@@ -35,13 +35,13 @@ namespace Revolutions
 
     public class SaveDefiner : SaveableTypeDefiner
     {
-        public SaveDefiner() : base(10000001)
+        public SaveDefiner() : base(350040)
         {
         }
 
         protected override void DefineClassTypes()
         {
-            AddClassDefinition(typeof(SettlementInfo), 1);
+            AddClassDefinition(typeof(SettlementInfo), 350041);
         }
 
         protected override void DefineContainerDefinitions()
