@@ -14,6 +14,65 @@ using Revolutions.Screens;
 
 namespace Revolutions
 {
+    public class FactionInfo
+    {
+        public FactionInfo(IFaction faction)
+        {
+            factionID = faction.StringId;
+            foreach (var settlement in faction.Settlements)
+            {
+                if (settlement.IsTown)
+                {
+                    initialTownNumber++;
+                }
+            }
+        }
+
+        public void UpdateCurrentTownCount()
+        {
+            currentTownNumber = 0;
+            foreach (var settlement in GetFaction().Settlements)
+            {
+                if (settlement.IsTown)
+                {
+                    currentTownNumber++;
+                }
+            }
+        }
+
+        public int TownsAboveInitial()
+        {
+            return currentTownNumber - initialTownNumber;
+        }
+
+        public int CurrentTowns()
+        {
+            return currentTownNumber;
+        }
+
+        public int InitialTowns()
+        {
+            return initialTownNumber;
+        }
+
+        public IFaction GetFaction()
+        {
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                if (faction.StringId == factionID)
+                {
+                    return faction;
+                }
+            }
+
+            return null;
+        }
+
+        [SaveableField(1)] private string factionID;
+        [SaveableField(2)] private int initialTownNumber = 0;
+        [SaveableField(3)] private int currentTownNumber = 0;
+    }
+
     public class SettlementInfo
     {
         public SettlementInfo(Settlement _settlement)
@@ -69,14 +128,23 @@ namespace Revolutions
 
     public class Revolution : CampaignBehaviorBase
     {
+        private const int PlayerInTownLoyaltyIncrease = 5;
+        private const int LoyaltyChangeForForeignPower = 5;
+        private const int MinimumObedianceLoyalty = 25;
+        private const int ForeignLoyaltyChangeMultiplayer = 2;
+
+
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
+        public List<FactionInfo> FactionInformation = new List<FactionInfo>();
 
         public override void RegisterEvents()
         {
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnSessionLaunched));
-            CampaignEvents.DailyTickSettlementEvent.AddNonSerializedListener(this, new Action<Settlement>(this.DailyLoyaltyEvent));
             CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero,
                                     ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
+            CampaignEvents.DailyTickSettlementEvent.AddNonSerializedListener(this, new Action<Settlement>(this.DailySettlementTick));
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTickEvent));
+            
         }
 
         private SettlementInfo GetSettlementInformation(Settlement settlement)
@@ -86,6 +154,19 @@ namespace Revolutions
                 if (settlementInfo.GetID() == settlement.StringId)
                 {
                     return settlementInfo;
+                }
+            }
+
+            return null;
+        }
+
+        private FactionInfo GetFactionInformation(IFaction faction)
+        {
+            foreach (var factionInfo in FactionInformation)
+            {
+                if (factionInfo.GetFaction().StringId == faction.StringId)
+                {
+                    return factionInfo;
                 }
             }
 
@@ -102,23 +183,31 @@ namespace Revolutions
             }
         }
 
+        private void DailySettlementTick(Settlement settlement)
+        {
+            DailyTownEvent(settlement);
+        }
+
+        private void DailyTickEvent()
+        {
+            foreach (var faction in FactionInformation)
+            {
+                faction.UpdateCurrentTownCount();
+            }
+        }
+
         private void DailyLoyaltyEvent(Settlement settlement)
         {
             SettlementInfo info = GetSettlementInformation(settlement);
-
-            if (!settlement.IsTown)
-            {
-                return;
-            }
 
             if (info.GetOriginalFaction().MapFaction.Name == settlement.MapFaction.Name)
             {
                 return;
             }
 
-            //settlement in wrong hands, so -5 loyalty modifier per day
-            settlement.Town.Loyalty = settlement.Town.Loyalty - 5;
-            info.RevoltProgress = info.RevoltProgress + (25 - settlement.Town.Loyalty);
+            //settlement in wrong hands, so penalty loyalty modifier per day
+            settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
+            info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
             if (info.RevoltProgress >= 100)
             {
@@ -179,19 +268,41 @@ namespace Revolutions
             }
         }
 
+        private void DailyTownEvent(Settlement settlement)
+        {
+            if (!settlement.IsTown)
+            {
+                return;
+            }
+
+            DailyLoyaltyEvent(settlement);
+            IncreaseDailyLoyaltyForPlayerSettlement(settlement);
+        }
+
+        private void IncreaseDailyLoyaltyForPlayerSettlement(Settlement settlement)
+        {
+            if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
+            {
+                return;
+            }
+
+            if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Seeing you spend time at " + settlement.Name.ToString() + " , your subjects feel more loyal to you."));
+                settlement.Town.Loyalty = settlement.Town.Loyalty + PlayerInTownLoyaltyIncrease;
+            }
+        }
+
         public override void SyncData(IDataStore dataStore)
         {
             dataStore.SyncData("_SettlementInformation", ref SettlementInformation);
+            dataStore.SyncData("_FactionInformation", ref FactionInformation);
         }
 
-        private void OnSessionLaunched(CampaignGameStarter obj)
+        private int CalculateLoyaltyChangeForForeignPower(SettlementInfo info)
         {
-            if (SettlementInformation.Count < 1)
-            {
-                RegisterSettlements();
-            }
-
-            CreateLoyaltyMenu(obj);
+            //by default, we can use a const.
+            return LoyaltyChangeForForeignPower + GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() * ForeignLoyaltyChangeMultiplayer;
         }
 
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
@@ -207,12 +318,36 @@ namespace Revolutions
             }, false, 4);
         }
 
+        private void OnSessionLaunched(CampaignGameStarter obj)
+        {
+            if (SettlementInformation.Count < 1)
+            {
+                RegisterSettlements();
+            }
+
+            if (FactionInformation.Count < 1)
+            {
+                RegisterFactions();
+            }
+
+            CreateLoyaltyMenu(obj);
+        }
+
         private void RegisterSettlements()
         {
             foreach (var settlement in Settlement.All)
             {
                 SettlementInfo settInf = new SettlementInfo(settlement);
                 SettlementInformation.Add(settInf);
+            }
+        }
+
+        private void RegisterFactions()
+        {
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                FactionInfo fi = new FactionInfo(faction);
+                FactionInformation.Add(fi);
             }
         }
     }

@@ -42,11 +42,13 @@ namespace Revolutions
         protected override void DefineClassTypes()
         {
             AddClassDefinition(typeof(SettlementInfo), 350041);
+            AddClassDefinition(typeof(FactionInfo), 350042);
         }
 
         protected override void DefineContainerDefinitions()
         {
             ConstructContainerDefinition(typeof(List<SettlementInfo>));
+            ConstructContainerDefinition(typeof(List<FactionInfo>));
         }
     }
 }
