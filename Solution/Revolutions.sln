@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revolutions", "Revolutions\Revolutions.csproj", "{662B8B90-8088-45CE-973B-04B56346B57A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{662B8B90-8088-45CE-973B-04B56346B57A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{662B8B90-8088-45CE-973B-04B56346B57A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{662B8B90-8088-45CE-973B-04B56346B57A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{662B8B90-8088-45CE-973B-04B56346B57A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {58A0186C-6C15-48E6-82A4-C16885C6AECD}
+	EndGlobalSection
+EndGlobal
