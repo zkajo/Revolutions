@@ -170,10 +170,11 @@ namespace Revolutions
                 }
             }
 
-            FactionInfo fi = new FactionInfo(faction);
-            FactionInformation.Add(fi);
+            //add faction if missing
+            FactionInfo fi = new FactionInfo(faction);//
+            FactionInformation.Add(fi);//
 
-            return fi;
+            return fi;//
         }
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool bl, Hero hero1, Hero hero2, Hero hero3, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
