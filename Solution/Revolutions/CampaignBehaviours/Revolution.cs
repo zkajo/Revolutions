@@ -9,6 +9,7 @@ using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.SaveSystem;
+using HarmonyLib;
 
 using Revolutions.Screens;
 
@@ -170,10 +171,7 @@ namespace Revolutions
                 }
             }
 
-            FactionInfo fi = new FactionInfo(faction);
-            FactionInformation.Add(fi);
-
-            return fi;
+            return null;
         }
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool bl, Hero hero1, Hero hero2, Hero hero3, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
@@ -305,11 +303,6 @@ namespace Revolutions
         private int CalculateLoyaltyChangeForForeignPower(SettlementInfo info)
         {
             //by default, we can use a const.
-            if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
-            {
-                return GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial();
-            }
-
             return LoyaltyChangeForForeignPower + GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() * ForeignLoyaltyChangeMultiplayer;
         }
 
