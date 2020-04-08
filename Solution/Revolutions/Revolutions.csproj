@@ -221,7 +221,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Screens\CampaignBehaviours\Revolution.cs" />
+    <Compile Include="CampaignBehaviours\Revolution.cs" />
     <Compile Include="RevolutionsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\TownRevolutionScreen.cs" />
