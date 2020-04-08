@@ -24,7 +24,8 @@
 					<RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Top" HorizontalAlignment="Center" MarginLeft="0" MarginTop="60" Text="@TownOwnership" Brush="CenterAlignedMediumFont"/>
                     <!--Banner-->
                     <MaskedTextureWidget DataSource="{FactionVisual}" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="105" SuggestedHeight="126" HorizontalAlignment="Center" VerticalAlignment="Top" PositionXOffset="0" MarginTop="120" Brush="Kingdom.TornBanner" AdditionalArgs="@AdditionalArgs" ImageId="@Id" ImageTypeCode="@ImageTypeCode" OverlayTextureScale="1.8" />
-
+					<!--Mood-->
+					<RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Top" HorizontalAlignment="Center" MarginLeft="0" MarginTop="260" Text="@RevoltMood" Brush="CenterAlignedMediumFont"/>
 					</Children>
                 </Widget>
                 

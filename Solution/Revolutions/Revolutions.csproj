@@ -221,6 +221,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CampaignBehaviours\FactionInfo.cs" />
     <Compile Include="CampaignBehaviours\Revolution.cs" />
     <Compile Include="RevolutionsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

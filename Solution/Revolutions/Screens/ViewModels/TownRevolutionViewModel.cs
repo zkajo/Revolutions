@@ -13,10 +13,12 @@ namespace Revolutions.Screens.ViewModels
     class TownRevolutionViewModel : ViewModel
     {
         private SettlementInfo settlementInfo;
+        private FactionInfo factionInfo;
 
-        public TownRevolutionViewModel(SettlementInfo info)
+        public TownRevolutionViewModel(SettlementInfo settInfo, FactionInfo factInfo)
         {
-            settlementInfo = info;
+            settlementInfo = settInfo;
+            factionInfo = factInfo;
             _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(settlementInfo.GetOriginalFaction().Banner), true);
         }
 
@@ -73,6 +75,46 @@ namespace Revolutions.Screens.ViewModels
             }
         }
 
+        [DataSourceProperty]
+        public string RevoltMood
+        {
+            get
+            {
+                if (factionInfo.GetFaction().StringId == settlementInfo.GetOriginalFaction().StringId)
+                {
+                    return "People are content with the current rule";
+                }
+
+                if (factionInfo.RevoltCanHappen())
+                {
+                    return "Some talk of raising banners of their homeland.";
+                    
+                }
+                else
+                {
+                    if (factionInfo.RevoltedSettlement() == null)
+                    {
+                        return " ";
+                    }
+
+                    if (factionInfo.RevoltedSettlement().StringId == settlementInfo.GetSettlement().StringId)
+                    {
+                        return "The people of this town had revolted recently, and don't wish to spill blood again.";
+                    }
+
+                    return "After hearing of blood spilled in " + factionInfo.RevoltedSettlement().Name + " citizens are afraid of revolting.";
+                }
+            }
+            set
+            {
+                if (value != this.RevoltMood)
+                {
+                    this.RevoltMood = value;
+                    base.OnPropertyChanged("RevoltMood");
+                }
+            }
+        }
+
         private void ExitTownPropertyMenu()
         {
             ScreenManager.PopScreen();
@@ -83,6 +125,7 @@ namespace Revolutions.Screens.ViewModels
             OnPropertyChanged("TownDescription");
             OnPropertyChanged("RevolutionProgress");
             OnPropertyChanged("TownOwnership");
+            OnPropertyChanged("FactionVisual");
             OnPropertyChanged("FactionVisual");
         }
     }

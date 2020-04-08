@@ -14,65 +14,6 @@ using Revolutions.Screens;
 
 namespace Revolutions
 {
-    public class FactionInfo
-    {
-        public FactionInfo(IFaction faction)
-        {
-            factionID = faction.StringId;
-            foreach (var settlement in faction.Settlements)
-            {
-                if (settlement.IsTown)
-                {
-                    initialTownNumber++;
-                }
-            }
-        }
-
-        public void UpdateCurrentTownCount()
-        {
-            currentTownNumber = 0;
-            foreach (var settlement in GetFaction().Settlements)
-            {
-                if (settlement.IsTown)
-                {
-                    currentTownNumber++;
-                }
-            }
-        }
-
-        public int TownsAboveInitial()
-        {
-            return currentTownNumber - initialTownNumber;
-        }
-
-        public int CurrentTowns()
-        {
-            return currentTownNumber;
-        }
-
-        public int InitialTowns()
-        {
-            return initialTownNumber;
-        }
-
-        public IFaction GetFaction()
-        {
-            foreach (var faction in Campaign.Current.Factions)
-            {
-                if (faction.StringId == factionID)
-                {
-                    return faction;
-                }
-            }
-
-            return null;
-        }
-
-        [SaveableField(1)] private string factionID;
-        [SaveableField(2)] private int initialTownNumber = 0;
-        [SaveableField(3)] private int currentTownNumber = 0;
-    }
-
     public class SettlementInfo
     {
         public SettlementInfo(Settlement _settlement)
@@ -157,7 +98,10 @@ namespace Revolutions
                 }
             }
 
-            return null;
+            SettlementInfo missingSettlement = new SettlementInfo(settlement);
+            SettlementInformation.Add(missingSettlement);
+
+            return missingSettlement;
         }
 
         private FactionInfo GetFactionInformation(IFaction faction)
@@ -170,11 +114,10 @@ namespace Revolutions
                 }
             }
 
-            //add faction if missing
-            FactionInfo fi = new FactionInfo(faction);//
-            FactionInformation.Add(fi);//
+            FactionInfo missingInformation = new FactionInfo(faction);
+            FactionInformation.Add(missingInformation);
 
-            return fi;//
+            return missingInformation;
         }
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool bl, Hero hero1, Hero hero2, Hero hero3, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
@@ -196,7 +139,7 @@ namespace Revolutions
         {
             foreach (var faction in FactionInformation)
             {
-                faction.UpdateCurrentTownCount();
+                faction.UpdateFactionInfo();
             }
         }
 
@@ -209,12 +152,20 @@ namespace Revolutions
                 return;
             }
 
+            if (!GetFactionInformation(info.GetSettlement().MapFaction).RevoltCanHappen())
+            {
+                info.RevoltProgress = 0;
+                return;
+            }
+
             //settlement in wrong hands, so penalty loyalty modifier per day
             settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
             if (info.RevoltProgress >= 100)
             {
+                GetFactionInformation(info.GetSettlement().MapFaction).CityRevolted(settlement);
+
                 InformationManager.DisplayMessage(new InformationMessage(settlement.Name.ToString() + " is revolting!"));
 
                 if (Settlement.CurrentSettlement == info.GetSettlement())
@@ -323,7 +274,8 @@ namespace Revolutions
             }, (MenuCallbackArgs args) =>
             {
                 SettlementInfo setinf = GetSettlementInformation(Settlement.CurrentSettlement);
-                ScreenManager.PushScreen(new TownRevolutionScreen(setinf));
+                FactionInfo factinfo = GetFactionInformation(Settlement.CurrentSettlement.MapFaction);
+                ScreenManager.PushScreen(new TownRevolutionScreen(setinf, factinfo));
             }, false, 4);
         }
 
