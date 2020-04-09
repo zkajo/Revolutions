@@ -37,8 +37,8 @@ namespace Revolutions
             UpdateCurrentTownCount();
             daysSinceLastRevolt++;
 
-            //three years
-            if (daysSinceLastRevolt > 252)
+            //sixty days
+            if (daysSinceLastRevolt > 60)
             {
                 hadRecentRevolt = false;
                 revoltedSettlement = null;
