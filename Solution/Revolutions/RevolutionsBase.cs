@@ -11,12 +11,39 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Engine.GauntletUI;
+using HarmonyLib;
+using System.Windows;
 
 namespace Revolutions
 {
     public class RevolutionsBase : MBSubModuleBase
     {
         private Revolution RevolutionModule;
+
+        protected override void OnSubModuleLoad()
+        {
+            try
+            {
+                var h = new Harmony("KommissarsBannerlordRevolutions");
+                h.PatchAll();
+            }
+            catch (Exception exception1)
+            {
+                string message;
+                Exception exception = exception1;
+                string str = exception.Message;
+                Exception innerException = exception.InnerException;
+                if (innerException != null)
+                {
+                    message = innerException.Message;
+                }
+                else
+                {
+                    message = null;
+                }
+                MessageBox.Show(string.Concat("Error patching:\n", str, " \n\n", message));
+            }
+        }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {

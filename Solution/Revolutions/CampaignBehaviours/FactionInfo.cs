@@ -34,6 +34,9 @@ namespace Revolutions
 
         public void UpdateFactionInfo()
         {
+            //debug:
+            daysSinceLastRevolt = 300;
+
             UpdateCurrentTownCount();
             daysSinceLastRevolt++;
 

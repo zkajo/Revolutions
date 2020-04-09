@@ -9,6 +9,11 @@ using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.SaveSystem;
+using HarmonyLib;
+using SandBox;
+using SandBox.Source;
+using SandBox.CampaignBehaviors;
+using SandBox.ViewModelCollection;
 
 using Revolutions.Screens;
 
@@ -67,16 +72,27 @@ namespace Revolutions
         [SaveableField(4)] public float RevoltProgress = 0;
     }
 
+    public class Something : SandBox.Source.Towns.CommonAreaCampaignBehavior
+    {
+        public override void RegisterEvents()
+        {
+            base.RegisterEvents();
+        }
+    }
+
     public class Revolution : CampaignBehaviorBase
     {
         private const int PlayerInTownLoyaltyIncrease = 5;
         private const int LoyaltyChangeForForeignPower = 5;
         private const int MinimumObedianceLoyalty = 25;
         private const int ForeignLoyaltyChangeMultiplayer = 2;
+        private bool inAlleyBattle = false;
+        private Settlement alleyBattleSettlement = null;
 
 
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
         public List<FactionInfo> FactionInformation = new List<FactionInfo>();
+        public List<MobileParty> Revolutionaries = new List<MobileParty>();
 
         public override void RegisterEvents()
         {
@@ -85,7 +101,31 @@ namespace Revolutions
                                     ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
             CampaignEvents.DailyTickSettlementEvent.AddNonSerializedListener(this, new Action<Settlement>(this.DailySettlementTick));
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTickEvent));
-            
+            CampaignEvents.OnPlayerBattleEndEvent.AddNonSerializedListener(this, new Action<MapEvent>(this.PlayerBattleEndEvent));
+        }
+
+        private void PlayerBattleEndEvent(MapEvent mapevent)
+        {
+            if (inAlleyBattle && mapevent.EventType == MapEvent.BattleTypes.AlleyFight)
+            {
+                PartyBase looters;
+
+                if (mapevent.PlayerSide == BattleSideEnum.Attacker)
+                {
+                    looters = mapevent.DefenderSide.LeaderParty;
+                }
+                else
+                {
+                    looters = mapevent.AttackerSide.LeaderParty;
+                }
+
+                looters.MobileParty.CurrentSettlement = alleyBattleSettlement;
+                alleyBattleSettlement = null;
+
+                inAlleyBattle = false;
+
+                
+            }
         }
 
         private SettlementInfo GetSettlementInformation(Settlement settlement)
@@ -141,6 +181,22 @@ namespace Revolutions
             {
                 faction.UpdateFactionInfo();
             }
+
+            if (Revolutionaries.Count > 0)
+            {
+                int length = Revolutionaries.Count;
+
+                for (int i = 0; i < length; i++)
+                {
+                    if (Revolutionaries[i].Party.Side != BattleSideEnum.None)
+                    {
+                        Revolutionaries[i].RemoveParty();
+                        Revolutionaries.RemoveAt(i);
+                        length = Revolutionaries.Count;
+                        i--;
+                    }
+                }
+            }
         }
 
         private void DailyLoyaltyEvent(Settlement settlement)
@@ -157,70 +213,125 @@ namespace Revolutions
                 info.RevoltProgress = 0;
                 return;
             }
-
+            
             //settlement in wrong hands, so penalty loyalty modifier per day
             settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
             if (info.RevoltProgress >= 100)
             {
-                GetFactionInformation(info.GetSettlement().MapFaction).CityRevolted(settlement);
-
-                InformationManager.DisplayMessage(new InformationMessage(settlement.Name.ToString() + " is revolting!"));
-
-                if (Settlement.CurrentSettlement == info.GetSettlement())
-                {
-                    PlayerEncounter.LeaveSettlement();
-                    PlayerEncounter.Finish(true);
-                }
-
-                if (info.GetSettlement().Parties.Count > 0)
-                {
-                    int partyNumber = info.GetSettlement().Parties.Count;
-                    for (int i = 0; i < partyNumber; i++)
-                    {
-                        if (info.GetSettlement().Parties[i].IsMilitia || info.GetSettlement().Parties[i].IsGarrison)
-                        {
-                            continue;
-                        }
-
-                        LeaveSettlementAction.ApplyForParty(info.GetSettlement().Parties[i]);
-                        partyNumber = info.GetSettlement().Parties.Count;
-                        i--;
-                    }
-                }
-
-                Hero selectedHero = null;
-                Clan chosenClan = null;
-                int leastSettlements = 100;
-                foreach (var noble in info.GetOriginalFaction().Nobles)
-                {
-                    int currentSettlements = noble.Clan.Settlements.Count();
-                    if (currentSettlements < leastSettlements)
-                    {
-                        leastSettlements = currentSettlements;
-                        chosenClan = noble.Clan;
-                    }
-                }
-
-                if (chosenClan != null)
-                {
-                    selectedHero = chosenClan.Nobles.GetRandomElement();
-                }
-                else
-                {
-                    selectedHero = info.GetOriginalFaction().Leader;
-                }
-
-                ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, settlement);
-                
-                info.RevoltProgress = 0;
+                RevoltLogic(info, settlement);
             }
 
             if (info.RevoltProgress < 0)
             {
                 info.RevoltProgress = 0;
             }
+        }
+
+        private void RevoltLogic(SettlementInfo info, Settlement settlement)
+        {
+            GetFactionInformation(info.GetSettlement().MapFaction).CityRevolted(settlement);
+
+            InformationManager.DisplayMessage(new InformationMessage(settlement.Name.ToString() + " is revolting!"));
+
+            Hero selectedHero = null;
+            //Clan chosenClan = null;
+            //int leastSettlements = 100;
+            //foreach (var noble in info.GetOriginalFaction().Nobles)
+            //{
+            //    int currentSettlements = noble.Clan.Settlements.Count();
+            //    if (currentSettlements < leastSettlements)
+            //    {
+            //        leastSettlements = currentSettlements;
+            //        chosenClan = noble.Clan;
+            //    }
+            //}
+
+            //if (chosenClan != null)
+            //{
+            //    selectedHero = chosenClan.Nobles.GetRandomElement();
+            //}
+            //else
+            //{
+            //    selectedHero = info.GetOriginalFaction().Leader;
+            //}
+
+            MobileParty mob = MobileParty.Create("Revolutionary Mob");
+            TroopRoster roster = new TroopRoster();
+
+            TroopRoster infnatry = new TroopRoster();
+            infnatry.FillMembersOfRoster(300, settlement.Culture.MeleeMilitiaTroop);
+            roster.Add(infnatry);
+
+            TroopRoster archers = new TroopRoster();
+            archers.FillMembersOfRoster(200, settlement.Culture.RangedMilitiaTroop);
+            roster.Add(archers);
+
+            TroopRoster prisonRoster = new TroopRoster();
+            prisonRoster.IsPrisonRoster = true;
+
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                if (faction.Name.Contains("Looter"))
+                {
+                    selectedHero = faction.Heroes.ToList()[0];
+                }
+
+            }
+
+            mob.ChangePartyLeader(selectedHero.CharacterObject);
+            mob.Party.Owner = selectedHero;
+            mob.InitializeMobileParty(new TaleWorlds.Localization.TextObject("Revolutionary Mob", null), roster, prisonRoster, settlement.GatePosition, 2.0f, 2.0f);
+            //mob.CurrentSettlement = settlement;
+
+            mob.Ai.DisableAi();
+
+            Revolutionaries.Add(mob);
+            //StartBattleAction.ApplyStartAssaultAgainstWalls(mob, settlement);
+            MobileParty garrison = null;
+
+            foreach (var party in settlement.Parties)
+            {
+                if (party.IsGarrison)
+                {
+                    garrison = party;
+                    break;
+                }
+            }
+
+            if (garrison == null)
+            {
+                foreach (var party in settlement.Parties)
+                {
+                    if (party.IsMilitia || party.MapFaction.StringId == settlement.OwnerClan.MapFaction.StringId)
+                    {
+                        garrison = party;
+                        break;
+                    }
+                }
+            }
+
+            if (garrison == null)
+            {
+                ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, settlement);
+            }
+            else
+            {
+                //StartBattleAction.ApplyStartAssaultAgainstWalls(mob, settlement);
+                //StartBattleAction.ApplyStartAssaultAgainstWalls(mob, settlement);
+                Campaign.Current.MapEventManager.StartAlleyFightMapEvent(mob.Party, garrison.Party);
+                inAlleyBattle = true;
+                alleyBattleSettlement = settlement;
+            }
+
+            
+            
+            /*
+            ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, settlement);
+            */
+
+            info.RevoltProgress = 0;
         }
 
         private void DailyTownEvent(Settlement settlement)
@@ -258,7 +369,7 @@ namespace Revolutions
         {
             //by default, we can use a const.
             if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
-            {
+            {    
                 return GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial();
             }
 
