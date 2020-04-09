@@ -13,37 +13,13 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Engine.GauntletUI;
 using HarmonyLib;
 using System.Windows;
+using SandBox;
 
 namespace Revolutions
 {
     public class RevolutionsBase : MBSubModuleBase
     {
-        private Revolution RevolutionModule;
-
-        protected override void OnSubModuleLoad()
-        {
-            try
-            {
-                var h = new Harmony("KommissarsBannerlordRevolutions");
-                h.PatchAll();
-            }
-            catch (Exception exception1)
-            {
-                string message;
-                Exception exception = exception1;
-                string str = exception.Message;
-                Exception innerException = exception.InnerException;
-                if (innerException != null)
-                {
-                    message = innerException.Message;
-                }
-                else
-                {
-                    message = null;
-                }
-                MessageBox.Show(string.Concat("Error patching:\n", str, " \n\n", message));
-            }
-        }
+        private Revolution _revolutionModule;
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -55,8 +31,8 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter gameInitializer)
         {
-            RevolutionModule = new Revolution();
-            gameInitializer.AddBehavior(RevolutionModule);
+            _revolutionModule = new Revolution();
+            gameInitializer.AddBehavior(_revolutionModule);
         }
     }
 
@@ -72,10 +48,16 @@ namespace Revolutions
             AddClassDefinition(typeof(FactionInfo), 350042);
         }
 
+        protected override void DefineGenericClassDefinitions()
+        {
+            ConstructGenericClassDefinition(typeof(Tuple<PartyBase, SettlementInfo>));;
+        }
+
         protected override void DefineContainerDefinitions()
         {
             ConstructContainerDefinition(typeof(List<SettlementInfo>));
             ConstructContainerDefinition(typeof(List<FactionInfo>));
+            ConstructContainerDefinition(typeof(List<Tuple<PartyBase, SettlementInfo>>));
         }
     }
 }

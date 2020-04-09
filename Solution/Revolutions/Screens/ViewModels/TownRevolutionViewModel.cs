@@ -12,14 +12,14 @@ namespace Revolutions.Screens.ViewModels
 {
     class TownRevolutionViewModel : ViewModel
     {
-        private SettlementInfo settlementInfo;
-        private FactionInfo factionInfo;
+        private SettlementInfo _settlementInfo;
+        private FactionInfo _factionInfo;
 
         public TownRevolutionViewModel(SettlementInfo settInfo, FactionInfo factInfo)
         {
-            settlementInfo = settInfo;
-            factionInfo = factInfo;
-            _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(settlementInfo.GetOriginalFaction().Banner), true);
+            _settlementInfo = settInfo;
+            _factionInfo = factInfo;
+            _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(_settlementInfo.GetOriginalFaction().Banner), true);
         }
 
         private ImageIdentifierVM _factionVisual;
@@ -46,13 +46,13 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (settlementInfo.RevoltProgress < 10)
+                if (_settlementInfo.RevoltProgress < 10)
                 {
-                    return "The people of " + settlementInfo.GetSettlement().Name + " seem to be content";
+                    return "The people of " + _settlementInfo.GetSettlement().Name + " seem to be content";
                 }
                 else
                 {
-                    return "Flames of revolution are slowly stirring in " + settlementInfo.GetSettlement().Name;
+                    return "Flames of revolution are slowly stirring in " + _settlementInfo.GetSettlement().Name;
                 }
             }
         }
@@ -62,7 +62,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                return "Population is loyal to the " + settlementInfo.GetOriginalFaction().Name;
+                return "Population is loyal to the " + _settlementInfo.GetOriginalFaction().Name;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                return "Current revolution progress is " + settlementInfo.RevoltProgress + "%";
+                return "Current revolution progress is " + _settlementInfo.RevoltProgress + "%";
             }
         }
 
@@ -80,29 +80,29 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (factionInfo.GetFaction().StringId == settlementInfo.GetOriginalFaction().StringId)
+                if (_factionInfo.GetFaction().StringId == _settlementInfo.GetOriginalFaction().StringId)
                 {
                     return "People are content with the current rule";
                 }
 
-                if (factionInfo.RevoltCanHappen())
+                if (_factionInfo.RevoltCanHappen())
                 {
                     return "Some talk of raising banners of their homeland.";
                     
                 }
                 else
                 {
-                    if (factionInfo.RevoltedSettlement() == null)
+                    if (_factionInfo.RevoltedSettlement() == null)
                     {
                         return " ";
                     }
 
-                    if (factionInfo.RevoltedSettlement().StringId == settlementInfo.GetSettlement().StringId)
+                    if (_factionInfo.RevoltedSettlement().StringId == _settlementInfo.GetSettlement().StringId)
                     {
                         return "The people of this town had revolted recently, and don't wish to spill blood again.";
                     }
 
-                    return "After hearing of blood spilled in " + factionInfo.RevoltedSettlement().Name + " citizens are afraid of revolting.";
+                    return "After hearing of blood spilled in " + _factionInfo.RevoltedSettlement().Name + " citizens are afraid of revolting.";
                 }
             }
             set

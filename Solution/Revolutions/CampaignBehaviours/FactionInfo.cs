@@ -12,81 +12,78 @@ namespace Revolutions
     {
         public FactionInfo(IFaction faction)
         {
-            factionID = faction.StringId;
+            _factionId = faction.StringId;
             foreach (var settlement in faction.Settlements)
             {
                 if (settlement.IsTown)
                 {
-                    initialTownNumber++;
+                    _initialTownNumber++;
                 }
             }
         }
 
         public bool RevoltCanHappen()
         {
-            return !hadRecentRevolt;
+            return !_hadRecentRevolt;
         }
 
         public Settlement RevoltedSettlement()
         {
-            return revoltedSettlement;
+            return _revoltedSettlement;
         }
 
         public void UpdateFactionInfo()
         {
-            //debug:
-            daysSinceLastRevolt = 300;
-
             UpdateCurrentTownCount();
-            daysSinceLastRevolt++;
+            _daysSinceLastRevolt++;
 
             //three years
-            if (daysSinceLastRevolt > 252)
+            if (_daysSinceLastRevolt > 30)
             {
-                hadRecentRevolt = false;
-                revoltedSettlement = null;
+                _hadRecentRevolt = false;
+                _revoltedSettlement = null;
             }
         }
 
         public void CityRevolted(Settlement settlement)
         {
-            hadRecentRevolt = true;
-            revoltedSettlement = settlement;
-            daysSinceLastRevolt = 0;
+            _hadRecentRevolt = true;
+            _revoltedSettlement = settlement;
+            _daysSinceLastRevolt = 0;
         }
 
         private void UpdateCurrentTownCount()
         {
-            currentTownNumber = 0;
+            _currentTownNumber = 0;
             foreach (var settlement in GetFaction().Settlements)
             {
                 if (settlement.IsTown)
                 {
-                    currentTownNumber++;
+                    _currentTownNumber++;
                 }
             }
         }
 
         public int TownsAboveInitial()
         {
-            return currentTownNumber - initialTownNumber;
+            return _currentTownNumber - _initialTownNumber;
         }
 
         public int CurrentTowns()
         {
-            return currentTownNumber;
+            return _currentTownNumber;
         }
 
         public int InitialTowns()
         {
-            return initialTownNumber;
+            return _initialTownNumber;
         }
 
         public IFaction GetFaction()
         {
             foreach (var faction in Campaign.Current.Factions)
             {
-                if (faction.StringId == factionID)
+                if (faction.StringId == _factionId)
                 {
                     return faction;
                 }
@@ -95,11 +92,11 @@ namespace Revolutions
             return null;
         }
 
-        [SaveableField(1)] private string factionID;
-        [SaveableField(2)] private int initialTownNumber = 0;
-        [SaveableField(3)] private int currentTownNumber = 0;
-        [SaveableField(4)] private bool hadRecentRevolt = false;
-        [SaveableField(5)] private int daysSinceLastRevolt = 0;
-        [SaveableField(6)] private Settlement revoltedSettlement;
+        [SaveableField(1)] private string _factionId;
+        [SaveableField(2)] private int _initialTownNumber = 0;
+        [SaveableField(3)] private int _currentTownNumber = 0;
+        [SaveableField(4)] private bool _hadRecentRevolt = false;
+        [SaveableField(5)] private int _daysSinceLastRevolt = 0;
+        [SaveableField(6)] private Settlement _revoltedSettlement;
     }
 }
