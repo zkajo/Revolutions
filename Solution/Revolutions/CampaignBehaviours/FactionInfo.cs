@@ -87,7 +87,7 @@ namespace Revolutions
                     return faction;
                 }
             }
-
+            
             return null;
         }
 

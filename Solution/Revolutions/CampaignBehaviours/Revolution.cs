@@ -124,7 +124,7 @@ namespace Revolutions
             
             if (!revVictory)
             {
-                RemoveParty(revs);
+                RemoveRevolutionaryPartyFromList(revs);
                 return;
             }
 
@@ -143,12 +143,13 @@ namespace Revolutions
 
             revs.Owner = selectedHero;
 
-            RemoveParty(revs);
+            RemoveRevolutionaryPartyFromList(revs);
+            revs.MobileParty.RemoveParty();
             ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.GetSettlement());
             currentInfo.GetSettlement().AddGarrisonParty(true);
         }
 
-        private void RemoveParty(PartyBase revolutionaryParty)
+        private void RemoveRevolutionaryPartyFromList(PartyBase revolutionaryParty)
         {
             for (int i = 0; i < Revolutionaries.Count; i++)
             {
@@ -156,7 +157,6 @@ namespace Revolutions
                 {
                     PartyBase partyToRemove = Revolutionaries[i].Item1;
                     Revolutionaries.RemoveAt(i);
-                    partyToRemove.MobileParty.RemoveParty();
                     break;
                 }
             }
