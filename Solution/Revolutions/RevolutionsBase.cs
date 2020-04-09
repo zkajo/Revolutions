@@ -11,12 +11,15 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Engine.GauntletUI;
+using HarmonyLib;
+using System.Windows;
+using SandBox;
 
 namespace Revolutions
 {
     public class RevolutionsBase : MBSubModuleBase
     {
-        private Revolution RevolutionModule;
+        private Revolution _revolutionModule;
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -28,8 +31,8 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter gameInitializer)
         {
-            RevolutionModule = new Revolution();
-            gameInitializer.AddBehavior(RevolutionModule);
+            _revolutionModule = new Revolution();
+            gameInitializer.AddBehavior(_revolutionModule);
         }
     }
 
@@ -45,10 +48,16 @@ namespace Revolutions
             AddClassDefinition(typeof(FactionInfo), 350042);
         }
 
+        protected override void DefineGenericClassDefinitions()
+        {
+            ConstructGenericClassDefinition(typeof(Tuple<PartyBase, SettlementInfo>));;
+        }
+
         protected override void DefineContainerDefinitions()
         {
             ConstructContainerDefinition(typeof(List<SettlementInfo>));
             ConstructContainerDefinition(typeof(List<FactionInfo>));
+            ConstructContainerDefinition(typeof(List<Tuple<PartyBase, SettlementInfo>>));
         }
     }
 }
