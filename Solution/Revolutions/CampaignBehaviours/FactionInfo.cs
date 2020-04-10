@@ -87,6 +87,11 @@ namespace Revolutions
                     return faction;
                 }
             }
+
+            if (Hero.MainHero.MapFaction.StringId == _factionId)
+            {
+                return Hero.MainHero.MapFaction;
+            }
             
             return null;
         }

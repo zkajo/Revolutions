@@ -177,9 +177,14 @@ namespace Revolutions
 
         private FactionInfo GetFactionInformation(IFaction faction)
         {
-            foreach (var factionInfo in FactionInformation.Where(factionInfo => factionInfo.GetFaction().StringId == faction.StringId))
+            foreach (var factioninfo in FactionInformation)
             {
-                return factionInfo;
+                string id = factioninfo.GetFaction().StringId;
+                IFaction fa = factioninfo.GetFaction();
+                if (factioninfo.GetFaction().StringId == faction.StringId)
+                {
+                    return factioninfo;
+                }
             }
 
             FactionInfo missingInformation = new FactionInfo(faction);
@@ -227,7 +232,17 @@ namespace Revolutions
             }
             
             //settlement in wrong hands, so penalty loyalty modifier per day
-            settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
+            //temporarily help the player
+            
+            if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
+            {
+                settlement.Town.Loyalty = settlement.Town.Loyalty + 5;
+            }
+            else
+            {
+                settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
+            }
+
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
             if (info.RevoltProgress >= 100)
