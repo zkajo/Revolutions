@@ -1,69 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Revolutions.Screens;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.SaveSystem;
-using Revolutions.Screens;
 
-namespace Revolutions
+namespace Revolutions.CampaignBehaviours
 {
-    public class SettlementInfo
-    {
-        public SettlementInfo(Settlement settlement)
-        {
-            _settlementId = settlement.StringId;
-            _originalFactionId = settlement.MapFaction.StringId;
-            _originalCultureId = settlement.Culture.StringId;
-        }
-
-        public string GetId()
-        {
-            return _settlementId;
-        }
-
-        public bool IsOfCulture(string cultureStringId)
-        {
-            if (_originalCultureId == cultureStringId)
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        public Settlement GetSettlement()
-        {
-            return Settlement.Find(_settlementId);
-        }
-
-        public IFaction GetOriginalFaction()
-        {
-            foreach (var faction in Campaign.Current.Factions)
-            {
-                if (faction.StringId == _originalFactionId)
-                {
-                    return faction;
-                }
-            }
-
-            return null;
-        }
-
-        public CultureObject GetOriginalCulture()
-        {
-            return Game.Current.ObjectManager.GetObject<CultureObject>(_originalCultureId);
-        }
-        
-        [SaveableField(1)] private string _settlementId;
-        [SaveableField(2)] private string _originalFactionId;
-        [SaveableField(3)] private string _originalCultureId;
-        [SaveableField(4)] public float RevoltProgress = 0;
-    }
-
     public class Revolution : CampaignBehaviorBase
     {
         private const int PlayerInTownLoyaltyIncrease = 5;
@@ -74,6 +20,42 @@ namespace Revolutions
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
         public List<FactionInfo> FactionInformation = new List<FactionInfo>();
         public List<Tuple<PartyBase, SettlementInfo>> Revolutionaries = new List<Tuple<PartyBase, SettlementInfo>>();
+
+        #region Data Getters
+        private SettlementInfo GetSettlementInformation(Settlement settlement)
+        {
+            foreach (var settlementInfo in SettlementInformation)
+            {
+                if (settlementInfo.GetSettlement().StringId == settlement.StringId)
+                {
+                    return settlementInfo;
+                }
+            }
+
+            SettlementInfo missingSettlement = new SettlementInfo(settlement);
+            SettlementInformation.Add(missingSettlement);
+
+            return missingSettlement;
+        }
+
+        private FactionInfo GetFactionInformation(IFaction faction)
+        {
+            foreach (var factioninfo in FactionInformation)
+            {
+                if (factioninfo.GetFaction().StringId == faction.StringId)
+                {
+                    return factioninfo;
+                }
+            }
+
+            FactionInfo missingInformation = new FactionInfo(faction);
+            FactionInformation.Add(missingInformation);
+
+            return missingInformation;
+        }   
+        #endregion
+
+        #region Base Functionality
 
         public override void RegisterEvents()
         {
@@ -89,7 +71,95 @@ namespace Revolutions
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.OnMapEventEnded));
         }
         
+        public override void SyncData(IDataStore dataStore)
+        {
+            dataStore.SyncData("_SettlementInformation", ref SettlementInformation);
+            dataStore.SyncData("_FactionInformation", ref FactionInformation);
+            dataStore.SyncData("_Revolutionaries", ref Revolutionaries);
+        }
+        
+        private void OnSessionLaunched(CampaignGameStarter obj)
+        {
+            if (SettlementInformation.Count < 1)
+            {
+                RegisterSettlements();
+            }
+
+            if (FactionInformation.Count < 1)
+            {
+                RegisterFactions();
+            }
+
+            CreateLoyaltyMenu(obj);
+        }
+        
+        private void RegisterSettlements()
+        {
+            foreach (var settlement in Settlement.All)
+            {
+                SettlementInfo settInf = new SettlementInfo(settlement);
+                SettlementInformation.Add(settInf);
+            }
+        }
+
+        private void RegisterFactions()
+        {
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                FactionInfo fi = new FactionInfo(faction);
+                FactionInformation.Add(fi);
+            }
+        }
+        
+        private void CreateLoyaltyMenu(CampaignGameStarter obj)
+        {
+            obj.AddGameMenuOption("town", "town_enter_entr_option", "Town Loyalty", (MenuCallbackArgs args) =>
+            {
+                args.optionLeaveType = GameMenuOption.LeaveType.Trade;
+                return true;
+            }, (MenuCallbackArgs args) =>
+            {
+                SettlementInfo setinf = GetSettlementInformation(Settlement.CurrentSettlement);
+                FactionInfo factinfo = GetFactionInformation(Settlement.CurrentSettlement.MapFaction);
+                ScreenManager.PushScreen(new TownRevolutionScreen(setinf, factinfo));
+            }, false, 4);
+        }
+
+        #endregion
+
+        #region Events
+        
+        private void DailyTickEvent()
+        {
+            foreach (var faction in FactionInformation)
+            {
+                faction.UpdateFactionInfo();
+            }
+        }
+        
+        private void DailySettlementTick(Settlement settlement)
+        {
+            DailyTownEvent(settlement);
+        }
+
+        private void OnSettlementOwnerChangedEvent(Settlement settlement, bool bl, Hero hero1, Hero hero2, Hero hero3, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
+        {
+            SettlementInfo settlementInfo = GetSettlementInformation(settlement);
+
+            if (settlementInfo != null)
+            {
+                settlementInfo.RevoltProgress = 0;
+            }
+        }
+
         private void OnMapEventEnded(MapEvent mapEvent)
+        {
+            RevoltMapEventEnd(mapEvent);
+        }
+
+        #endregion
+
+        private void RevoltMapEventEnd(MapEvent mapEvent)
         {
             PartyBase revs = null;
             SettlementInfo currentInfo = null;
@@ -148,7 +218,7 @@ namespace Revolutions
             ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.GetSettlement());
             currentInfo.GetSettlement().AddGarrisonParty(true);
         }
-
+        
         private void RemoveRevolutionaryPartyFromList(PartyBase revolutionaryParty)
         {
             for (int i = 0; i < Revolutionaries.Count; i++)
@@ -161,61 +231,7 @@ namespace Revolutions
                 }
             }
         }
-
-        private SettlementInfo GetSettlementInformation(Settlement settlement)
-        {
-            foreach (var settlementInfo in SettlementInformation.Where(settlementInfo => settlementInfo.GetId() == settlement.StringId))
-            {
-                return settlementInfo;
-            }
-
-            SettlementInfo missingSettlement = new SettlementInfo(settlement);
-            SettlementInformation.Add(missingSettlement);
-
-            return missingSettlement;
-        }
-
-        private FactionInfo GetFactionInformation(IFaction faction)
-        {
-            foreach (var factioninfo in FactionInformation)
-            {
-                string id = factioninfo.GetFaction().StringId;
-                IFaction fa = factioninfo.GetFaction();
-                if (factioninfo.GetFaction().StringId == faction.StringId)
-                {
-                    return factioninfo;
-                }
-            }
-
-            FactionInfo missingInformation = new FactionInfo(faction);
-            FactionInformation.Add(missingInformation);
-
-            return missingInformation;
-        }
-
-        private void OnSettlementOwnerChangedEvent(Settlement settlement, bool bl, Hero hero1, Hero hero2, Hero hero3, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
-        {
-            SettlementInfo settlementInfo = GetSettlementInformation(settlement);
-
-            if (settlementInfo != null)
-            {
-                settlementInfo.RevoltProgress = 0;
-            }
-        }
-
-        private void DailySettlementTick(Settlement settlement)
-        {
-            DailyTownEvent(settlement);
-        }
-
-        private void DailyTickEvent()
-        {
-            foreach (var faction in FactionInformation)
-            {
-                faction.UpdateFactionInfo();
-            }
-        }
-
+        
         private void DailyLoyaltyEvent(Settlement settlement)
         {
             SettlementInfo info = GetSettlementInformation(settlement);
@@ -255,7 +271,18 @@ namespace Revolutions
                 info.RevoltProgress = 0;
             }
         }
+        
+        private void DailyTownEvent(Settlement settlement)
+        {
+            if (!settlement.IsTown)
+            {
+                return;
+            }
 
+            DailyLoyaltyEvent(settlement);
+            IncreaseDailyLoyaltyForPlayerSettlement(settlement);
+        }
+        
         private void RevoltLogic(SettlementInfo info, Settlement settlement)
         {
             GetFactionInformation(info.GetSettlement().MapFaction).CityRevolted(settlement);
@@ -315,18 +342,7 @@ namespace Revolutions
 
             info.RevoltProgress = 0;
         }
-
-        private void DailyTownEvent(Settlement settlement)
-        {
-            if (!settlement.IsTown)
-            {
-                return;
-            }
-
-            DailyLoyaltyEvent(settlement);
-            IncreaseDailyLoyaltyForPlayerSettlement(settlement);
-        }
-
+        
         private void IncreaseDailyLoyaltyForPlayerSettlement(Settlement settlement)
         {
             if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
@@ -340,14 +356,7 @@ namespace Revolutions
                 settlement.Town.Loyalty = settlement.Town.Loyalty + PlayerInTownLoyaltyIncrease;
             }
         }
-
-        public override void SyncData(IDataStore dataStore)
-        {
-            dataStore.SyncData("_SettlementInformation", ref SettlementInformation);
-            dataStore.SyncData("_FactionInformation", ref FactionInformation);
-            dataStore.SyncData("_Revolutionaries", ref Revolutionaries);
-        }
-
+        
         private int CalculateLoyaltyChangeForForeignPower(SettlementInfo info)
         {
             //by default, we can use a const.
@@ -358,52 +367,6 @@ namespace Revolutions
 
             return LoyaltyChangeForForeignPower + GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() * ForeignLoyaltyChangeMultiplayer;
         }
-
-        private void CreateLoyaltyMenu(CampaignGameStarter obj)
-        {
-            obj.AddGameMenuOption("town", "town_enter_entr_option", "Town Loyalty", (MenuCallbackArgs args) =>
-            {
-                args.optionLeaveType = GameMenuOption.LeaveType.Trade;
-                return true;
-            }, (MenuCallbackArgs args) =>
-            {
-                SettlementInfo setinf = GetSettlementInformation(Settlement.CurrentSettlement);
-                FactionInfo factinfo = GetFactionInformation(Settlement.CurrentSettlement.MapFaction);
-                ScreenManager.PushScreen(new TownRevolutionScreen(setinf, factinfo));
-            }, false, 4);
-        }
-
-        private void OnSessionLaunched(CampaignGameStarter obj)
-        {
-            if (SettlementInformation.Count < 1)
-            {
-                RegisterSettlements();
-            }
-
-            if (FactionInformation.Count < 1)
-            {
-                RegisterFactions();
-            }
-
-            CreateLoyaltyMenu(obj);
-        }
-
-        private void RegisterSettlements()
-        {
-            foreach (var settlement in Settlement.All)
-            {
-                SettlementInfo settInf = new SettlementInfo(settlement);
-                SettlementInformation.Add(settInf);
-            }
-        }
-
-        private void RegisterFactions()
-        {
-            foreach (var faction in Campaign.Current.Factions)
-            {
-                FactionInfo fi = new FactionInfo(faction);
-                FactionInformation.Add(fi);
-            }
-        }
+        
     }
 }

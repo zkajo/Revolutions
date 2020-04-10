@@ -239,6 +239,7 @@
   <ItemGroup>
     <Compile Include="CampaignBehaviours\FactionInfo.cs" />
     <Compile Include="CampaignBehaviours\Revolution.cs" />
+    <Compile Include="CampaignBehaviours\SettlementInfo.cs" />
     <Compile Include="RevolutionsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screens\TownRevolutionScreen.cs" />

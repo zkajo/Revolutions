@@ -13,6 +13,7 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Engine.GauntletUI;
 using HarmonyLib;
 using System.Windows;
+using Revolutions.CampaignBehaviours;
 using SandBox;
 
 namespace Revolutions
