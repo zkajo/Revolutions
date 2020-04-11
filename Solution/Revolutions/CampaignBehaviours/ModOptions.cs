@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Xml.Serialization;
 using Revolutions.Screens;
 using SandBox.GauntletUI.Map;
 using SandBox.View.Map;

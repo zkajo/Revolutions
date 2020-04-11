@@ -7,7 +7,6 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.MountAndBlade;
 
 namespace Revolutions.CampaignBehaviours
 {

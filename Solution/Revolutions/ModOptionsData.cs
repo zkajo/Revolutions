@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using TaleWorlds.SaveSystem;
+﻿using TaleWorlds.SaveSystem;
 
 namespace Revolutions
 {

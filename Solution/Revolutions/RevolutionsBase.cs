@@ -1,22 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.SaveSystem;
-using TaleWorlds.CampaignSystem.Actions;
-using TaleWorlds.CampaignSystem.GameMenus;
-using TaleWorlds.Engine.Screens;
-using TaleWorlds.Engine.GauntletUI;
-using HarmonyLib;
-using System.Windows;
 using Revolutions.CampaignBehaviours;
-using SandBox;
-using TaleWorlds.Localization;
-using Revolutions.Screens;
 
 namespace Revolutions
 {
