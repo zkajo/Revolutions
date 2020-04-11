@@ -50,7 +50,7 @@ namespace Revolutions.Screens.ViewModels
             set
             {
                 SetField(ref m_EmpireLoyaltyMechanicsEnabled, value, nameof(EmpireLoyaltyMechanicsEnabled));
-                ModOptions.OptionsData.m_EmpireLoyaltyMechanics = m_EmpireLoyaltyMechanicsEnabled;
+                ModOptions.OptionsData.EmpireLoyaltyMechanics = m_EmpireLoyaltyMechanicsEnabled;
             } 
         }
 
@@ -60,7 +60,7 @@ namespace Revolutions.Screens.ViewModels
         {
             base.RefreshValues();
             RevoltCooldown = _data.RevoltCooldownTime;
-            EmpireLoyaltyMechanicsEnabled = _data.m_EmpireLoyaltyMechanics;
+            EmpireLoyaltyMechanicsEnabled = _data.EmpireLoyaltyMechanics;
         }
         
         public ModOptionsViewModel(Action onClose)

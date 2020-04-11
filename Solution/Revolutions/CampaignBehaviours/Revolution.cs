@@ -374,7 +374,7 @@ namespace Revolutions.CampaignBehaviours
                 return GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial();
             }
 
-            if (ModOptions.OptionsData.m_EmpireLoyaltyMechanics)
+            if (ModOptions.OptionsData.EmpireLoyaltyMechanics)
             {
                 Settlement settlement = info.GetSettlement();
                 IFaction originalOwner = info.GetOriginalFaction();
