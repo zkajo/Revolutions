@@ -376,10 +376,6 @@ namespace Revolutions.CampaignBehaviours
 
             if (ModOptions.OptionsData.EmpireLoyaltyMechanics)
             {
-                Settlement settlement = info.GetSettlement();
-                IFaction originalOwner = info.GetOriginalFaction();
-                IFaction currentOwner = settlement.MapFaction;
-
                 if (info.OriginalOwnerIsOfImperialCulture())
                 {
                     if (info.OwnerIsOfImperialCulture())
