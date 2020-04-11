@@ -17,9 +17,14 @@ namespace Revolutions.CampaignBehaviours
             }
         }
 
+        public bool SuccessfulRevolt()
+        {
+            return _successfulRevolt;
+        }
+
         public bool RevoltCanHappen()
         {
-            return !_hadRecentRevolt;
+            return _canRevolt;
         }
 
         public Settlement RevoltedSettlement()
@@ -32,18 +37,26 @@ namespace Revolutions.CampaignBehaviours
             UpdateCurrentTownCount();
             _daysSinceLastRevolt++;
             
-            if (_daysSinceLastRevolt > 30)
+            if (_daysSinceLastRevolt > ModOptions.OptionsData.RevoltCooldownTime)
             {
-                _hadRecentRevolt = false;
+                _canRevolt = true;
                 _revoltedSettlement = null;
             }
         }
 
-        public void CityRevolted(Settlement settlement)
+        public void CityRevoltedFailure(Settlement settlement)
         {
-            _hadRecentRevolt = true;
+            _canRevolt = false;
             _revoltedSettlement = settlement;
             _daysSinceLastRevolt = 0;
+            _successfulRevolt = false;
+        }
+
+        public void CityRevoltedSuccess(Settlement settlement)
+        {
+            _canRevolt = true;
+            _revoltedSettlement = settlement;
+            _successfulRevolt = true;
         }
 
         private void UpdateCurrentTownCount()
@@ -94,8 +107,9 @@ namespace Revolutions.CampaignBehaviours
         [SaveableField(1)] private string _factionId;
         [SaveableField(2)] private int _initialTownNumber = 0;
         [SaveableField(3)] private int _currentTownNumber = 0;
-        [SaveableField(4)] private bool _hadRecentRevolt = false;
+        [SaveableField(4)] private bool _canRevolt = false;
         [SaveableField(5)] private int _daysSinceLastRevolt = 0;
         [SaveableField(6)] private Settlement _revoltedSettlement;
+        [SaveableField(7)] private bool _successfulRevolt = false;
     }
 }

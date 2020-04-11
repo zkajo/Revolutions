@@ -1,0 +1,115 @@
+<Prefab>
+
+  <Variables>
+  </Variables>
+  <VisualDefinitions>
+    <VisualDefinition Name="BottomMenu" DelayOnBegin="0.2" TransitionDuration="0.4">
+      <VisualState PositionYOffset="0" State="Default" />
+    </VisualDefinition>
+  </VisualDefinitions>
+  <Window>
+    <Widget WidthSizePolicy = "StretchToParent" HeightSizePolicy = "StretchToParent" Brush="Frame1Brush">
+      <Children>
+                        <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent"
+                                         AutoHideScrollBars="true" ClipRect="ClipRect" InnerPanel="ClipRect\List"
+                                         VerticalScrollbar="..\VerticalScrollbar" MarginBottom="65" MarginTop="15">
+                            <Children>
+                                <Widget Id="ClipRect" WidthSizePolicy="StretchToParent"
+                                        HeightSizePolicy="StretchToParent" ClipContents="true" >
+                                    <Children>
+                                        <ListPanel Id="List" WidthSizePolicy="StretchToParent"
+                                                   HeightSizePolicy="CoverChildren"
+                                                   LayoutImp.LayoutMethod="VerticalBottomToTop">
+                                            <Children>
+												<!-- Revolt cooldown days -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+																MarginTop="250"
+																IsVisible="true"
+																MarginBottom="-350"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true"
+                                                                Text="@RevoltCooldownString"/>
+                                                <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                              SuggestedWidth="500"
+                                                              SuggestedHeight="800" VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center" Filler="Filler"
+                                                              Handle="SliderHandle"
+                                                              MaxValueFloat="@SliderRevoltCooldownMaxValue"
+                                                              MinValueFloat="@SliderRevoltCooldownMinValue"
+                                                              ValueFloat="@RevoltCooldown">
+                                                    <Children>
+                                                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="500"
+                                                                SuggestedHeight="38" HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_canvas"
+                                                                IsEnabled="false"/>
+                                                        <Widget Id="Filler" WidthSizePolicy="Fixed"
+                                                                HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="500" SuggestedHeight="35"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_fill"
+                                                                ClipContents="true">
+                                                            <Children>
+                                                                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                        SuggestedWidth="500" SuggestedHeight="35"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Center"
+                                                                        Sprite="SPOptions\standart_slider_fill"/>
+                                                            </Children>
+                                                        </Widget>
+                                                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="595"
+                                                                SuggestedHeight="65" HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_frame"
+                                                                IsEnabled="false"/>
+                                                        <Widget Id="SliderHandle" WidthSizePolicy="Fixed"
+                                                                HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="14" SuggestedHeight="38"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Handle"
+                                                                DoNotAcceptEvents="true"/>
+                                                    </Children>
+                                                </SliderWidget>
+												<!-- Empire loyalty mechanics -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+																MarginTop="-300"
+																MarginBottom="25"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true" 
+																Text="Empire loyalty mechanics"
+                                                                />
+                                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+                                                              HeightSizePolicy="Fixed" SuggestedWidth="40"
+                                                              SuggestedHeight="40"
+                                                              HorizontalAlignment="Center"
+                                                              Brush="SPOptions.Checkbox.Empty.Button"
+                                                              ButtonType="Toggle"
+                                                              IsSelected="@EmpireLoyaltyMechanicsEnabled"
+                                                              ToggleIndicator="ToggleIndicator"
+                                                              UpdateChildrenStates="true">
+                                                    <Children>
+                                                        <ImageWidget Id="ToggleIndicator"
+                                                                     WidthSizePolicy="StretchToParent"
+                                                                     HeightSizePolicy="StretchToParent"
+                                                                     Brush="SPOptions.Checkbox.Full.Button"/>
+                                                    </Children>
+                                                </ButtonWidget>
+                                            </Children>
+                                        </ListPanel>
+                                    </Children>
+                                </Widget>
+                            </Children>
+                        </ScrollablePanel>
+        <!--Close Screen Button// Parameter.DoneButtonAction="ExecuteClose"-->
+        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="Done" Parameter.ShowCancel="false" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

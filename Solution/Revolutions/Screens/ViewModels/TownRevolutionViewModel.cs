@@ -88,7 +88,13 @@ namespace Revolutions.Screens.ViewModels
 
                 if (_factionInfo.RevoltCanHappen())
                 {
-                    return "Some talk of raising banners of their homeland.";
+                    string inspiration = "";
+                    if (_factionInfo.SuccessfulRevolt())
+                    {
+                        inspiration = " Many are inspired by events at " + _factionInfo.RevoltedSettlement().Name;
+                    }
+                    
+                    return "Some talk of raising banners of their homeland." + inspiration;
                     
                 }
                 else

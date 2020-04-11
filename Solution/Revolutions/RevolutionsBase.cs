@@ -15,12 +15,15 @@ using HarmonyLib;
 using System.Windows;
 using Revolutions.CampaignBehaviours;
 using SandBox;
+using TaleWorlds.Localization;
+using Revolutions.Screens;
 
 namespace Revolutions
 {
     public class RevolutionsBase : MBSubModuleBase
     {
-        private Revolution _revolutionModule;
+        private Revolution _revolutionBehaviour;
+        private ModOptions _modOptions;
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -32,8 +35,10 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter gameInitializer)
         {
-            _revolutionModule = new Revolution();
-            gameInitializer.AddBehavior(_revolutionModule);
+            _modOptions = new ModOptions();
+            _revolutionBehaviour = new Revolution();
+            gameInitializer.AddBehavior(_revolutionBehaviour);
+            gameInitializer.AddBehavior(_modOptions);
         }
     }
 
@@ -47,6 +52,7 @@ namespace Revolutions
         {
             AddClassDefinition(typeof(SettlementInfo), 350041);
             AddClassDefinition(typeof(FactionInfo), 350042);
+            AddClassDefinition(typeof(ModOptionsData), 350043);
         }
 
         protected override void DefineGenericClassDefinitions()

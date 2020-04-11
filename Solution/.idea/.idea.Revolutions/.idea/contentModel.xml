@@ -7,9 +7,11 @@
       <e p="Revolutions" t="IncludeRecursive">
         <e p="CampaignBehaviours" t="Include">
           <e p="FactionInfo.cs" t="Include" />
+          <e p="ModOptions.cs" t="Include" />
           <e p="Revolution.cs" t="Include" />
           <e p="SettlementInfo.cs" t="Include" />
         </e>
+        <e p="ModOptionsData.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="Properties" t="Include">
           <e p="AssemblyInfo.cs" t="Include" />
@@ -17,8 +19,10 @@
         <e p="Revolutions.csproj" t="IncludeRecursive" />
         <e p="RevolutionsBase.cs" t="Include" />
         <e p="Screens" t="Include">
+          <e p="ModOptionsScreen.cs" t="Include" />
           <e p="TownRevolutionScreen.cs" t="Include" />
           <e p="ViewModels" t="Include">
+            <e p="ModOptionsViewModel.cs" t="Include" />
             <e p="TownRevolutionViewModel.cs" t="Include" />
           </e>
         </e>

@@ -33,6 +33,26 @@ namespace Revolutions.CampaignBehaviours
             return Settlement.Find(_settlementId);
         }
 
+        public bool OriginalOwnerIsOfImperialCulture()
+        {
+            if (GetOriginalFaction().Culture.Name.Contains("Empire"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool OwnerIsOfImperialCulture()
+        {
+            if (GetSettlement().MapFaction.Culture.Name.Contains("Empire"))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public IFaction GetOriginalFaction()
         {
             foreach (var faction in Campaign.Current.Factions)

@@ -7,6 +7,7 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
+using TaleWorlds.MountAndBlade;
 
 namespace Revolutions.CampaignBehaviours
 {
@@ -16,11 +17,16 @@ namespace Revolutions.CampaignBehaviours
         private const int LoyaltyChangeForForeignPower = 5;
         private const int MinimumObedianceLoyalty = 25;
         private const int ForeignLoyaltyChangeMultiplayer = 2;
-
+        
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
         public List<FactionInfo> FactionInformation = new List<FactionInfo>();
         public List<Tuple<PartyBase, SettlementInfo>> Revolutionaries = new List<Tuple<PartyBase, SettlementInfo>>();
 
+        public Revolution()
+        {
+            
+        }
+        
         #region Data Getters
         private SettlementInfo GetSettlementInformation(Settlement settlement)
         {
@@ -163,6 +169,7 @@ namespace Revolutions.CampaignBehaviours
         {
             PartyBase revs = null;
             SettlementInfo currentInfo = null;
+            Settlement settlement = null;
             
             foreach (Tuple<PartyBase,SettlementInfo> pair in Revolutionaries)
             {
@@ -170,6 +177,7 @@ namespace Revolutions.CampaignBehaviours
                 {
                     revs = pair.Item1;
                     currentInfo = pair.Item2;
+                    settlement = currentInfo.GetSettlement();
                     break;
                 }
             }
@@ -194,6 +202,7 @@ namespace Revolutions.CampaignBehaviours
             
             if (!revVictory)
             {
+                GetFactionInformation(settlement.MapFaction).CityRevoltedFailure(settlement);
                 RemoveRevolutionaryPartyFromList(revs);
                 return;
             }
@@ -215,8 +224,9 @@ namespace Revolutions.CampaignBehaviours
 
             RemoveRevolutionaryPartyFromList(revs);
             revs.MobileParty.RemoveParty();
+            GetFactionInformation(settlement.MapFaction).CityRevoltedSuccess(settlement);
             ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.GetSettlement());
-            currentInfo.GetSettlement().AddGarrisonParty(true);
+            settlement.AddGarrisonParty(true);
         }
         
         private void RemoveRevolutionaryPartyFromList(PartyBase revolutionaryParty)
@@ -285,8 +295,6 @@ namespace Revolutions.CampaignBehaviours
         
         private void RevoltLogic(SettlementInfo info, Settlement settlement)
         {
-            GetFactionInformation(info.GetSettlement().MapFaction).CityRevolted(settlement);
-
             InformationManager.DisplayMessage(new InformationMessage(settlement.Name.ToString() + " is revolting!"));
 
             Hero selectedHero = null;
@@ -330,10 +338,11 @@ namespace Revolutions.CampaignBehaviours
                     break;
                 }
             }
-
+            
             if (garrison == null)
             {
                 ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, settlement);
+                GetFactionInformation(info.GetSettlement().MapFaction).CityRevoltedSuccess(settlement);
             }
             else
             {
@@ -359,14 +368,40 @@ namespace Revolutions.CampaignBehaviours
         
         private int CalculateLoyaltyChangeForForeignPower(SettlementInfo info)
         {
-            //by default, we can use a const.
+            //Player calculation
             if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
             {    
                 return GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial();
             }
 
+            if (ModOptions.OptionsData.m_EmpireLoyaltyMechanics)
+            {
+                Settlement settlement = info.GetSettlement();
+                IFaction originalOwner = info.GetOriginalFaction();
+                IFaction currentOwner = settlement.MapFaction;
+
+                if (info.OriginalOwnerIsOfImperialCulture())
+                {
+                    if (info.OwnerIsOfImperialCulture())
+                    {
+                        //loyalty boost between empire cities, negative will give us a positive change
+                        return -5;   
+                    }
+                }
+                else
+                {
+                    if (info.OwnerIsOfImperialCulture())
+                    {
+                        //loyalty penalty for empire holding non-imperial land
+                        return LoyaltyChangeForForeignPower + 
+                               GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() 
+                               * ForeignLoyaltyChangeMultiplayer
+                                + 5; 
+                    }
+                }
+            }
+
             return LoyaltyChangeForForeignPower + GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() * ForeignLoyaltyChangeMultiplayer;
         }
-        
     }
 }
