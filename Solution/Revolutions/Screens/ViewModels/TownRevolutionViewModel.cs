@@ -91,7 +91,16 @@ namespace Revolutions.Screens.ViewModels
                     string inspiration = "";
                     if (_factionInfo.SuccessfulRevolt())
                     {
-                        inspiration = " Many are inspired by events at " + _factionInfo.RevoltedSettlement().Name;
+                        //no idea why that's the case, but it is O_O
+                        //TODO find a cause of this?
+                        if (_factionInfo.RevoltedSettlement() == null)
+                        {
+                            inspiration = " Many are inspired by tales of revolts in the kingdom.";
+                        }
+                        else
+                        {
+                            inspiration = " Many are inspired by events at " + _factionInfo.RevoltedSettlement().Name;
+                        }
                     }
                     
                     return "Some talk of raising banners of their homeland." + inspiration;
