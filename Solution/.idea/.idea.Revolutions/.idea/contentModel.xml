@@ -11,6 +11,9 @@
           <e p="Revolution.cs" t="Include" />
           <e p="SettlementInfo.cs" t="Include" />
         </e>
+        <e p="Models" t="Include">
+          <e p="LoyaltyModel.cs" t="Include" />
+        </e>
         <e p="ModOptionsData.cs" t="Include" />
         <e p="obj" t="ExcludeRecursive" />
         <e p="Properties" t="Include">

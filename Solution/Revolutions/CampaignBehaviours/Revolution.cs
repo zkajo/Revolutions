@@ -14,8 +14,8 @@ namespace Revolutions.CampaignBehaviours
     {
         private const int PlayerInTownLoyaltyIncrease = 5;
         private const int LoyaltyChangeForForeignPower = 5;
-        private const int MinimumObedianceLoyalty = 25;
         private const int ForeignLoyaltyChangeMultiplayer = 2;
+        private const int MinimumObedianceLoyalty = 25;
         
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
         public List<FactionInfo> FactionInformation = new List<FactionInfo>();
@@ -27,7 +27,7 @@ namespace Revolutions.CampaignBehaviours
         }
         
         #region Data Getters
-        private SettlementInfo GetSettlementInformation(Settlement settlement)
+        public SettlementInfo GetSettlementInformation(Settlement settlement)
         {
             foreach (var settlementInfo in SettlementInformation)
             {
@@ -43,7 +43,7 @@ namespace Revolutions.CampaignBehaviours
             return missingSettlement;
         }
 
-        private FactionInfo GetFactionInformation(IFaction faction)
+        public FactionInfo GetFactionInformation(IFaction faction)
         {
             foreach (var factioninfo in FactionInformation)
             {
@@ -227,7 +227,7 @@ namespace Revolutions.CampaignBehaviours
             ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.GetSettlement());
             settlement.AddGarrisonParty(true);
         }
-        
+
         private void RemoveRevolutionaryPartyFromList(PartyBase revolutionaryParty)
         {
             for (int i = 0; i < Revolutionaries.Count; i++)
@@ -240,34 +240,33 @@ namespace Revolutions.CampaignBehaviours
                 }
             }
         }
-        
-        private void DailyLoyaltyEvent(Settlement settlement)
+
+        private void DailyTownEvent(Settlement settlement)
+        {
+            if (!settlement.IsTown)
+            {
+                return;
+            }
+            
+            IncreaseDailyLoyaltyForPlayerSettlement(settlement);
+            CheckRevoltProgress(settlement);
+        }
+
+        private void CheckRevoltProgress(Settlement settlement)
         {
             SettlementInfo info = GetSettlementInformation(settlement);
-
+            
             if (info.GetOriginalFaction().MapFaction.Name == settlement.MapFaction.Name)
             {
                 return;
             }
-
+            
             if (!GetFactionInformation(info.GetSettlement().MapFaction).RevoltCanHappen())
             {
                 info.RevoltProgress = 0;
                 return;
             }
             
-            //settlement in wrong hands, so penalty loyalty modifier per day
-            //temporarily help the player
-            
-            if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
-            {
-                settlement.Town.Loyalty = settlement.Town.Loyalty + 5;
-            }
-            else
-            {
-                settlement.Town.Loyalty = settlement.Town.Loyalty - CalculateLoyaltyChangeForForeignPower(info);
-            }
-
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
             if (info.RevoltProgress >= 100)
@@ -281,15 +280,18 @@ namespace Revolutions.CampaignBehaviours
             }
         }
         
-        private void DailyTownEvent(Settlement settlement)
+        private void IncreaseDailyLoyaltyForPlayerSettlement(Settlement settlement)
         {
-            if (!settlement.IsTown)
+            if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
             {
                 return;
             }
 
-            DailyLoyaltyEvent(settlement);
-            IncreaseDailyLoyaltyForPlayerSettlement(settlement);
+            if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Seeing you spend time at " + settlement.Name.ToString() + " , your subjects feel more loyal to you."));
+                settlement.Town.Loyalty = settlement.Town.Loyalty + PlayerInTownLoyaltyIncrease;
+            }
         }
         
         private void RevoltLogic(SettlementInfo info, Settlement settlement)
@@ -349,54 +351,6 @@ namespace Revolutions.CampaignBehaviours
             }
 
             info.RevoltProgress = 0;
-        }
-        
-        private void IncreaseDailyLoyaltyForPlayerSettlement(Settlement settlement)
-        {
-            if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
-            {
-                return;
-            }
-
-            if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
-            {
-                InformationManager.DisplayMessage(new InformationMessage("Seeing you spend time at " + settlement.Name.ToString() + " , your subjects feel more loyal to you."));
-                settlement.Town.Loyalty = settlement.Town.Loyalty + PlayerInTownLoyaltyIncrease;
-            }
-        }
-        
-        private int CalculateLoyaltyChangeForForeignPower(SettlementInfo info)
-        {
-            //Player calculation
-            if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
-            {    
-                return GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial();
-            }
-
-            if (ModOptions.OptionsData.EmpireLoyaltyMechanics)
-            {
-                if (info.OriginalOwnerIsOfImperialCulture())
-                {
-                    if (info.OwnerIsOfImperialCulture())
-                    {
-                        //loyalty boost between empire cities, negative will give us a positive change
-                        return -5;   
-                    }
-                }
-                else
-                {
-                    if (info.OwnerIsOfImperialCulture())
-                    {
-                        //loyalty penalty for empire holding non-imperial land
-                        return LoyaltyChangeForForeignPower + 
-                               GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() 
-                               * ForeignLoyaltyChangeMultiplayer
-                                + 5; 
-                    }
-                }
-            }
-
-            return LoyaltyChangeForForeignPower + GetFactionInformation(info.GetSettlement().MapFaction).TownsAboveInitial() * ForeignLoyaltyChangeMultiplayer;
         }
     }
 }

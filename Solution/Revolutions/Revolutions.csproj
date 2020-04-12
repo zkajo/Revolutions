@@ -242,6 +242,7 @@
     <Compile Include="CampaignBehaviours\ModOptions.cs" />
     <Compile Include="CampaignBehaviours\Revolution.cs" />
     <Compile Include="CampaignBehaviours\SettlementInfo.cs" />
+    <Compile Include="Models\LoyaltyModel.cs" />
     <Compile Include="ModOptionsData.cs" />
     <Compile Include="RevolutionsBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

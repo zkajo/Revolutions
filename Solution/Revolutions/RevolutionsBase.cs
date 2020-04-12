@@ -5,6 +5,7 @@ using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.SaveSystem;
 using Revolutions.CampaignBehaviours;
+using Revolutions.Models;
 
 namespace Revolutions
 {
@@ -12,6 +13,7 @@ namespace Revolutions
     {
         private Revolution _revolutionBehaviour;
         private ModOptions _modOptions;
+        private LoyaltyModel _loyaltyModel;
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -25,8 +27,12 @@ namespace Revolutions
         {
             _modOptions = new ModOptions();
             _revolutionBehaviour = new Revolution();
+            _loyaltyModel = new LoyaltyModel();
+            _loyaltyModel.RevolutionBehaviour = _revolutionBehaviour;
+            
             gameInitializer.AddBehavior(_revolutionBehaviour);
             gameInitializer.AddBehavior(_modOptions);
+            gameInitializer.AddModel(_loyaltyModel);
         }
     }
 
