@@ -39,9 +39,11 @@ namespace Revolutions.Screens.ViewModels
         
         #endregion
 
-        #region Empire Loyalty Mechanics
+        #region Mechanics
 
         private bool m_EmpireLoyaltyMechanicsEnabled;
+        private bool m_OverextensionMechanicsEnabled;
+        private bool m_PlayerAffectedByOverextension;
         
         [DataSourceProperty]
         public bool EmpireLoyaltyMechanicsEnabled
@@ -53,6 +55,28 @@ namespace Revolutions.Screens.ViewModels
                 ModOptions.OptionsData.EmpireLoyaltyMechanics = m_EmpireLoyaltyMechanicsEnabled;
             } 
         }
+        
+        [DataSourceProperty]
+        public bool OverextensionMechanicsEnabled
+        {
+            get => m_OverextensionMechanicsEnabled;
+            set
+            {
+                SetField(ref m_OverextensionMechanicsEnabled, value, nameof(OverextensionMechanicsEnabled));
+                ModOptions.OptionsData.OverextensionMechanics = m_OverextensionMechanicsEnabled;
+            } 
+        }
+        
+        [DataSourceProperty]
+        public bool PlayerAffectedByOverextension
+        {
+            get => m_PlayerAffectedByOverextension;
+            set
+            {
+                SetField(ref m_PlayerAffectedByOverextension, value, nameof(PlayerAffectedByOverextension));
+                ModOptions.OptionsData.PlayerAffectedByOverextension = m_PlayerAffectedByOverextension;
+            } 
+        }
 
         #endregion
         
@@ -61,6 +85,8 @@ namespace Revolutions.Screens.ViewModels
             base.RefreshValues();
             RevoltCooldown = _data.RevoltCooldownTime;
             EmpireLoyaltyMechanicsEnabled = _data.EmpireLoyaltyMechanics;
+            OverextensionMechanicsEnabled = _data.OverextensionMechanics;
+            PlayerAffectedByOverextension = _data.PlayerAffectedByOverextension;
         }
         
         public ModOptionsViewModel(Action onClose)

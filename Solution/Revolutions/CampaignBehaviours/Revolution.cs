@@ -13,8 +13,6 @@ namespace Revolutions.CampaignBehaviours
     public class Revolution : CampaignBehaviorBase
     {
         private const int PlayerInTownLoyaltyIncrease = 5;
-        private const int LoyaltyChangeForForeignPower = 5;
-        private const int ForeignLoyaltyChangeMultiplayer = 2;
         private const int MinimumObedianceLoyalty = 25;
         
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();

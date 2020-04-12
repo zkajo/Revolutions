@@ -25,16 +25,20 @@
                                                 <RichTextWidget WidthSizePolicy="CoverChildren"
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
-																MarginTop="250"
+																VerticalAlignment="Top"
 																IsVisible="true"
-																MarginBottom="-350"
+																MarginTop="100"
                                                                 Brush="SPOptions.Slider.Value.Text"
                                                                 IsEnabled="true"
                                                                 Text="@RevoltCooldownString"/>
                                                 <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
                                                               SuggestedWidth="500"
-                                                              SuggestedHeight="800" VerticalAlignment="Center"
-                                                              HorizontalAlignment="Center" Filler="Filler"
+                                                              SuggestedHeight="700" 
+															  MarginTop="-300"
+															  MarginBottom="300"
+															  VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center" 
+															  Filler="Filler"
                                                               Handle="SliderHandle"
                                                               MaxValueFloat="@SliderRevoltCooldownMaxValue"
                                                               MinValueFloat="@SliderRevoltCooldownMinValue"
@@ -75,16 +79,13 @@
                                                                 DoNotAcceptEvents="true"/>
                                                     </Children>
                                                 </SliderWidget>
-												<!-- Empire loyalty mechanics -->
+                                                <!-- Imperial Loyalty Mechanics -->
                                                 <RichTextWidget WidthSizePolicy="CoverChildren"
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
-																MarginTop="-300"
-																MarginBottom="25"
                                                                 Brush="SPOptions.Slider.Value.Text"
-                                                                IsEnabled="true" 
-																Text="Empire loyalty mechanics"
-                                                                />
+                                                                IsEnabled="true" Text="Imperial Loyalty Mechanic"
+                                                                MarginTop="-550"/>
                                                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
                                                               HeightSizePolicy="Fixed" SuggestedWidth="40"
                                                               SuggestedHeight="40"
@@ -92,6 +93,52 @@
                                                               Brush="SPOptions.Checkbox.Empty.Button"
                                                               ButtonType="Toggle"
                                                               IsSelected="@EmpireLoyaltyMechanicsEnabled"
+                                                              ToggleIndicator="ToggleIndicator"
+                                                              UpdateChildrenStates="true">
+                                                    <Children>
+                                                        <ImageWidget Id="ToggleIndicator"
+                                                                     WidthSizePolicy="StretchToParent"
+                                                                     HeightSizePolicy="StretchToParent"
+                                                                     Brush="SPOptions.Checkbox.Full.Button"/>
+                                                    </Children>
+                                                </ButtonWidget>
+                                                <!-- Overextension Mechanics -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true" Text="Overextension Mechanic"
+                                                                MarginTop="14"/>
+                                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+                                                              HeightSizePolicy="Fixed" SuggestedWidth="40"
+                                                              SuggestedHeight="40"
+                                                              HorizontalAlignment="Center"
+                                                              Brush="SPOptions.Checkbox.Empty.Button"
+                                                              ButtonType="Toggle"
+                                                              IsSelected="@OverextensionMechanicsEnabled"
+                                                              ToggleIndicator="ToggleIndicator"
+                                                              UpdateChildrenStates="true">
+                                                    <Children>
+                                                        <ImageWidget Id="ToggleIndicator"
+                                                                     WidthSizePolicy="StretchToParent"
+                                                                     HeightSizePolicy="StretchToParent"
+                                                                     Brush="SPOptions.Checkbox.Full.Button"/>
+                                                    </Children>
+                                                </ButtonWidget>
+                                                <!-- Player Affected by Overextension -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true" Text="Overextension affects Player"
+                                                                MarginTop="14"/>
+                                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+                                                              HeightSizePolicy="Fixed" SuggestedWidth="40"
+                                                              SuggestedHeight="40"
+                                                              HorizontalAlignment="Center"
+                                                              Brush="SPOptions.Checkbox.Empty.Button"
+                                                              ButtonType="Toggle"
+                                                              IsSelected="@PlayerAffectedByOverextension"
                                                               ToggleIndicator="ToggleIndicator"
                                                               UpdateChildrenStates="true">
                                                     <Children>

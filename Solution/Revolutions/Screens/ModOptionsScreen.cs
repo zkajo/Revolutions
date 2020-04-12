@@ -42,6 +42,8 @@ namespace Revolutions.Screens
         {
             base.OnFinalize();
             _dataSource = null;
+            _gauntletLayer = null;
+            _movie = null;
         }
 
         protected override void OnFrameTick(float dt)
@@ -52,18 +54,6 @@ namespace Revolutions.Screens
             if (_firstRender)
             {
                 //TODO  something flashy
-            }
-
-            if (input.IsKeyReleased(InputKey.Escape))
-            {
-                ScreenManager.PopScreen();
-            }
-            
-            if (input.IsKeyPressed(InputKey.Numpad1))
-            {
-                //TODO delete
-                _movie.WidgetFactory.CheckForUpdates();
-                _movie = _gauntletLayer.LoadMovie("RevolutionModOptions", _dataSource);
             }
         }
     }

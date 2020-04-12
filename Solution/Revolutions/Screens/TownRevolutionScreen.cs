@@ -17,6 +17,14 @@ namespace Revolutions.Screens
 
         private bool _firstRender;
 
+        protected override void OnFinalize()
+        {
+            base.OnFinalize();
+            _gauntletLayer = null;
+            _dataSource = null;
+            _movie = null;
+        }
+
         public TownRevolutionScreen(SettlementInfo settinfo, FactionInfo factInfo)
         {
             this._settlementInfo = settinfo;
@@ -44,17 +52,6 @@ namespace Revolutions.Screens
             if (_firstRender)
             {
                 //TODO  something flashy
-            }
-
-            if (input.IsKeyReleased(InputKey.Escape))
-            {
-                ScreenManager.PopScreen();
-            }
-            else if (input.IsKeyPressed(InputKey.F5))
-            {
-                //TODO delete
-                _movie.WidgetFactory.CheckForUpdates();
-                _movie = _gauntletLayer.LoadMovie("TownRevolutionScreen", _dataSource);
             }
         }
     }
