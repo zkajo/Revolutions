@@ -239,6 +239,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignBehaviours\FactionInfo.cs" />
+    <Compile Include="CampaignBehaviours\MobChecker.cs" />
     <Compile Include="CampaignBehaviours\ModOptions.cs" />
     <Compile Include="CampaignBehaviours\Revolution.cs" />
     <Compile Include="CampaignBehaviours\SettlementInfo.cs" />

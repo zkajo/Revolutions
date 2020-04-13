@@ -19,12 +19,21 @@ namespace Revolutions.Models
 
             if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
             {    
-                explainedNumber.Add(_basePlayerLoyalty);
+                explainedNumber.Add(_basePlayerLoyalty, new TextObject("Bannerlord Settlement"));
+
+                if (ModOptions.OptionsData.PlayerAffectedByOverextension && ModOptions.OptionsData.OverextensionMechanics)
+                {
+                    Overextension(info, ref explainedNumber);
+                }
             }
             else
             {
                 BaseLoyalty(info, ref explainedNumber);
-                Overextension(info, ref explainedNumber);
+
+                if (ModOptions.OptionsData.OverextensionMechanics)
+                {
+                    Overextension(info, ref explainedNumber);
+                }
             }
             
             return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, explanation);
@@ -55,11 +64,6 @@ namespace Revolutions.Models
             IFaction originalOwner = info.GetOriginalFaction();
             IFaction currentOwner = info.GetSettlement().MapFaction;
             
-            if (originalOwner.StringId == currentOwner.StringId)
-            {
-                return;
-            }
-
             if (ModOptions.OptionsData.EmpireLoyaltyMechanics)
             {
                 if (info.OriginalOwnerIsOfImperialCulture())
@@ -80,12 +84,18 @@ namespace Revolutions.Models
                         explainedNumber.Add(-5, new TextObject("Imperial aversion"));
                     }
                     
-                    explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                    if (originalOwner.StringId != currentOwner.StringId)
+                    {
+                        explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                    }
                 }
             }
             else
             {
-                explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                if (originalOwner.StringId != currentOwner.StringId)
+                {
+                    explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                }
             }
         }
     }

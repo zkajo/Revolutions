@@ -18,7 +18,7 @@ namespace Revolutions.CampaignBehaviours
         public List<SettlementInfo> SettlementInformation = new List<SettlementInfo>();
         public List<FactionInfo> FactionInformation = new List<FactionInfo>();
         public List<Tuple<PartyBase, SettlementInfo>> Revolutionaries = new List<Tuple<PartyBase, SettlementInfo>>();
-
+        
         public Revolution()
         {
             
@@ -134,6 +134,12 @@ namespace Revolutions.CampaignBehaviours
         
         private void DailyTickEvent()
         {
+            foreach (var party in Campaign.Current.Parties)
+            {
+                party.Name.Contains("Revolution");
+            }
+            
+            
             foreach (var faction in FactionInformation)
             {
                 faction.UpdateFactionInfo();
@@ -267,7 +273,7 @@ namespace Revolutions.CampaignBehaviours
             
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
-            if (info.RevoltProgress >= 100)
+            if (info.RevoltProgress >= 100 && !info.GetSettlement().IsUnderSiege)
             {
                 RevoltLogic(info, settlement);
             }
