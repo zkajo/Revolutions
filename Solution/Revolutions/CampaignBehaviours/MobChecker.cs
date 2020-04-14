@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.CampaignBehaviours
@@ -40,66 +41,26 @@ namespace Revolutions.CampaignBehaviours
 
         private void CompareLists()
         {
-            //Check for removed parties in list1
-            CheckForInvisibleParties();
-
             if (PartyCheckerListTwo.Count == 0 || PartyCheckerListOne.Count == 0)
             {
                 return;
             }
-            
-            int dayOneCount = PartyCheckerListOne.Count;
-            for (int i = 0; i < dayOneCount; i++)
+
+            List<Tuple<PartyBase, int>> test = PartyCheckerListOne.Intersect((PartyCheckerListTwo)).ToList();
+
+            if (test.Count > 0)
             {
-                int dayOneTroops = PartyCheckerListOne[i].Item2;
-                int dayTwoTroops = PartyCheckerListTwo[i].Item2;
-
-                if (dayOneTroops == dayTwoTroops)
+                foreach (var party in test)
                 {
-                    //stuff is the same, so remove both
-                    
-                    PartyCheckerListOne[i].Item1.MobileParty.RemoveParty();
-                    PartyCheckerListOne.RemoveAt(i);
-                    PartyCheckerListTwo.RemoveAt(i);
-                    i--;
-                }
-
-                dayOneCount = PartyCheckerListOne.Count;
-            }
-        }
-
-        private void CheckForInvisibleParties()
-        {
-            int length = PartyCheckerListOne.Count;
-            
-            for (var index = 0; index < length; index++)
-            {
-                var party = PartyCheckerListOne[index];
-                if (!party.Item1.IsVisible)
-                {
-                    if (PartyCheckerListTwo.Contains(party))
+                    if (party.Item1.IsActive)
                     {
-                        int dayTwoLength = PartyCheckerListTwo.Count;
-                        
-                        for (int i = 0; i < dayTwoLength; i++)
-                        {
-                            if (PartyCheckerListTwo[i] == party)
-                            {
-                                PartyCheckerListOne.RemoveAt(index);
-                                index--;
-                                
-                                PartyCheckerListTwo.RemoveAt(i);
-                                dayTwoLength = PartyCheckerListTwo.Count;
-                                i--;
-                            }
-                        }
+                        party.Item1.MobileParty.RemoveParty();
                     }
 
-                    length = PartyCheckerListOne.Count;
                 }
             }
         }
-        
+
         private void PopulateList(List<Tuple<PartyBase, int>> list)
         {
             foreach (var party in Campaign.Current.Parties)

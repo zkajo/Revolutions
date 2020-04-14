@@ -48,11 +48,6 @@ namespace Revolutions.Screens
         {
             base.OnFrameTick(dt);
             InputContext input = _gauntletLayer.Input;
-
-            if (_firstRender)
-            {
-                //TODO  something flashy
-            }
         }
     }
 }

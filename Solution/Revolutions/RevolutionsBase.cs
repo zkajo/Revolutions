@@ -6,6 +6,8 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.SaveSystem;
 using Revolutions.CampaignBehaviours;
 using Revolutions.Models;
+using TaleWorlds.CampaignSystem.Actions;
+using TaleWorlds.InputSystem;
 
 namespace Revolutions
 {
