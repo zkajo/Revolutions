@@ -6,6 +6,9 @@
     <VisualDefinition Name="BottomMenu" DelayOnBegin="0.2" TransitionDuration="0.4">
       <VisualState PositionYOffset="0" State="Default" />
     </VisualDefinition>
+    <VisualDefinition Name="OptionsMenu" DelayOnBegin="0.2" TransitionDuration="0.4">
+      <VisualState PositionYOffset="0" State="Default" />
+    </VisualDefinition>
   </VisualDefinitions>
   <Window>
     <Widget WidthSizePolicy = "StretchToParent" HeightSizePolicy = "StretchToParent" Brush="Frame1Brush">
@@ -27,11 +30,12 @@
 					<!--Mood-->
 					<RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" VerticalAlignment="Top" HorizontalAlignment="Center" MarginLeft="0" MarginTop="260" Text="@RevoltMood" Brush="CenterAlignedMediumFont"/>
 					</Children>
-                </Widget>
-                
+                </Widget>            
             </Children>
         </Widget>
-
+		
+		<!--Options button-->
+        <Standard.DialogCloseButtons VisualDefinition="OptionsMenu" Parameter.DoneButtonAction="OpenOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="Options" Parameter.ShowCancel="false" HorizontalAlignment="Right" />
         <!--Close Screen Button// Parameter.DoneButtonAction="ExecuteClose"-->
         <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitTownPropertyMenu" PositionYOffset="100" Parameter.DoneButtonText="Done" Parameter.ShowCancel="false" />
       </Children>

@@ -18,7 +18,7 @@ namespace Revolutions.Screens.ViewModels
         #region revolt cooldown
         
         [DataSourceProperty] public float SliderRevoltCooldownMinValue => 0f;
-        [DataSourceProperty] public float SliderRevoltCooldownMaxValue => 100f;
+        [DataSourceProperty] public float SliderRevoltCooldownMaxValue => 250f;
 
         private float m_revolt_cooldown;
 
@@ -34,6 +34,24 @@ namespace Revolutions.Screens.ViewModels
                 RevoltCooldownString = $"Revolt cooldown per faction: {m_revolt_cooldown:0} days";
                 OnPropertyChanged(nameof(RevoltCooldownString));
                 _data.RevoltCooldownTime = m_revolt_cooldown;
+            }
+        }
+
+        private float m_daysUntilLoyaltyChange;
+        [DataSourceProperty] public string DaysUntilLoyaltyChangeString { get; private set; }
+        [DataSourceProperty] public float SliderDaysUntilLoyaltyChangeMinValue => 0f;
+        [DataSourceProperty] public float SliderDaysUntilLoyaltyChangeMaxValue => 250f;
+
+        [DataSourceProperty]
+        public float DaysUntilLoyaltyChange
+        {
+            get => m_daysUntilLoyaltyChange;
+            set
+            {
+                SetField(ref m_daysUntilLoyaltyChange, value, nameof(DaysUntilLoyaltyChange));
+                DaysUntilLoyaltyChangeString = $"City changes loyalty to current owner in: {(int)m_daysUntilLoyaltyChange} days";
+                OnPropertyChanged(nameof(DaysUntilLoyaltyChangeString));
+                _data.DaysUntilLoyaltyChange = (int)m_daysUntilLoyaltyChange;
             }
         }
         
@@ -87,6 +105,7 @@ namespace Revolutions.Screens.ViewModels
             EmpireLoyaltyMechanicsEnabled = _data.EmpireLoyaltyMechanics;
             OverextensionMechanicsEnabled = _data.OverextensionMechanics;
             PlayerAffectedByOverextension = _data.PlayerAffectedByOverextension;
+            DaysUntilLoyaltyChange = _data.DaysUntilLoyaltyChange;
         }
         
         public ModOptionsViewModel(Action onClose)

@@ -20,7 +20,7 @@ namespace Revolutions.Screens.ViewModels
         {
             _settlementInfo = settInfo;
             _factionInfo = factInfo;
-            _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(_settlementInfo.GetOriginalFaction().Banner), true);
+            _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(_settlementInfo.OriginalFaction.Banner), true);
         }
 
         private ImageIdentifierVM _factionVisual;
@@ -49,11 +49,11 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (_settlementInfo.RevoltProgress < 10)
                 {
-                    return "The people of " + _settlementInfo.GetSettlement().Name + " seem to be content";
+                    return "The people of " + _settlementInfo.Settlement.Name + " seem to be content";
                 }
                 else
                 {
-                    return "Flames of revolution are slowly stirring in " + _settlementInfo.GetSettlement().Name;
+                    return "Flames of revolution are slowly stirring in " + _settlementInfo.Settlement.Name;
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                return "Population is loyal to the " + _settlementInfo.GetOriginalFaction().Name;
+                return "Population is loyal to the " + _settlementInfo.OriginalFaction.Name;
             }
         }
 
@@ -81,7 +81,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (_factionInfo.GetFaction().StringId == _settlementInfo.GetOriginalFaction().StringId)
+                if (_factionInfo.GetFaction().StringId == _settlementInfo.OriginalFaction.StringId)
                 {
                     return "People are content with the current rule";
                 }
@@ -113,7 +113,7 @@ namespace Revolutions.Screens.ViewModels
                         return " ";
                     }
 
-                    if (_factionInfo.RevoltedSettlement().StringId == _settlementInfo.GetSettlement().StringId)
+                    if (_factionInfo.RevoltedSettlement().StringId == _settlementInfo.Settlement.StringId)
                     {
                         return "The people of this town had revolted recently, and don't wish to spill blood again.";
                     }
@@ -134,6 +134,11 @@ namespace Revolutions.Screens.ViewModels
         private void ExitTownPropertyMenu()
         {
             ScreenManager.PopScreen();
+        }
+
+        private void OpenOptionsMenu()
+        {
+            ModOptions.CreateModOptionsMenu();
         }
 
         private void RefreshProperties()

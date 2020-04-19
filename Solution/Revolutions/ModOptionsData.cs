@@ -8,5 +8,6 @@ namespace Revolutions
         [SaveableField(1)] public bool EmpireLoyaltyMechanics = true;
         [SaveableField(2)] public bool OverextensionMechanics = true;
         [SaveableField(3)] public bool PlayerAffectedByOverextension = true;
+        [SaveableField(4)] public int DaysUntilLoyaltyChange = 80;
     }
 }

@@ -29,7 +29,7 @@ namespace Revolutions.CampaignBehaviours
         {
             foreach (var settlementInfo in SettlementInformation)
             {
-                if (settlementInfo.GetSettlement().StringId == settlement.StringId)
+                if (settlementInfo.Settlement.StringId == settlement.StringId)
                 {
                     return settlementInfo;
                 }
@@ -138,11 +138,15 @@ namespace Revolutions.CampaignBehaviours
             {
                 party.Name.Contains("Revolution");
             }
-            
-            
+
             foreach (var faction in FactionInformation)
             {
                 faction.UpdateFactionInfo();
+            }
+
+            foreach (var settlement in SettlementInformation)
+            {
+                settlement.UpdateOwnership();
             }
         }
         
@@ -157,7 +161,7 @@ namespace Revolutions.CampaignBehaviours
 
             if (settlementInfo != null)
             {
-                settlementInfo.RevoltProgress = 0;
+                settlementInfo.ResetOwnership();
             }
         }
 
@@ -180,7 +184,7 @@ namespace Revolutions.CampaignBehaviours
                 {
                     revs = pair.Item1;
                     currentInfo = pair.Item2;
-                    settlement = currentInfo.GetSettlement();
+                    settlement = currentInfo.Settlement;
                     break;
                 }
             }
@@ -213,7 +217,7 @@ namespace Revolutions.CampaignBehaviours
             Hero selectedHero = null;
             Clan chosenClan = null;
             int leastSettlements = 100;
-            foreach (var noble in currentInfo.GetOriginalFaction().Nobles)
+            foreach (var noble in currentInfo.OriginalFaction.Nobles)
             {
                 int currentSettlements = noble.Clan.Settlements.Count();
                 if (currentSettlements >= leastSettlements) continue;
@@ -221,14 +225,14 @@ namespace Revolutions.CampaignBehaviours
                 chosenClan = noble.Clan;
             }
 
-            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : currentInfo.GetOriginalFaction().Leader;
+            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : currentInfo.OriginalFaction.Leader;
 
             revs.Owner = selectedHero;
 
             RemoveRevolutionaryPartyFromList(revs);
             revs.MobileParty.RemoveParty();
             GetFactionInformation(settlement.MapFaction).CityRevoltedSuccess(settlement);
-            ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.GetSettlement());
+            ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.Settlement);
             settlement.AddGarrisonParty(true);
         }
 
@@ -260,12 +264,12 @@ namespace Revolutions.CampaignBehaviours
         {
             SettlementInfo info = GetSettlementInformation(settlement);
             
-            if (info.GetOriginalFaction().MapFaction.Name == settlement.MapFaction.Name)
+            if (info.OriginalFaction.Name == settlement.MapFaction.Name)
             {
                 return;
             }
             
-            if (!GetFactionInformation(info.GetSettlement().MapFaction).RevoltCanHappen())
+            if (!GetFactionInformation(info.CurrentFaction).RevoltCanHappen())
             {
                 info.RevoltProgress = 0;
                 return;
@@ -273,7 +277,7 @@ namespace Revolutions.CampaignBehaviours
             
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
-            if (info.RevoltProgress >= 100 && !info.GetSettlement().IsUnderSiege)
+            if (info.RevoltProgress >= 100 && !info.Settlement.IsUnderSiege)
             {
                 RevoltLogic(info, settlement);
             }
@@ -347,7 +351,7 @@ namespace Revolutions.CampaignBehaviours
             if (garrison == null)
             {
                 ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, settlement);
-                GetFactionInformation(info.GetSettlement().MapFaction).CityRevoltedSuccess(settlement);
+                GetFactionInformation(info.CurrentFaction).CityRevoltedSuccess(settlement);
             }
             else
             {

@@ -16,8 +16,13 @@ namespace Revolutions.Models
         {
             ExplainedNumber explainedNumber = new ExplainedNumber(0.0f, explanation, (TextObject) null);
             SettlementInfo info = RevolutionBehaviour.GetSettlementInformation(town.Settlement);
+            
+            if (!town.IsTown)
+            {
+                return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, explanation);
+            }
 
-            if (info.GetSettlement().MapFaction.Leader == Hero.MainHero)
+            if (info.Settlement.MapFaction.Leader == Hero.MainHero)
             {    
                 explainedNumber.Add(_basePlayerLoyalty, new TextObject("Bannerlord Settlement"));
 
@@ -41,7 +46,7 @@ namespace Revolutions.Models
 
         private void Overextension(SettlementInfo settlement, ref ExplainedNumber explainedNumber)
         {
-            if (settlement.GetSettlement().MapFaction.StringId == settlement.GetOriginalFaction().StringId)
+            if (settlement.CurrentFaction.StringId == settlement.OriginalFaction.StringId)
             {
                 return;
             }
@@ -54,16 +59,13 @@ namespace Revolutions.Models
                 }   
             }
 
-            int townsAboveInitialStart = RevolutionBehaviour.GetFactionInformation(settlement.GetSettlement().MapFaction).TownsAboveInitial();
+            int townsAboveInitialStart = RevolutionBehaviour.GetFactionInformation(settlement.CurrentFaction).TownsAboveInitial();
             
             explainedNumber.Add(-townsAboveInitialStart * OverExtensionMultiplier, new TextObject("Overextension"));
         }
         
         private void BaseLoyalty(SettlementInfo info, ref ExplainedNumber explainedNumber)
         {
-            IFaction originalOwner = info.GetOriginalFaction();
-            IFaction currentOwner = info.GetSettlement().MapFaction;
-            
             if (ModOptions.OptionsData.EmpireLoyaltyMechanics)
             {
                 if (info.OriginalOwnerIsOfImperialCulture())
@@ -84,7 +86,7 @@ namespace Revolutions.Models
                         explainedNumber.Add(-5, new TextObject("Imperial aversion"));
                     }
                     
-                    if (originalOwner.StringId != currentOwner.StringId)
+                    if (info.OriginalFaction.StringId != info.CurrentFaction.StringId)
                     {
                         explainedNumber.Add(-5, new TextObject("Foreign rule"));
                     }
@@ -92,7 +94,7 @@ namespace Revolutions.Models
             }
             else
             {
-                if (originalOwner.StringId != currentOwner.StringId)
+                if (info.OriginalFaction.StringId != info.CurrentFaction.StringId)
                 {
                     explainedNumber.Add(-5, new TextObject("Foreign rule"));
                 }

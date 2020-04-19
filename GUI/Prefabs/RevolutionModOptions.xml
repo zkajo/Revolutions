@@ -79,13 +79,73 @@
                                                                 DoNotAcceptEvents="true"/>
                                                     </Children>
                                                 </SliderWidget>
+												<!-- Days until loyalty change -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+																VerticalAlignment="Top"
+																IsVisible="true"
+																MarginTop="-550"
+																SuggestedHeight="100"
+																SuggestedWidth="300"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true"
+                                                                Text="@DaysUntilLoyaltyChangeString"/>
+                                                <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                              SuggestedWidth="500"
+                                                              SuggestedHeight="200" 
+															  MarginTop="-50"
+															  MarginBottom="300"
+															  VerticalAlignment="Center"
+                                                              HorizontalAlignment="Center" 
+															  Filler="Filler"
+                                                              Handle="SliderHandle"
+                                                              MaxValueFloat="@SliderDaysUntilLoyaltyChangeMaxValue"
+                                                              MinValueFloat="@SliderDaysUntilLoyaltyChangeMinValue"
+                                                              ValueFloat="@DaysUntilLoyaltyChange">
+                                                    <Children>
+                                                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="500"
+                                                                SuggestedHeight="38" HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_canvas"
+                                                                IsEnabled="false"/>
+                                                        <Widget Id="Filler" WidthSizePolicy="Fixed"
+                                                                HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="500" SuggestedHeight="35"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_fill"
+                                                                ClipContents="true">
+                                                            <Children>
+                                                                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                        SuggestedWidth="500" SuggestedHeight="35"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Center"
+                                                                        Sprite="SPOptions\standart_slider_fill"/>
+                                                            </Children>
+                                                        </Widget>
+                                                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="595"
+                                                                SuggestedHeight="65" HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                Sprite="SPOptions\standart_slider_frame"
+                                                                IsEnabled="false"/>
+                                                        <Widget Id="SliderHandle" WidthSizePolicy="Fixed"
+                                                                HeightSizePolicy="Fixed"
+                                                                SuggestedWidth="14" SuggestedHeight="38"
+                                                                HorizontalAlignment="Left"
+                                                                VerticalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Handle"
+                                                                DoNotAcceptEvents="true"/>
+                                                    </Children>
+                                                </SliderWidget>
                                                 <!-- Imperial Loyalty Mechanics -->
                                                 <RichTextWidget WidthSizePolicy="CoverChildren"
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
                                                                 Brush="SPOptions.Slider.Value.Text"
                                                                 IsEnabled="true" Text="Imperial Loyalty Mechanic"
-                                                                MarginTop="-550"/>
+                                                                MarginTop="-300"/>
                                                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
                                                               HeightSizePolicy="Fixed" SuggestedWidth="40"
                                                               SuggestedHeight="40"
@@ -148,7 +208,7 @@
                                                                      Brush="SPOptions.Checkbox.Full.Button"/>
                                                     </Children>
                                                 </ButtonWidget>
-                                            </Children>
+                                            </Children>											
                                         </ListPanel>
                                     </Children>
                                 </Widget>

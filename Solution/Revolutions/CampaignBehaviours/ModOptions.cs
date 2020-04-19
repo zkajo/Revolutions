@@ -14,6 +14,11 @@ namespace Revolutions.CampaignBehaviours
     {
         public static ModOptionsData OptionsData = new ModOptionsData();
         
+        public static void CreateModOptionsMenu()
+        {
+            ScreenManager.PushScreen(new ModOptionsScreen(ModOptions.OptionsData));
+        }
+        
         public override void RegisterEvents()
         {
             
@@ -22,24 +27,6 @@ namespace Revolutions.CampaignBehaviours
         public override void SyncData(IDataStore dataStore)
         {
             dataStore.SyncData("_RevolutionsModOptionsdata", ref OptionsData);
-        }
-    }
-    
-    [OverrideView(typeof(MapEscapeMenu))]
-    public class ModOptionsMenu : GauntletMapEscapeMenu
-    {
-        public ModOptionsMenu(List<EscapeMenuItemVM> items) : base(items)
-        {
-            items.Add((new EscapeMenuItemVM(new TextObject("Revolutions Options", null), delegate(object o)
-                {
-                    ShowModOptions();
-                }, null, false,
-                false)));
-        }
-
-        private void ShowModOptions()
-        {
-            ScreenManager.PushScreen(new ModOptionsScreen(ModOptions.OptionsData));
         }
     }
 }

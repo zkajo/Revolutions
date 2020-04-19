@@ -12,6 +12,11 @@ namespace Revolutions.CampaignBehaviours
             _originalFactionId = settlement.MapFaction.StringId;
             _originalCultureId = settlement.Culture.StringId;
         }
+        
+        public IFaction OriginalFaction => GetOriginalFaction();
+        public CultureObject OriginalCulture => GetOriginalCulture();
+        public Settlement Settlement => GetSettlement();
+        public IFaction CurrentFaction => Settlement.MapFaction;
 
         public string GetId()
         {
@@ -28,7 +33,7 @@ namespace Revolutions.CampaignBehaviours
             return false;
         }
 
-        public Settlement GetSettlement()
+        private Settlement GetSettlement()
         {
             return Settlement.Find(_settlementId);
         }
@@ -53,7 +58,7 @@ namespace Revolutions.CampaignBehaviours
             return false;
         }
 
-        public IFaction GetOriginalFaction()
+        private IFaction GetOriginalFaction()
         {
             foreach (var faction in Campaign.Current.Factions)
             {
@@ -66,14 +71,36 @@ namespace Revolutions.CampaignBehaviours
             return null;
         }
 
-        public CultureObject GetOriginalCulture()
+        private CultureObject GetOriginalCulture()
         {
             return Game.Current.ObjectManager.GetObject<CultureObject>(_originalCultureId);
+        }
+
+        public void UpdateOwnership()
+        {
+            if (OriginalFaction.StringId == CurrentFaction.StringId)
+            {
+                return;
+            }
+
+            if (daysOwnedByOwner >= ModOptions.OptionsData.DaysUntilLoyaltyChange)
+            {
+                _originalFactionId = CurrentFaction.StringId;
+            }
+
+            daysOwnedByOwner++;
+        }
+
+        public void ResetOwnership()
+        {
+            RevoltProgress = 0;
+            daysOwnedByOwner = 0;
         }
         
         [SaveableField(1)] private string _settlementId;
         [SaveableField(2)] private string _originalFactionId;
         [SaveableField(3)] private string _originalCultureId;
         [SaveableField(4)] public float RevoltProgress = 0;
+        [SaveableField(5)] private int daysOwnedByOwner = 0;
     }
 }
