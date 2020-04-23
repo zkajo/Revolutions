@@ -60,6 +60,11 @@ namespace Revolutions.CampaignBehaviours
 
         private IFaction GetOriginalFaction()
         {
+            if (_originalFactionId.Contains("Player") || _originalFactionId.Contains("player"))
+            {
+                return Hero.MainHero.MapFaction;
+            }
+            
             foreach (var faction in Campaign.Current.Factions)
             {
                 if (faction.StringId == _originalFactionId)
