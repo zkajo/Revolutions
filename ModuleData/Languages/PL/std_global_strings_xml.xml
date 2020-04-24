@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Polski" />
+  </tags>
+  <strings>
+	<string id="rev01" text="Mieszczanie {SETTLEMENT} są zadowoleni" />
+	<string id="rev02" text="Mieszczanie szepczą buntownicze hasła w {SETTLEMENT}" />
+	<string id="rev03" text="Populacja jest lojalna wobec {FACTION}" />
+	<string id="rev04" text="Postęp buntu wynosi {PROGRESS}%" />
+	<string id="rev05" text="Ludzie są zadowoleni z obecnej władzy" />
+	<string id="rev06" text="Wielu inspiruje się powieściami o buntach w królestwie." />
+	<string id="rev07" text="Wielu inspiruje się powieściami o wydarzeniach w {SETTLEMENT}." />
+	<string id="rev08" text="Niektórzy mówią o podnoszeniu sztandarów swojej ojczyzny." />
+	<string id="rev09" text="Ludzie tego miasta przeżyli niedawny bunt, i nie chcą ponownie trwonić krwi." />
+	<string id="rev10" text="Słysząc o krwi przelanej w {SETTLEMENT}, mieszczanie boją się buntować." />
+	<string id="revopt01"	text="Miasto zmienia lojalność po upływie {DAYS} dni od przejęcia" />
+	<string id="revopt02"	text="Cooldown na bunt we frakcji: {COOLDOWN} dni" />
+	<string id="revopt03"	text="Nadwyrężenie Administracyjne dotyczy też gracza" />
+	<string id="revopt04"	text="Mechanika Imperialnej Lojalności" />
+	<string id="revopt05"	text="Mechanika Nadwyrężenia Administracyjnego" />
+	<string id="revGM01"	text="Widząc że spędzasz czas w {SETTLEMENT}, twoi mieszczanie stają się bardziej lojalni." />
+	<string id="revGM02"	text="{SETTLEMENT} się buntuje!" />
+	<string id="revGM03"	text="Lojalność Miasta" />
+	<string id="revGM04"	text="Buntownicy" />
+	<string id="rev11"		text="Wyjdź" />
+	<string id="rev12"		text="Opcje" />
+	<string id="rev13"		text="Nadwyrężenie Administracyjne" />
+	<string id="rev14"		text="Imperialna Lojalność" />
+	<string id="rev15"		text="Zagraniczna Władza" />
+	<string id="rev16"		text="Imperialna Awersja" />
+	<string id="rev17"		text="Lordowskie Włości" />
+  </strings>
+</base>
