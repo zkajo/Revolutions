@@ -35,9 +35,9 @@
         </Widget>
 		
 		<!--Options button-->
-        <Standard.DialogCloseButtons VisualDefinition="OptionsMenu" Parameter.DoneButtonAction="OpenOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="Options" Parameter.ShowCancel="false" HorizontalAlignment="Right" />
+        <Standard.DialogCloseButtons VisualDefinition="OptionsMenu" Parameter.DoneButtonAction="OpenOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="@OptionsDesc" Parameter.ShowCancel="false" HorizontalAlignment="Right" />
         <!--Close Screen Button// Parameter.DoneButtonAction="ExecuteClose"-->
-        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitTownPropertyMenu" PositionYOffset="100" Parameter.DoneButtonText="Done" Parameter.ShowCancel="false" />
+        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitTownPropertyMenu" PositionYOffset="100" Parameter.DoneButtonText="@DoneDesc" Parameter.ShowCancel="false" />
       </Children>
     </Widget>
   </Window>

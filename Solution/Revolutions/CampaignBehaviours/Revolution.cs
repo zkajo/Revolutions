@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Helpers;
 using Revolutions.Screens;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
+using TaleWorlds.CampaignSystem.SettlementActivities;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace Revolutions.CampaignBehaviours
 {
@@ -95,7 +99,7 @@ namespace Revolutions.CampaignBehaviours
 
             CreateLoyaltyMenu(obj);
         }
-        
+
         private void RegisterSettlements()
         {
             foreach (var settlement in Settlement.All)
@@ -116,9 +120,10 @@ namespace Revolutions.CampaignBehaviours
         
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
         {
-            obj.AddGameMenuOption("town", "town_enter_entr_option", "Town Loyalty", (MenuCallbackArgs args) =>
+            TextObject menuName = GameTexts.FindText("str_GM_TownLoyalty");
+            obj.AddGameMenuOption("town", "town_enter_entr_option", menuName.ToString(), (MenuCallbackArgs args) =>
             {
-                args.optionLeaveType = GameMenuOption.LeaveType.Trade;
+                args.optionLeaveType = GameMenuOption.LeaveType.Submenu;
                 return true;
             }, (MenuCallbackArgs args) =>
             {
@@ -134,11 +139,6 @@ namespace Revolutions.CampaignBehaviours
         
         private void DailyTickEvent()
         {
-            foreach (var party in Campaign.Current.Parties)
-            {
-                party.Name.Contains("Revolution");
-            }
-
             foreach (var faction in FactionInformation)
             {
                 faction.UpdateFactionInfo();
@@ -226,7 +226,6 @@ namespace Revolutions.CampaignBehaviours
             }
 
             selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : currentInfo.OriginalFaction.Leader;
-
             revs.Owner = selectedHero;
 
             RemoveRevolutionaryPartyFromList(revs);
@@ -297,17 +296,23 @@ namespace Revolutions.CampaignBehaviours
 
             if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
             {
-                InformationManager.DisplayMessage(new InformationMessage("Seeing you spend time at " + settlement.Name.ToString() + " , your subjects feel more loyal to you."));
+                TextObject textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
+                textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
+                
+                InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
                 settlement.Town.Loyalty = settlement.Town.Loyalty + PlayerInTownLoyaltyIncrease;
             }
         }
         
         private void RevoltLogic(SettlementInfo info, Settlement settlement)
         {
-            InformationManager.DisplayMessage(new InformationMessage(settlement.Name.ToString() + " is revolting!"));
+            TextObject revoltNotification = GameTexts.FindText("str_GM_RevoltNotification");
+            revoltNotification.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
+            InformationManager.DisplayMessage(new InformationMessage(revoltNotification.ToString()));
 
             Hero selectedHero = null;
-            MobileParty mob = MobileParty.Create("Revolutionary Mob");
+            TextObject revolutionaryMob = GameTexts.FindText("str_GM_RevolutionaryMob");
+            MobileParty mob = MobileParty.Create(revolutionaryMob.ToString());
             TroopRoster roster = new TroopRoster();
 
             TroopRoster infantry = new TroopRoster();
@@ -332,7 +337,7 @@ namespace Revolutions.CampaignBehaviours
 
             mob.ChangePartyLeader(selectedHero.CharacterObject);
             mob.Party.Owner = selectedHero;
-            mob.InitializeMobileParty(new TaleWorlds.Localization.TextObject("Revolutionary Mob", null), roster, prisonRoster, settlement.GatePosition, 2.0f, 2.0f);
+            mob.InitializeMobileParty(new TextObject(revolutionaryMob.ToString(), null), roster, prisonRoster, settlement.GatePosition, 2.0f, 2.0f);
 
             mob.Ai.DisableAi();
             Revolutionaries.Add(new Tuple<PartyBase, SettlementInfo>(mob.Party, info));

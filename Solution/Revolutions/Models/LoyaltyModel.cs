@@ -1,6 +1,7 @@
 ﻿using Revolutions.CampaignBehaviours;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
+using TaleWorlds.Core;
 using TaleWorlds.Localization;
 
 namespace Revolutions.Models
@@ -24,7 +25,7 @@ namespace Revolutions.Models
 
             if (info.Settlement.MapFaction.Leader == Hero.MainHero)
             {    
-                explainedNumber.Add(_basePlayerLoyalty, new TextObject("Bannerlord Settlement"));
+                explainedNumber.Add(_basePlayerLoyalty, GameTexts.FindText("str_loyalty_bannerlord"));
 
                 if (ModOptions.OptionsData.PlayerAffectedByOverextension && ModOptions.OptionsData.OverextensionMechanics)
                 {
@@ -61,7 +62,7 @@ namespace Revolutions.Models
 
             int townsAboveInitialStart = RevolutionBehaviour.GetFactionInformation(settlement.CurrentFaction).TownsAboveInitial();
             
-            explainedNumber.Add(-townsAboveInitialStart * OverExtensionMultiplier, new TextObject("Overextension"));
+            explainedNumber.Add(-townsAboveInitialStart * OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
         }
         
         private void BaseLoyalty(SettlementInfo info, ref ExplainedNumber explainedNumber)
@@ -72,23 +73,23 @@ namespace Revolutions.Models
                 {
                     if (info.OwnerIsOfImperialCulture())
                     {
-                        explainedNumber.Add(10, new TextObject("Imperial Loyalty"));
+                        explainedNumber.Add(10, GameTexts.FindText("str_loyalty_imperial"));
                     }
                     else
                     {
-                        explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                        explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                     }
                 }
                 else
                 {
                     if (info.OwnerIsOfImperialCulture())
                     {
-                        explainedNumber.Add(-5, new TextObject("Imperial aversion"));
+                        explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_imperialAvers"));
                     }
                     
                     if (info.OriginalFaction.StringId != info.CurrentFaction.StringId)
                     {
-                        explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                        explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                     }
                 }
             }
@@ -96,7 +97,7 @@ namespace Revolutions.Models
             {
                 if (info.OriginalFaction.StringId != info.CurrentFaction.StringId)
                 {
-                    explainedNumber.Add(-5, new TextObject("Foreign rule"));
+                    explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                 }
             }
         }

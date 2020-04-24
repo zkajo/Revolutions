@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <strings>
+    <string id="str_TD_Content" 			text="{=rev01}The people of {SETTLEMENT} seem to be content" />
+	<string id="str_TD_FlamesOfRevolution" 	text="{=rev02}Flames of revolution are slowly stirring in {SETTLEMENT}" />
+	<string id="str_TD_LoyalToFaction" 		text="{=rev03}Population is loyal to the {FACTION}" />
+	<string id="str_TD_RevoltProgress" 		text="{=rev04}Current revolt progress is {PROGRESS}" />
+	<string id="str_TD_Mood_Content"		text="{=rev05}People are content with the current rule" />
+	<string id="str_TD_Mood_inspiration_01"	text="{=rev06}Many are inspired by tales of revolts in the kingdom." />
+	<string id="str_TD_Mood_inspiration_02"	text="{=rev07}Many are inspired by events at {SETTLEMENT}." />
+	<string id="str_TD_Mood_RaiseBanners"	text="{=rev08}Some talk of raising banners of their homeland." />
+	<string id="str_TD_Mood_RecentRevolt"	text="{=rev09}The people of this town had revolted recently, and don't wish to spill blood again." />
+	<string id="str_TD_Mood_RecentRevolt2"	text="{=rev10}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
+	
+	<string id="str_opt_LoyaltyChangeDays"	text="{=revopt01}City changes loyalty to current owner in: {DAYS} days" />
+	<string id="str_opt_RevoltCooldown"		text="{=revopt02}Revolt cooldown per faction: {COOLDOWN} days" />
+	<string id="str_opt_OverextPlayerDesc"	text="{=revopt03}Overextension Affects Player" />
+	<string id="str_opt_ImpLoyaltyMechDesc"	text="{=revopt04}Imperial Loyalty Mechanic" />
+	<string id="str_opt_OverextDesc"		text="{=revopt05}Overextension Mechanic" />
+
+	<string id="str_GM_LoyaltyIncrease"		text="{=revGM01}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
+	<string id="str_GM_RevoltNotification"	text="{=revGM02}{SETTLEMENT} is revolting!" />
+	<string id="str_GM_TownLoyalty"			text="{=revGM03}Town Loyalty" />
+	
+	<string id="str_GM_RevolutionaryMob"	text="{=revGM04}Revolutionary Mob" />
+	<string id="str_rev_Done"				text="{=rev11}Done" />
+	<string id="str_rev_Options"			text="{=rev12}Options" />
+	
+	<string id="str_loyalty_overextension"	text="{=rev13}Overextension" />
+	<string id="str_loyalty_imperial"		text="{=rev14}Imperial Loyalty" />
+	<string id="str_loyalty_foreignRule"	text="{=rev15}Foreign Rule" />
+	<string id="str_loyalty_imperialAvers"	text="{=rev16}Imperial Aversion" />
+	<string id="str_loyalty_bannerlord"		text="{=rev17}Bannerlord Settlement" />
+  </strings>
+</base>

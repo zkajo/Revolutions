@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 
 namespace Revolutions.CampaignBehaviours
 {
@@ -65,7 +66,7 @@ namespace Revolutions.CampaignBehaviours
         {
             foreach (var party in Campaign.Current.Parties)
             {
-                if (party.Name.Contains("Revolution"))
+                if (party.Name.Contains(GameTexts.FindText("str_GM_RevolutionaryMob").ToString()))
                 {
                     list.Add(new Tuple<PartyBase, int>(party, party.NumberOfHealthyMembers));
                 }

@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+	<string id="rev01" text="Люди {SETTLEMENT} кажутся довольными" />
+	<string id="rev02" text="Огни революции медленно зарождаются в {SETTLEMENT}" />
+	<string id="rev03" text="Население предано {FACTION}" />
+	<string id="rev04" text="Текущий прогресс восстания {PROGRESS}%" />
+	<string id="rev05" text="Население довольно текущим правлением" />
+	<string id="rev06" text="Многие вдохновлены рассказами о восстаниях в королевстве." />
+	<string id="rev07" text="Многие вдохновлены событиями в {SETTLEMENT}." />
+	<string id="rev08" text="Некоторые говорят о поднятии знамён своей родины." />
+	<string id="rev09" text="Люди этого города уже восставали недавно и не хотят пролить кровь снова." />
+	<string id="rev10" text="После слухов о пролитой крови в {SETTLEMENT}, жители опасаются поднимать восстание." />
+	<string id="revopt01"	text="Город остаётся преданным бывшему владельцу ещё: {DAYS} дней" />
+	<string id="revopt02"	text="Охлаждение восстания за фракцию: {COOLDOWN} дней" />
+	<string id="revopt03"	text="Перенапряжение территорий и населения влияет на игрока" />
+	<string id="revopt04"	text="Верность Империи" />
+	<string id="revopt05"	text="Механика перенапряжения" />
+	<string id="revGM01"	text="Видя, как Вы проводите время в {SETTLEMENT}, Ваши подданные становятся более преданы Вам." />
+	<string id="revGM02"	text="{SETTLEMENT} восстаёт!" />
+	<string id="revGM03"	text="Преданность города" />
+	<string id="revGM04"	text="Повстанцы" />
+	<string id="rev11"		text="Закрыть" />
+	<string id="rev12"		text="Настройки" />
+	<string id="rev13"		text="Перенапряжение" />
+	<string id="rev14"		text="Верность Империи" />
+	<string id="rev15"		text="Иностранное правление" />
+	<string id="rev16"		text="Антипатия к Империи" />
+	<string id="rev17"		text="Волость Лорда-Знаменосца" />
+  </strings>
+</base>

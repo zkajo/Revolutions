@@ -144,7 +144,7 @@
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
                                                                 Brush="SPOptions.Slider.Value.Text"
-                                                                IsEnabled="true" Text="Imperial Loyalty Mechanic"
+                                                                IsEnabled="true" Text="@ImperialLoyaltyMechanicDesc"
                                                                 MarginTop="-300"/>
                                                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
                                                               HeightSizePolicy="Fixed" SuggestedWidth="40"
@@ -167,7 +167,7 @@
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
                                                                 Brush="SPOptions.Slider.Value.Text"
-                                                                IsEnabled="true" Text="Overextension Mechanic"
+                                                                IsEnabled="true" Text="@OverextensionDesc"
                                                                 MarginTop="14"/>
                                                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
                                                               HeightSizePolicy="Fixed" SuggestedWidth="40"
@@ -190,7 +190,7 @@
                                                                 HeightSizePolicy="CoverChildren"
                                                                 HorizontalAlignment="Center"
                                                                 Brush="SPOptions.Slider.Value.Text"
-                                                                IsEnabled="true" Text="Overextension affects Player"
+                                                                IsEnabled="true" Text="@OverextensionAffectsPlayerDesc"
                                                                 MarginTop="14"/>
                                                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
                                                               HeightSizePolicy="Fixed" SuggestedWidth="40"
@@ -215,7 +215,7 @@
                             </Children>
                         </ScrollablePanel>
         <!--Close Screen Button// Parameter.DoneButtonAction="ExecuteClose"-->
-        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="Done" Parameter.ShowCancel="false" />
+        <Standard.DialogCloseButtons VisualDefinition="BottomMenu" Parameter.DoneButtonAction="ExitOptionsMenu" PositionYOffset="100" Parameter.DoneButtonText="@DoneDesc" Parameter.ShowCancel="false" />
       </Children>
     </Widget>
   </Window>

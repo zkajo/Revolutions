@@ -11,6 +11,7 @@
           <e p="ModOptions.cs" t="Include" />
           <e p="Revolution.cs" t="Include" />
           <e p="SettlementInfo.cs" t="Include" />
+          <e p="TestCampaignBehaviour.cs" t="Include" />
         </e>
         <e p="Models" t="Include">
           <e p="LoyaltyModel.cs" t="Include" />

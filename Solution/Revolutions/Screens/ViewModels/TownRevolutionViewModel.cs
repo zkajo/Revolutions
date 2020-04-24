@@ -7,6 +7,7 @@ using Revolutions.CampaignBehaviours;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 using TaleWorlds.TwoDimension;
 
 namespace Revolutions.Screens.ViewModels
@@ -25,6 +26,22 @@ namespace Revolutions.Screens.ViewModels
 
         private ImageIdentifierVM _factionVisual;
 
+        [DataSourceProperty] public  string DoneDesc
+        {
+            get { return GetText("str_rev_Done"); }
+        }
+        
+        [DataSourceProperty] public  string OptionsDesc
+        {
+            get { return GetText("str_rev_Options"); }
+        }
+        
+        private string GetText(string id)
+        {
+            TextObject textObject = GameTexts.FindText(id);
+            return textObject.ToString();
+        }
+        
         [DataSourceProperty]
         public ImageIdentifierVM FactionVisual
         {
@@ -49,11 +66,17 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (_settlementInfo.RevoltProgress < 10)
                 {
-                    return "The people of " + _settlementInfo.Settlement.Name + " seem to be content";
+                    TextObject textObject = GameTexts.FindText("str_TD_Content");
+                    textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
+
+                    return textObject.ToString();
                 }
                 else
                 {
-                    return "Flames of revolution are slowly stirring in " + _settlementInfo.Settlement.Name;
+                    TextObject textObject = GameTexts.FindText("str_TD_FlamesOfRevolution");
+                    textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
+                    
+                    return textObject.ToString();
                 }
             }
         }
@@ -63,7 +86,10 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                return "Population is loyal to the " + _settlementInfo.OriginalFaction.Name;
+                TextObject textObject = GameTexts.FindText("str_TD_LoyalToFaction");
+                textObject.SetTextVariable("FACTION", this._settlementInfo.OriginalFaction.Name);
+
+                return textObject.ToString();
             }
         }
 
@@ -71,8 +97,11 @@ namespace Revolutions.Screens.ViewModels
         public string RevolutionProgress
         {
             get
-            {
-                return "Current revolution progress is " + _settlementInfo.RevoltProgress + "%";
+            {                
+                TextObject textObject = GameTexts.FindText("str_TD_RevoltProgress");
+                textObject.SetTextVariable("PROGRESS", _settlementInfo.RevoltProgress);
+
+                return textObject.ToString();
             }
         }
 
@@ -83,27 +112,30 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (_factionInfo.GetFaction().StringId == _settlementInfo.OriginalFaction.StringId)
                 {
-                    return "People are content with the current rule";
+                    TextObject textObject = GameTexts.FindText("str_TD_Mood_Content");
+                    return textObject.ToString();
                 }
 
                 if (_factionInfo.RevoltCanHappen())
                 {
-                    string inspiration = "";
+                    TextObject inspiration = new TextObject("");
                     if (_factionInfo.SuccessfulRevolt())
                     {
                         //no idea why that's the case, but it is O_O
                         //TODO find a cause of this?
                         if (_factionInfo.RevoltedSettlement() == null)
                         {
-                            inspiration = " Many are inspired by tales of revolts in the kingdom.";
+                            inspiration = GameTexts.FindText("str_TD_Mood_inspiration_01");
                         }
                         else
                         {
-                            inspiration = " Many are inspired by events at " + _factionInfo.RevoltedSettlement().Name;
+                            inspiration = GameTexts.FindText("str_TD_Mood_inspiration_02");
+                            inspiration.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement().Name);
                         }
                     }
                     
-                    return "Some talk of raising banners of their homeland." + inspiration;
+                    TextObject baseText = GameTexts.FindText("str_TD_Mood_RaiseBanners");
+                    return baseText.ToString() + " " + inspiration.ToString();
                     
                 }
                 else
@@ -115,10 +147,14 @@ namespace Revolutions.Screens.ViewModels
 
                     if (_factionInfo.RevoltedSettlement().StringId == _settlementInfo.Settlement.StringId)
                     {
-                        return "The people of this town had revolted recently, and don't wish to spill blood again.";
+                        TextObject option = GameTexts.FindText("str_TD_Mood_RecentRevolt");
+                        return option.ToString();
                     }
-
-                    return "After hearing of blood spilled in " + _factionInfo.RevoltedSettlement().Name + " citizens are afraid of revolting.";
+                    
+                    TextObject textObject = GameTexts.FindText("str_TD_Mood_RecentRevolt2");
+                    textObject.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement().Name);
+                    
+                    return textObject.ToString();
                 }
             }
             set
