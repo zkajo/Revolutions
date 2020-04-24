@@ -30,5 +30,6 @@
 	<string id="rev15"		text="Иностранное правление" />
 	<string id="rev16"		text="Антипатия к Империи" />
 	<string id="rev17"		text="Волость Лорда-Знаменосца" />
+	<string id="rev18"		text="Информация" />
   </strings>
 </base>
