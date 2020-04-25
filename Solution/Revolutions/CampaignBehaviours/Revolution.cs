@@ -76,6 +76,8 @@ namespace Revolutions.CampaignBehaviours
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTickEvent));
             
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.OnMapEventEnded));
+            CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
+            CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
         }
         
         public override void SyncData(IDataStore dataStore)
@@ -136,6 +138,30 @@ namespace Revolutions.CampaignBehaviours
         #endregion
 
         #region Events
+
+        private void KingdomDestroyedEvent(Kingdom kingdom)
+        {
+            for (int i = 0; i < FactionInformation.Count; i++)
+            {
+                if (kingdom.StringId == FactionInformation[i].stringID)
+                {
+                    FactionInformation.RemoveAt(i);
+                    return;
+                }
+            }
+        }
+
+        private void ClanDestroyedEvent(Clan clan)
+        {
+            for (int i = 0; i < FactionInformation.Count; i++)
+            {
+                if (clan.StringId == FactionInformation[i].stringID)
+                {
+                    FactionInformation.RemoveAt(i);
+                    return;
+                }
+            }
+        }
         
         private void DailyTickEvent()
         {

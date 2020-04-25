@@ -73,6 +73,14 @@ namespace Revolutions.CampaignBehaviours
                 }
             }
 
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                if (faction.Culture.StringId == _originalCultureId)
+                {
+                    return faction;
+                }
+            }
+
             return null;
         }
 

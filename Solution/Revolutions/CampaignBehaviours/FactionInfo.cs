@@ -5,6 +5,8 @@ namespace Revolutions.CampaignBehaviours
 {
     public class FactionInfo
     {
+        public string stringID => _factionId;
+        
         public FactionInfo(IFaction faction)
         {
             _factionId = faction.StringId;
@@ -100,7 +102,7 @@ namespace Revolutions.CampaignBehaviours
             {
                 return Hero.MainHero.MapFaction;
             }
-            
+
             return null;
         }
 
