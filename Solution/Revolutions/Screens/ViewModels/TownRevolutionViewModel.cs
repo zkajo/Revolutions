@@ -31,8 +31,7 @@ namespace Revolutions.Screens.ViewModels
             get { return GetText("str_rev_Done"); }
         }
 
-        [DataSourceProperty]
-        public string InformationDesc
+        [DataSourceProperty] public string InformationDesc
         {
             get { return GetText("str_TD_Information"); }
         }

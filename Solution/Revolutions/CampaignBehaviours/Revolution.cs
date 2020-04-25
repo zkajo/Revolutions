@@ -332,7 +332,6 @@ namespace Revolutions.CampaignBehaviours
                 {
                     selectedHero = faction.Heroes.ToList()[0];
                 }
-
             }
 
             mob.ChangePartyLeader(selectedHero.CharacterObject);
