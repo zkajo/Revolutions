@@ -259,7 +259,7 @@ namespace Revolutions.CampaignBehaviours
 
             RemoveRevolutionaryPartyFromList(revs);
             
-            if (revs.Owner.MapFaction.StringId == currentInfo.CurrentFaction.StringId)
+            if (revs.Owner.MapFaction.StringId == currentInfo.OriginalFaction.StringId)
             {
                 revs.MobileParty.RemoveParty();
                 ChangeOwnerOfSettlementAction.ApplyByDefault(selectedHero, currentInfo.Settlement);
