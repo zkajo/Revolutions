@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
 using Helpers;
 using Revolutions.Screens;
+using SandBox.BoardGames;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.CampaignSystem.SettlementActivities;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
+using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.ObjectSystem;
 
 namespace Revolutions.CampaignBehaviours
 {
@@ -49,7 +53,7 @@ namespace Revolutions.CampaignBehaviours
         {
             foreach (var factioninfo in FactionInformation)
             {
-                if (factioninfo.GetFaction().StringId == faction.StringId)
+                if (factioninfo.stringID == faction.StringId)
                 {
                     return factioninfo;
                 }
@@ -239,11 +243,12 @@ namespace Revolutions.CampaignBehaviours
                 RemoveRevolutionaryPartyFromList(revs);
                 return;
             }
-
+            
             Hero selectedHero = null;
             Clan chosenClan = null;
             int leastSettlements = 100;
-            foreach (var noble in currentInfo.OriginalFaction.Nobles)
+
+            foreach (var noble in revs.Owner.MapFaction.Nobles)
             {
                 int currentSettlements = noble.Clan.Settlements.Count();
                 if (currentSettlements >= leastSettlements) continue;
@@ -252,12 +257,26 @@ namespace Revolutions.CampaignBehaviours
             }
 
             selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : currentInfo.OriginalFaction.Leader;
-            revs.Owner = selectedHero;
 
             RemoveRevolutionaryPartyFromList(revs);
-            revs.MobileParty.RemoveParty();
+            
+            if (revs.Owner.MapFaction.StringId == currentInfo.CurrentFaction.StringId)
+            {
+                revs.MobileParty.RemoveParty();
+                ChangeOwnerOfSettlementAction.ApplyByDefault(selectedHero, currentInfo.Settlement);
+            }
+            else
+            {
+                revs.MobileParty.IsLordParty = true;
+                revs.MobileParty.Ai.EnableAi();;
+                revs.MobileParty.Ai.SetDoNotMakeNewDecisions(false);
+                revs.MobileParty.Name = revs.Owner.Name;
+                Clan own = revs.Owner.Clan;
+                own.AddParty(revs);
+                ChangeOwnerOfSettlementAction.ApplyByDefault(selectedHero, currentInfo.Settlement);
+            }
+            
             GetFactionInformation(settlement.MapFaction).CityRevoltedSuccess(settlement);
-            ChangeOwnerOfSettlementAction.ApplyByRevolt(selectedHero, currentInfo.Settlement);
             settlement.AddGarrisonParty(true);
         }
 
@@ -352,19 +371,39 @@ namespace Revolutions.CampaignBehaviours
             TroopRoster prisonRoster = new TroopRoster();
             prisonRoster.IsPrisonRoster = true;
 
-            foreach (var faction in Campaign.Current.Factions)
+            if (info.CurrentFaction.IsAtWarWith(info.OriginalFaction))
             {
-                if (faction.Name.Contains("Looter"))
+                Clan chosenClan = null;
+                int leastSettlements = 100;
+                foreach (var noble in info.OriginalFaction.Nobles)
                 {
-                    selectedHero = faction.Heroes.ToList()[0];
+                    int currentSettlements = noble.Clan.Settlements.Count();
+                    if (currentSettlements >= leastSettlements) continue;
+                    leastSettlements = currentSettlements;
+                    chosenClan = noble.Clan;
                 }
+
+                selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : info.OriginalFaction.Leader;
+            }
+            else
+            {
+                var clan = CreateRebellionClan(info);
+                DeclareWarAction.Apply(clan, info.CurrentFaction);
+                selectedHero = clan.Leader;
+                mob.IsLordParty = true;
             }
 
             mob.ChangePartyLeader(selectedHero.CharacterObject);
             mob.Party.Owner = selectedHero;
+
+            if (!info.CurrentFaction.IsAtWarWith(info.OriginalFaction))
+            {
+                mob.MemberRoster.AddToCounts(mob.Party.Owner.CharacterObject, 1, false, 0, 0, true, -1);
+            }
+            
             mob.InitializeMobileParty(new TextObject(revolutionaryMob.ToString(), null), roster, prisonRoster, settlement.GatePosition, 2.0f, 2.0f);
 
-            mob.Ai.DisableAi();
+            //mob.Ai.DisableAi();
             Revolutionaries.Add(new Tuple<PartyBase, SettlementInfo>(mob.Party, info));
 
             MobileParty garrison = settlement.Parties.FirstOrDefault(party => party.IsGarrison);
@@ -390,5 +429,82 @@ namespace Revolutions.CampaignBehaviours
 
             info.RevoltProgress = 0;
         }
+
+        private Clan CreateRebellionClan(SettlementInfo info)
+        {
+            var clan = MBObjectManager.Instance.CreateObject<Clan>(info.Settlement.Name.ToString() + "_rebels_" + MBRandom.RandomInt(100000).ToString());
+            var hero = HeroCreator.CreateSpecialHero(CreateLordCharacter(info.OriginalCulture), info.Settlement, clan, clan, 30);
+            TextObject name = new TextObject(hero.Name.ToString()); 
+            int value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
+            hero.SetTraitLevel(DefaultTraits.Commander, value);
+            hero.ChangeState(Hero.CharacterStates.Active);
+            hero.Initialize();
+            clan.InitializeClan(name, name, info.OriginalCulture, Banner.CreateRandomClanBanner(MBRandom.RandomInt(100000)));
+            hero.Clan = clan;
+            clan.SetLeader(hero);
+            clan.IsUnderMercenaryService = false;
+            var kingdom = FormRebelKingdom(clan, info.Settlement, info.CurrentFaction);
+            clan.ClanJoinFaction(kingdom);
+            return clan;
+        }
+
+        private Kingdom CreateKingdom(Clan rulingClan, string stringID, Settlement settlement)
+        {
+            var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>(stringID);
+            string kingdomName = settlement.Name.ToString();
+            TextObject textObject = new TextObject(kingdomName, null);
+            kingdom.InitializeKingdom(textObject, textObject, rulingClan.Culture, rulingClan.Banner, 
+                rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
+            kingdom.RulingClan = rulingClan;
+            return kingdom;
+        }
+        
+        private CharacterObject CreateLordCharacter(CultureObject culture)
+        {
+            List<CharacterObject> characterObjects = new List<CharacterObject>();
+            
+            foreach (CharacterObject characterObject in CharacterObject.Templates)
+            {
+                if (characterObject.Occupation == Occupation.Lord
+                            && characterObject.Culture == culture  && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
+                            && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
+                {
+                    characterObjects.Add(characterObject);
+                }
+            }
+
+            return characterObjects[MBRandom.RandomInt(characterObjects.Count)];
+        }
+
+        private string GetClanKingdomId(Settlement originSettlement)
+        {
+            return $"{originSettlement.Name.ToString().ToLower()}_kingdom";
+        }
+
+        private Kingdom FormRebelKingdom(Clan clan, Settlement originSettlement, IFaction warOnFaction)
+        {
+            string kingdomId = GetClanKingdomId(originSettlement);
+            var kingdom = Kingdom.All.SingleOrDefault(x => x.StringId == kingdomId);
+
+            if (kingdom == null)
+            {
+                kingdom = CreateKingdom(clan, kingdomId, originSettlement);
+                DeclareWarAction.Apply(kingdom, warOnFaction);
+            }
+            
+            if (!Kingdom.All.Contains(kingdom))
+            {
+                ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
+            }
+
+            return kingdom;
+        }
+        
+        private void ModifyKingdomList(Action<List<Kingdom>> modificator)
+		{
+			List<Kingdom> kingdoms = new List<Kingdom>(Campaign.Current.Kingdoms.ToList());
+			modificator(kingdoms);
+			AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
+		}
     }
 }

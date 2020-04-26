@@ -115,7 +115,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (_factionInfo.GetFaction().StringId == _settlementInfo.OriginalFaction.StringId)
+                if (_factionInfo.faction.StringId == _settlementInfo.OriginalFaction.StringId)
                 {
                     TextObject textObject = GameTexts.FindText("str_TD_Mood_Content");
                     return textObject.ToString();

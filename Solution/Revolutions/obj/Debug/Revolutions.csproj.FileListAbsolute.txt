@@ -9,3 +9,4 @@ C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions
 C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.pdb
 C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client\Revolutions.dll
 C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client\Revolutions.pdb
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.csproj.CopyComplete

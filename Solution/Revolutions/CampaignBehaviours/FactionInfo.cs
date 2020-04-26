@@ -6,6 +6,7 @@ namespace Revolutions.CampaignBehaviours
     public class FactionInfo
     {
         public string stringID => _factionId;
+        public IFaction faction => GetFaction();
         
         public FactionInfo(IFaction faction)
         {
@@ -88,13 +89,13 @@ namespace Revolutions.CampaignBehaviours
             return _initialTownNumber;
         }
 
-        public IFaction GetFaction()
+        private IFaction GetFaction()
         {
-            foreach (var faction in Campaign.Current.Factions)
+            foreach (var f in Campaign.Current.Factions)
             {
-                if (faction.StringId == _factionId)
+                if (f.StringId == _factionId)
                 {
-                    return faction;
+                    return f;
                 }
             }
 
