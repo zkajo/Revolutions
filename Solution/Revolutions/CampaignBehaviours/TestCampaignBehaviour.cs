@@ -6,7 +6,6 @@ using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.ObjectSystem;
 using TaleWorlds.SaveSystem;
 
 namespace Revolutions.CampaignBehaviours

@@ -199,10 +199,6 @@
       <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.Network.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="TaleWorlds.ObjectSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.ObjectSystem.dll</HintPath>
-	  <Private>False</Private>
-    </Reference>
     <Reference Include="TaleWorlds.PlatformService">
       <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.PlatformService.dll</HintPath>
       <Private>False</Private>

@@ -14,7 +14,6 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.ObjectSystem;
 
 namespace Revolutions.CampaignBehaviours
 {
