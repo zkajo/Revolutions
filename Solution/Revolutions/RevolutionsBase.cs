@@ -18,6 +18,8 @@ namespace Revolutions
         private ModOptions _modOptions;
         private LoyaltyModel _loyaltyModel;
         private MobChecker _mobChecker;
+        private DebugCampaignBehaviour _debugBehaviour;
+        private Common _common;
         
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -32,10 +34,13 @@ namespace Revolutions
             _modOptions = new ModOptions();
             _revolutionBehaviour = new Revolution();
             _mobChecker = new MobChecker();
+            _debugBehaviour = new DebugCampaignBehaviour();
+            _common = new Common();
             
             gameInitializer.AddBehavior(_revolutionBehaviour);
             gameInitializer.AddBehavior(_modOptions);
             gameInitializer.AddBehavior(_mobChecker);
+            gameInitializer.AddBehavior(_debugBehaviour);
             
             _loyaltyModel = new LoyaltyModel();
             _loyaltyModel.RevolutionBehaviour = _revolutionBehaviour;
