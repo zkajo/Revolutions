@@ -17,6 +17,8 @@
 	<string id="str_opt_OverextPlayerDesc"	text="{=revopt03}Overextension Affects Player" />
 	<string id="str_opt_ImpLoyaltyMechDesc"	text="{=revopt04}Imperial Loyalty Mechanic" />
 	<string id="str_opt_OverextDesc"		text="{=revopt05}Overextension Mechanic" />
+	<string id="str_opt_MinFactEnabledDesc" text="{=revopt06}Rise of minor kingdoms" />
+	<string id="str_opt_DebugDesc" 			text="{=revopt07}Debug mode" />
 
 	<string id="str_GM_LoyaltyIncrease"		text="{=revGM01}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
 	<string id="str_GM_RevoltNotification"	text="{=revGM02}{SETTLEMENT} is revolting!" />

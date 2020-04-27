@@ -19,6 +19,8 @@
 	<string id="revopt03"	text="Overextension Affects Player" />
 	<string id="revopt04"	text="Imperial Loyalty Mechanic" />
 	<string id="revopt05"	text="Overextension Mechanic" />
+	<string id="revopt06" 	text="Rise of minor kingdoms" />
+	<string id="revopt07" 	text="Debug mode" />
 	<string id="revGM01"	text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
 	<string id="revGM02"	text="{SETTLEMENT} is revolting!" />
 	<string id="revGM03"	text="Town Loyalty" />
@@ -30,5 +32,6 @@
 	<string id="rev15"		text="Foreign Rule" />
 	<string id="rev16"		text="Imperial Aversion" />
 	<string id="rev17"		text="Bannerlord Settlement" />
+	<string id="rev18"		text="Information" />
   </strings>
 </base>
