@@ -5,8 +5,10 @@ using HarmonyLib;
 using Helpers;
 using Revolutions.Screens;
 using SandBox.BoardGames;
+using SandBox.GauntletUI;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.Actions;
+using TaleWorlds.CampaignSystem.Encyclopedia;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.CampaignSystem.SettlementActivities;
 using TaleWorlds.Core;
@@ -82,6 +84,7 @@ namespace Revolutions.CampaignBehaviours
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
             CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
+            List<EncyclopediaPage> list = Campaign.Current.EncyclopediaManager.GetEncyclopediaPages().ToList();
         }
 
         private void TickEvent(float dt)
@@ -106,6 +109,7 @@ namespace Revolutions.CampaignBehaviours
                     townNames.Add(settlement.Name.ToString());
                 }
             }
+            
             List<Kingdom> kingdomsToRemove = new List<Kingdom>();
             foreach (var kingdom in Kingdom.All)
             {
@@ -133,7 +137,16 @@ namespace Revolutions.CampaignBehaviours
                     }
                 }
 
+                foreach (var clan in kingdom.Clans)
+                {
+                    if (clan.IsClanTypeMercenary)
+                    {
+                        clan.ClanLeaveKingdom(false);
+                    }
+                }
+                
                 DestroyKingdomAction.Apply(kingdom);
+                ModifyKingdomList(kingdoms => kingdoms.Remove(kingdom));
             }
         }
         
@@ -320,6 +333,7 @@ namespace Revolutions.CampaignBehaviours
                     selectedHero = GetNobleWithLeastFiefs(currentInfo.OriginalFaction.MapFaction);
                     revs.MobileParty.RemoveParty();
                     DestroyKingdomAction.Apply(own.Kingdom);
+                    ModifyKingdomList(kingdoms => kingdoms.Remove(own.Kingdom));
                 }
                 
                 ChangeOwnerOfSettlementAction.ApplyByDefault(selectedHero, currentInfo.Settlement);
