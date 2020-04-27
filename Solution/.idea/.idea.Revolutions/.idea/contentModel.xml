@@ -6,13 +6,14 @@
       <e p="packages" t="ExcludeRecursive" />
       <e p="Revolutions" t="IncludeRecursive">
         <e p="CampaignBehaviours" t="Include">
+          <e p="DebugCampaignBehaviour.cs" t="Include" />
           <e p="FactionInfo.cs" t="Include" />
           <e p="MobChecker.cs" t="Include" />
           <e p="ModOptions.cs" t="Include" />
           <e p="Revolution.cs" t="Include" />
           <e p="SettlementInfo.cs" t="Include" />
-          <e p="TestCampaignBehaviour.cs" t="Include" />
         </e>
+        <e p="Common.cs" t="Include" />
         <e p="Models" t="Include">
           <e p="LoyaltyModel.cs" t="Include" />
         </e>

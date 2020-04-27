@@ -199,10 +199,6 @@
       <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.Network.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="TaleWorlds.ObjectSystem, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.ObjectSystem.dll</HintPath>
-	  <Private>False</Private>
-    </Reference>
     <Reference Include="TaleWorlds.PlatformService">
       <HintPath>..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds.PlatformService.dll</HintPath>
       <Private>False</Private>
@@ -245,12 +241,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CampaignBehaviours\DebugCampaignBehaviour.cs" />
     <Compile Include="CampaignBehaviours\FactionInfo.cs" />
     <Compile Include="CampaignBehaviours\MobChecker.cs" />
     <Compile Include="CampaignBehaviours\ModOptions.cs" />
     <Compile Include="CampaignBehaviours\Revolution.cs" />
     <Compile Include="CampaignBehaviours\SettlementInfo.cs" />
-    <Compile Include="CampaignBehaviours\TestCampaignBehaviour.cs" />
+    <Compile Include="Common.cs" />
     <Compile Include="Models\LoyaltyModel.cs" />
     <Compile Include="ModOptionsData.cs" />
     <Compile Include="RevolutionsBase.cs" />
