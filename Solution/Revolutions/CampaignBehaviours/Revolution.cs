@@ -84,60 +84,6 @@ namespace Revolutions.CampaignBehaviours
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.OnMapEventEnded));
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
-            CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
-        }
-
-        private void TickEvent(float dt)
-        {
-            if (ModOptions.OptionsData.DebugMode)
-            {
-                if (Input.IsKeyReleased(InputKey.Numpad7))
-                {
-                    DestroyCustomKingdoms();
-                }   
-            }
-        }
-        
-        private void DestroyCustomKingdoms()
-        {
-            List<string> townNames = new List<string>();
-            
-            foreach (var settlement in Settlement.All)
-            {
-                if (settlement.IsTown)
-                {
-                    townNames.Add(settlement.Name.ToString());
-                }
-            }
-            List<Kingdom> kingdomsToRemove = new List<Kingdom>();
-            foreach (var kingdom in Kingdom.All)
-            {
-                foreach (string name in townNames)
-                {
-                    if (kingdom.StringId.Contains(name.ToLower()))
-                    {
-                        kingdomsToRemove.Add(kingdom);
-                        break;
-                    }
-                }
-            }
-
-            foreach (var kingdom in kingdomsToRemove)
-            {
-                int length = kingdom.Parties.Count();
-                for (int i = 0; i < length; i++)
-                {
-                    if (kingdom.Parties.ToList()[i].IsLordParty)
-                    {
-                        kingdom.Parties.ToList()[i].RemoveParty();
-                        length = kingdom.Parties.Count();
-                        i--;
-                        continue;
-                    }
-                }
-
-                DestroyKingdomAction.Apply(kingdom);
-            }
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -313,7 +259,6 @@ namespace Revolutions.CampaignBehaviours
                 revs.MobileParty.Ai.EnableAi();;
                 revs.MobileParty.Ai.SetDoNotMakeNewDecisions(false);
                 revs.MobileParty.Name = revs.Owner.Name;
-
                 Clan ownerClan = revs.Owner.Clan;
                 ownerClan.AddParty(revs);
 
@@ -382,7 +327,6 @@ namespace Revolutions.CampaignBehaviours
             
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
-            
             if (info.RevoltProgress >= 100 && !info.Settlement.IsUnderSiege)
             {
                 RevoltLogic(info, settlement);
