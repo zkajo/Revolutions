@@ -19,6 +19,8 @@
 	<string id="revopt03"	text="Nadwyrężenie Administracyjne dotyczy też gracza" />
 	<string id="revopt04"	text="Mechanika Imperialnej Lojalności" />
 	<string id="revopt05"	text="Mechanika Nadwyrężenia Administracyjnego" />
+	<string id="revopt06" 	text="Powstania małych królestw" />
+	<string id="revopt07" 	text="Tryb Testowania" />
 	<string id="revGM01"	text="Widząc że spędzasz czas w {SETTLEMENT}, twoi mieszczanie stają się bardziej lojalni." />
 	<string id="revGM02"	text="{SETTLEMENT} się buntuje!" />
 	<string id="revGM03"	text="Lojalność Miasta" />

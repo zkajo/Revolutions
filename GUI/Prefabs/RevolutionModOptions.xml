@@ -208,6 +208,52 @@
                                                                      Brush="SPOptions.Checkbox.Full.Button"/>
                                                     </Children>
                                                 </ButtonWidget>
+                                                <!-- MinorFactionsEnabled -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true" Text="@MinorFactionsEnabledDesc"
+                                                                MarginTop="14"/>
+                                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+                                                              HeightSizePolicy="Fixed" SuggestedWidth="40"
+                                                              SuggestedHeight="40"
+                                                              HorizontalAlignment="Center"
+                                                              Brush="SPOptions.Checkbox.Empty.Button"
+                                                              ButtonType="Toggle"
+                                                              IsSelected="@MinorFactionsEnabled"
+                                                              ToggleIndicator="ToggleIndicator"
+                                                              UpdateChildrenStates="true">
+                                                    <Children>
+                                                        <ImageWidget Id="ToggleIndicator"
+                                                                     WidthSizePolicy="StretchToParent"
+                                                                     HeightSizePolicy="StretchToParent"
+                                                                     Brush="SPOptions.Checkbox.Full.Button"/>
+                                                    </Children>
+                                                </ButtonWidget>
+                                                <!-- MinorFactionsEnabled -->
+                                                <RichTextWidget WidthSizePolicy="CoverChildren"
+                                                                HeightSizePolicy="CoverChildren"
+                                                                HorizontalAlignment="Center"
+                                                                Brush="SPOptions.Slider.Value.Text"
+                                                                IsEnabled="true" Text="@DebugModeDesc"
+                                                                MarginTop="14"/>
+                                                <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed"
+                                                              HeightSizePolicy="Fixed" SuggestedWidth="40"
+                                                              SuggestedHeight="40"
+                                                              HorizontalAlignment="Center"
+                                                              Brush="SPOptions.Checkbox.Empty.Button"
+                                                              ButtonType="Toggle"
+                                                              IsSelected="@DebugModeEnabled"
+                                                              ToggleIndicator="ToggleIndicator"
+                                                              UpdateChildrenStates="true">
+                                                    <Children>
+                                                        <ImageWidget Id="ToggleIndicator"
+                                                                     WidthSizePolicy="StretchToParent"
+                                                                     HeightSizePolicy="StretchToParent"
+                                                                     Brush="SPOptions.Checkbox.Full.Button"/>
+                                                    </Children>
+                                                </ButtonWidget>
                                             </Children>											
                                         </ListPanel>
                                     </Children>

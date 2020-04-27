@@ -60,6 +60,8 @@ namespace Revolutions.Screens.ViewModels
         [DataSourceProperty] public string DaysUntilLoyaltyChangeString { get; private set; }
         [DataSourceProperty] public float SliderDaysUntilLoyaltyChangeMinValue => 0f;
         [DataSourceProperty] public float SliderDaysUntilLoyaltyChangeMaxValue => 250f;
+        [DataSourceProperty] public string MinorFactionsEnabledDesc {get { return GetText("str_opt_MinFactEnabledDesc"); } }
+        [DataSourceProperty] public string DebugModeDesc {get { return GetText("str_opt_DebugDesc"); } }
 
         [DataSourceProperty]
         public float DaysUntilLoyaltyChange
@@ -84,6 +86,8 @@ namespace Revolutions.Screens.ViewModels
         private bool m_EmpireLoyaltyMechanicsEnabled;
         private bool m_OverextensionMechanicsEnabled;
         private bool m_PlayerAffectedByOverextension;
+        private bool m_MinorFactionsEnabled;
+        private bool m_DebugModeEnabled;
         
         [DataSourceProperty]
         public bool EmpireLoyaltyMechanicsEnabled
@@ -108,6 +112,28 @@ namespace Revolutions.Screens.ViewModels
         }
         
         [DataSourceProperty]
+        public bool MinorFactionsEnabled
+        {
+            get => m_MinorFactionsEnabled;
+            set
+            {
+                SetField(ref m_MinorFactionsEnabled, value, nameof(MinorFactionsEnabled));
+                ModOptions.OptionsData.AllowMinorFactions = m_MinorFactionsEnabled;
+            } 
+        }
+        
+        [DataSourceProperty]
+        public bool DebugModeEnabled
+        {
+            get => m_DebugModeEnabled;
+            set
+            {
+                SetField(ref m_DebugModeEnabled, value, nameof(DebugModeEnabled));
+                ModOptions.OptionsData.DebugMode = m_DebugModeEnabled;
+            } 
+        }
+        
+        [DataSourceProperty]
         public bool PlayerAffectedByOverextension
         {
             get => m_PlayerAffectedByOverextension;
@@ -128,6 +154,8 @@ namespace Revolutions.Screens.ViewModels
             OverextensionMechanicsEnabled = _data.OverextensionMechanics;
             PlayerAffectedByOverextension = _data.PlayerAffectedByOverextension;
             DaysUntilLoyaltyChange = _data.DaysUntilLoyaltyChange;
+            MinorFactionsEnabled = _data.AllowMinorFactions;
+            DebugModeEnabled = _data.DebugMode;
         }
         
         public ModOptionsViewModel(Action onClose)

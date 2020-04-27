@@ -82,6 +82,60 @@ namespace Revolutions.CampaignBehaviours
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.OnMapEventEnded));
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
+            CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
+        }
+
+        private void TickEvent(float dt)
+        {
+            if (ModOptions.OptionsData.DebugMode)
+            {
+                if (Input.IsKeyReleased(InputKey.Numpad7))
+                {
+                    DestroyCustomKingdoms();
+                }   
+            }
+        }
+        
+        private void DestroyCustomKingdoms()
+        {
+            List<string> townNames = new List<string>();
+            
+            foreach (var settlement in Settlement.All)
+            {
+                if (settlement.IsTown)
+                {
+                    townNames.Add(settlement.Name.ToString());
+                }
+            }
+            List<Kingdom> kingdomsToRemove = new List<Kingdom>();
+            foreach (var kingdom in Kingdom.All)
+            {
+                foreach (string name in townNames)
+                {
+                    if (kingdom.StringId.Contains(name.ToLower()))
+                    {
+                        kingdomsToRemove.Add(kingdom);
+                        break;
+                    }
+                }
+            }
+
+            foreach (var kingdom in kingdomsToRemove)
+            {
+                int length = kingdom.Parties.Count();
+                for (int i = 0; i < length; i++)
+                {
+                    if (kingdom.Parties.ToList()[i].IsLordParty)
+                    {
+                        kingdom.Parties.ToList()[i].RemoveParty();
+                        length = kingdom.Parties.Count();
+                        i--;
+                        continue;
+                    }
+                }
+
+                DestroyKingdomAction.Apply(kingdom);
+            }
         }
         
         public override void SyncData(IDataStore dataStore)
@@ -245,19 +299,7 @@ namespace Revolutions.CampaignBehaviours
             }
             
             Hero selectedHero = null;
-            Clan chosenClan = null;
-            int leastSettlements = 100;
-
-            foreach (var noble in revs.Owner.MapFaction.Nobles)
-            {
-                int currentSettlements = noble.Clan.Settlements.Count();
-                if (currentSettlements >= leastSettlements) continue;
-                leastSettlements = currentSettlements;
-                chosenClan = noble.Clan;
-            }
-
-            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : currentInfo.OriginalFaction.Leader;
-
+            selectedHero = GetNobleWithLeastFiefs(revs.Owner.MapFaction);
             RemoveRevolutionaryPartyFromList(revs);
             
             if (revs.Owner.MapFaction.StringId == currentInfo.OriginalFaction.StringId)
@@ -273,6 +315,14 @@ namespace Revolutions.CampaignBehaviours
                 revs.MobileParty.Name = revs.Owner.Name;
                 Clan own = revs.Owner.Clan;
                 own.AddParty(revs);
+
+                if (!ModOptions.OptionsData.AllowMinorFactions)
+                {
+                    selectedHero = GetNobleWithLeastFiefs(currentInfo.OriginalFaction.MapFaction);
+                    revs.MobileParty.RemoveParty();
+                    DestroyKingdomAction.Apply(own.Kingdom);
+                }
+                
                 ChangeOwnerOfSettlementAction.ApplyByDefault(selectedHero, currentInfo.Settlement);
             }
             
@@ -313,7 +363,7 @@ namespace Revolutions.CampaignBehaviours
                 return;
             }
             
-            if (!GetFactionInformation(info.CurrentFaction).RevoltCanHappen())
+            if (!GetFactionInformation(info.CurrentFaction).RevoltCanHappen() || OwnedByRevoltKingdom(info))
             {
                 info.RevoltProgress = 0;
                 return;
@@ -321,6 +371,7 @@ namespace Revolutions.CampaignBehaviours
             
             info.RevoltProgress = info.RevoltProgress + (MinimumObedianceLoyalty - settlement.Town.Loyalty);
 
+            
             if (info.RevoltProgress >= 100 && !info.Settlement.IsUnderSiege)
             {
                 RevoltLogic(info, settlement);
@@ -330,6 +381,35 @@ namespace Revolutions.CampaignBehaviours
             {
                 info.RevoltProgress = 0;
             }
+        }
+
+        private bool OwnedByRevoltKingdom(SettlementInfo info)
+        {
+            string kingdomId = GetClanKingdomId(info.Settlement);
+
+            if (info.CurrentFaction.StringId == kingdomId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private Hero GetNobleWithLeastFiefs(IFaction faction)
+        {
+            Hero selectedHero = null;
+            Clan chosenClan = null;
+            int leastSettlements = 100;
+
+            foreach (var noble in faction.Nobles)
+            {
+                int currentSettlements = noble.Clan.Settlements.Count();
+                if (currentSettlements >= leastSettlements) continue;
+                leastSettlements = currentSettlements;
+                chosenClan = noble.Clan;
+            }
+            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : faction.Leader;
+            return selectedHero;
         }
         
         private void IncreaseDailyLoyaltyForPlayerSettlement(Settlement settlement)
@@ -432,8 +512,9 @@ namespace Revolutions.CampaignBehaviours
 
         private Clan CreateRebellionClan(SettlementInfo info)
         {
-            var clan = MBObjectManager.Instance.CreateObject<Clan>(info.Settlement.Name.ToString() + "_rebels_" + MBRandom.RandomInt(100000).ToString());
-            var hero = HeroCreator.CreateSpecialHero(CreateLordCharacter(info.OriginalCulture), info.Settlement, clan, clan, 30);
+            Clan clan = MBObjectManager.Instance.CreateObject<Clan>(info.Settlement.Name.ToString() + "_rebels_" + MBRandom.RandomInt(100000).ToString());
+            Hero hero = HeroCreator.CreateSpecialHero(CreateLordCharacter(info.OriginalCulture), info.Settlement, clan, clan, 30);
+
             TextObject name = new TextObject(hero.Name.ToString()); 
             int value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
             hero.SetTraitLevel(DefaultTraits.Commander, value);
@@ -444,6 +525,13 @@ namespace Revolutions.CampaignBehaviours
             clan.SetLeader(hero);
             clan.IsUnderMercenaryService = false;
             var kingdom = FormRebelKingdom(clan, info.Settlement, info.CurrentFaction);
+
+            if (kingdom.IsDeactivated)
+            {
+                kingdom.ReactivateKingdom();
+                DeclareWarAction.Apply(kingdom, info.CurrentFaction);
+            }
+            
             clan.ClanJoinFaction(kingdom);
             return clan;
         }
