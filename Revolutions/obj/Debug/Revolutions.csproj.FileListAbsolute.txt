@@ -5,3 +5,8 @@ D:\Development\Visual Studio\Revolutions\Revolutions\obj\Debug\Revolutions.cspro
 D:\Development\Visual Studio\Revolutions\Revolutions\obj\Debug\Revolutions.csproj.CopyComplete
 D:\Development\Visual Studio\Revolutions\Revolutions\obj\Debug\Revolutions.dll
 D:\Development\Visual Studio\Revolutions\Revolutions\obj\Debug\Revolutions.pdb
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.csprojAssemblyReference.cache
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.csproj.CoreCompileInputs.cache
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.csproj.CopyComplete
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.dll
+D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\Solution\Revolutions\obj\Debug\Revolutions.pdb
