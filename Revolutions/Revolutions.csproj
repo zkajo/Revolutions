@@ -70,6 +70,19 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="CampaignBehaviours\DebugCampaignBehaviour.cs" />
+    <Compile Include="CampaignBehaviours\FactionInfo.cs" />
+    <Compile Include="CampaignBehaviours\MobChecker.cs" />
+    <Compile Include="CampaignBehaviours\ModOptions.cs" />
+    <Compile Include="CampaignBehaviours\Revolution.cs" />
+    <Compile Include="CampaignBehaviours\SettlementInfo.cs" />
+    <Compile Include="Common.cs" />
+    <Compile Include="Models\LoyaltyModel.cs" />
+    <Compile Include="ModOptionsData.cs" />
+    <Compile Include="Screens\ModOptionsScreen.cs" />
+    <Compile Include="Screens\TownRevolutionScreen.cs" />
+    <Compile Include="Screens\ViewModels\ModOptionsViewModel.cs" />
+    <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />
     <Compile Include="SubModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
@@ -87,6 +100,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <!-- Post-Build -->
   <PropertyGroup>
     <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\"
