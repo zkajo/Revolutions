@@ -66,6 +66,9 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="0Harmony, Version=2.0.0.9, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\..\Harmony\Debug\net472\0Harmony.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
   </ItemGroup>
   <!-- Files & Classes -->

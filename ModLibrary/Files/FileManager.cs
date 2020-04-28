@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.AccessControl;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
@@ -68,30 +69,35 @@ namespace ModLibrary.Files
 			}
 		}
 
-		public void Serialize<T>(T data, string basePath, string fileName)
+		public void Serialize<T>(T data, string basePath, string saveId, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(basePath, SaveDirectory, fileName);
-				Directory.CreateDirectory(filePath);
+                DirectorySecurity securityRules = new DirectorySecurity();
+                securityRules.AddAccessRule(new FileSystemAccessRule("Users", FileSystemRights.FullControl, AccessControlType.Allow));
 
+                string dirPath = Path.Combine(basePath, SaveDirectory, saveId);
+				Directory.CreateDirectory(dirPath, securityRules);
+
+                string filePath = Path.Combine(dirPath, fileName);
+                
 				using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
 				{
 					BinaryFormatter binaryFormatter = new BinaryFormatter();
 					binaryFormatter.Serialize(fileStream, data);
 				}
 			}
-			catch (IOException)
+			catch (IOException) 
 			{
 				InformationManager.DisplayMessage(new InformationMessage($"Could not create save file '{fileName}'.", Color.FromUint(4282569842U)));
 			}
 		}
 
-		public T Deserialize<T>(string basePath, string fileName)
+		public T Deserialize<T>(string basePath, string saveId, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(basePath, SaveDirectory, fileName);
+				string filePath = Path.Combine(basePath, SaveDirectory, saveId, fileName);
 				if(!File.Exists(filePath))
 				{
 					return default;

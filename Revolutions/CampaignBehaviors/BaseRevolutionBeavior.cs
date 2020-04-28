@@ -11,16 +11,16 @@ namespace Revolutions.CampaignBehaviors
         internal List<SettlementInfoRevolutions> SettlementRevolutionInfos = new List<SettlementInfoRevolutions>();
         internal List<Tuple<PartyBase, SettlementInfoRevolutions>> Revolutions = new List<Tuple<PartyBase, SettlementInfoRevolutions>>();
 
-        internal void LoadData()
+        internal void LoadData(string saveID)
         {
-            this.SettlementRevolutionInfos = FileManager.Instance.Deserialize<List<SettlementInfoRevolutions>>(SubModule.ModuleDataPath, "SettlementRevolutionInfos.bin") ?? this.SettlementRevolutionInfos;
-            this.Revolutions = FileManager.Instance.Deserialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(SubModule.ModuleDataPath, "Revolutions.bin") ?? this.Revolutions;
+            this.SettlementRevolutionInfos = FileManager.Instance.Deserialize<List<SettlementInfoRevolutions>>(SubModule.ModuleDataPath, saveID, "SettlementRevolutionInfos.bin") ?? this.SettlementRevolutionInfos;
+            this.Revolutions = FileManager.Instance.Deserialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(SubModule.ModuleDataPath, saveID, "Revolutions.bin") ?? this.Revolutions;
         }
 
-        internal void SaveData()
+        internal void SaveData(string saveID)
         {
-            FileManager.Instance.Serialize<List<SettlementInfoRevolutions>>(this.SettlementRevolutionInfos, SubModule.ModuleDataPath, "SettlementRevolutionInfos.bin");
-            FileManager.Instance.Serialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(this.Revolutions, SubModule.ModuleDataPath, "Revolutions.bin");
+            FileManager.Instance.Serialize<List<SettlementInfoRevolutions>>(this.SettlementRevolutionInfos, SubModule.ModuleDataPath, saveID, "SettlementRevolutionInfos.bin");
+            FileManager.Instance.Serialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(this.Revolutions, SubModule.ModuleDataPath, saveID, "Revolutions.bin");
         }
     }
 }
