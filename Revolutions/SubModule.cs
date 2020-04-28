@@ -1,81 +1,76 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
-using TaleWorlds.SaveSystem;
 using TaleWorlds.Library;
-using Revolutions.CampaignBehaviours;
 using Revolutions.Models;
+using ModLibrary.Files;
+using Revolutions.CampaignBehaviours;
+using Revolutions.CampaignBehaviors;
 
 namespace Revolutions
 {
     public class SubModule : MBSubModuleBase
     {
-        private Revolution _revolutionBehaviour;
-        private ModOptions _modOptions;
-        private LoyaltyModel _loyaltyModel;
-        private MobChecker _mobChecker;
-        private DebugCampaignBehaviour _debugBehaviour;
-        private Common _common;
+        public static Configuration Configuration;
 
-        protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
+        public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
+
+        protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            if (!(game.GameType is Campaign))
+            try
             {
-                return;
+                InformationManager.DisplayMessage(new InformationMessage("Loaded Revolutions.", Color.White));
             }
-
-            CampaignGameStarter gameInitializer = (CampaignGameStarter)gameStarterObject;
-            this.AddBehaviours(gameInitializer);
-        }
-
-        private void AddBehaviours(CampaignGameStarter gameInitializer)
-        {
-            this._modOptions = new ModOptions();
-            this._revolutionBehaviour = new Revolution();
-            this._mobChecker = new MobChecker();
-            this._debugBehaviour = new DebugCampaignBehaviour();
-            this._common = new Common();
-
-            gameInitializer.AddBehavior(this._revolutionBehaviour);
-            gameInitializer.AddBehavior(this._modOptions);
-            gameInitializer.AddBehavior(this._mobChecker);
-            gameInitializer.AddBehavior(this._debugBehaviour);
-
-            this._loyaltyModel = new LoyaltyModel
+            catch (Exception exception)
             {
-                RevolutionBehaviour = _revolutionBehaviour
-            };
-            gameInitializer.AddModel(this._loyaltyModel);
-
-            gameInitializer.LoadGameTexts($"{BasePath.Name}Modules/Revolutions/ModuleData/global_strings.xml");
-        }
-    }
-
-    public class SaveDefiner : SaveableTypeDefiner
-    {
-        public SaveDefiner() : base(350040)
-        {
+                string errorMessage = "Revolutions: Could not be loaded! ";
+                InformationManager.DisplayMessage(new InformationMessage(errorMessage + exception?.ToString()));
+            }
         }
 
-        protected override void DefineClassTypes()
+        protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {
-            this.AddClassDefinition(typeof(SettlementInfo), 350041);
-            this.AddClassDefinition(typeof(FactionInfo), 350042);
-            this.AddClassDefinition(typeof(ModOptionsData), 350043);
+            try
+            {
+                base.OnGameStart(game, gameStarter);
+
+                if (!(game.GameType is Campaign))
+                {
+                    return;
+                }
+
+                this.InitializeMod(gameStarter as CampaignGameStarter);
+            }
+            catch (Exception exception)
+            {
+                string exceptionMessage = "Revolutions: Failed to load on game start! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
+            }
         }
 
-        protected override void DefineGenericClassDefinitions()
+        private void InitializeMod(CampaignGameStarter campaignGameStarter)
         {
-            this.ConstructGenericClassDefinition(typeof(Tuple<PartyBase, SettlementInfo>));
+            try
+            {
+                campaignGameStarter.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
+
+                SubModule.Configuration = FileManager.Instance.Load<Configuration>(SubModule.ModuleDataPath, "Settings.xml") ?? new Configuration();
+
+                this.AddBehaviours(campaignGameStarter);
+            }
+            catch (Exception exception)
+            {
+                string exceptionMessage = "Revolutions: Failed to initialize! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
+            }
         }
 
-        protected override void DefineContainerDefinitions()
+        private void AddBehaviours(CampaignGameStarter campaignGameStarter)
         {
-            this.ConstructContainerDefinition(typeof(List<SettlementInfo>));
-            this.ConstructContainerDefinition(typeof(List<FactionInfo>));
-            this.ConstructContainerDefinition(typeof(List<Tuple<PartyBase, SettlementInfo>>));
+            campaignGameStarter.AddBehavior(new RevolutionBehavior());
+            campaignGameStarter.AddBehavior(new RevolutionDailyBehavior());
         }
     }
 }

@@ -5,33 +5,32 @@ using System.Xml.Serialization;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 
-namespace ModLibrary.File
+namespace ModLibrary.Files
 {
-    public class FileManager
-    {
-        #region Singleton
+	public class FileManager
+	{
+		#region Singleton
 
-        private static readonly FileManager instance;
 
-        private FileManager() { }
+		private FileManager() { }
 
-        static FileManager()
-        {
-            FileManager.instance = new FileManager();
-        }
+		static FileManager()
+		{
+			FileManager.Instance = new FileManager();
+		}
 
-        public static FileManager Instance => FileManager.instance;
+		public static FileManager Instance { get; private set; }
 
 		#endregion
 
 		private const string SaveDirectory = "Save";
 		private const string ConfigurationDirectory = "Configuration";
 
-		public void Save<T>(T data, string fileName)
+		public void Save<T>(T data, string basePath, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(BasePath.Name, FileManager.ConfigurationDirectory, fileName);
+				string filePath = Path.Combine(basePath, ConfigurationDirectory, fileName);
 				Directory.CreateDirectory(filePath);
 
 				using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
@@ -42,15 +41,20 @@ namespace ModLibrary.File
 			}
 			catch (IOException)
 			{
-				InformationManager.DisplayMessage(new InformationMessage($"Could not create config-file '{fileName}'.", Color.Black, "Error"));
+				InformationManager.DisplayMessage(new InformationMessage($"Could not create configuration file '{fileName}'.", Color.FromUint(4282569842U)));
 			}
 		}
 
-		public T Load<T>(string fileName)
+		public T Load<T>(string basePath, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(BasePath.Name, FileManager.ConfigurationDirectory, fileName);
+				string filePath = Path.Combine(basePath, ConfigurationDirectory, fileName);
+				if (!File.Exists(filePath))
+				{
+					return default;
+				}
+
 				using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
 				{
 					XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
@@ -59,16 +63,16 @@ namespace ModLibrary.File
 			}
 			catch (IOException)
 			{
-				InformationManager.DisplayMessage(new InformationMessage($"Could not load config-file '{fileName}'.", Color.Black, "Error"));
+				InformationManager.DisplayMessage(new InformationMessage($"Could not load configuration file '{fileName}'.", Color.FromUint(4282569842U)));
 				return (T)Activator.CreateInstance(typeof(T));
 			}
 		}
 
-		public void Serialize<T>(T data, string fileName)
+		public void Serialize<T>(T data, string basePath, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(BasePath.Name, FileManager.SaveDirectory, fileName);
+				string filePath = Path.Combine(basePath, SaveDirectory, fileName);
 				Directory.CreateDirectory(filePath);
 
 				using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
@@ -79,15 +83,20 @@ namespace ModLibrary.File
 			}
 			catch (IOException)
 			{
-				InformationManager.DisplayMessage(new InformationMessage($"Could not create save-file '{fileName}'.", Color.Black, "Error"));
+				InformationManager.DisplayMessage(new InformationMessage($"Could not create save file '{fileName}'.", Color.FromUint(4282569842U)));
 			}
 		}
 
-		public T Deserialize<T>(string fileName)
+		public T Deserialize<T>(string basePath, string fileName)
 		{
 			try
 			{
-				string filePath = Path.Combine(BasePath.Name, FileManager.SaveDirectory, fileName);
+				string filePath = Path.Combine(basePath, SaveDirectory, fileName);
+				if(!File.Exists(filePath))
+				{
+					return default;
+				}
+
 				using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
 				{
 					BinaryFormatter binaryFormatter = new BinaryFormatter();
@@ -96,7 +105,7 @@ namespace ModLibrary.File
 			}
 			catch (IOException)
 			{
-				InformationManager.DisplayMessage(new InformationMessage($"Could not load save-file '{fileName}'.", Color.Black, "Error"));
+				InformationManager.DisplayMessage(new InformationMessage($"Could not load save file '{fileName}'.", Color.FromUint(4282569842U)));
 				return (T)Activator.CreateInstance(typeof(T));
 			}
 		}

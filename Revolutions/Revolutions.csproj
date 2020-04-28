@@ -70,20 +70,13 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="CampaignBehaviors\BaseRevolutionBeavior.cs" />
+    <Compile Include="CampaignBehaviors\RevolutionBehaviour.cs" />
+    <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
+    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Settlements\SettlementInfoRevolutionsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="CampaignBehaviours\DebugCampaignBehaviour.cs" />
-    <Compile Include="CampaignBehaviours\FactionInfo.cs" />
-    <Compile Include="CampaignBehaviours\MobChecker.cs" />
-    <Compile Include="CampaignBehaviours\ModOptions.cs" />
-    <Compile Include="CampaignBehaviours\Revolution.cs" />
-    <Compile Include="CampaignBehaviours\SettlementInfo.cs" />
-    <Compile Include="Common.cs" />
-    <Compile Include="Models\LoyaltyModel.cs" />
-    <Compile Include="ModOptionsData.cs" />
-    <Compile Include="Screens\ModOptionsScreen.cs" />
-    <Compile Include="Screens\TownRevolutionScreen.cs" />
-    <Compile Include="Screens\ViewModels\ModOptionsViewModel.cs" />
-    <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />
+    <Compile Include="Settlements\SettlementInfoRevolutions.cs" />
     <Compile Include="SubModule.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
     <Content Include="GUI\Prefabs\RevolutionModOptions.xml" />
@@ -105,6 +98,9 @@
       <Project>{d711d674-808c-421a-ba59-9dcd8b4a51dc}</Project>
       <Name>ModLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Screens\ViewModels\" />
   </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>
