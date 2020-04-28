@@ -1,0 +1,110 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Main Project Properties -->
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <PlatformTarget Condition=" '$(PlatformTarget)' == '' ">x64</PlatformTarget>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BD535D95-FD82-4AE2-A1A7-B669D58FCE8E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Revolutions</RootNamespace>
+    <AssemblyName>Revolutions</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <!-- Debug Configuration Properties -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Release Configuration Properties -->
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- Debugging Properties -->
+  <PropertyGroup>
+    <StartAction>Program</StartAction>
+    <StartProgram>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Bannerlord.exe</StartProgram>
+    <StartArguments>/singleplayer _MODULES_*Native*SandBoxCore*SandBox*StoryMode*CustomBattle*Revolutions*_MODULES_</StartArguments>
+    <StartWorkingDirectory>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client</StartWorkingDirectory>
+  </PropertyGroup>
+  <!-- Bannerlord Native Assemblies -->
+  <ItemGroup>
+    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
+    </Reference>
+    <Reference Include="D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <!-- Bannerlord Module Assemblies  -->
+    <Reference Include="D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Native\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\SandBox\bin\Win64_Shipping_Client\SandBox*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\StoryMode\bin\Win64_Shipping_Client\StoryMode*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\CustomBattle\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
+  </ItemGroup>
+  <!-- Files & Classes -->
+  <ItemGroup>
+    <Compile Include="SubModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="GUI\Brushes\ButtonBrush.xml" />
+    <Content Include="GUI\Prefabs\RevolutionModOptions.xml" />
+    <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
+    <Content Include="Logo.png" />
+    <Content Include="ModuleData\global_strings.xml" />
+    <Content Include="ModuleData\Languages\DE\std_global_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\PL\std_global_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\RU\std_global_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\std_global_strings_xml.xml" />
+    <Content Include="Readme.txt" />
+    <Content Include="SubModule.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <!-- Post-Build -->
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\"
+
+
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\GUI\Brushes\"
+
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\RevolutionModOptions.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\GUI\Prefabs\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\GUI\Prefabs\"
+
+
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\global_strings.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\ModuleData\"
+
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_global_strings_xml.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\ModuleData\Languages\"
+
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_global_strings_xml.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\ModuleData\Languages\DE\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\PL\std_global_strings_xml.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\ModuleData\Languages\PL\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\RU\std_global_strings_xml.xml" "D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\ModuleData\Languages\RU\"</PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

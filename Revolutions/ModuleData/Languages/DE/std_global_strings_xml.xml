@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Deutsch" />
+  </tags>
+  <strings>
+    <string id="rev01" text="Die Bevölkerung von {SETTLEMENT} scheinen zufrieden zu sein" />
+    <string id="rev02" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}" />
+    <string id="rev03" text="Die Bevölkerung ist {FACTION} treu" />
+    <string id="rev04" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%" />
+    <string id="rev05" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden" />
+    <string id="rev06" text="Viele lassen sich durch Geschichten von Revolutionen im Königreich inspirieren." />
+    <string id="rev07" text="Viele sind von Ereignissen bei {SETTLEMENT} inspiriert." />
+    <string id="rev08" text="Einige reden davon das Banner ihrer Heimat zu hissen." />
+    <string id="rev09" text="Die Menschen in dieser Stadt haben erst kürzlich revolviert und möchten kein weiteres Blut mehr vergießen." />
+    <string id="rev10" text="Nach dem Hören von Blutvergießen in {SETTLEMENT}, haben die Bürger Angst vor Aufruhr." />
+    <string id="revopt01" text="Die Stadt ändert die Loyalität zum aktuellen Eigentümer in: {DAYS} Tagen" />
+    <string id="revopt02"	text="Abklingzeit der Revolte pro Fraktion: {COOLDOWN} Tage" />
+    <string id="revopt03"	text="Überdehnung wirkt sich auf den Spieler aus" />
+    <string id="revopt04"	text="Kaiserlicher Loyalitätsmechanik" />
+    <string id="revopt05"	text="Überdehnungsmechanik" />
+    <string id="revopt06" text="Aufstieg kleiner Königreiche" />
+    <string id="revopt07" text="Debug Modus" />
+    <string id="revGM01" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />
+    <string id="revGM02" text="{SETTLEMENT} revolviert!" />
+    <string id="revGM03" text="Stadttreue" />
+    <string id="revGM04" text="Revolutionärer Mob" />
+    <string id="rev11" text="Erledigt" />
+    <string id="rev12" text="Optionen" />
+    <string id="rev13" text="Überdehnung" />
+    <string id="rev14" text="Kaiserliche Loyalität" />
+    <string id="rev15" text="Ausländische Regel" />
+    <string id="rev16" text="Kaiserliche Abneigung" />
+    <string id="rev17" text="Bannerlord Siedlung" />
+    <string id="rev18" text="Information" />
+  </strings>
+</base>

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+	<string id="rev01" text="The people of {SETTLEMENT} seem to be content" />
+	<string id="rev02" text="Flames of revolution are slowly stirring in {SETTLEMENT}" />
+	<string id="rev03" text="Population is loyal to the {FACTION}" />
+	<string id="rev04" text="Current revolt progress is {PROGRESS}%" />
+	<string id="rev05" text="People are content with the current rule" />
+	<string id="rev06" text="Many are inspired by tales of revolts in the kingdom." />
+	<string id="rev07" text="Many are inspired by events at {SETTLEMENT}." />
+	<string id="rev08" text="Some talk of raising banners of their homeland." />
+	<string id="rev09" text="The people of this town had revolted recently, and don't wish to spill blood again." />
+	<string id="rev10" text="After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
+	<string id="revopt01"	text="City changes loyalty to current owner in: {DAYS} days" />
+	<string id="revopt02"	text="Revolt cooldown per faction: {COOLDOWN} days" />
+	<string id="revopt03"	text="Overextension Affects Player" />
+	<string id="revopt04"	text="Imperial Loyalty Mechanic" />
+	<string id="revopt05"	text="Overextension Mechanic" />
+	<string id="revopt06" text="Rise of minor kingdoms" />
+	<string id="revopt07" text="Debug mode" />
+	<string id="revGM01" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
+	<string id="revGM02" text="{SETTLEMENT} is revolting!" />
+	<string id="revGM03" text="Town Loyalty" />
+	<string id="revGM04" text="Revolutionary Mob" />
+	<string id="rev11" text="Done" />
+	<string id="rev12" text="Options" />
+	<string id="rev13" text="Overextension" />
+	<string id="rev14" text="Imperial Loyalty" />
+	<string id="rev15" text="Foreign Rule" />
+	<string id="rev16" text="Imperial Aversion" />
+	<string id="rev17" text="Bannerlord Settlement" />
+	<string id="rev18" text="Information" />
+  </strings>
+</base>
