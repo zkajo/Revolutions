@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revolutions", "Revolutions\Revolutions.csproj", "{BD535D95-FD82-4AE2-A1A7-B669D58FCE8E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModLibrary", "ModLibrary\ModLibrary.csproj", "{D711D674-808C-421A-BA59-9DCD8B4A51DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BD535D95-FD82-4AE2-A1A7-B669D58FCE8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD535D95-FD82-4AE2-A1A7-B669D58FCE8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD535D95-FD82-4AE2-A1A7-B669D58FCE8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

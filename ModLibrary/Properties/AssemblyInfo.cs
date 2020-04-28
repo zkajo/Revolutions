@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Revolutions")]
+[assembly: AssemblyTitle("ModLibrary")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Revolutions")]
+[assembly: AssemblyProduct("ModLibrary")]
 [assembly: AssemblyCopyright("Copyright © 2020 Kommissar & TH3UNKN0WN")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +19,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bd535d95-fd82-4ae2-a1a7-b669d58fce8e")]
+[assembly: Guid("d711d674-808c-421a-ba59-9dcd8b4a51dc")]
 
 // Version information for an assembly consists of the following four values:
 //

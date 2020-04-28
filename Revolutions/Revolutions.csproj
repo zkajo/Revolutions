@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
+    <OutputPath>..\..\..\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -28,7 +28,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
+    <OutputPath>..\..\..\Modules\Revolutions\bin\Win64_Shipping_Client</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,33 +36,33 @@
   <!-- Debugging Properties -->
   <PropertyGroup>
     <StartAction>Program</StartAction>
-    <StartProgram>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client\Bannerlord.exe</StartProgram>
+    <StartProgram>..\..\..\bin\Win64_Shipping_Client\Bannerlord.exe</StartProgram>
     <StartArguments>/singleplayer _MODULES_*Native*SandBoxCore*SandBox*StoryMode*CustomBattle*Revolutions*_MODULES_</StartArguments>
-    <StartWorkingDirectory>D:\Steam\steamapps\common\Mount &amp; Blade II Bannerlord\bin\Win64_Shipping_Client</StartWorkingDirectory>
+    <StartWorkingDirectory>..\..\..\bin\Win64_Shipping_Client</StartWorkingDirectory>
   </PropertyGroup>
   <!-- Bannerlord Native Assemblies -->
   <ItemGroup>
     <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="..\..\..\..\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="..\..\..\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
     <!-- Bannerlord Module Assemblies  -->
-    <Reference Include="..\..\..\..\Modules\Native\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="..\..\..\Modules\Native\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="..\..\..\..\Modules\SandBox\bin\Win64_Shipping_Client\SandBox*.dll">
+    <Reference Include="..\..\..\Modules\SandBox\bin\Win64_Shipping_Client\SandBox*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="..\..\..\..\Modules\StoryMode\bin\Win64_Shipping_Client\StoryMode*.dll">
+    <Reference Include="..\..\..\Modules\StoryMode\bin\Win64_Shipping_Client\StoryMode*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="..\..\..\..\Modules\CustomBattle\bin\Win64_Shipping_Client\TaleWorlds*.dll">
+    <Reference Include="..\..\..\Modules\CustomBattle\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
@@ -70,6 +70,7 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CampaignBehaviours\DebugCampaignBehaviour.cs" />
     <Compile Include="CampaignBehaviours\FactionInfo.cs" />
     <Compile Include="CampaignBehaviours\MobChecker.cs" />
@@ -84,7 +85,6 @@
     <Compile Include="Screens\ViewModels\ModOptionsViewModel.cs" />
     <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />
     <Compile Include="SubModule.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
     <Content Include="GUI\Prefabs\RevolutionModOptions.xml" />
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
@@ -100,25 +100,30 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\ModLibrary\ModLibrary.csproj">
+      <Project>{d711d674-808c-421a-ba59-9dcd8b4a51dc}</Project>
+      <Name>ModLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\"
+    <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"
 
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "$(SolutionDir)\..\GUI\Brushes\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "$(SolutionDir)\..\Revolutions\GUI\Brushes\"
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\RevolutionModOptions.xml" $(SolutionDir)\..\GUI\Prefabs\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "$(SolutionDir)\..\GUI\Prefabs\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\RevolutionModOptions.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
 
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\global_strings.xml" "$(SolutionDir)\..\ModuleData\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\global_strings.xml" "$(SolutionDir)\..\Revolutions\ModuleData\"
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_global_strings_xml.xml" "$(SolutionDir)\..\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_global_strings_xml.xml" "$(SolutionDir)\..\ModuleData\Languages\DE\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\PL\std_global_strings_xml.xml" "$(SolutionDir)\..\ModuleData\Languages\PL\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\RU\std_global_strings_xml.xml" "$(SolutionDir)\..\ModuleData\Languages\RU\"</PostBuildEvent>
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\DE\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\PL\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\PL\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\RU\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\RU\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
