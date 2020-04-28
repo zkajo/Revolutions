@@ -358,3 +358,10 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+.idea/.idea.Bannerlord/riderModule.iml
+.idea/.idea.Bannerlord/.idea/vcs.xml
+.idea/.idea.Bannerlord/.idea/projectSettingsUpdater.xml
+.idea/.idea.Bannerlord/.idea/modules.xml
+.idea/.idea.Bannerlord/.idea/indexLayout.xml
+.idea/.idea.Bannerlord/.idea/encodings.xml
+.idea/.idea.Bannerlord/.idea/contentModel.xml
