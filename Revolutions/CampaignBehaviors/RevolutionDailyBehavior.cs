@@ -1,20 +1,9 @@
-﻿using System;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.CampaignBehaviors
 {
     public class RevolutionDailyBehavior : BaseRevolutionBeavior
     {
-        public RevolutionDailyBehavior()
-        {
-            if (this.SaveDataLoaded)
-            {
-                return;
-            }
-
-            this.LoadSaveData();
-        }
-
         public override void RegisterEvents()
         {
         }

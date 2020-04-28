@@ -1,4 +1,5 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System;
+using TaleWorlds.CampaignSystem;
 using Revolutions.CampaignBehaviors;
 
 namespace Revolutions.CampaignBehaviours
@@ -7,20 +8,21 @@ namespace Revolutions.CampaignBehaviours
     {
         public RevolutionBehavior()
         {
-            if(this.SaveDataLoaded)
-            {
-                return;
-            }
-
-            this.LoadSaveData();
+            this.LoadData();
         }
 
         public override void RegisterEvents()
         {
+            CampaignEvents.OnBeforeSaveEvent.AddNonSerializedListener(this, new Action(this.OnBeforeSaveEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
         {
+        }
+
+        public void OnBeforeSaveEvent()
+        {
+            this.SaveData();
         }
     }
 }
