@@ -47,59 +47,62 @@ namespace Revolutions.Revolutions
             return this.GetParty(revolution.PartyId);
         }
 
-        public void IncreaseDailyLoyaltyForSettlement(Settlement settlement)
+        public void IncreaseDailyLoyaltyForSettlement()
         {
-            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
-
-            if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
+            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos)
             {
-                return;
-            }
+                Settlement settlement = settlementInfoRevolutions.GetSettlement();
 
-            if (!settlementInfo.IsOwnerInSettlement)
-            {
-                return;
-            }
+                foreach (MobileParty mobileParty in settlement.Parties)
+                {
+                    if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan == settlement.OwnerClan)
+                    {
+                        settlement.Town.Loyalty += SubModule.Configuration.PlayerInTownLoyaltyIncrease;
 
-            settlement.Town.Loyalty += SubModule.Configuration.PlayerInTownLoyaltyIncrease;
+                        if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
+                        {
+                            TextObject textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
+                            textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
+                            InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
+                        }
 
-            if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
-            {
-                TextObject textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
-                textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
-                InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
+                        break;
+                    }
+                }
             }
         }
 
-        public bool CheckRevolutionProgress(Settlement settlement)
+        public void CheckRevolutionProgress()
         {
-            SettlementInfoRevolutions settlementInfoRevolutions = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement);
-            FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
-
-            if (settlementInfoRevolutions.OriginalFactionId == settlementInfoRevolutions.CurrentFactionId)
+            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos)
             {
-                return false;
+                Settlement settlement = settlementInfoRevolutions.GetSettlement();
+                FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+
+                if (settlementInfoRevolutions.OriginalFactionId == settlementInfoRevolutions.CurrentFactionId)
+                {
+                    break;
+                }
+
+                if (!factionInfoRevolutions.CanRevolt)
+                {
+                    settlementInfoRevolutions.RevolutionProgress = 0;
+                    break;
+                }
+
+                settlementInfoRevolutions.RevolutionProgress += SubModule.Configuration.MinimumObedianceLoyalty - settlement.Town.Loyalty;
+
+                if (settlementInfoRevolutions.RevolutionProgress >= 100 && !settlement.IsUnderSiege)
+                {
+                    this.StartRevolution(settlement);
+                    break;
+                }
+
+                if (settlementInfoRevolutions.RevolutionProgress < 0)
+                {
+                    settlementInfoRevolutions.RevolutionProgress = 0;
+                }
             }
-
-            if (!factionInfoRevolutions.CanRevolt)
-            {
-                settlementInfoRevolutions.RevolutionProgress = 0;
-                return false;
-            }
-
-            settlementInfoRevolutions.RevolutionProgress += SubModule.Configuration.MinimumObedianceLoyalty - settlement.Town.Loyalty;
-
-            if (settlementInfoRevolutions.RevolutionProgress >= 100 && !settlement.IsUnderSiege)
-            {
-                return true;
-            }
-
-            if (settlementInfoRevolutions.RevolutionProgress < 0)
-            {
-                settlementInfoRevolutions.RevolutionProgress = 0;
-            }
-
-            return false;
         }
 
         public void StartRevolution(Settlement settlement)
