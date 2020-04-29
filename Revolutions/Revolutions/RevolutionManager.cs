@@ -60,7 +60,7 @@ namespace Revolutions.Revolutions
 
             if (!factionInfoRevolutions.CanRevolt )
             {
-                settlementInfoRevolutions.RevoltProgress = 0;
+                settlementInfoRevolutions.RevolutionProgress = 0;
                 return false;
             }
 
