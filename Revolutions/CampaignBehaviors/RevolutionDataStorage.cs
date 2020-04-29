@@ -10,7 +10,7 @@ using System.IO;
 
 namespace Revolutions.CampaignBehaviors
 {
-    public  abstract class BaseRevolutionBeavior : CampaignBehaviorBase
+    public class RevolutionDataStorage
     {
         [SaveableField(0)]
         internal string SaveId = string.Empty;

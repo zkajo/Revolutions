@@ -1,12 +1,19 @@
-﻿using System;
+﻿using Revolutions.CampaignBehaviors;
+using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using Revolutions.CampaignBehaviors;
 
 namespace Revolutions.CampaignBehaviours
 {
-    public class RevolutionBehavior : BaseRevolutionBeavior
+    public class RevolutionBehavior : CampaignBehaviorBase
     {
+        private readonly RevolutionDataStorage RevolutionDataStorage;
+
+        public RevolutionBehavior(ref RevolutionDataStorage revolutionDataStorage)
+        {
+            this.RevolutionDataStorage = revolutionDataStorage;
+        }
+
         public override void RegisterEvents()
         {
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnSessionLaunchedEvent));
@@ -16,27 +23,27 @@ namespace Revolutions.CampaignBehaviours
         {
             if (dataStore.IsLoading)
             {
-                dataStore.SyncData("Revolutions.SaveId", ref base.SaveId);
-                base.LoadData(base.SaveId);
+                dataStore.SyncData("Revolutions.SaveId", ref this.RevolutionDataStorage.SaveId);
+                this.RevolutionDataStorage.LoadData(this.RevolutionDataStorage.SaveId);
             }
 
             if (dataStore.IsSaving)
             {
-                if (base.SaveId.IsEmpty())
+                if (this.RevolutionDataStorage.SaveId.IsEmpty())
                 {
-                    base.SaveId = Guid.NewGuid().ToString();
+                    this.RevolutionDataStorage.SaveId = Guid.NewGuid().ToString();
                 }
 
-                dataStore.SyncData("Revolutions.SaveId", ref base.SaveId);
-                base.SaveData(base.SaveId);
+                dataStore.SyncData("Revolutions.SaveId", ref this.RevolutionDataStorage.SaveId);
+                this.RevolutionDataStorage.SaveData(this.RevolutionDataStorage.SaveId);
             }
         }
 
         private void OnSessionLaunchedEvent(CampaignGameStarter obj)
         {
-            if (base.SaveId.IsEmpty())
+            if (this.RevolutionDataStorage.SaveId.IsEmpty())
             {
-                base.InitializeData();
+                this.RevolutionDataStorage.InitializeData();
             }
         }
     }

@@ -13,9 +13,15 @@ namespace Revolutions
 {
     public class SubModule : MBSubModuleBase
     {
-        public static Configuration Configuration;
+        private RevolutionDataStorage _revolutionDataStorage;
 
+        public static Configuration Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
+
+        public SubModule()
+        {
+            this._revolutionDataStorage = new RevolutionDataStorage();
+        }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
@@ -69,8 +75,8 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter campaignGameStarter)
         {
-            campaignGameStarter.AddBehavior(new RevolutionBehavior());
-            campaignGameStarter.AddBehavior(new RevolutionDailyBehavior());
+            campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._revolutionDataStorage));
+            campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._revolutionDataStorage));
         }
     }
 }
