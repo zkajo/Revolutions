@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Factions
 {
@@ -9,6 +10,11 @@ namespace ModLibrary.Factions
         public FactionInfo()
         {
 
+        }
+
+        public FactionInfo(IFaction faction)
+        {
+            this.FactionId = faction.StringId;
         }
 
         public string FactionId { get; set; }

@@ -7,8 +7,14 @@ namespace Revolutions.Settlements
     [Serializable]
     public class SettlementInfoRevolutions : SettlementInfo
     {
-        public SettlementInfoRevolutions()
+        public SettlementInfoRevolutions() : base()
         {
+            this.LoyalFactionId = base.InitialFactionId;
+        }
+
+        public SettlementInfoRevolutions(Settlement settlement) : base(settlement)
+        {
+            this.LoyalFactionId = base.InitialFactionId;
         }
 
         public string LoyalFactionId { get; set; }

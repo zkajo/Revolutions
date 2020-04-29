@@ -26,10 +26,6 @@ namespace Revolutions
             RevolutionsManagers.SettlementManager.SettlementInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
             RevolutionsManagers.FactionManager.FactionInfos = FileManager.Instance.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
             RevolutionsManagers.RevolutionManager.Revolutions = FileManager.Instance.Load<List<Revolution>>(directoryPath, "Revolutions");
-
-            RevolutionsManagers.SettlementManager.SettlementInfos.ForEach(settlement => settlement.SetInitialValues());
-            RevolutionsManagers.FactionManager.FactionInfos.ForEach(faction => faction.SetInitialValues());
-            RevolutionsManagers.RevolutionManager.Revolutions.ForEach(revolution => revolution.SetInitialValues());
         }
 
         internal void SaveData()

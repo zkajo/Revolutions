@@ -4,10 +4,6 @@ namespace Revolutions.Factions
 {
     public static class FactionInfoRevolutionsExtesion
     {
-        public static void SetInitialValues(this FactionInfoRevolutions factionInfoRevolutions)
-        {
-        }
-
         public static void CityRevoltionFailed(this FactionInfoRevolutions factionInfoRevolutions, Settlement settlement)
         {
             factionInfoRevolutions.CanRevolt = false;

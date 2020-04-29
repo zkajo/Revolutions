@@ -1,13 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using ModLibrary.Settlements;
-using Revolutions.Settlements;
-using Revolutions.Revolutions;
-using Revolutions.Factions;
-using ModLibrary.Factions;
 using TaleWorlds.CampaignSystem.Actions;
 
 namespace Revolutions.CampaignBehaviors

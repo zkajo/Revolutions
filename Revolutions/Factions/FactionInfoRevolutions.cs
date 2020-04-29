@@ -1,12 +1,18 @@
 ﻿using System;
 using ModLibrary.Factions;
+using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Factions
 {
     [Serializable]
     public class FactionInfoRevolutions : FactionInfo
     {
-        public FactionInfoRevolutions()
+        public FactionInfoRevolutions() : base()
+        {
+
+        }
+
+        public FactionInfoRevolutions(IFaction faction) : base(faction)
         {
 
         }
