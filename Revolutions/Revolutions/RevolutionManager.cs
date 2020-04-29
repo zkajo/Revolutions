@@ -123,9 +123,10 @@ namespace Revolutions.Revolutions
 
         public void EndSucceededRevoluton(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
         {
-            //TODO: Succeed Logic
+            Settlement currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
 
-            factionInfoRevolutions.CityRevoltionFailed(settlementInfoRevolutions);
+            //TODO: Succeed Logic
+            factionInfoRevolutions.CityRevoltionSucceeded(currentSettlement);
         }
     }
 }
