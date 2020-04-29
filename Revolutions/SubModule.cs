@@ -4,9 +4,8 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
-using Revolutions.Models;
 using ModLibrary.Files;
-using Revolutions.CampaignBehaviours;
+using Revolutions.Models;
 using Revolutions.CampaignBehaviors;
 
 namespace Revolutions

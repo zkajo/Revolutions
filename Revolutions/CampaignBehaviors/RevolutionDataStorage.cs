@@ -1,12 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
+using System.IO;
 using System.Collections.Generic;
-using TaleWorlds.CampaignSystem;
 using TaleWorlds.SaveSystem;
-using Revolutions.Settlements;
 using ModLibrary.Files;
 using ModLibrary.Settlements;
-using System.IO;
+using Revolutions.Settlements;
 
 namespace Revolutions.CampaignBehaviors
 {

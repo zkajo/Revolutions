@@ -1,9 +1,8 @@
-﻿using Revolutions.CampaignBehaviors;
-using System;
+﻿using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
-namespace Revolutions.CampaignBehaviours
+namespace Revolutions.CampaignBehaviors
 {
     public class RevolutionBehavior : CampaignBehaviorBase
     {

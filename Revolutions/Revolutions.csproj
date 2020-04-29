@@ -73,7 +73,7 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
-    <Compile Include="CampaignBehaviors\BaseRevolutionBeavior.cs" />
+    <Compile Include="CampaignBehaviors\RevolutionDataStorage.cs" />
     <Compile Include="CampaignBehaviors\RevolutionBehaviour.cs" />
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
     <Compile Include="Models\Configuration.cs" />
