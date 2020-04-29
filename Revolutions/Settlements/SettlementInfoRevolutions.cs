@@ -27,6 +27,8 @@ namespace Revolutions.Settlements
             base.PreviousFactionId = settlementInfo.PreviousFactionId;
         }
 
+        public bool IsOwnerInSettlement { get; set; } = false;
+
         public float RevolutionProgress { get; set; } = 0;
 
         public int DaysOwnedByOwner { get; set; } = 0;

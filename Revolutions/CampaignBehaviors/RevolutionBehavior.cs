@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModLibrary.Settlements;
+using Revolutions.Settlements;
+using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
@@ -16,6 +18,8 @@ namespace Revolutions.CampaignBehaviors
         public override void RegisterEvents()
         {
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnSessionLaunchedEvent));
+            CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.SettlementEntered));
+            CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -43,6 +47,26 @@ namespace Revolutions.CampaignBehaviors
             if (this.DataStorage.SaveId.IsEmpty())
             {
                 this.DataStorage.InitializeData();
+            }
+        }
+
+        private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
+        {
+            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+
+            if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan.StringId == settlement.OwnerClan.StringId)
+            {
+                settlementInfo.IsOwnerInSettlement = true;
+            }
+        }
+
+        private void OnSettlementLeftEvent(MobileParty mobileParty, Settlement settlement)
+        {
+            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+
+            if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan.StringId == settlement.OwnerClan.StringId)
+            {
+                settlementInfo.IsOwnerInSettlement = false;
             }
         }
     }

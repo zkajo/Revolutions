@@ -2,12 +2,11 @@
 using ModLibrary.Settlements;
 using Revolutions.Factions;
 using Revolutions.Settlements;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
+using TaleWorlds.Localization;
 
 namespace Revolutions.Revolutions
 {
@@ -48,9 +47,33 @@ namespace Revolutions.Revolutions
             return this.GetParty(revolution.PartyId);
         }
 
-        public bool CheckRevolutionProgress(SettlementInfoRevolutions settlementInfoRevolutions)
+        public void IncreaseDailyLoyaltyForSettlement(Settlement settlement)
         {
-            Settlement settlement = ((SettlementInfo)settlementInfoRevolutions).GetSettlement();
+            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+
+            if (Settlement.CurrentSettlement == null || Settlement.CurrentSettlement.StringId != settlement.StringId)
+            {
+                return;
+            }
+
+            if (!settlementInfo.IsOwnerInSettlement)
+            {
+                return;
+            }
+
+            settlement.Town.Loyalty += SubModule.Configuration.PlayerInTownLoyaltyIncrease;
+
+            if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
+            {
+                TextObject textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
+                textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
+                InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
+            }
+        }
+
+        public bool CheckRevolutionProgress(Settlement settlement)
+        {
+            SettlementInfoRevolutions settlementInfoRevolutions = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement);
             FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
             if (settlementInfoRevolutions.OriginalFactionId == settlementInfoRevolutions.CurrentFactionId)
@@ -58,7 +81,7 @@ namespace Revolutions.Revolutions
                 return false;
             }
 
-            if (!factionInfoRevolutions.CanRevolt )
+            if (!factionInfoRevolutions.CanRevolt)
             {
                 settlementInfoRevolutions.RevolutionProgress = 0;
                 return false;
@@ -79,9 +102,10 @@ namespace Revolutions.Revolutions
             return false;
         }
 
-        public void StartRevolution(SettlementInfoRevolutions settlementInfoRevolutions)
+        public void StartRevolution(Settlement settlement)
         {
-            Settlement settlement = ((SettlementInfo)settlementInfoRevolutions).GetSettlement();
+            SettlementInfoRevolutions settlementInfoRevolutions = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement);
+            FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
             this.Revolutions.Add(new Revolution());
         }
