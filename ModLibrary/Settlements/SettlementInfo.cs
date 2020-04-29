@@ -32,5 +32,11 @@ namespace ModLibrary.Settlements
         public string CurrentFactionId { get; set; }
 
         public string PreviousFactionId { get; set; }
+
+        public void ChangeOwner(Hero oldOwner, Hero newOwner)
+        {
+            CurrentFactionId = newOwner.Clan.MapFaction.StringId;
+            PreviousFactionId = oldOwner.Clan.MapFaction.StringId;
+        }
     }
 }

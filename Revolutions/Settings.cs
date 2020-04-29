@@ -20,5 +20,9 @@ namespace Revolutions
         public int MinimumObedianceLoyalty = 25;
 
         public int PlayerInTownLoyaltyIncrease = 5;
+        
+        public float OverExtensionMultiplier = 2.0f;
+        
+        public float BasePlayerLoyalty = 5.0f;
     }
 }

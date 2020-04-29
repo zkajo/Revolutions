@@ -8,6 +8,7 @@ using Revolutions.Settlements;
 using Revolutions.Revolutions;
 using Revolutions.Factions;
 using ModLibrary.Factions;
+using TaleWorlds.CampaignSystem.Actions;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -26,6 +27,8 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.SettlementEntered));
             CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
+            CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, 
+                ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementChanged));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -56,9 +59,15 @@ namespace Revolutions.CampaignBehaviors
             }
         }
 
+        private void OnSettlementChanged(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
+        {
+            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+            settlementInfo.ChangeOwner(oldOwner, newOwner);
+        }
+
         private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
         {
-            if (mobileParty == null || !mobileParty.IsLordParty)
+            if (mobileParty == null || !mobileParty.IsLordParty || mobileParty.LeaderHero == null)
             {
                 return;
             }
@@ -76,7 +85,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementLeftEvent(MobileParty mobileParty, Settlement settlement)
         {
-            if (mobileParty == null || !mobileParty.IsLordParty)
+            if (mobileParty == null || !mobileParty.IsLordParty || mobileParty.LeaderHero == null)
             {
                 return;
             }

@@ -21,7 +21,6 @@ namespace Revolutions.Factions
         {
             base.FactionId = factionInfo.FactionId;
             base.InitialTownsCount = factionInfo.InitialTownsCount;
-            base.CurrentTownsCount = factionInfo.CurrentTownsCount;
         }
 
         public string RevoltedSettlementId { get; set; }

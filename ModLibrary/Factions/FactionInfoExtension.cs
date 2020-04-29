@@ -9,10 +9,5 @@ namespace ModLibrary.Factions
         {
             return FactionManager<FactionInfo>.Instance.GetFaction(factionInfo);
         }
-
-        public static void UpdateCurrentTownsCount(this FactionInfo factionInfo)
-        {
-            factionInfo.CurrentTownsCount = FactionManager<FactionInfo>.Instance.GetFaction(factionInfo).Settlements.Count();
-        }
     }
 }

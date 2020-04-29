@@ -6,6 +6,7 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
 using ModLibrary.Files;
 using Revolutions.CampaignBehaviors;
+using Revolutions.Models;
 
 namespace Revolutions
 {
@@ -71,6 +72,7 @@ namespace Revolutions
         {
             campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._dataStorage));
             campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._dataStorage));
+            campaignGameStarter.AddModel(new LoyaltyModel(ref this._dataStorage));
         }
     }
 }
