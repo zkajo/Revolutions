@@ -25,6 +25,7 @@ namespace Revolutions.Settlements
             base.OriginalFactionId = settlementInfo.OriginalFactionId;
             base.CurrentFactionId = settlementInfo.CurrentFactionId;
             base.PreviousFactionId = settlementInfo.PreviousFactionId;
+            LoyalFactionID = settlementInfo.OriginalFactionId;
         }
 
         public bool IsOwnerInSettlement { get; set; } = false;
@@ -32,5 +33,7 @@ namespace Revolutions.Settlements
         public float RevolutionProgress { get; set; } = 0;
 
         public int DaysOwnedByOwner { get; set; } = 0;
+        
+        public string LoyalFactionID { get; set; }
     }
 }

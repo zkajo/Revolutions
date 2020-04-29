@@ -50,16 +50,16 @@ namespace Revolutions.Models
             return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, explanation);
         }
 
-        private void Overextension(SettlementInfo settlement, ref ExplainedNumber explainedNumber)
+        private void Overextension(SettlementInfoRevolutions settlement, ref ExplainedNumber explainedNumber)
         {
-            if (settlement.GetCurrentFaction().StringId == settlement.GetOriginalFaction().StringId)
+            if (settlement.GetCurrentFaction().StringId == settlement.GetLoyalFaction().StringId)
             {
                 return;
             }
 
             if (SubModule.Configuration.EmpireLoyaltyMechanics)
             {
-                if (settlement.IsOriginalOwnerOfImperialCulture() && settlement.IsCurrentOwnerOfImperialCulture())
+                if (IsTownOfImperialCulture(settlement) && settlement.IsCurrentOwnerOfImperialCulture())
                 {
                     return;
                 }   
@@ -71,11 +71,11 @@ namespace Revolutions.Models
             explainedNumber.Add(overExtension * SubModule.Configuration.OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
         }
         
-        private void BaseLoyalty(SettlementInfo info, ref ExplainedNumber explainedNumber)
+        private void BaseLoyalty(SettlementInfoRevolutions info, ref ExplainedNumber explainedNumber)
         {
             if (SubModule.Configuration.EmpireLoyaltyMechanics)
             {
-                if (info.IsOriginalOwnerOfImperialCulture())
+                if (IsTownOfImperialCulture(info))
                 {
                     if (info.IsCurrentOwnerOfImperialCulture())
                     {
@@ -93,7 +93,7 @@ namespace Revolutions.Models
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_imperialAvers"));
                     }
                     
-                    if (info.OriginalFactionId != info.CurrentFactionId)
+                    if (info.LoyalFactionID != info.CurrentFactionId)
                     {
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                     }
@@ -101,11 +101,16 @@ namespace Revolutions.Models
             }
             else
             {
-                if (info.OriginalFactionId != info.CurrentFactionId)
+                if (info.LoyalFactionID != info.CurrentFactionId)
                 {
                     explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                 }
             }
+        }
+
+        private bool IsTownOfImperialCulture(SettlementInfoRevolutions settlement)
+        {
+            return settlement.GetSettlement().Culture.Name.ToLower().Contains("empire");
         }
     }
 }

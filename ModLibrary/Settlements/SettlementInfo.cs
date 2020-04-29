@@ -28,7 +28,7 @@ namespace ModLibrary.Settlements
         public string InitialFactionId { get; set; }
 
         public string OriginalFactionId { get; set; }
-
+        
         public string CurrentFactionId { get; set; }
 
         public string PreviousFactionId { get; set; }

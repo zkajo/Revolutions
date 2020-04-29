@@ -1,4 +1,5 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using ModLibrary.Factions;
+using TaleWorlds.CampaignSystem;
 using ModLibrary.Settlements;
 
 namespace Revolutions.Settlements
@@ -7,16 +8,16 @@ namespace Revolutions.Settlements
     {
         public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfoRevolutions, IFaction faction = null)
         {
-            ((SettlementInfo)settlementInfoRevolutions).UpdateOwner(faction);
+            settlementInfoRevolutions.UpdateOwner(faction);
 
-            if (settlementInfoRevolutions.OriginalFactionId == settlementInfoRevolutions.CurrentFactionId)
+            if (settlementInfoRevolutions.LoyalFactionID == settlementInfoRevolutions.CurrentFactionId)
             {
                 return;
             }
 
             if (settlementInfoRevolutions.DaysOwnedByOwner >= SubModule.Configuration.DaysUntilLoyaltyChange)
             {
-                settlementInfoRevolutions.CurrentFactionId = settlementInfoRevolutions.CurrentFactionId;
+                settlementInfoRevolutions.LoyalFactionID = settlementInfoRevolutions.CurrentFactionId;
             }
 
             settlementInfoRevolutions.DaysOwnedByOwner++;
@@ -26,6 +27,11 @@ namespace Revolutions.Settlements
         {
             settlementInfoRevolutions.RevolutionProgress = 0;
             settlementInfoRevolutions.DaysOwnedByOwner = 0;
+        }
+
+        public static IFaction GetLoyalFaction(this SettlementInfoRevolutions settlementInfo)
+        {
+            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.LoyalFactionID).MapFaction;
         }
     }
 }
