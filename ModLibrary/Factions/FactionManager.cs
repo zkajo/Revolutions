@@ -24,14 +24,31 @@ namespace ModLibrary.Factions
 
         public void InitializeFactionInfos()
         {
-            foreach (var Faction in Campaign.Current.Factions)
+            foreach (var faction in Campaign.Current.Factions)
             {
-                this.FactionInfos.Add((T)Activator.CreateInstance(typeof(T), Faction));
+                AddFaction(faction);
             }
         }
 
         public T GetFactionInfo(string factionId)
         {
+            var faction = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
+
+            if (faction != null)
+            {
+                return faction;
+            }
+
+            foreach (var mapFaction in Campaign.Current.Factions)
+            {
+                var info = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
+                
+                if (info == null)
+                {
+                    AddFaction(mapFaction);
+                }
+            }
+
             return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
         }
 
@@ -48,6 +65,11 @@ namespace ModLibrary.Factions
         public IFaction GetFaction(T factionInfo)
         {
             return this.GetFaction(factionInfo.FactionId);
+        }
+        
+        private void AddFaction(IFaction faction)
+        {
+            this.FactionInfos.Add((T)Activator.CreateInstance(typeof(T), faction));
         }
     }
 }
