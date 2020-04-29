@@ -51,7 +51,7 @@ namespace Revolutions.Revolutions
         {
             foreach (var settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
             {
-                var settlement = settlementInfoRevolutions.GetSettlement();
+                var settlement = settlementInfoRevolutions.Settlement;
 
                 foreach (var mobileParty in settlement.Parties)
                 {
@@ -76,7 +76,7 @@ namespace Revolutions.Revolutions
         {
             foreach (var settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
             {
-                var settlement = settlementInfoRevolutions.GetSettlement();
+                var settlement = settlementInfoRevolutions.Settlement;
                 var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
                 if (settlementInfoRevolutions.LoyalFactionId == settlementInfoRevolutions.CurrentFactionId)

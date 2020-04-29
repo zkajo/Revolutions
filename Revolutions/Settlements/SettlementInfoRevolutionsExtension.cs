@@ -1,5 +1,4 @@
-﻿using ModLibrary.Factions;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 using ModLibrary.Settlements;
 
 namespace Revolutions.Settlements
@@ -27,11 +26,6 @@ namespace Revolutions.Settlements
         {
             settlementInfoRevolutions.RevolutionProgress = 0;
             settlementInfoRevolutions.DaysOwnedByOwner = 0;
-        }
-
-        public static IFaction GetLoyalFaction(this SettlementInfoRevolutions settlementInfo)
-        {
-            return RevolutionsManagers.FactionManager.GetFaction(settlementInfo.LoyalFactionId).MapFaction;
         }
     }
 }

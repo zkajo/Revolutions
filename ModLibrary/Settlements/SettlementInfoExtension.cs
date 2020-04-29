@@ -1,36 +1,9 @@
 ﻿using TaleWorlds.CampaignSystem;
-using TaleWorlds.Core;
-using ModLibrary.Factions;
 
 namespace ModLibrary.Settlements
 {
     public static class SettlementInfoExtension
     {
-        public static Settlement GetSettlement(this SettlementInfo settlementInfo)
-        {
-            return ModLibraryManagers.SettlementManager.GetSettlement(settlementInfo);
-        }
-
-        public static CultureObject GetOriginalCulture(this SettlementInfo settlementInfo)
-        {
-            return Game.Current.ObjectManager.GetObject<CultureObject>(settlementInfo.InitialCultureId);
-        }
-
-        public static IFaction GetInitialFaction(this SettlementInfo settlementInfo)
-        {
-            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.InitialFactionId).MapFaction;
-        }
-
-        public static IFaction GetCurrentFaction(this SettlementInfo settlementInfo)
-        {
-            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.CurrentFactionId).MapFaction;
-        }
-
-        public static IFaction GetPreviousFaction(this SettlementInfo settlementInfo)
-        {
-            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.PreviousFactionId).MapFaction;
-        }
-
         public static void UpdateOwner(this SettlementInfo settlementInfo, IFaction faction = null)
         {
             if (faction == null)
@@ -57,17 +30,17 @@ namespace ModLibrary.Settlements
 
         public static bool IsOriginalOwnerOfImperialCulture(this SettlementInfo settlementInfo)
         {
-            return settlementInfo.GetOriginalCulture().Name.ToLower().Contains("empire");
+            return settlementInfo.InitialCulture.Name.ToLower().Contains("empire");
         }
 
         public static bool IsCurrentOwnerOfImperialCulture(this SettlementInfo settlementInfo)
         {
-            return settlementInfo.GetCurrentFaction().Culture.Name.ToLower().Contains("empire");
+            return settlementInfo.CurrentFaction.Culture.Name.ToLower().Contains("empire");
         }
 
         public static bool IsPreviousOwnerOfImperialCulture(this SettlementInfo settlementInfo)
         {
-            return settlementInfo.GetPreviousFaction().Culture.Name.ToLower().Contains("empire");
+            return settlementInfo.PreviousFaction.Culture.Name.ToLower().Contains("empire");
         }
     }
 }

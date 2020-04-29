@@ -24,7 +24,7 @@ namespace Revolutions.Settlements
             base.InitialFactionId = settlementInfo.InitialFactionId;
             base.CurrentFactionId = settlementInfo.CurrentFactionId;
             base.PreviousFactionId = settlementInfo.PreviousFactionId;
-            LoyalFactionId = settlementInfo.InitialFactionId;
+            this.LoyalFactionId = settlementInfo.InitialFactionId;
         }
 
         public string LoyalFactionId { get; set; }
@@ -34,5 +34,7 @@ namespace Revolutions.Settlements
         public float RevolutionProgress { get; set; } = 0;
 
         public int DaysOwnedByOwner { get; set; } = 0;
+
+        public IFaction LoyalFaction => RevolutionsManagers.FactionManager.GetFaction(this.LoyalFactionId);
     }
 }
