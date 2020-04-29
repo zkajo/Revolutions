@@ -58,9 +58,17 @@ namespace Revolutions.CampaignBehaviors
 
         private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
         {
+            if (mobileParty == null || !mobileParty.IsLordParty)
+            {
+                return;
+            }
+            
             SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
 
-            if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan.StringId == settlement.OwnerClan.StringId)
+            Hero partyLeader = mobileParty.Leader.HeroObject;
+            Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
+            
+            if (partyLeader.StringId == clanLeader.StringId && clanLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
                 settlementInfo.IsOwnerInSettlement = true;
             }
@@ -68,9 +76,17 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementLeftEvent(MobileParty mobileParty, Settlement settlement)
         {
+            if (mobileParty == null || !mobileParty.IsLordParty)
+            {
+                return;
+            }
+            
             SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
 
-            if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan.StringId == settlement.OwnerClan.StringId)
+            Hero partyLeader = mobileParty.Leader.HeroObject;
+            Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
+            
+            if (partyLeader.StringId == clanLeader.StringId && partyLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
                 settlementInfo.IsOwnerInSettlement = false;
             }
