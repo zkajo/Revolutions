@@ -5,7 +5,6 @@ using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
 using ModLibrary.Files;
-using Revolutions.Models;
 using Revolutions.CampaignBehaviors;
 
 namespace Revolutions
@@ -14,7 +13,7 @@ namespace Revolutions
     {
         private DataStorage _dataStorage;
 
-        public static Configuration Configuration;
+        public static Settings Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
@@ -56,7 +55,7 @@ namespace Revolutions
             {
                 campaignGameStarter.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
 
-                SubModule.Configuration = FileManager.Instance.Load<Configuration>(SubModule.ModuleDataPath, "Settings") ?? new Configuration();
+                SubModule.Configuration = FileManager.Instance.Load<Settings>(SubModule.ModuleDataPath, "Settings") ?? new Settings();
 
                 this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);

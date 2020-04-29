@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Revolutions.Models
+namespace Revolutions
 {
     [Serializable]
-    public class Configuration
+    public class Settings
     {
         public float RevoltCooldownTime = 30.0f;
 
@@ -17,6 +17,8 @@ namespace Revolutions.Models
 
         public bool AllowMinorFactions = false;
 
-        public bool DebugMode = false;
+        public int MinimumObedianceLoyalty = 25;
+
+        public int PlayerInTownLoyaltyIncrease = 5;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using ModLibrary.Factions;
+using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Factions
 {
@@ -7,6 +8,11 @@ namespace Revolutions.Factions
     public class FactionInfoRevolutions : FactionInfo
     {
         public FactionInfoRevolutions()
+        {
+
+        }
+
+        public FactionInfoRevolutions(IFaction faction) : base(faction)
         {
 
         }

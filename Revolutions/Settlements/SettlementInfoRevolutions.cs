@@ -1,5 +1,6 @@
 ﻿using System;
 using ModLibrary.Settlements;
+using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Settlements
 {
@@ -7,6 +8,11 @@ namespace Revolutions.Settlements
     public class SettlementInfoRevolutions : SettlementInfo
     {
         public SettlementInfoRevolutions()
+        {
+
+        }
+
+        public SettlementInfoRevolutions(Settlement settlement) : base(settlement)
         {
 
         }

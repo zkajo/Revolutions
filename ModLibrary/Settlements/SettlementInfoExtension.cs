@@ -6,6 +6,11 @@ namespace ModLibrary.Settlements
 {
     public static class SettlementInfoExtension
     {
+        public static Settlement GetSettlement(this SettlementInfo settlementInfo)
+        {
+            return SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfo);
+        }
+
         public static CultureObject GetOriginalCulture(this SettlementInfo settlementInfo)
         {
             return Game.Current.ObjectManager.GetObject<CultureObject>(settlementInfo.InitialCultureId);

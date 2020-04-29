@@ -75,7 +75,10 @@
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
     <Compile Include="Factions\FactionInfoRevolutions.cs" />
     <Compile Include="Factions\FactionInfoRevolutionsExtesion.cs" />
-    <Compile Include="Models\Configuration.cs" />
+    <Compile Include="Revolutions\Revolution.cs" />
+    <Compile Include="Revolutions\RevolutionExtension.cs" />
+    <Compile Include="Revolutions\RevolutionManager.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Settlements\SettlementInfoRevolutionsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settlements\SettlementInfoRevolutions.cs" />
