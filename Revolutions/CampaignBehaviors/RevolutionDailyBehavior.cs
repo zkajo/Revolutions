@@ -1,9 +1,6 @@
-﻿using ModLibrary.Settlements;
-using Revolutions.Revolutions;
-using Revolutions.Settlements;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using TaleWorlds.CampaignSystem;
+using Revolutions.Revolutions;
 
 namespace Revolutions.CampaignBehaviors
 {

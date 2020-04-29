@@ -1,12 +1,12 @@
-﻿using ModLibrary.Factions;
-using ModLibrary.Settlements;
-using Revolutions.Factions;
-using Revolutions.Settlements;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Localization;
+using ModLibrary.Factions;
+using ModLibrary.Settlements;
+using Revolutions.Factions;
+using Revolutions.Settlements;
 
 namespace Revolutions.Revolutions
 {
@@ -113,9 +113,19 @@ namespace Revolutions.Revolutions
             this.Revolutions.Add(new Revolution());
         }
 
-        public void EndRevolution(Revolution revolution)
+        public void EndFailedRevolution(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
         {
+            Settlement currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
+
+            factionInfoRevolutions.CityRevoltionFailed(currentSettlement);
             this.Revolutions.Remove(revolution);
+        }
+
+        public void EndSucceededRevoluton(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
+        {
+            //TODO: Succeed Logic
+
+            factionInfoRevolutions.CityRevoltionFailed(settlementInfoRevolutions);
         }
     }
 }
