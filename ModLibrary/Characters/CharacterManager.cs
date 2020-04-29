@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
@@ -19,7 +20,7 @@ namespace ModLibrary.Characters
 
         #endregion
         
-        private CharacterObject CreateLordCharacter(CultureObject culture)
+        public CharacterObject CreateLordCharacter(CultureObject culture)
         {
             List<CharacterObject> characterObjects = new List<CharacterObject>();
             
