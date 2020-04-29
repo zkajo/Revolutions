@@ -21,7 +21,7 @@ namespace Revolutions
 
         internal void LoadData()
         {
-            string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
+            var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
             RevolutionsManagers.SettlementManager.SettlementInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
             RevolutionsManagers.FactionManager.FactionInfos = FileManager.Instance.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
@@ -30,7 +30,7 @@ namespace Revolutions
 
         internal void SaveData()
         {
-            string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
+            var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
             FileManager.Instance.Save(RevolutionsManagers.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");
             FileManager.Instance.Save(RevolutionsManagers.FactionManager.FactionInfos, directoryPath, "FactionInfos");

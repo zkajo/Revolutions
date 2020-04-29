@@ -25,7 +25,7 @@ namespace Revolutions
             }
             catch (Exception exception)
             {
-                string errorMessage = "Revolutions: Could not be loaded! ";
+                var errorMessage = "Revolutions: Could not be loaded! ";
                 InformationManager.DisplayMessage(new InformationMessage(errorMessage + exception?.ToString()));
             }
         }
@@ -45,7 +45,7 @@ namespace Revolutions
             }
             catch (Exception exception)
             {
-                string exceptionMessage = "Revolutions: Failed to load on game start! ";
+                var exceptionMessage = "Revolutions: Failed to load on game start! ";
                 InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
             }
         }
@@ -63,7 +63,7 @@ namespace Revolutions
             }
             catch (Exception exception)
             {
-                string exceptionMessage = "Revolutions: Failed to initialize! ";
+                var exceptionMessage = "Revolutions: Failed to initialize! ";
                 InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
             }
         }

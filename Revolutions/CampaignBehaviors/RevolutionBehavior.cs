@@ -27,8 +27,7 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.SettlementEntered));
             CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
-            CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero,
-                ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementChanged));
+            CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -59,9 +58,9 @@ namespace Revolutions.CampaignBehaviors
             }
         }
 
-        private void OnSettlementChanged(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
+        private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
             settlementInfo.ChangeOwner(oldOwner, newOwner);
         }
 
@@ -72,10 +71,10 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
 
-            Hero partyLeader = mobileParty.Leader.HeroObject;
-            Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
+            var partyLeader = mobileParty.Leader.HeroObject;
+            var clanLeader = mobileParty.Party.Owner.Clan.Leader;
 
             if (partyLeader.StringId == clanLeader.StringId && clanLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
@@ -90,10 +89,9 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
-
-            Hero partyLeader = mobileParty.Leader.HeroObject;
-            Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var partyLeader = mobileParty.Leader.HeroObject;
+            var clanLeader = mobileParty.Party.Owner.Clan.Leader;
 
             if (partyLeader.StringId == clanLeader.StringId && partyLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
@@ -103,16 +101,16 @@ namespace Revolutions.CampaignBehaviors
 
         private void MapEventEnded(MapEvent mapEvent)
         {
-            List<PartyBase> revolutionParties = RevolutionManager.Instance.Revolutions.Select(revolution => RevolutionManager.Instance.GetParty(revolution)).ToList();
-            PartyBase involvedRevolutionParty = mapEvent.InvolvedParties.Intersect(revolutionParties).FirstOrDefault();
+            var revolutionParties = RevolutionManager.Instance.Revolutions.Select(revolution => RevolutionManager.Instance.GetParty(revolution)).ToList();
+            var involvedRevolutionParty = mapEvent.InvolvedParties.Intersect(revolutionParties).FirstOrDefault();
             if (involvedRevolutionParty == null)
             {
                 return;
             }
 
-            Revolution currentRevolution = RevolutionManager.Instance.GetRevolution(involvedRevolutionParty.Id);
-            SettlementInfoRevolutions currentSettlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
-            FactionInfoRevolutions currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
+            var currentRevolution = RevolutionManager.Instance.GetRevolution(involvedRevolutionParty.Id);
+            var currentSettlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
+            var currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;
             if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedRevolutionParty.Id) == null)

@@ -24,7 +24,7 @@ namespace ModLibrary.Factions
 
         public void InitializeFactionInfos()
         {
-            foreach (IFaction Faction in Campaign.Current.Factions)
+            foreach (var Faction in Campaign.Current.Factions)
             {
                 this.FactionInfos.Add((T)Activator.CreateInstance(typeof(T), Faction));
             }

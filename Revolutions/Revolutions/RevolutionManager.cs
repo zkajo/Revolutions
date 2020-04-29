@@ -49,11 +49,11 @@ namespace Revolutions.Revolutions
 
         public void IncreaseDailyLoyaltyForSettlement()
         {
-            foreach (SettlementInfoRevolutions settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
+            foreach (var settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
             {
-                Settlement settlement = settlementInfoRevolutions.GetSettlement();
+                var settlement = settlementInfoRevolutions.GetSettlement();
 
-                foreach (MobileParty mobileParty in settlement.Parties)
+                foreach (var mobileParty in settlement.Parties)
                 {
                     if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan == settlement.OwnerClan)
                     {
@@ -61,7 +61,7 @@ namespace Revolutions.Revolutions
 
                         if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
                         {
-                            TextObject textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
+                            var textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
                             textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
                             InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
                         }
@@ -74,10 +74,10 @@ namespace Revolutions.Revolutions
 
         public void CheckRevolutionProgress()
         {
-            foreach (SettlementInfoRevolutions settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
+            foreach (var settlementInfoRevolutions in RevolutionsManagers.SettlementManager.SettlementInfos)
             {
-                Settlement settlement = settlementInfoRevolutions.GetSettlement();
-                FactionInfoRevolutions factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+                var settlement = settlementInfoRevolutions.GetSettlement();
+                var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
                 if (settlementInfoRevolutions.LoyalFactionID == settlementInfoRevolutions.CurrentFactionId)
                 {
@@ -107,15 +107,15 @@ namespace Revolutions.Revolutions
 
         public void StartRevolution(Settlement settlement)
         {
-            SettlementInfoRevolutions settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement);
-            FactionInfoRevolutions factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+            var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement);
+            var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
             this.Revolutions.Add(new Revolution());
         }
 
         public void EndFailedRevolution(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
         {
-            Settlement currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
+            var currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
 
             factionInfoRevolutions.CityRevoltionFailed(currentSettlement);
             this.Revolutions.Remove(revolution);
@@ -123,7 +123,7 @@ namespace Revolutions.Revolutions
 
         public void EndSucceededRevoluton(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
         {
-            Settlement currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
+            var currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
 
             //TODO: Succeed Logic
             factionInfoRevolutions.CityRevoltionSucceeded(currentSettlement);

@@ -10,14 +10,14 @@ namespace Revolutions.Settlements
         {
             settlementInfoRevolutions.UpdateOwner(faction);
 
-            if (settlementInfoRevolutions.LoyalFactionID == settlementInfoRevolutions.CurrentFactionId)
+            if (settlementInfoRevolutions.LoyalFactionId == settlementInfoRevolutions.CurrentFactionId)
             {
                 return;
             }
 
             if (settlementInfoRevolutions.DaysOwnedByOwner >= SubModule.Configuration.DaysUntilLoyaltyChange)
             {
-                settlementInfoRevolutions.LoyalFactionID = settlementInfoRevolutions.CurrentFactionId;
+                settlementInfoRevolutions.LoyalFactionId = settlementInfoRevolutions.CurrentFactionId;
             }
 
             settlementInfoRevolutions.DaysOwnedByOwner++;
@@ -31,7 +31,7 @@ namespace Revolutions.Settlements
 
         public static IFaction GetLoyalFaction(this SettlementInfoRevolutions settlementInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.LoyalFactionID).MapFaction;
+            return RevolutionsManagers.FactionManager.GetFaction(settlementInfo.LoyalFactionId).MapFaction;
         }
     }
 }
