@@ -5,6 +5,7 @@ using TaleWorlds.Core;
 using ModLibrary.Settlements;
 using Revolutions.Factions;
 using Revolutions.Settlements;
+using KingdomManager = ModLibrary.Kingdoms.KingdomManager;
 
 namespace Revolutions.Revolutions
 {
