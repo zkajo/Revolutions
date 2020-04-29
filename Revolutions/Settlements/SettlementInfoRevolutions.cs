@@ -9,22 +9,7 @@ namespace Revolutions.Settlements
     {
         public SettlementInfoRevolutions()
         {
-
-        }
-
-        public SettlementInfoRevolutions(Settlement settlement) : base(settlement)
-        {
-
-        }
-
-        public SettlementInfoRevolutions(SettlementInfo settlementInfo)
-        {
-            base.SettlementId = settlementInfo.SettlementId;
-            base.InitialCultureId = settlementInfo.InitialCultureId;
-            base.InitialFactionId = settlementInfo.InitialFactionId;
-            base.CurrentFactionId = settlementInfo.CurrentFactionId;
-            base.PreviousFactionId = settlementInfo.PreviousFactionId;
-            this.LoyalFactionId = settlementInfo.InitialFactionId;
+            this.LoyalFactionId = base.InitialFactionId;
         }
 
         public string LoyalFactionId { get; set; }

@@ -1,6 +1,5 @@
 ﻿using System;
 using ModLibrary.Factions;
-using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Factions
 {
@@ -10,17 +9,6 @@ namespace Revolutions.Factions
         public FactionInfoRevolutions()
         {
 
-        }
-
-        public FactionInfoRevolutions(IFaction faction) : base(faction)
-        {
-
-        }
-
-        public FactionInfoRevolutions(FactionInfo factionInfo)
-        {
-            base.FactionId = factionInfo.FactionId;
-            base.InitialTownsCount = factionInfo.InitialTownsCount;
         }
 
         public string RevoltedSettlementId { get; set; }

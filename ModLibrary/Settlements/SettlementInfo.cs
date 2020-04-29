@@ -12,15 +12,6 @@ namespace ModLibrary.Settlements
 
         }
 
-        public SettlementInfo(Settlement settlement)
-        {
-            this.SettlementId = settlement.StringId;
-            this.InitialCultureId = settlement.Culture.StringId;
-            this.InitialFactionId = settlement.MapFaction.StringId;
-            this.CurrentFactionId = settlement.MapFaction.StringId;
-            this.PreviousFactionId = settlement.MapFaction.StringId;
-        }
-
         public string SettlementId { get; set; }
 
         public string InitialCultureId { get; set; }
