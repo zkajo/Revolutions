@@ -14,29 +14,20 @@ namespace ModLibrary.Factions
 
         public FactionInfo(IFaction faction)
         {
-            this._faction = faction;
             this.FactionId = faction.StringId;
-            this.InitialTownsCount = CountTowns();
+            this.InitialTownsCount = this.CurrentTownsCount;
         }
 
         public string FactionId { get; set; }
 
         public int InitialTownsCount { get; set; } = 0;
 
-        public int CurrentTownsCount => CountTowns();
-
-        private IFaction _faction;
-
-        private int CountTowns()
+        public int CurrentTownsCount
         {
-            int count = 0;
-            
-            foreach (var town in _faction.Settlements.Where(n => n.IsTown))
+            get
             {
-                count++;
+                return FactionManager<FactionInfo>.Instance.GetFaction(FactionId).Settlements.Where(n => n.IsTown).Count();
             }
-
-            return count;
-        } 
+        }
     }
 }

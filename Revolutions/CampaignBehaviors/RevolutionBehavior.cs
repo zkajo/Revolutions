@@ -27,7 +27,7 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.SettlementEntered));
             CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
-            CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, 
+            CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero,
                 ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementChanged));
         }
 
@@ -61,7 +61,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementChanged(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
             settlementInfo.ChangeOwner(oldOwner, newOwner);
         }
 
@@ -71,12 +71,12 @@ namespace Revolutions.CampaignBehaviors
             {
                 return;
             }
-            
-            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+
+            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
 
             Hero partyLeader = mobileParty.Leader.HeroObject;
             Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
-            
+
             if (partyLeader.StringId == clanLeader.StringId && clanLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
                 settlementInfo.IsOwnerInSettlement = true;
@@ -89,12 +89,12 @@ namespace Revolutions.CampaignBehaviors
             {
                 return;
             }
-            
-            SettlementInfoRevolutions settlementInfo = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement.StringId);
+
+            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
 
             Hero partyLeader = mobileParty.Leader.HeroObject;
             Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
-            
+
             if (partyLeader.StringId == clanLeader.StringId && partyLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
                 settlementInfo.IsOwnerInSettlement = false;
@@ -111,8 +111,8 @@ namespace Revolutions.CampaignBehaviors
             }
 
             Revolution currentRevolution = RevolutionManager.Instance.GetRevolution(involvedRevolutionParty.Id);
-            SettlementInfoRevolutions currentSettlementInfoRevolutions = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(currentRevolution.SettlementId);
-            FactionInfoRevolutions currentFactionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
+            SettlementInfoRevolutions currentSettlementInfoRevolutions = SubModule.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
+            FactionInfoRevolutions currentFactionInfoRevolutions = SubModule.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;
             if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedRevolutionParty.Id) == null)

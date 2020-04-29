@@ -49,7 +49,7 @@ namespace Revolutions.Revolutions
 
         public void IncreaseDailyLoyaltyForSettlement()
         {
-            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos)
+            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SubModule.SettlementManager.SettlementInfos)
             {
                 Settlement settlement = settlementInfoRevolutions.GetSettlement();
 
@@ -74,10 +74,10 @@ namespace Revolutions.Revolutions
 
         public void CheckRevolutionProgress()
         {
-            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos)
+            foreach (SettlementInfoRevolutions settlementInfoRevolutions in SubModule.SettlementManager.SettlementInfos)
             {
                 Settlement settlement = settlementInfoRevolutions.GetSettlement();
-                FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+                FactionInfoRevolutions factionInfoRevolutions = SubModule.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
                 if (settlementInfoRevolutions.LoyalFactionID == settlementInfoRevolutions.CurrentFactionId)
                 {
@@ -107,8 +107,8 @@ namespace Revolutions.Revolutions
 
         public void StartRevolution(Settlement settlement)
         {
-            SettlementInfoRevolutions settlementInfoRevolutions = SettlementManager<SettlementInfoRevolutions>.Instance.GetSettlementInfo(settlement);
-            FactionInfoRevolutions factionInfoRevolutions = FactionManager<FactionInfoRevolutions>.Instance.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+            SettlementInfoRevolutions settlementInfoRevolutions = SubModule.SettlementManager.GetSettlementInfo(settlement);
+            FactionInfoRevolutions factionInfoRevolutions = SubModule.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
             this.Revolutions.Add(new Revolution());
         }

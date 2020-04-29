@@ -7,6 +7,10 @@ using TaleWorlds.Library;
 using ModLibrary.Files;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
+using ModLibrary.Settlements;
+using Revolutions.Settlements;
+using ModLibrary.Factions;
+using Revolutions.Factions;
 
 namespace Revolutions
 {
@@ -16,6 +20,10 @@ namespace Revolutions
 
         public static Settings Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
+
+        public static FactionManager<FactionInfoRevolutions> FactionManager { get; } = SubModule.FactionManager;
+
+        public static SettlementManager<SettlementInfoRevolutions> SettlementManager { get; }  = SubModule.SettlementManager;
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {

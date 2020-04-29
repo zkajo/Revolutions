@@ -17,16 +17,16 @@ namespace Revolutions
 
         internal void InitializeData()
         {
-            SettlementManager<SettlementInfoRevolutions>.Instance.InitializeSettlementInfos();
-            FactionManager<FactionInfoRevolutions>.Instance.InitializeFactionInfos();
+            SubModule.SettlementManager.InitializeSettlementInfos();
+            SubModule.FactionManager.InitializeFactionInfos();
         }
 
         internal void LoadData()
         {
             string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
-            SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
-            FactionManager<FactionInfoRevolutions>.Instance.FactionInfos = FileManager.Instance.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
+            SubModule.SettlementManager.SettlementInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
+            SubModule.FactionManager.FactionInfos = FileManager.Instance.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
             RevolutionManager.Instance.Revolutions = FileManager.Instance.Load<List<Revolution>>(directoryPath, "Revolutions");
         }
 
@@ -34,8 +34,8 @@ namespace Revolutions
         {
             string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
-            FileManager.Instance.Save(SettlementManager<SettlementInfoRevolutions>.Instance.SettlementInfos, directoryPath, "SettlementInfos");
-            FileManager.Instance.Save(FactionManager<FactionInfoRevolutions>.Instance.FactionInfos, directoryPath, "FactionInfos");
+            FileManager.Instance.Save(SubModule.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");
+            FileManager.Instance.Save(SubModule.FactionManager.FactionInfos, directoryPath, "FactionInfos");
             FileManager.Instance.Save(RevolutionManager.Instance.Revolutions, directoryPath, "Revolutions");
         }
     }
