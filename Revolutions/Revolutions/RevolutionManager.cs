@@ -79,7 +79,7 @@ namespace Revolutions.Revolutions
                 var settlement = settlementInfoRevolutions.GetSettlement();
                 var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
 
-                if (settlementInfoRevolutions.LoyalFactionID == settlementInfoRevolutions.CurrentFactionId)
+                if (settlementInfoRevolutions.LoyalFactionId == settlementInfoRevolutions.CurrentFactionId)
                 {
                     break;
                 }

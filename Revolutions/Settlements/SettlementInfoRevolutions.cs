@@ -24,7 +24,7 @@ namespace Revolutions.Settlements
             base.InitialFactionId = settlementInfo.InitialFactionId;
             base.CurrentFactionId = settlementInfo.CurrentFactionId;
             base.PreviousFactionId = settlementInfo.PreviousFactionId;
-            LoyalFactionID = settlementInfo.InitialFactionId;
+            LoyalFactionId = settlementInfo.InitialFactionId;
         }
 
         public string LoyalFactionId { get; set; }

@@ -93,7 +93,7 @@ namespace Revolutions.Models
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_imperialAvers"));
                     }
                     
-                    if (info.LoyalFactionID != info.CurrentFactionId)
+                    if (info.LoyalFactionId != info.CurrentFactionId)
                     {
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                     }
@@ -101,7 +101,7 @@ namespace Revolutions.Models
             }
             else
             {
-                if (info.LoyalFactionID != info.CurrentFactionId)
+                if (info.LoyalFactionId != info.CurrentFactionId)
                 {
                     explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                 }
