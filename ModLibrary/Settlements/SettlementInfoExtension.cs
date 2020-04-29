@@ -8,7 +8,7 @@ namespace ModLibrary.Settlements
     {
         public static Settlement GetSettlement(this SettlementInfo settlementInfo)
         {
-            return SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfo);
+            return ModLibraryManagers.SettlementManager.GetSettlement(settlementInfo);
         }
 
         public static CultureObject GetOriginalCulture(this SettlementInfo settlementInfo)
@@ -18,22 +18,22 @@ namespace ModLibrary.Settlements
 
         public static IFaction GetInitialFaction(this SettlementInfo settlementInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.InitialFactionId).MapFaction;
+            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.InitialFactionId).MapFaction;
         }
 
         public static IFaction GetOriginalFaction(this SettlementInfo settlementInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.OriginalFactionId).MapFaction;
+            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.OriginalFactionId).MapFaction;
         }
 
         public static IFaction GetCurrentFaction(this SettlementInfo settlementInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.CurrentFactionId).MapFaction;
+            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.CurrentFactionId).MapFaction;
         }
 
         public static IFaction GetPreviousFaction(this SettlementInfo settlementInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(settlementInfo.PreviousFactionId).MapFaction;
+            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.PreviousFactionId).MapFaction;
         }
 
         public static void UpdateOwner(this SettlementInfo settlementInfo, IFaction faction = null)

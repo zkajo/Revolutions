@@ -6,7 +6,7 @@ namespace ModLibrary.Factions
     {
         public static IFaction GetFaction(this FactionInfo factionInfo)
         {
-            return FactionManager<FactionInfo>.Instance.GetFaction(factionInfo);
+            return ModLibraryManagers.FactionManager.GetFaction(factionInfo);
         }
     }
 }

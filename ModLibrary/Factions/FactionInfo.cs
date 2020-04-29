@@ -26,7 +26,7 @@ namespace ModLibrary.Factions
         {
             get
             {
-                return FactionManager<FactionInfo>.Instance.GetFaction(FactionId).Settlements.Where(n => n.IsTown).Count();
+                return ModLibraryManagers.FactionManager.GetFaction(FactionId).Settlements.Where(n => n.IsTown).Count();
             }
         }
     }

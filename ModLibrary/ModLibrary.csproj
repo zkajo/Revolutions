@@ -75,6 +75,7 @@
     <Compile Include="Factions\FactionManager.cs" />
     <Compile Include="Factions\FactionInfoExtension.cs" />
     <Compile Include="Kingdoms\KingdomManager.cs" />
+    <Compile Include="ModLibraryManagers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="Settlements\SettlementInfo.cs" />

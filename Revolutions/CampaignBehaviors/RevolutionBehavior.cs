@@ -61,7 +61,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementChanged(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
+            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
             settlementInfo.ChangeOwner(oldOwner, newOwner);
         }
 
@@ -72,7 +72,7 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
+            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
 
             Hero partyLeader = mobileParty.Leader.HeroObject;
             Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
@@ -90,7 +90,7 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            SettlementInfoRevolutions settlementInfo = SubModule.SettlementManager.GetSettlementInfo(settlement.StringId);
+            SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
 
             Hero partyLeader = mobileParty.Leader.HeroObject;
             Hero clanLeader = mobileParty.Party.Owner.Clan.Leader;
@@ -111,8 +111,8 @@ namespace Revolutions.CampaignBehaviors
             }
 
             Revolution currentRevolution = RevolutionManager.Instance.GetRevolution(involvedRevolutionParty.Id);
-            SettlementInfoRevolutions currentSettlementInfoRevolutions = SubModule.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
-            FactionInfoRevolutions currentFactionInfoRevolutions = SubModule.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
+            SettlementInfoRevolutions currentSettlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
+            FactionInfoRevolutions currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;
             if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedRevolutionParty.Id) == null)
