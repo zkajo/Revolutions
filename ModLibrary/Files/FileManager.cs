@@ -12,7 +12,6 @@ namespace ModLibrary.Files
     {
         #region Singleton
 
-
         private FileManager() { }
 
         static FileManager()

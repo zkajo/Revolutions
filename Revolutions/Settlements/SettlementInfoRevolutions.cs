@@ -14,7 +14,8 @@ namespace Revolutions.Settlements
         public SettlementInfoRevolutions(SettlementInfo settlementInfo)
         {
             base.SettlementId = settlementInfo.SettlementId;
-            base.OriginalCultureId = settlementInfo.OriginalCultureId;
+            base.InitialCultureId = settlementInfo.InitialCultureId;
+            base.InitialFactionId = settlementInfo.InitialFactionId;
             base.OriginalFactionId = settlementInfo.OriginalFactionId;
             base.CurrentFactionId = settlementInfo.CurrentFactionId;
             base.PreviousFactionId = settlementInfo.PreviousFactionId;

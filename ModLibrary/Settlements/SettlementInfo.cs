@@ -14,7 +14,8 @@ namespace ModLibrary.Settlements
         public SettlementInfo(Settlement settlement)
         {
             this.SettlementId = settlement.StringId;
-            this.OriginalCultureId = settlement.Culture.StringId;
+            this.InitialCultureId = settlement.Culture.StringId;
+            this.InitialFactionId = settlement.MapFaction.StringId;
             this.OriginalFactionId = settlement.MapFaction.StringId;
             this.CurrentFactionId = settlement.MapFaction.StringId;
             this.PreviousFactionId = settlement.MapFaction.StringId;
@@ -22,7 +23,9 @@ namespace ModLibrary.Settlements
 
         public string SettlementId { get; set; }
 
-        public string OriginalCultureId { get; set; }
+        public string InitialCultureId { get; set; }
+
+        public string InitialFactionId { get; set; }
 
         public string OriginalFactionId { get; set; }
 

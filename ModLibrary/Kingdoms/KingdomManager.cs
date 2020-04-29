@@ -4,7 +4,6 @@
     {
         #region Singleton
 
-
         private KingdomManager() { }
 
         static KingdomManager()

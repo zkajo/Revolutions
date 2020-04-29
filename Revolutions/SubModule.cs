@@ -12,15 +12,10 @@ namespace Revolutions
 {
     public class SubModule : MBSubModuleBase
     {
-        private RevolutionDataStorage _revolutionDataStorage;
+        private DataStorage _dataStorage;
 
         public static Configuration Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
-
-        public SubModule()
-        {
-            this._revolutionDataStorage = new RevolutionDataStorage();
-        }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
@@ -63,6 +58,7 @@ namespace Revolutions
 
                 SubModule.Configuration = FileManager.Instance.Load<Configuration>(SubModule.ModuleDataPath, "Settings") ?? new Configuration();
 
+                this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);
             }
             catch (Exception exception)
@@ -74,8 +70,8 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter campaignGameStarter)
         {
-            campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._revolutionDataStorage));
-            campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._revolutionDataStorage));
+            campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._dataStorage));
+            campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._dataStorage));
         }
     }
 }

@@ -1,34 +1,53 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Settlements
 {
-    public class SettlementManager
+    public class SettlementManager<T> where T : SettlementInfo, new()
     {
         #region Singleton
-
 
         private SettlementManager() { }
 
         static SettlementManager()
         {
-            SettlementManager.Instance = new SettlementManager();
+            SettlementManager<T>.Instance = new SettlementManager<T>();
         }
 
-        public static SettlementManager Instance { get; private set; }
+        public static SettlementManager<T> Instance { get; private set; }
 
         #endregion
 
-        public List<SettlementInfo> InitializeSettlementInfos()
-        {
-            var settlementInfos = new List<SettlementInfo>();
+        public List<T> SettlementInfos = new List<T>();
 
+        public void InitializeSettlementInfos()
+        {
             foreach (Settlement settlement in Settlement.All)
             {
-                settlementInfos.Add(new SettlementInfo(settlement));
+                this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
             }
+        }
 
-            return settlementInfos;
+        public T GetSettlementInfo(string settlementId)
+        {
+            return this.SettlementInfos.FirstOrDefault(settlementInfo => settlementInfo.SettlementId == settlementId);
+        }
+
+        public T GetSettlementInfo(Settlement settlement)
+        {
+            return this.GetSettlementInfo(settlement.StringId);
+        }
+
+        public Settlement GetSettlement(string settlementId)
+        {
+            return Settlement.Find(settlementId);
+        }
+
+        public Settlement GetSettlement(T settlementInfo)
+        {
+            return this.GetSettlement(settlementInfo.SettlementId);
         }
     }
 }

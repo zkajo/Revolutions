@@ -42,9 +42,6 @@
   </PropertyGroup>
   <!-- Bannerlord Native Assemblies -->
   <ItemGroup>
-    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
-    </Reference>
     <Reference Include="..\..\..\bin\Win64_Shipping_Client\TaleWorlds*.dll">
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
@@ -66,16 +63,18 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="0Harmony, Version=2.0.0.9, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Harmony\Debug\net472\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
-    <Compile Include="CampaignBehaviors\RevolutionDataStorage.cs" />
-    <Compile Include="CampaignBehaviors\RevolutionBehaviour.cs" />
+    <Compile Include="DataStorage.cs" />
+    <Compile Include="CampaignBehaviors\RevolutionBehavior.cs" />
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
+    <Compile Include="Factions\FactionInfoRevolutions.cs" />
+    <Compile Include="Factions\FactionInfoRevolutionsExtesion.cs" />
     <Compile Include="Models\Configuration.cs" />
     <Compile Include="Settlements\SettlementInfoRevolutionsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,9 +93,6 @@
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\ModLibrary\ModLibrary.csproj">
       <Project>{d711d674-808c-421a-ba59-9dcd8b4a51dc}</Project>
       <Name>ModLibrary</Name>
@@ -104,6 +100,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Screens\ViewModels\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>

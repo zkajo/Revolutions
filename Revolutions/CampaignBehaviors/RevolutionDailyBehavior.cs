@@ -4,11 +4,11 @@ namespace Revolutions.CampaignBehaviors
 {
     public class RevolutionDailyBehavior : CampaignBehaviorBase
     {
-        private readonly RevolutionDataStorage RevolutionDataStorage;
+        private readonly DataStorage DataStorage;
 
-        public RevolutionDailyBehavior(ref RevolutionDataStorage revolutionDataStorage)
+        public RevolutionDailyBehavior(ref DataStorage dataStorage)
         {
-            this.RevolutionDataStorage = revolutionDataStorage;
+            this.DataStorage = dataStorage;
         }
 
         public override void RegisterEvents()
@@ -17,6 +17,7 @@ namespace Revolutions.CampaignBehaviors
 
         public override void SyncData(IDataStore dataStore)
         {
+            //REMARK: We won't sync any data here, because the data will be synced inside RevolutionBehavior
         }
     }
 }
