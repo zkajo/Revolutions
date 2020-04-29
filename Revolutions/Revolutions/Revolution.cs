@@ -1,4 +1,5 @@
 ﻿using System;
+using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Revolutions
 {
@@ -12,6 +13,10 @@ namespace Revolutions.Revolutions
 
         public string PartyId { get; set; }
 
+        public PartyBase Party => RevolutionsManagers.RevolutionManager.GetParty(this.PartyId);
+
         public string SettlementId { get; set; }
+
+        public Settlement Settlement => RevolutionsManagers.SettlementManager.GetSettlement(this.SettlementId);
     }
 }

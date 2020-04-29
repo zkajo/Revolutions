@@ -19,6 +19,8 @@ namespace ModLibrary.Factions
 
         public string FactionId { get; set; }
 
+        public IFaction Faction => ModLibraryManagers.FactionManager.GetFaction(this.FactionId);
+
         public int InitialTownsCount { get; set; } = 0;
 
         public int CurrentTownsCount => ModLibraryManagers.FactionManager.GetFaction(this.FactionId).Settlements.Where(settlement => settlement.IsTown).Count();

@@ -23,21 +23,21 @@ namespace ModLibrary.Settlements
 
         public string SettlementId { get; set; }
 
-        public string InitialCultureId { get; set; }
-
-        public string InitialFactionId { get; set; }
-
-        public string CurrentFactionId { get; set; }
-
-        public string PreviousFactionId { get; set; }
-
         public Settlement Settlement => ModLibraryManagers.SettlementManager.GetSettlement(this.SettlementId);
+
+        public string InitialCultureId { get; set; }
 
         public CultureObject InitialCulture => Game.Current.ObjectManager.GetObject<CultureObject>(this.InitialCultureId);
 
+        public string InitialFactionId { get; set; }
+
         public IFaction InitialFaction => ModLibraryManagers.FactionManager.GetFaction(this.InitialFactionId);
 
+        public string CurrentFactionId { get; set; }
+
         public IFaction CurrentFaction => ModLibraryManagers.FactionManager.GetFaction(this.CurrentFactionId);
+
+        public string PreviousFactionId { get; set; }
 
         public IFaction PreviousFaction => ModLibraryManagers.FactionManager.GetFaction(this.PreviousFactionId);
 

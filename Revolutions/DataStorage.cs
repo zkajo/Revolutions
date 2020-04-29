@@ -1,10 +1,10 @@
 ﻿using System.IO;
 using System.Collections.Generic;
 using TaleWorlds.SaveSystem;
-using ModLibrary.Files;
 using Revolutions.Settlements;
 using Revolutions.Factions;
 using Revolutions.Revolutions;
+using ModLibrary;
 
 namespace Revolutions
 {
@@ -23,18 +23,18 @@ namespace Revolutions
         {
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
-            RevolutionsManagers.SettlementManager.SettlementInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
-            RevolutionsManagers.FactionManager.FactionInfos = FileManager.Instance.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
-            RevolutionsManagers.RevolutionManager.Revolutions = FileManager.Instance.Load<List<Revolution>>(directoryPath, "Revolutions");
+            RevolutionsManagers.SettlementManager.SettlementInfos = ModLibraryManagers.FileManager.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
+            RevolutionsManagers.FactionManager.FactionInfos = ModLibraryManagers.FileManager.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
+            RevolutionsManagers.RevolutionManager.Revolutions = ModLibraryManagers.FileManager.Load<List<Revolution>>(directoryPath, "Revolutions");
         }
 
         internal void SaveData()
         {
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
-            FileManager.Instance.Save(RevolutionsManagers.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");
-            FileManager.Instance.Save(RevolutionsManagers.FactionManager.FactionInfos, directoryPath, "FactionInfos");
-            FileManager.Instance.Save(RevolutionsManagers.RevolutionManager.Revolutions, directoryPath, "Revolutions");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.FactionManager.FactionInfos, directoryPath, "FactionInfos");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.RevolutionManager.Revolutions, directoryPath, "Revolutions");
         }
     }
 }

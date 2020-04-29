@@ -2,8 +2,6 @@
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using TaleWorlds.Localization;
-using ModLibrary.Factions;
 using ModLibrary.Settlements;
 using Revolutions.Factions;
 using Revolutions.Settlements;

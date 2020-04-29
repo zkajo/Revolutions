@@ -4,9 +4,9 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
-using ModLibrary.Files;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
+using ModLibrary;
 
 namespace Revolutions
 {
@@ -56,7 +56,7 @@ namespace Revolutions
             {
                 campaignGameStarter.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
 
-                SubModule.Configuration = FileManager.Instance.Load<Settings>(SubModule.ModuleDataPath, "Settings") ?? new Settings();
+                SubModule.Configuration = ModLibraryManagers.FileManager.Load<Settings>(SubModule.ModuleDataPath, "Settings") ?? new Settings();
 
                 this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);
