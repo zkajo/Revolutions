@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
-using Revolutions.Settlements;
 using ModLibrary.Files;
+using Revolutions.Settlements;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -19,8 +19,8 @@ namespace Revolutions.CampaignBehaviors
 
         internal void SaveData()
         {
-            FileManager.Instance.Serialize<List<SettlementInfoRevolutions>>(this.SettlementRevolutionInfos, SubModule.ModuleDataPath, "SettlementRevolutionInfos.bin");
-            FileManager.Instance.Serialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(this.Revolutions, SubModule.ModuleDataPath, "Revolutions.bin");
+            FileManager.Instance.Serialize(this.SettlementRevolutionInfos, SubModule.ModuleDataPath, "SettlementRevolutionInfos.bin");
+            FileManager.Instance.Serialize(this.Revolutions, SubModule.ModuleDataPath, "Revolutions.bin");
         }
     }
 }
