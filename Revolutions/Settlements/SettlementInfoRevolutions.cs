@@ -22,10 +22,9 @@ namespace Revolutions.Settlements
             base.SettlementId = settlementInfo.SettlementId;
             base.InitialCultureId = settlementInfo.InitialCultureId;
             base.InitialFactionId = settlementInfo.InitialFactionId;
-            base.OriginalFactionId = settlementInfo.OriginalFactionId;
             base.CurrentFactionId = settlementInfo.CurrentFactionId;
             base.PreviousFactionId = settlementInfo.PreviousFactionId;
-            LoyalFactionID = settlementInfo.OriginalFactionId;
+            LoyalFactionID = settlementInfo.InitialFactionId;
         }
 
         public bool IsOwnerInSettlement { get; set; } = false;

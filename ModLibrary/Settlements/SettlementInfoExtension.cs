@@ -21,11 +21,6 @@ namespace ModLibrary.Settlements
             return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.InitialFactionId).MapFaction;
         }
 
-        public static IFaction GetOriginalFaction(this SettlementInfo settlementInfo)
-        {
-            return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.OriginalFactionId).MapFaction;
-        }
-
         public static IFaction GetCurrentFaction(this SettlementInfo settlementInfo)
         {
             return ModLibraryManagers.FactionManager.GetFaction(settlementInfo.CurrentFactionId).MapFaction;

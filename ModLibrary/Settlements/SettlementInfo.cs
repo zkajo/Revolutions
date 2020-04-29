@@ -16,7 +16,6 @@ namespace ModLibrary.Settlements
             this.SettlementId = settlement.StringId;
             this.InitialCultureId = settlement.Culture.StringId;
             this.InitialFactionId = settlement.MapFaction.StringId;
-            this.OriginalFactionId = settlement.MapFaction.StringId;
             this.CurrentFactionId = settlement.MapFaction.StringId;
             this.PreviousFactionId = settlement.MapFaction.StringId;
         }
@@ -27,16 +26,8 @@ namespace ModLibrary.Settlements
 
         public string InitialFactionId { get; set; }
 
-        public string OriginalFactionId { get; set; }
-        
         public string CurrentFactionId { get; set; }
 
         public string PreviousFactionId { get; set; }
-
-        public void ChangeOwner(Hero oldOwner, Hero newOwner)
-        {
-            CurrentFactionId = newOwner.Clan.MapFaction.StringId;
-            PreviousFactionId = oldOwner.Clan.MapFaction.StringId;
-        }
     }
 }

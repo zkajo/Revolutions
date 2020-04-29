@@ -62,7 +62,7 @@ namespace Revolutions.CampaignBehaviors
         private void OnSettlementChanged(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
             SettlementInfoRevolutions settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
-            settlementInfo.ChangeOwner(oldOwner, newOwner);
+            settlementInfo.UpdateOwner(newOwner.MapFaction);
         }
 
         private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
