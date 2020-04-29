@@ -5,6 +5,14 @@ namespace Revolutions.Settlements
 {
     public static class SettlementInfoRevolutionsExtension
     {
+        public static void SetInitialValues(this SettlementInfoRevolutions settlementInfoRevolutions)
+        {
+            if (string.IsNullOrEmpty(settlementInfoRevolutions.LoyalFactionId))
+            {
+                settlementInfoRevolutions.LoyalFactionId = settlementInfoRevolutions.InitialFactionId;
+            }
+        }
+
         public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfoRevolutions, IFaction faction = null)
         {
             settlementInfoRevolutions.UpdateOwner(faction);

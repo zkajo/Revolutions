@@ -101,25 +101,25 @@ namespace Revolutions.CampaignBehaviors
 
         private void MapEventEnded(MapEvent mapEvent)
         {
-            var revolutionParties = RevolutionManager.Instance.Revolutions.Select(revolution => RevolutionManager.Instance.GetParty(revolution)).ToList();
+            var revolutionParties = RevolutionsManagers.RevolutionManager.Revolutions.Select(revolution => RevolutionsManagers.RevolutionManager.GetParty(revolution)).ToList();
             var involvedRevolutionParty = mapEvent.InvolvedParties.Intersect(revolutionParties).FirstOrDefault();
             if (involvedRevolutionParty == null)
             {
                 return;
             }
 
-            var currentRevolution = RevolutionManager.Instance.GetRevolution(involvedRevolutionParty.Id);
+            var currentRevolution = RevolutionsManagers.RevolutionManager.GetRevolution(involvedRevolutionParty.Id);
             var currentSettlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
             var currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;
             if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedRevolutionParty.Id) == null)
             {
-                RevolutionManager.Instance.EndFailedRevolution(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
+                RevolutionsManagers.RevolutionManager.EndFailedRevolution(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
             }
             else
             {
-                RevolutionManager.Instance.EndSucceededRevoluton(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
+                RevolutionsManagers.RevolutionManager.EndSucceededRevoluton(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
             }
         }
     }

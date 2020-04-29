@@ -9,7 +9,6 @@ namespace Revolutions.Settlements
     {
         public SettlementInfoRevolutions()
         {
-            this.LoyalFactionId = base.InitialFactionId;
         }
 
         public string LoyalFactionId { get; set; }

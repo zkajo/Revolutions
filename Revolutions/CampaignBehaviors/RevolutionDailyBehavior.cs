@@ -20,8 +20,8 @@ namespace Revolutions.CampaignBehaviors
 
         private void DailyTickEvent()
         {
-            RevolutionManager.Instance.IncreaseDailyLoyaltyForSettlement();
-            RevolutionManager.Instance.CheckRevolutionProgress();
+            RevolutionsManagers.RevolutionManager.IncreaseDailyLoyaltyForSettlement();
+            RevolutionsManagers.RevolutionManager.CheckRevolutionProgress();
         }
 
         public override void SyncData(IDataStore dataStore)
