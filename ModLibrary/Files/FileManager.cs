@@ -27,15 +27,15 @@ namespace ModLibrary.Files
         {
             try
             {
-                DirectorySecurity securityRules = new DirectorySecurity();
+                var securityRules = new DirectorySecurity();
                 securityRules.AddAccessRule(new FileSystemAccessRule(new SecurityIdentifier(WellKnownSidType.AuthenticatedUserSid, null), FileSystemRights.FullControl, AccessControlType.Allow));
 
                 Directory.CreateDirectory(directoryPath, securityRules);
-                string filePath = Path.Combine(directoryPath, $"{fileName}.xml");
+                var filePath = Path.Combine(directoryPath, $"{fileName}.xml");
 
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
+                using (var fileStream = new FileStream(filePath, FileMode.Create, FileAccess.ReadWrite, FileShare.None))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                    var xmlSerializer = new XmlSerializer(typeof(T));
                     xmlSerializer.Serialize(fileStream, data);
                 }
             }
@@ -49,15 +49,15 @@ namespace ModLibrary.Files
         {
             try
             {
-                string filePath = Path.Combine(directoryPath, $"{fileName}.xml");
+                var filePath = Path.Combine(directoryPath, $"{fileName}.xml");
                 if (!File.Exists(filePath))
                 {
                     this.Save<T>(default, directoryPath, fileName);
                 }
 
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
+                using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite, FileShare.None))
                 {
-                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(T));
+                    var xmlSerializer = new XmlSerializer(typeof(T));
                     return (T)xmlSerializer.Deserialize(fileStream);
                 }
             }

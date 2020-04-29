@@ -27,12 +27,12 @@ namespace Revolutions.Settlements
             LoyalFactionID = settlementInfo.InitialFactionId;
         }
 
+        public string LoyalFactionId { get; set; }
+
         public bool IsOwnerInSettlement { get; set; } = false;
 
         public float RevolutionProgress { get; set; } = 0;
 
         public int DaysOwnedByOwner { get; set; } = 0;
-        
-        public string LoyalFactionID { get; set; }
     }
 }

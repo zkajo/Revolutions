@@ -20,8 +20,8 @@ namespace Revolutions.Models
         
         public override float CalculateLoyaltyChange(Town town, StatExplainer explanation = null)
         {
-            ExplainedNumber explainedNumber = new ExplainedNumber(0.0f, explanation, (TextObject) null);
-            SettlementInfoRevolutions info = RevolutionsManagers.SettlementManager.GetSettlementInfo(town.Settlement.StringId);
+            var explainedNumber = new ExplainedNumber(0.0f, explanation, (TextObject) null);
+            var info = RevolutionsManagers.SettlementManager.GetSettlementInfo(town.Settlement.StringId);
             
             if (!town.IsTown)
             {
@@ -65,8 +65,8 @@ namespace Revolutions.Models
                 }   
             }
 
-            FactionInfoRevolutions factionInfo = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.CurrentFactionId);
-            int overExtension = factionInfo.InitialTownsCount - factionInfo.CurrentTownsCount;
+            var factionInfo = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.CurrentFactionId);
+            var overExtension = factionInfo.InitialTownsCount - factionInfo.CurrentTownsCount;
             
             explainedNumber.Add(overExtension * SubModule.Configuration.OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
         }
