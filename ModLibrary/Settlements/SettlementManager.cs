@@ -19,15 +19,16 @@ namespace ModLibrary.Settlements
 
         #endregion
 
-        public List<SettlementInfo> SettlementInfos;
-
-        public void InitializeSettlementInfos()
+        public List<SettlementInfo> InitializeSettlementInfos()
         {
-            this.SettlementInfos = new List<SettlementInfo>();
+            var settlementInfos = new List<SettlementInfo>();
+
             foreach (Settlement settlement in Settlement.All)
             {
-                this.SettlementInfos.Add(new SettlementInfo(settlement));
+                settlementInfos.Add(new SettlementInfo(settlement));
             }
+
+            return settlementInfos;
         }
     }
 }

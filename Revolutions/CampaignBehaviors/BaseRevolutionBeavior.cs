@@ -1,26 +1,41 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.SaveSystem;
 using Revolutions.Settlements;
 using ModLibrary.Files;
+using ModLibrary.Settlements;
+using System.IO;
 
 namespace Revolutions.CampaignBehaviors
 {
     public  abstract class BaseRevolutionBeavior : CampaignBehaviorBase
     {
-        internal List<SettlementInfoRevolutions> SettlementRevolutionInfos = new List<SettlementInfoRevolutions>();
-        internal List<Tuple<PartyBase, SettlementInfoRevolutions>> Revolutions = new List<Tuple<PartyBase, SettlementInfoRevolutions>>();
+        [SaveableField(0)]
+        internal string SaveId = string.Empty;
 
-        internal void LoadData(string saveID)
+        internal List<SettlementInfoRevolutions> SettlementRevolutionInfos = new List<SettlementInfoRevolutions>();
+
+        internal void InitializeData()
         {
-            this.SettlementRevolutionInfos = FileManager.Instance.Deserialize<List<SettlementInfoRevolutions>>(SubModule.ModuleDataPath, saveID, "SettlementRevolutionInfos.bin") ?? this.SettlementRevolutionInfos;
-            this.Revolutions = FileManager.Instance.Deserialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(SubModule.ModuleDataPath, saveID, "Revolutions.bin") ?? this.Revolutions;
+            this.SettlementRevolutionInfos = new List<SettlementInfoRevolutions>(SettlementManager.Instance.InitializeSettlementInfos()
+                .Select(settlementInfo => new SettlementInfoRevolutions(settlementInfo)));
         }
 
-        internal void SaveData(string saveID)
+        internal void LoadData(string saveId)
         {
-            FileManager.Instance.Serialize<List<SettlementInfoRevolutions>>(this.SettlementRevolutionInfos, SubModule.ModuleDataPath, saveID, "SettlementRevolutionInfos.bin");
-            FileManager.Instance.Serialize<List<Tuple<PartyBase, SettlementInfoRevolutions>>>(this.Revolutions, SubModule.ModuleDataPath, saveID, "Revolutions.bin");
+            string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", saveId);
+
+            this.SettlementRevolutionInfos = FileManager.Instance.Load<List<SettlementInfoRevolutions>>(directoryPath, "Settlements")
+                ?? this.SettlementRevolutionInfos;
+        }
+
+        internal void SaveData(string saveId)
+        {
+            string directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", saveId);
+
+            FileManager.Instance.Save(this.SettlementRevolutionInfos, directoryPath, "Settlements");
         }
     }
 }
