@@ -59,7 +59,7 @@ namespace Revolutions.Models
 
             if (SubModule.Configuration.EmpireLoyaltyMechanics)
             {
-                if (this.IsTownOfImperialCulture(settlement) && settlement.IsCurrentOwnerOfImperialCulture())
+                if (this.IsTownOfImperialCulture(settlement) && settlement.IsCurrentFactionOfImperialCulture)
                 {
                     return;
                 }
@@ -77,7 +77,7 @@ namespace Revolutions.Models
             {
                 if (this.IsTownOfImperialCulture(info))
                 {
-                    if (info.IsCurrentOwnerOfImperialCulture())
+                    if (info.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(10, GameTexts.FindText("str_loyalty_imperial"));
                     }
@@ -88,7 +88,7 @@ namespace Revolutions.Models
                 }
                 else
                 {
-                    if (info.IsCurrentOwnerOfImperialCulture())
+                    if (info.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_imperialAvers"));
                     }

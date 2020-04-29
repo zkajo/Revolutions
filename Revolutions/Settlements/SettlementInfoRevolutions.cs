@@ -26,5 +26,7 @@ namespace Revolutions.Settlements
         public int DaysOwnedByOwner { get; set; } = 0;
 
         public IFaction LoyalFaction => RevolutionsManagers.FactionManager.GetFaction(this.LoyalFactionId);
+
+        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetFaction(this.LoyalFactionId).Name.ToLower().Contains("empire");
     }
 }

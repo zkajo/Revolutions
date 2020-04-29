@@ -40,5 +40,11 @@ namespace ModLibrary.Settlements
         public IFaction CurrentFaction => ModLibraryManagers.FactionManager.GetFaction(this.CurrentFactionId);
 
         public IFaction PreviousFaction => ModLibraryManagers.FactionManager.GetFaction(this.PreviousFactionId);
+
+        public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.InitialFactionId).Name.ToLower().Contains("empire");
+
+        public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.CurrentFactionId).Name.ToLower().Contains("empire");
+
+        public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.PreviousFactionId).Name.ToLower().Contains("empire");
     }
 }

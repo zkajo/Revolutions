@@ -27,20 +27,5 @@ namespace ModLibrary.Settlements
         {
             return settlementInfo.IsOfCulture(culture.StringId);
         }
-
-        public static bool IsOriginalOwnerOfImperialCulture(this SettlementInfo settlementInfo)
-        {
-            return settlementInfo.InitialCulture.Name.ToLower().Contains("empire");
-        }
-
-        public static bool IsCurrentOwnerOfImperialCulture(this SettlementInfo settlementInfo)
-        {
-            return settlementInfo.CurrentFaction.Culture.Name.ToLower().Contains("empire");
-        }
-
-        public static bool IsPreviousOwnerOfImperialCulture(this SettlementInfo settlementInfo)
-        {
-            return settlementInfo.PreviousFaction.Culture.Name.ToLower().Contains("empire");
-        }
     }
 }
