@@ -1,11 +1,7 @@
-﻿using ModLibrary.Factions;
-using ModLibrary.Settlements;
-using Revolutions.Factions;
-using Revolutions.Settlements;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
 using TaleWorlds.Core;
-using TaleWorlds.Localization;
+using Revolutions.Settlements;
 
 namespace Revolutions.Models
 {
@@ -18,66 +14,66 @@ namespace Revolutions.Models
             this.DataStorage = dataStorage;
         }
 
-        public override float CalculateLoyaltyChange(Town town, StatExplainer explanation = null)
+        public override float CalculateLoyaltyChange(Town town, StatExplainer statExplainer = null)
         {
-            var explainedNumber = new ExplainedNumber(0.0f, explanation, (TextObject)null);
-            var info = RevolutionsManagers.SettlementManager.GetSettlementInfo(town.Settlement.StringId);
+            var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
+            var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(town.Settlement.StringId);
 
             if (!town.IsTown)
             {
-                return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, explanation);
+                return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
             }
 
-            if (info.Settlement.MapFaction.Leader == Hero.MainHero)
+            if (settlementInfoRevolutions.CurrentFaction.Leader == Hero.MainHero)
             {
                 explainedNumber.Add(SubModule.Configuration.BasePlayerLoyalty, GameTexts.FindText("str_loyalty_bannerlord"));
 
                 if (SubModule.Configuration.PlayerAffectedByOverextension && SubModule.Configuration.OverextensionMechanics)
                 {
-                    this.Overextension(info, ref explainedNumber);
+                    this.Overextension(settlementInfoRevolutions, ref explainedNumber);
                 }
             }
             else
             {
-                this.BaseLoyalty(info, ref explainedNumber);
+                this.BaseLoyalty(settlementInfoRevolutions, ref explainedNumber);
 
                 if (SubModule.Configuration.OverextensionMechanics)
                 {
-                    this.Overextension(info, ref explainedNumber);
+                    this.Overextension(settlementInfoRevolutions, ref explainedNumber);
                 }
             }
 
-            return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, explanation);
+            return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
         }
 
-        private void Overextension(SettlementInfoRevolutions settlement, ref ExplainedNumber explainedNumber)
+        private void Overextension(SettlementInfoRevolutions settlementInfoRevolutions, ref ExplainedNumber explainedNumber)
         {
-            if (settlement.CurrentFaction.StringId == settlement.LoyalFaction.StringId)
+            if (settlementInfoRevolutions.CurrentFaction.StringId == settlementInfoRevolutions.LoyalFaction.StringId)
             {
                 return;
             }
 
             if (SubModule.Configuration.EmpireLoyaltyMechanics)
             {
-                if (this.IsTownOfImperialCulture(settlement) && settlement.IsCurrentFactionOfImperialCulture)
+                if (settlementInfoRevolutions.IsOfImperialCulture && settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
                 {
                     return;
                 }
             }
 
-            var factionInfo = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.CurrentFactionId);
+            var factionInfo = settlementInfoRevolutions.CurrentFactionInfo;
             var overExtension = factionInfo.InitialTownsCount - factionInfo.CurrentTownsCount;
 
             explainedNumber.Add(overExtension * SubModule.Configuration.OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
         }
 
-        private void BaseLoyalty(SettlementInfoRevolutions info, ref ExplainedNumber explainedNumber)
+        private void BaseLoyalty(SettlementInfoRevolutions settlementInfoRevolutions, ref ExplainedNumber explainedNumber)
         {
             if (SubModule.Configuration.EmpireLoyaltyMechanics)
             {
-                if (this.IsTownOfImperialCulture(info))
+                if (settlementInfoRevolutions.IsOfImperialCulture)
                 {
-                    if (info.IsCurrentFactionOfImperialCulture)
+                    if (settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(10, GameTexts.FindText("str_loyalty_imperial"));
                     }
@@ -88,12 +84,12 @@ namespace Revolutions.Models
                 }
                 else
                 {
-                    if (info.IsCurrentFactionOfImperialCulture)
+                    if (settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_imperialAvers"));
                     }
 
-                    if (info.LoyalFactionId != info.CurrentFactionId)
+                    if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId)
                     {
                         explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                     }
@@ -101,16 +97,11 @@ namespace Revolutions.Models
             }
             else
             {
-                if (info.LoyalFactionId != info.CurrentFactionId)
+                if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId)
                 {
                     explainedNumber.Add(-5, GameTexts.FindText("str_loyalty_foreignRule"));
                 }
             }
-        }
-
-        private bool IsTownOfImperialCulture(SettlementInfoRevolutions settlement)
-        {
-            return settlement.Settlement.Culture.Name.ToLower().Contains("empire");
         }
     }
 }

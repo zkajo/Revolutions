@@ -32,7 +32,7 @@ namespace ModLibrary.Factions
 
         public T GetFactionInfo(string factionId)
         {
-            return this.FactionInfos.FirstOrDefault(FactionInfo => FactionInfo.FactionId == factionId);
+            return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
         }
 
         public T GetFactionInfo(IFaction faction)

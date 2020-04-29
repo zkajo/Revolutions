@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Revolutions.Settlements;
+using System;
 using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.Revolutions
@@ -18,5 +19,7 @@ namespace Revolutions.Revolutions
         public string SettlementId { get; set; }
 
         public Settlement Settlement => RevolutionsManagers.SettlementManager.GetSettlement(this.SettlementId);
+
+        public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetSettlementInfo(this.SettlementId);
     }
 }

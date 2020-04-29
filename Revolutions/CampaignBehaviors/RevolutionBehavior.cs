@@ -104,7 +104,7 @@ namespace Revolutions.CampaignBehaviors
             }
 
             var currentRevolution = RevolutionsManagers.RevolutionManager.GetRevolution(involvedRevolutionParty.Id);
-            var currentSettlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(currentRevolution.SettlementId);
+            var currentSettlementInfoRevolutions = currentRevolution.SettlementInfoRevolutions;
             var currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;

@@ -1,6 +1,6 @@
 ﻿using System;
-using ModLibrary.Settlements;
 using TaleWorlds.CampaignSystem;
+using ModLibrary.Settlements;
 
 namespace Revolutions.Settlements
 {

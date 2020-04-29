@@ -106,16 +106,14 @@ namespace Revolutions.Revolutions
         public void StartRevolution(Settlement settlement)
         {
             var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement);
-            var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlementInfoRevolutions.CurrentFactionId);
+            var factionInfoRevolutions = settlementInfoRevolutions.CurrentFactionInfo;
 
             this.Revolutions.Add(new Revolution());
         }
 
         public void EndFailedRevolution(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions factionInfoRevolutions)
         {
-            var currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
-
-            factionInfoRevolutions.CityRevoltionFailed(currentSettlement);
+            factionInfoRevolutions.CityRevoltionFailed(settlementInfoRevolutions.Settlement);
             this.Revolutions.Remove(revolution);
         }
 

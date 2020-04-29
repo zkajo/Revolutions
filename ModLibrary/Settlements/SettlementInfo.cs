@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ModLibrary.Factions;
+using System;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
@@ -33,13 +34,21 @@ namespace ModLibrary.Settlements
 
         public IFaction InitialFaction => ModLibraryManagers.FactionManager.GetFaction(this.InitialFactionId);
 
+        public FactionInfo InitialFactionInfo => ModLibraryManagers.FactionManager.GetFactionInfo(this.InitialFactionId);
+
         public string CurrentFactionId { get; set; }
 
         public IFaction CurrentFaction => ModLibraryManagers.FactionManager.GetFaction(this.CurrentFactionId);
 
+        public FactionInfo CurrentFactionInfo => ModLibraryManagers.FactionManager.GetFactionInfo(this.CurrentFactionId);
+
         public string PreviousFactionId { get; set; }
 
         public IFaction PreviousFaction => ModLibraryManagers.FactionManager.GetFaction(this.PreviousFactionId);
+
+        public FactionInfo PreviousFactionInfo => ModLibraryManagers.FactionManager.GetFactionInfo(this.PreviousFactionId);
+
+        public bool IsOfImperialCulture => this.Settlement.Culture.Name.ToLower().Contains("empire");
 
         public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.InitialFactionId).Name.ToLower().Contains("empire");
 
