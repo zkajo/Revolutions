@@ -44,6 +44,52 @@ namespace ModLibrary.Factions
             
             return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
         }
+        
+        public void WatchFactions()
+        {
+            if (FactionInfos.Count() == Campaign.Current.Factions.Count())
+            {
+                return;
+            }
+
+            foreach (var info in FactionInfos)
+            {
+                info.Remove = true;
+            }
+            
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                var factionInfo = FactionInfos.FirstOrDefault(n => n.FactionId == faction.StringId);
+
+                if (factionInfo == null)
+                {
+                    AddFaction(faction);
+                }
+                else
+                {
+                    factionInfo.Remove = false;
+                }
+            }
+
+            int length = FactionInfos.Count();
+            
+            for (int i = 0; i < length; i++)
+            {
+                if (FactionInfos[i].Remove)
+                {
+                    RemoveFactionInfo(FactionInfos[i].FactionId);
+                    i--;
+                }
+
+                length = FactionInfos.Count();
+            }
+        }
+
+        private void RemoveFactionInfo(string factionId)
+        {
+            var toRemove = FactionInfos.FirstOrDefault(n => n.FactionId == factionId);
+            FactionInfos.Remove(toRemove);
+        }
 
         public T GetFactionInfo(IFaction faction)
         {

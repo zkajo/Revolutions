@@ -19,8 +19,8 @@ namespace Revolutions.CampaignBehaviors
         private void TickEvent(float dt)
         {
             //TODO: Add similar functions for other manager
-            //RevolutionsManagers.FactionManager.WatchFactions();
-            //RevolutionsManagers.SettlementManager.WatchSettlements();
+            RevolutionsManagers.FactionManager.WatchFactions();
+            RevolutionsManagers.SettlementManager.WatchSettlements();
             RevolutionsManagers.PartyManager.WatchParties();
         }
     }

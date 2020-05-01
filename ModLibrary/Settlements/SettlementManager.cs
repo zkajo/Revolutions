@@ -29,9 +29,60 @@ namespace ModLibrary.Settlements
                 SettlementInfo info = GetSettlementInfo(settlement);
                 if (info == null)
                 {
-                    this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
+                    AddSettlement(settlement);
                 }
             }
+        }
+        
+        public void WatchSettlements()
+        {
+            if (SettlementInfos.Count() == Campaign.Current.Settlements.Count())
+            {
+                return;
+            }
+
+            foreach (var info in SettlementInfos)
+            {
+                info.Remove = true;
+            }
+            
+            foreach (var settlement in Campaign.Current.Settlements)
+            {
+                var settlementInfo = SettlementInfos.FirstOrDefault(n => n.SettlementId == settlement.StringId);
+
+                if (settlementInfo == null)
+                {
+                    AddSettlement(settlement);
+                }
+                else
+                {
+                    settlementInfo.Remove = false;
+                }
+            }
+
+            int length = SettlementInfos.Count();
+            
+            for (int i = 0; i < length; i++)
+            {
+                if (SettlementInfos[i].Remove)
+                {
+                    RemoveSettlementInfo(SettlementInfos[i].SettlementId);
+                    i--;
+                }
+
+                length = SettlementInfos.Count();
+            }
+        }
+
+        public void AddSettlement(Settlement settlement)
+        {
+            this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
+        }
+
+        private void RemoveSettlementInfo(string settlementId)
+        {
+            var toRemove = SettlementInfos.FirstOrDefault(n => n.SettlementId == settlementId);
+            SettlementInfos.Remove(toRemove);
         }
 
         public T GetSettlementInfo(string settlementId)
