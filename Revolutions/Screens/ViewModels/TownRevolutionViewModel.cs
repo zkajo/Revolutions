@@ -1,6 +1,7 @@
 ﻿using ModLibrary.Factions;
 using ModLibrary.Settlements;
 using Revolutions.CampaignBehaviors;
+using Revolutions.Components.Factions;
 using Revolutions.Factions;
 using Revolutions.Settlements;
 using TaleWorlds.Core;

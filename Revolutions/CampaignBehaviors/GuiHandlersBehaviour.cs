@@ -1,6 +1,7 @@
 ﻿using System;
 using ModLibrary.Factions;
 using ModLibrary.Settlements;
+using Revolutions.Components.Factions;
 using Revolutions.Factions;
 using Revolutions.Screens;
 using Revolutions.Settlements;

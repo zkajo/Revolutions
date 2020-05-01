@@ -73,9 +73,11 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="CampaignBehaviors\CleanupBehaviour.cs" />
     <Compile Include="CampaignBehaviors\GuiHandlersBehaviour.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutions.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutionsExtesion.cs" />
+    <Compile Include="Components\Parties\PartyInfoRevolutions.cs" />
     <Compile Include="Components\Revolutions\Revolution.cs" />
     <Compile Include="Components\Revolutions\RevolutionExtension.cs" />
     <Compile Include="Components\Revolutions\RevolutionManager.cs" />
@@ -110,9 +112,6 @@
       <Project>{d711d674-808c-421a-ba59-9dcd8b4a51dc}</Project>
       <Name>ModLibrary</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

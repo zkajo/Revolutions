@@ -1,6 +1,6 @@
 ﻿using ModLibrary.Factions;
 using ModLibrary.Files;
-using ModLibrary.Party;
+using ModLibrary.Parties;
 using ModLibrary.Settlements;
 
 namespace ModLibrary
@@ -13,6 +13,6 @@ namespace ModLibrary
 
         public static SettlementManager<SettlementInfo> SettlementManager { get; } = SettlementManager<SettlementInfo>.Instance;
 
-        public static PartyManager PartyManager { get; } = PartyManager.Instance;
+        public static PartyManager<PartyInfo> PartyManager { get; } = PartyManager<PartyInfo>.Instance;
     }
 }

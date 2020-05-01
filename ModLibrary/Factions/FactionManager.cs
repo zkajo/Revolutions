@@ -26,29 +26,22 @@ namespace ModLibrary.Factions
         {
             foreach (var faction in Campaign.Current.Factions)
             {
-                AddFaction(faction);
+                GetFactionInfo(faction.StringId);
             }
         }
 
         public T GetFactionInfo(string factionId)
         {
-            var faction = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
+            T info = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
 
-            if (faction != null)
+            if (info != null)
             {
-                return faction;
+                return info;
             }
 
-            foreach (var mapFaction in Campaign.Current.Factions)
-            {
-                var info = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
-                
-                if (info == null)
-                {
-                    AddFaction(mapFaction);
-                }
-            }
-
+            IFaction missingFaction = Campaign.Current.Factions.FirstOrDefault(n => n.StringId == factionId);
+            AddFaction(missingFaction);
+            
             return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
         }
 

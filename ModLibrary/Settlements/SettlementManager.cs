@@ -26,7 +26,11 @@ namespace ModLibrary.Settlements
         {
             foreach (var settlement in Settlement.All)
             {
-                this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
+                SettlementInfo info = GetSettlementInfo(settlement);
+                if (info == null)
+                {
+                    this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
+                }
             }
         }
 

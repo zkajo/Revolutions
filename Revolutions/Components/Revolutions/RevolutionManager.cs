@@ -4,6 +4,7 @@ using ModLibrary;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using ModLibrary.Settlements;
+using Revolutions.Components.Factions;
 using Revolutions.Factions;
 using Revolutions.Settlements;
 using KingdomManager = ModLibrary.Kingdoms.KingdomManager;

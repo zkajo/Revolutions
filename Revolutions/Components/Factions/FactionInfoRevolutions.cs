@@ -3,7 +3,7 @@ using ModLibrary;
 using ModLibrary.Factions;
 using TaleWorlds.CampaignSystem;
 
-namespace Revolutions.Factions
+namespace Revolutions.Components.Factions
 {
     [Serializable]
     public class FactionInfoRevolutions : FactionInfo

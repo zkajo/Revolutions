@@ -5,6 +5,8 @@ using Revolutions.Settlements;
 using Revolutions.Factions;
 using Revolutions.Revolutions;
 using ModLibrary;
+using Revolutions.Components.Factions;
+using Revolutions.Components.Parties;
 
 namespace Revolutions
 {
@@ -17,6 +19,7 @@ namespace Revolutions
         {
             RevolutionsManagers.SettlementManager.InitializeSettlementInfos();
             RevolutionsManagers.FactionManager.InitializeFactionInfos();
+            RevolutionsManagers.PartyManager.InitializePartyInfos();
         }
 
         internal void LoadData()
@@ -26,6 +29,7 @@ namespace Revolutions
             RevolutionsManagers.SettlementManager.SettlementInfos = ModLibraryManagers.FileManager.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
             RevolutionsManagers.FactionManager.FactionInfos = ModLibraryManagers.FileManager.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
             RevolutionsManagers.RevolutionManager.Revolutions = ModLibraryManagers.FileManager.Load<List<Revolution>>(directoryPath, "Revolutions");
+            RevolutionsManagers.PartyManager.PartyInfos = ModLibraryManagers.FileManager.Load<List<PartyInfoRevolutions>>(directoryPath, "PartyInfos");
         }
 
         internal void SaveData()
@@ -35,6 +39,7 @@ namespace Revolutions
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.FactionManager.FactionInfos, directoryPath, "FactionInfos");
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.RevolutionManager.Revolutions, directoryPath, "Revolutions");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.PartyManager.PartyInfos, directoryPath, "PartyInfos");
         }
     }
 }
