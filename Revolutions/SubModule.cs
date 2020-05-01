@@ -72,6 +72,7 @@ namespace Revolutions
         {
             campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._dataStorage));
             campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._dataStorage));
+            campaignGameStarter.AddBehavior(new GuiHandlersBehaviour());
             campaignGameStarter.AddModel(new LoyaltyModel(ref this._dataStorage));
         }
     }

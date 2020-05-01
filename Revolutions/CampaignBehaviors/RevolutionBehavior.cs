@@ -29,6 +29,7 @@ namespace Revolutions.CampaignBehaviors
         {
             if (dataStore.IsLoading)
             {
+                this.DataStorage.InitializeData();
                 dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
                 this.DataStorage.LoadData();
             }
@@ -47,10 +48,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSessionLaunchedEvent(CampaignGameStarter obj)
         {
-            if (this.DataStorage.SaveId.IsEmpty())
-            {
-                this.DataStorage.InitializeData();
-            }
+            this.DataStorage.InitializeData();
         }
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)

@@ -42,7 +42,7 @@ namespace ModLibrary.Settlements
 
         public Settlement GetSettlement(string settlementId)
         {
-            return Settlement.Find(settlementId);
+            return Settlement.All.FirstOrDefault(settlement => settlement.StringId == settlementId);
         }
 
         public Settlement GetSettlement(T settlementInfo)

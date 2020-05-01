@@ -24,5 +24,7 @@ namespace Revolutions
         public float OverExtensionMultiplier = 2.0f;
         
         public float BasePlayerLoyalty = 5.0f;
+
+        public bool DebugMode = false;
     }
 }

@@ -73,20 +73,25 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
+    <Compile Include="CampaignBehaviors\GuiHandlersBehaviour.cs" />
+    <Compile Include="Components\Factions\FactionInfoRevolutions.cs" />
+    <Compile Include="Components\Factions\FactionInfoRevolutionsExtesion.cs" />
+    <Compile Include="Components\Revolutions\Revolution.cs" />
+    <Compile Include="Components\Revolutions\RevolutionExtension.cs" />
+    <Compile Include="Components\Revolutions\RevolutionManager.cs" />
+    <Compile Include="Components\Settlements\SettlementInfoRevolutions.cs" />
+    <Compile Include="Components\Settlements\SettlementInfoRevolutionsExtension.cs" />
     <Compile Include="DataStorage.cs" />
     <Compile Include="CampaignBehaviors\RevolutionBehavior.cs" />
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
-    <Compile Include="Factions\FactionInfoRevolutions.cs" />
-    <Compile Include="Factions\FactionInfoRevolutionsExtesion.cs" />
     <Compile Include="Models\LoyaltyModel.cs" />
     <Compile Include="RevolutionsManagers.cs" />
-    <Compile Include="Revolutions\Revolution.cs" />
-    <Compile Include="Revolutions\RevolutionExtension.cs" />
-    <Compile Include="Revolutions\RevolutionManager.cs" />
+    <Compile Include="Screens\ModOptionsScreen.cs" />
+    <Compile Include="Screens\TownRevolutionsScreen.cs" />
+    <Compile Include="Screens\ViewModels\ModOptionsViewModel.cs" />
+    <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />
     <Compile Include="Settings.cs" />
-    <Compile Include="Settlements\SettlementInfoRevolutionsExtension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settlements\SettlementInfoRevolutions.cs" />
     <Compile Include="SubModule.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
     <Content Include="GUI\Prefabs\RevolutionModOptions.xml" />
@@ -107,7 +112,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Screens\ViewModels\" />
+    <Folder Include="Components" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

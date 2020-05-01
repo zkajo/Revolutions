@@ -58,5 +58,10 @@ namespace ModLibrary.Party
             newRoster.IsPrisonRoster = true;
             return newRoster;
         }
+        
+        public PartyBase GetParty(string partyId)
+        {
+            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using ModLibrary;
 using ModLibrary.Factions;
 using TaleWorlds.CampaignSystem;
 
@@ -18,6 +19,8 @@ namespace Revolutions.Factions
         }
 
         public string RevoltedSettlementId { get; set; }
+        
+        public Settlement RevoltedSettlement => ModLibraryManagers.SettlementManager.GetSettlement(RevoltedSettlementId);
 
         public bool CanRevolt { get; set; } = false;
 

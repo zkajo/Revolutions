@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ModLibrary;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using ModLibrary.Settlements;
@@ -35,15 +36,10 @@ namespace Revolutions.Revolutions
         {
             return this.Revolutions.FirstOrDefault(revolution => revolution.SettlementId == settlement.StringId);
         }
-
-        public PartyBase GetParty(string partyId)
-        {
-            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
-        }
-
+        
         public PartyBase GetParty(Revolution revolution)
         {
-            return this.GetParty(revolution.PartyId);
+            return ModLibraryManagers.PartyManager.GetParty(revolution.PartyId);
         }
 
         public void IncreaseDailyLoyaltyForSettlement()
