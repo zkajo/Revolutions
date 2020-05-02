@@ -63,19 +63,24 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
-    </Reference>
-    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
+  </ItemGroup>
+  <!-- Files & Classes -->
+  <ItemGroup>
+	<Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net472\0Harmony.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="ModLib">
       <HintPath>..\External\ModLib.dll</HintPath>
+	  <Private>False</Private>
+    </Reference>
+    <Reference Include="ModLib.Patches">
+      <HintPath>..\External\ModLib.Patches.dll</HintPath>
+	  <Private>False</Private>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <!-- Files & Classes -->
   <ItemGroup>
     <Compile Include="CampaignBehaviors\CleanupBehavior.cs" />
     <Compile Include="CampaignBehaviors\GuiHandlersBehavior.cs" />
@@ -106,7 +111,6 @@
     <Content Include="ModuleData\Languages\PL\std_global_strings_xml.xml" />
     <Content Include="ModuleData\Languages\RU\std_global_strings_xml.xml" />
     <Content Include="ModuleData\Languages\std_global_strings_xml.xml" />
-    <Content Include="Readme.txt" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
