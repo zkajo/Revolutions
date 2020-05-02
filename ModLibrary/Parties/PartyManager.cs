@@ -30,33 +30,70 @@ namespace ModLibrary.Parties
         {
             foreach (var party in Campaign.Current.Parties)
             {
-                PartyInfo newParty = GetPartyInfo(party.Id);
-                if (newParty == null)
-                {
-                    AddPartyInfo(party);
-                }
+                this.GetPartyInfo(party.Id);
             }
+        }
+
+        public T GetPartyInfo(string partyId)
+        {
+            var partyInfo = this.PartyInfos.FirstOrDefault(info => info.PartyId == partyId);
+
+            if (partyInfo != null)
+            {
+                return partyInfo;
+            }
+
+            PartyBase missingParty = Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
+            return missingParty != null ? this.AddPartyInfo(missingParty) : null;
+        }
+
+        public T GetPartyInfo(PartyBase party)
+        {
+            return this.GetPartyInfo(party.Id);
+        }
+
+        public T AddPartyInfo(PartyBase party)
+        {
+            var partyInfo = (T)Activator.CreateInstance(typeof(T), party);
+            this.PartyInfos.Add(partyInfo);
+
+            return partyInfo;
+        }
+
+        public void RemovePartyInfo(string partyId)
+        {
+            this.PartyInfos.RemoveAll(party => party.PartyId == partyId);
+        }
+
+        public PartyBase GetParty(string partyId)
+        {
+            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
+        }
+
+        public PartyBase GetParty(T partyInfo)
+        {
+            return this.GetParty(partyInfo.PartyId);
         }
 
         public void WatchParties()
         {
-            if (PartyInfos.Count() == Campaign.Current.Parties.Count())
+            if (this.PartyInfos.Count() == Campaign.Current.Parties.Count())
             {
                 return;
             }
 
-            foreach (var info in PartyInfos)
+            foreach (var info in this.PartyInfos)
             {
                 info.Remove = true;
             }
 
             foreach (var party in Campaign.Current.Parties)
             {
-                var partyInfo = PartyInfos.FirstOrDefault(n => n.partyId == party.Id);
+                var partyInfo = this.PartyInfos.FirstOrDefault(n => n.PartyId == party.Id);
 
                 if (partyInfo == null)
                 {
-                    AddPartyInfo(party);
+                    this.AddPartyInfo(party);
                 }
                 else
                 {
@@ -64,33 +101,22 @@ namespace ModLibrary.Parties
                 }
             }
 
-            int length = PartyInfos.Count();
+            int length = this.PartyInfos.Count();
 
             for (int i = 0; i < length; i++)
             {
-                if (PartyInfos[i].Remove)
+                if (this.PartyInfos[i].Remove)
                 {
-                    RemovePartyInfo(PartyInfos[i].partyId);
+                    this.RemovePartyInfo(this.PartyInfos[i].PartyId);
                     i--;
                 }
 
-                length = PartyInfos.Count();
+                length = this.PartyInfos.Count();
             }
         }
 
-        public void AddPartyInfo(PartyBase party)
-        {
-            this.PartyInfos.Add((T)Activator.CreateInstance(typeof(T), party));
-        }
-
-        public void RemovePartyInfo(string partyID)
-        {
-            var toRemove = PartyInfos.FirstOrDefault(n => n.partyId == partyID);
-            PartyInfos.Remove(toRemove);
-        }
-
         /// <summary>
-        /// Creates and initialises a mobile party. Sets owner to hero.
+        /// Creates and initializes a mobile party. Sets owner to hero.
         /// </summary>
         public MobileParty CreateMobileParty(string id, TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
@@ -128,26 +154,6 @@ namespace ModLibrary.Parties
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
             newRoster.IsPrisonRoster = true;
             return newRoster;
-        }
-
-        public PartyBase GetParty(string partyId)
-        {
-            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
-        }
-
-        public T GetPartyInfo(string partyId)
-        {
-            T info = this.PartyInfos.FirstOrDefault(partyinfo => partyinfo.partyId == partyId);
-
-            if (info != null)
-            {
-                return info;
-            }
-
-            PartyBase missingParty = Campaign.Current.Parties.FirstOrDefault(n => n.Id == partyId);
-            AddPartyInfo(missingParty);
-
-            return PartyInfos.FirstOrDefault(partyinfo => partyinfo.partyId == partyId);
         }
     }
 }

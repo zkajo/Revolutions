@@ -1,7 +1,10 @@
-﻿using Revolutions.Settlements;
-using System;
-using ModLibrary;
+﻿using System;
 using TaleWorlds.CampaignSystem;
+using ModLibrary;
+using ModLibrary.Parties;
+using ModLibrary.Settlements;
+using Revolutions.Components.Parties;
+using Revolutions.Settlements;
 
 namespace Revolutions.Revolutions
 {
@@ -19,16 +22,19 @@ namespace Revolutions.Revolutions
             this.SettlementId = settlement.StringId;
         }
 
-        /// <summary>
-        /// This is the PartyBase ID, NOT MobileParty
-        /// </summary>
         public string PartyId { get; set; }
 
         public PartyBase Party => ModLibraryManagers.PartyManager.GetParty(this.PartyId);
 
+        public PartyInfo PartyInfo => ModLibraryManagers.PartyManager.GetPartyInfo(this.PartyId);
+
+        public PartyInfoRevolutions PartyInfoRevolutions => RevolutionsManagers.PartyManager.GetPartyInfo(this.PartyId);
+
         public string SettlementId { get; set; }
 
-        public Settlement Settlement => RevolutionsManagers.SettlementManager.GetSettlement(this.SettlementId);
+        public Settlement Settlement => ModLibraryManagers.SettlementManager.GetSettlement(this.SettlementId);
+
+        public SettlementInfo SettlementInfo => ModLibraryManagers.SettlementManager.GetSettlementInfo(this.SettlementId);
 
         public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetSettlementInfo(this.SettlementId);
     }

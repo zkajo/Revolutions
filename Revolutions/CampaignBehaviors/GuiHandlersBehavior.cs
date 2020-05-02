@@ -10,7 +10,7 @@ using TaleWorlds.Localization;
 
 namespace Revolutions.CampaignBehaviors
 {
-    public class GuiHandlersBehaviour : CampaignBehaviorBase
+    public class GuiHandlersBehavior : CampaignBehaviorBase
     {
         public override void RegisterEvents()
         {
@@ -24,7 +24,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSessionLaunched(CampaignGameStarter obj)
         {
-            CreateLoyaltyMenu(obj);
+            this.CreateLoyaltyMenu(obj);
         }
 
         public static void CreateModOptionsMenu()

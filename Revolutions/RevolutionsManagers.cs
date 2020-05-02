@@ -16,10 +16,10 @@ namespace Revolutions
 
         public static SettlementManager<SettlementInfoRevolutions> SettlementManager { get; } = SettlementManager<SettlementInfoRevolutions>.Instance;
 
+        public static ClanManager<ClanInfoRevolutions> ClanManager { get; } = ClanManager<ClanInfoRevolutions>.Instance;
+
         public static PartyManager<PartyInfoRevolutions> PartyManager { get; } = PartyManager<PartyInfoRevolutions>.Instance;
 
         public static RevolutionManager RevolutionManager { get; } = RevolutionManager.Instance;
-
-        public static ClanManager<ClanInfoRevolutions> ClanManager { get; } = ClanManager<ClanInfoRevolutions>.Instance;
     }
 }

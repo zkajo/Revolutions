@@ -17,6 +17,7 @@ namespace ModLibrary.Settlements
         }
 
         public static SettlementManager<T> Instance { get; private set; }
+        public object PartyInfos { get; private set; }
 
         #endregion
 
@@ -26,73 +27,39 @@ namespace ModLibrary.Settlements
         {
             foreach (var settlement in Settlement.All)
             {
-                SettlementInfo info = GetSettlementInfo(settlement);
-                if (info == null)
-                {
-                    AddSettlement(settlement);
-                }
+                this.GetSettlementInfo(settlement);
             }
-        }
-
-        public void WatchSettlements()
-        {
-            if (SettlementInfos.Count() == Campaign.Current.Settlements.Count())
-            {
-                return;
-            }
-
-            foreach (var info in SettlementInfos)
-            {
-                info.Remove = true;
-            }
-
-            foreach (var settlement in Campaign.Current.Settlements)
-            {
-                var settlementInfo = SettlementInfos.FirstOrDefault(n => n.SettlementId == settlement.StringId);
-
-                if (settlementInfo == null)
-                {
-                    AddSettlement(settlement);
-                }
-                else
-                {
-                    settlementInfo.Remove = false;
-                }
-            }
-
-            int length = SettlementInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (SettlementInfos[i].Remove)
-                {
-                    RemoveSettlementInfo(SettlementInfos[i].SettlementId);
-                    i--;
-                }
-
-                length = SettlementInfos.Count();
-            }
-        }
-
-        public void AddSettlement(Settlement settlement)
-        {
-            this.SettlementInfos.Add((T)Activator.CreateInstance(typeof(T), settlement));
-        }
-
-        private void RemoveSettlementInfo(string settlementId)
-        {
-            var toRemove = SettlementInfos.FirstOrDefault(n => n.SettlementId == settlementId);
-            SettlementInfos.Remove(toRemove);
         }
 
         public T GetSettlementInfo(string settlementId)
         {
-            return this.SettlementInfos.FirstOrDefault(settlementInfo => settlementInfo.SettlementId == settlementId);
+            var settlementInfo = this.SettlementInfos.FirstOrDefault(info => info.SettlementId == settlementId);
+
+            if (settlementInfo != null)
+            {
+                return settlementInfo;
+            }
+
+            Settlement missingSettlement = Settlement.All.FirstOrDefault(settlement => settlement.StringId == settlementId);
+            return missingSettlement != null ? this.AddSettlement(missingSettlement) : null;
         }
 
         public T GetSettlementInfo(Settlement settlement)
         {
             return this.GetSettlementInfo(settlement.StringId);
+        }
+
+        public T AddSettlement(Settlement settlement)
+        {
+            var settlementInfo = (T)Activator.CreateInstance(typeof(T), settlement);
+            this.SettlementInfos.Add(settlementInfo);
+
+            return settlementInfo;
+        }
+
+        private void RemoveSettlementInfo(string settlementId)
+        {
+            this.SettlementInfos.RemoveAll(info => info.SettlementId == settlementId);
         }
 
         public Settlement GetSettlement(string settlementId)
@@ -103,6 +70,46 @@ namespace ModLibrary.Settlements
         public Settlement GetSettlement(T settlementInfo)
         {
             return this.GetSettlement(settlementInfo.SettlementId);
+        }
+
+        public void WatchSettlements()
+        {
+            if (this.SettlementInfos.Count() == Campaign.Current.Settlements.Count())
+            {
+                return;
+            }
+
+            foreach (var info in this.SettlementInfos)
+            {
+                info.Remove = true;
+            }
+
+            foreach (var settlement in Campaign.Current.Settlements)
+            {
+                var settlementInfo = this.SettlementInfos.FirstOrDefault(n => n.SettlementId == settlement.StringId);
+
+                if (settlementInfo == null)
+                {
+                    this.AddSettlement(settlement);
+                }
+                else
+                {
+                    settlementInfo.Remove = false;
+                }
+            }
+
+            int length = this.SettlementInfos.Count();
+
+            for (int i = 0; i < length; i++)
+            {
+                if (this.SettlementInfos[i].Remove)
+                {
+                    this.RemoveSettlementInfo(this.SettlementInfos[i].SettlementId);
+                    i--;
+                }
+
+                length = this.SettlementInfos.Count();
+            }
         }
     }
 }

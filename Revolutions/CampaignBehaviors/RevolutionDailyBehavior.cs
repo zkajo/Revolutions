@@ -23,7 +23,7 @@ namespace Revolutions.CampaignBehaviors
         {
             RevolutionsManagers.RevolutionManager.IncreaseDailyLoyaltyForSettlement();
             RevolutionsManagers.RevolutionManager.CheckRevolutionProgress();
-            UpdateSettlementInfos();
+            this.UpdateSettlementInfos();
 
         }
 

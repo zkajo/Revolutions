@@ -29,38 +29,74 @@ namespace ModLibrary.Clans
         {
             foreach (var clan in Campaign.Current.Clans)
             {
-                ClanInfo clanInfo = GetClanInfo(clan);
+                ClanInfo clanInfo = this.GetClanInfo(clan);
                 if (clanInfo == null)
                 {
-                    AddClanInfo(clan);
+                    this.AddClanInfo(clan);
                 }
             }
         }
 
-        public void WatchClans()
+        public T GetClanInfo(string clanId)
         {
-            SynchroniseWithGame();
+            T clanInfo = this.ClanInfos.FirstOrDefault(info => info.ClanId == clanId);
+
+            if (clanInfo != null)
+            {
+                return clanInfo;
+            }
+
+            Clan missingClan = Campaign.Current.Clans.FirstOrDefault(info => info.StringId == clanId);
+            return missingClan != null ? this.AddClanInfo(missingClan) : null;
         }
 
-        private void SynchroniseWithGame()
+        public T GetClanInfo(Clan clan)
         {
-            if (ClanInfos.Count() == Campaign.Current.Clans.Count())
+            return this.GetClanInfo(clan.StringId);
+        }
+
+        public T AddClanInfo(Clan clan)
+        {
+            var clanInfo = (T)Activator.CreateInstance(typeof(T), clan);
+            this.ClanInfos.Add(clanInfo);
+
+            return clanInfo;
+        }
+
+        public void RemoveClanInfo(string clanId)
+        {
+            this.ClanInfos.RemoveAll(info => info.ClanId == clanId);
+        }
+
+        public Clan GetClan(string clanId)
+        {
+            return Campaign.Current.Clans.FirstOrDefault(clan => clan.StringId == clanId);
+        }
+
+        public Clan GetClan(T clanInfo)
+        {
+            return this.GetClan(clanInfo.ClanId);
+        }
+
+        public void WatchClans()
+        {
+            if (this.ClanInfos.Count() == Campaign.Current.Clans.Count())
             {
                 return;
             }
 
-            foreach (var info in ClanInfos)
+            foreach (var info in this.ClanInfos)
             {
                 info.Remove = true;
             }
 
             foreach (var clan in Campaign.Current.Clans)
             {
-                var clanInfo = ClanInfos.FirstOrDefault(n => n.StringId == clan.StringId);
+                var clanInfo = this.ClanInfos.FirstOrDefault(n => n.ClanId == clan.StringId);
 
                 if (clanInfo == null)
                 {
-                    AddClanInfo(clan);
+                    this.AddClanInfo(clan);
                 }
                 else
                 {
@@ -68,46 +104,19 @@ namespace ModLibrary.Clans
                 }
             }
 
-            int length = ClanInfos.Count();
+            int length = this.ClanInfos.Count();
 
             for (int i = 0; i < length; i++)
             {
-                if (ClanInfos[i].Remove)
+                if (this.ClanInfos[i].Remove)
                 {
-                    RemoveClanInfo(ClanInfos[i].StringId);
+                    this.RemoveClanInfo(this.ClanInfos[i].ClanId);
                     i--;
                 }
 
-                length = ClanInfos.Count();
+                length = this.ClanInfos.Count();
             }
         }
-
-        public void RemoveClanInfo(string clanId)
-        {
-            var toRemove = ClanInfos.FirstOrDefault(n => n.StringId == clanId);
-            ClanInfos.Remove(toRemove);
-        }
-
-        public T GetClanInfo(Clan clan)
-        {
-            T info = this.ClanInfos.FirstOrDefault(clanInfo => clanInfo.StringId == clan.StringId);
-
-            if (info != null)
-            {
-                return info;
-            }
-
-            Clan missingClan = Campaign.Current.Clans.FirstOrDefault(n => n.StringId == clan.StringId);
-            AddClanInfo(missingClan);
-
-            return this.ClanInfos.FirstOrDefault(clanInfo => clanInfo.StringId == clan.StringId);
-        }
-
-        public void AddClanInfo(Clan clan)
-        {
-            this.ClanInfos.Add((T)Activator.CreateInstance(typeof(T), clan));
-        }
-
 
         public Clan CreateClan(TextObject name, TextObject informalName, CultureObject culture, Hero owner, uint primaryColor, uint secondaryColor, uint labelColour, Vec2 position)
         {

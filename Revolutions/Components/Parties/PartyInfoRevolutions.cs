@@ -12,7 +12,7 @@ namespace Revolutions.Components.Parties
 
         }
 
-        public PartyInfoRevolutions(PartyBase mobileParty) : base(mobileParty)
+        public PartyInfoRevolutions(PartyBase party) : base(party)
         {
 
         }

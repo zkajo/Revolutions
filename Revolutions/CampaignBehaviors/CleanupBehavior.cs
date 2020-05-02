@@ -4,10 +4,11 @@ using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.CampaignBehaviors
 {
-    public class CleanupBehaviour : CampaignBehaviorBase
+    public class CleanupBehavior : CampaignBehaviorBase
     {
+        private const int RefreshAtTick = 100;
+
         private int _currentTick = 0;
-        private const int _refreshAtTick = 100;
 
         public override void RegisterEvents()
         {
@@ -59,28 +60,28 @@ namespace Revolutions.CampaignBehaviors
             //TODO: Add similar functions for other manager
             //TODO: Better functionality here. These are too slow.
 
-            if (_currentTick == _refreshAtTick)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick)
             {
                 RevolutionsManagers.FactionManager.WatchFactions();
             }
 
-            if (_currentTick == _refreshAtTick + 10)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 10)
             {
                 RevolutionsManagers.SettlementManager.WatchSettlements();
             }
 
-            if (_currentTick == _refreshAtTick + 20)
-            {
-                RevolutionsManagers.PartyManager.WatchParties();
-            }
-
-            if (_currentTick > _refreshAtTick + 30)
+            if (this._currentTick > CleanupBehavior.RefreshAtTick + 20)
             {
                 RevolutionsManagers.ClanManager.WatchClans();
-                _currentTick = 0;
+
+            }
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 30)
+            {
+                RevolutionsManagers.PartyManager.WatchParties();
+                this._currentTick = 0;
             }
 
-            _currentTick++;
+            this._currentTick++;
         }
     }
 }

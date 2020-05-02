@@ -15,9 +15,9 @@ namespace Revolutions.Screens.ViewModels
 
         public TownRevolutionViewModel(SettlementInfoRevolutions settInfo, FactionInfoRevolutions factInfo)
         {
-            _settlementInfo = settInfo;
-            _factionInfo = factInfo;
-            _factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(_settlementInfo.LoyalFaction.Banner), true);
+            this._settlementInfo = settInfo;
+            this._factionInfo = factInfo;
+            this._factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(this._settlementInfo.LoyalFaction.Banner), true);
         }
 
         private ImageIdentifierVM _factionVisual;
@@ -25,19 +25,19 @@ namespace Revolutions.Screens.ViewModels
         [DataSourceProperty]
         public string DoneDesc
         {
-            get { return GetText("str_rev_Done"); }
+            get { return this.GetText("str_rev_Done"); }
         }
 
         [DataSourceProperty]
         public string InformationDesc
         {
-            get { return GetText("str_TD_Information"); }
+            get { return this.GetText("str_TD_Information"); }
         }
 
         [DataSourceProperty]
         public string OptionsDesc
         {
-            get { return GetText("str_rev_Options"); }
+            get { return this.GetText("str_rev_Options"); }
         }
 
         private string GetText(string id)
@@ -68,7 +68,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (_settlementInfo.RevolutionProgress < 10)
+                if (this._settlementInfo.RevolutionProgress < 10)
                 {
                     TextObject textObject = GameTexts.FindText("str_TD_Content");
                     textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
@@ -103,7 +103,7 @@ namespace Revolutions.Screens.ViewModels
             get
             {
                 TextObject textObject = GameTexts.FindText("str_TD_RevoltProgress");
-                textObject.SetTextVariable("PROGRESS", _settlementInfo.RevolutionProgress);
+                textObject.SetTextVariable("PROGRESS", this._settlementInfo.RevolutionProgress);
 
                 return textObject.ToString();
             }
@@ -114,27 +114,27 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (_factionInfo.FactionId == _settlementInfo.LoyalFaction.StringId)
+                if (this._factionInfo.FactionId == this._settlementInfo.LoyalFaction.StringId)
                 {
                     TextObject textObject = GameTexts.FindText("str_TD_Mood_Content");
                     return textObject.ToString();
                 }
 
-                if (_factionInfo.CanRevolt)
+                if (this._factionInfo.CanRevolt)
                 {
                     TextObject inspiration = new TextObject("");
-                    if (_factionInfo.SuccessfullyRevolted)
+                    if (this._factionInfo.SuccessfullyRevolted)
                     {
                         //no idea why that's the case, but it is O_O
                         //TODO find a cause of this?
-                        if (_factionInfo.RevoltedSettlement == null)
+                        if (this._factionInfo.RevoltedSettlement == null)
                         {
                             inspiration = GameTexts.FindText("str_TD_Mood_inspiration_01");
                         }
                         else
                         {
                             inspiration = GameTexts.FindText("str_TD_Mood_inspiration_02");
-                            inspiration.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement.Name);
+                            inspiration.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
                         }
                     }
 
@@ -144,19 +144,19 @@ namespace Revolutions.Screens.ViewModels
                 }
                 else
                 {
-                    if (_factionInfo.RevoltedSettlement == null)
+                    if (this._factionInfo.RevoltedSettlement == null)
                     {
                         return " ";
                     }
 
-                    if (_factionInfo.RevoltedSettlementId == _settlementInfo.Settlement.StringId)
+                    if (this._factionInfo.RevoltedSettlementId == this._settlementInfo.Settlement.StringId)
                     {
                         TextObject option = GameTexts.FindText("str_TD_Mood_RecentRevolt");
                         return option.ToString();
                     }
 
                     TextObject textObject = GameTexts.FindText("str_TD_Mood_RecentRevolt2");
-                    textObject.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement.Name);
+                    textObject.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
 
                     return textObject.ToString();
                 }
@@ -178,16 +178,16 @@ namespace Revolutions.Screens.ViewModels
 
         private void OpenOptionsMenu()
         {
-            GuiHandlersBehaviour.CreateModOptionsMenu();
+            GuiHandlersBehavior.CreateModOptionsMenu();
         }
 
         private void RefreshProperties()
         {
-            OnPropertyChanged("TownDescription");
-            OnPropertyChanged("RevolutionProgress");
-            OnPropertyChanged("TownOwnership");
-            OnPropertyChanged("FactionVisual");
-            OnPropertyChanged("FactionVisual");
+            this.OnPropertyChanged("TownDescription");
+            this.OnPropertyChanged("RevolutionProgress");
+            this.OnPropertyChanged("TownOwnership");
+            this.OnPropertyChanged("FactionVisual");
+            this.OnPropertyChanged("FactionVisual");
         }
     }
 }

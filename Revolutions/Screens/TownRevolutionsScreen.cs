@@ -21,9 +21,9 @@ namespace Revolutions.Screens
         protected override void OnFinalize()
         {
             base.OnFinalize();
-            _gauntletLayer = null;
-            _dataSource = null;
-            _movie = null;
+            this._gauntletLayer = null;
+            this._dataSource = null;
+            this._movie = null;
         }
 
         public TownRevolutionsScreen(SettlementInfoRevolutions settinfo, FactionInfoRevolutions factInfo)
@@ -35,20 +35,20 @@ namespace Revolutions.Screens
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            _dataSource = new TownRevolutionViewModel(this._settlementInfo, this._factionInfo);
-            _gauntletLayer = new GauntletLayer(100);
-            _gauntletLayer.IsFocusLayer = true;
-            AddLayer(_gauntletLayer);
-            _gauntletLayer.InputRestrictions.SetInputRestrictions();
-            ScreenManager.TrySetFocus(_gauntletLayer);
-            _movie = _gauntletLayer.LoadMovie("TownRevolutionScreen", _dataSource);
-            _firstRender = true;
+            this._dataSource = new TownRevolutionViewModel(this._settlementInfo, this._factionInfo);
+            this._gauntletLayer = new GauntletLayer(100);
+            this._gauntletLayer.IsFocusLayer = true;
+            this.AddLayer(this._gauntletLayer);
+            this._gauntletLayer.InputRestrictions.SetInputRestrictions();
+            ScreenManager.TrySetFocus(this._gauntletLayer);
+            this._movie = this._gauntletLayer.LoadMovie("TownRevolutionScreen", this._dataSource);
+            this._firstRender = true;
         }
 
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);
-            InputContext input = _gauntletLayer.Input;
+            InputContext input = this._gauntletLayer.Input;
         }
     }
 }

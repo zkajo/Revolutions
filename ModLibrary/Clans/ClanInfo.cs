@@ -11,10 +11,12 @@ namespace ModLibrary.Clans
 
         public ClanInfo(Clan clan)
         {
-            StringId = clan.StringId;
+            this.ClanId = clan.StringId;
         }
 
-        public string StringId { get; set; }
+        public string ClanId { get; set; }
+
+        public Clan Clan => ModLibraryManagers.ClanManager.GetClan(this.ClanId);
 
         public bool CanJoinOtherKingdoms { get; set; } = true;
 

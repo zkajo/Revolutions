@@ -27,93 +27,39 @@ namespace ModLibrary.Factions
         {
             foreach (var faction in Campaign.Current.Factions)
             {
-                GetFactionInfo(faction.StringId);
+                this.GetFactionInfo(faction.StringId);
             }
-        }
-
-        public CharacterObject GetLordWithLeastFiefs(IFaction faction)
-        {
-            Hero selectedHero = null;
-            Clan chosenClan = null;
-            int leastSettlements = 100;
-            foreach (var noble in faction.Nobles)
-            {
-                int currentSettlements = noble.Clan.Settlements.Count();
-                if (currentSettlements >= leastSettlements)
-                    continue;
-                leastSettlements = currentSettlements;
-                chosenClan = noble.Clan;
-            }
-
-            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : faction.Leader;
-
-            return selectedHero.CharacterObject;
         }
 
         public T GetFactionInfo(string factionId)
         {
-            T info = this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
+            T factionInfo = this.FactionInfos.FirstOrDefault(info => info.FactionId == factionId);
 
-            if (info != null)
+            if (factionInfo != null)
             {
-                return info;
+                return factionInfo;
             }
 
-            IFaction missingFaction = Campaign.Current.Factions.FirstOrDefault(n => n.StringId == factionId);
-            AddFaction(missingFaction);
-
-            return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
-        }
-
-        public void WatchFactions()
-        {
-            if (FactionInfos.Count() == Campaign.Current.Factions.Count())
-            {
-                return;
-            }
-
-            foreach (var info in FactionInfos)
-            {
-                info.Remove = true;
-            }
-
-            foreach (var faction in Campaign.Current.Factions)
-            {
-                var factionInfo = FactionInfos.FirstOrDefault(n => n.FactionId == faction.StringId);
-
-                if (factionInfo == null)
-                {
-                    AddFaction(faction);
-                }
-                else
-                {
-                    factionInfo.Remove = false;
-                }
-            }
-
-            int length = FactionInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (FactionInfos[i].Remove)
-                {
-                    RemoveFactionInfo(FactionInfos[i].FactionId);
-                    i--;
-                }
-
-                length = FactionInfos.Count();
-            }
-        }
-
-        private void RemoveFactionInfo(string factionId)
-        {
-            var toRemove = FactionInfos.FirstOrDefault(n => n.FactionId == factionId);
-            FactionInfos.Remove(toRemove);
+            IFaction missingFaction = Campaign.Current.Factions.FirstOrDefault(faction => faction.StringId == factionId);
+            return missingFaction != null ? this.AddFactionInfo(missingFaction) : null;
         }
 
         public T GetFactionInfo(IFaction faction)
         {
             return this.GetFactionInfo(faction.StringId);
+        }
+
+        private T AddFactionInfo(IFaction faction)
+        {
+            var factionInfo = (T)Activator.CreateInstance(typeof(T), faction);
+            this.FactionInfos.Add(factionInfo);
+
+            return factionInfo;
+        }
+
+        private void RemoveFactionInfo(string factionId)
+        {
+            this.FactionInfos.RemoveAll(info => info.FactionId == factionId);
         }
 
         public IFaction GetFaction(string factionId)
@@ -126,9 +72,64 @@ namespace ModLibrary.Factions
             return this.GetFaction(factionInfo.FactionId);
         }
 
-        private void AddFaction(IFaction faction)
+        public void WatchFactions()
         {
-            this.FactionInfos.Add((T)Activator.CreateInstance(typeof(T), faction));
+            if (this.FactionInfos.Count() == Campaign.Current.Factions.Count())
+            {
+                return;
+            }
+
+            foreach (var info in this.FactionInfos)
+            {
+                info.Remove = true;
+            }
+
+            foreach (var faction in Campaign.Current.Factions)
+            {
+                var factionInfo = this.FactionInfos.FirstOrDefault(n => n.FactionId == faction.StringId);
+
+                if (factionInfo == null)
+                {
+                    this.AddFactionInfo(faction);
+                }
+                else
+                {
+                    factionInfo.Remove = false;
+                }
+            }
+
+            int length = this.FactionInfos.Count();
+
+            for (int i = 0; i < length; i++)
+            {
+                if (this.FactionInfos[i].Remove)
+                {
+                    this.RemoveFactionInfo(this.FactionInfos[i].FactionId);
+                    i--;
+                }
+
+                length = this.FactionInfos.Count();
+            }
+        }
+
+        public CharacterObject GetLordWithLeastFiefs(IFaction faction)
+        {
+            Clan chosenClan = null;
+            int leastSettlements = 100;
+
+            foreach (var noble in faction.Nobles)
+            {
+                int currentSettlements = noble.Clan.Settlements.Count();
+                if (currentSettlements >= leastSettlements)
+                {
+                    continue;
+                }
+
+                leastSettlements = currentSettlements;
+                chosenClan = noble.Clan;
+            }
+
+            return chosenClan != null ? chosenClan.Nobles.GetRandomElement().CharacterObject : faction.Leader.CharacterObject;
         }
     }
 }

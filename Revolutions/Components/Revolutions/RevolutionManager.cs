@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using ModLibrary;
-using ModLibrary.Characters;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.CampaignSystem.Actions;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
+using ModLibrary;
+using ModLibrary.Characters;
 using ModLibrary.Settlements;
 using Revolutions.Components.Clans;
 using Revolutions.Components.Factions;
 using Revolutions.Factions;
 using Revolutions.Settlements;
-using TaleWorlds.CampaignSystem.Actions;
-using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace Revolutions.Revolutions
 {
@@ -89,7 +89,7 @@ namespace Revolutions.Revolutions
                     continue;
                 }
 
-                if (!factionInfoRevolutions.CanRevolt || settlementInfoRevolutions.HasRebellionRevent)
+                if (!factionInfoRevolutions.CanRevolt || settlementInfoRevolutions.HasRebellionEvent)
                 {
                     settlementInfoRevolutions.RevolutionProgress = 0;
                     continue;
@@ -115,7 +115,8 @@ namespace Revolutions.Revolutions
             currentFactionInfo.CityRevoltionFailed(settlementInfoRevolutions.Settlement);
             DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.GetGarrison(), revolution.Party.MobileParty);
-            settlementInfoRevolutions.HasRebellionRevent = false;
+
+            settlementInfoRevolutions.HasRebellionEvent = false;
             this.Revolutions.Remove(revolution);
         }
 
@@ -123,7 +124,6 @@ namespace Revolutions.Revolutions
         {
             var currentSettlement = SettlementManager<SettlementInfo>.Instance.GetSettlement(settlementInfoRevolutions.SettlementId);
 
-            //TODO: Succeed Logic
             currentFactionInfo.CityRevoltionSucceeded(currentSettlement);
 
             if (SubModule.Configuration.AllowMinorFactions)
@@ -137,8 +137,7 @@ namespace Revolutions.Revolutions
                 revolution.Party.MobileParty.RemoveParty();
             }
 
-            settlementInfoRevolutions.HasRebellionRevent = false;
-            //TODO delete?
+            settlementInfoRevolutions.HasRebellionEvent = false;
             this.Revolutions.Remove(revolution);
         }
 
@@ -148,8 +147,9 @@ namespace Revolutions.Revolutions
             var currentFaction = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.MapFaction);
             bool atWarWithLoyalFaction = currentFaction.Faction.IsAtWarWith(settlementInfoRevolutions.LoyalFaction);
 
-            Hero hero = null;
-            Clan clan = null;
+            Hero hero;
+            Clan clan;
+
             if (atWarWithLoyalFaction)
             {
                 hero = RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(settlementInfoRevolutions.LoyalFaction).HeroObject;
@@ -158,8 +158,7 @@ namespace Revolutions.Revolutions
             else
             {
                 hero = HeroCreator.CreateSpecialHero(CharacterManager.Instance.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
-                clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color,
-                    settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
+                clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
                 clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
 
                 ClanInfoRevolutions clanInfo = RevolutionsManagers.ClanManager.GetClanInfo(clan);
@@ -219,7 +218,7 @@ namespace Revolutions.Revolutions
             else
             {
                 Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, garrison);
-                settlementInfoRevolutions.HasRebellionRevent = true;
+                settlementInfoRevolutions.HasRebellionEvent = true;
             }
         }
     }

@@ -14,16 +14,14 @@ namespace ModLibrary.Parties
 
         public PartyInfo(PartyBase party)
         {
-            partyId = party.Id;
+            this.PartyId = party.Id;
         }
 
-        /// <summary>
-        /// Id belonging to PartyBase
-        /// </summary>
-        public string partyId { get; set; }
+        public string PartyId { get; set; }
+
+        public PartyBase Party => Campaign.Current.Parties.ToList().FirstOrDefault(party => party.Id == this.PartyId);
 
         public bool Remove { get; set; } = false;
 
-        public PartyBase PartyBase => Campaign.Current.Parties.ToList().FirstOrDefault(party => party.Id == partyId);
     }
 }
