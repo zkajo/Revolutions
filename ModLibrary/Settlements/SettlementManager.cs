@@ -33,7 +33,7 @@ namespace ModLibrary.Settlements
                 }
             }
         }
-        
+
         public void WatchSettlements()
         {
             if (SettlementInfos.Count() == Campaign.Current.Settlements.Count())
@@ -45,7 +45,7 @@ namespace ModLibrary.Settlements
             {
                 info.Remove = true;
             }
-            
+
             foreach (var settlement in Campaign.Current.Settlements)
             {
                 var settlementInfo = SettlementInfos.FirstOrDefault(n => n.SettlementId == settlement.StringId);
@@ -61,7 +61,7 @@ namespace ModLibrary.Settlements
             }
 
             int length = SettlementInfos.Count();
-            
+
             for (int i = 0; i < length; i++)
             {
                 if (SettlementInfos[i].Remove)

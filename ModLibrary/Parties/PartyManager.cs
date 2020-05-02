@@ -25,7 +25,7 @@ namespace ModLibrary.Parties
         #endregion
 
         public List<T> PartyInfos = new List<T>();
-        
+
         public void InitializePartyInfos()
         {
             foreach (var party in Campaign.Current.Parties)
@@ -37,7 +37,7 @@ namespace ModLibrary.Parties
                 }
             }
         }
-        
+
         public void WatchParties()
         {
             if (PartyInfos.Count() == Campaign.Current.Parties.Count())
@@ -49,7 +49,7 @@ namespace ModLibrary.Parties
             {
                 info.Remove = true;
             }
-            
+
             foreach (var party in Campaign.Current.Parties)
             {
                 var partyInfo = PartyInfos.FirstOrDefault(n => n.partyId == party.Id);
@@ -65,7 +65,7 @@ namespace ModLibrary.Parties
             }
 
             int length = PartyInfos.Count();
-            
+
             for (int i = 0; i < length; i++)
             {
                 if (PartyInfos[i].Remove)
@@ -80,7 +80,7 @@ namespace ModLibrary.Parties
 
         public void AddPartyInfo(PartyBase party)
         {
-            this.PartyInfos.Add((T)Activator.CreateInstance(typeof(T), party ));
+            this.PartyInfos.Add((T)Activator.CreateInstance(typeof(T), party));
         }
 
         public void RemovePartyInfo(string partyID)
@@ -98,7 +98,7 @@ namespace ModLibrary.Parties
             {
                 id
             }));
-            
+
             mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
             mobileParty.Party.Owner = owner;
 
@@ -111,7 +111,7 @@ namespace ModLibrary.Parties
             {
                 mobileParty.Name = MobilePartyHelper.GeneratePartyName(mobileParty.Party.Owner.CharacterObject);
             }
-            
+
             return mobileParty;
         }
 
@@ -121,7 +121,7 @@ namespace ModLibrary.Parties
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
             return newRoster;
         }
-        
+
         public TroopRoster CreatePrisonRoster(int numberNeeded, CharacterObject troopCharacter)
         {
             TroopRoster newRoster = new TroopRoster();
@@ -129,7 +129,7 @@ namespace ModLibrary.Parties
             newRoster.IsPrisonRoster = true;
             return newRoster;
         }
-        
+
         public PartyBase GetParty(string partyId)
         {
             return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
@@ -143,7 +143,7 @@ namespace ModLibrary.Parties
             {
                 return info;
             }
-            
+
             PartyBase missingParty = Campaign.Current.Parties.FirstOrDefault(n => n.Id == partyId);
             AddPartyInfo(missingParty);
 

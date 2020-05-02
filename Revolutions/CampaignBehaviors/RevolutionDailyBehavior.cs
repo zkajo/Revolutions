@@ -1,7 +1,6 @@
 ﻿using System;
 using Revolutions.Factions;
 using TaleWorlds.CampaignSystem;
-using Revolutions.Revolutions;
 using Revolutions.Settlements;
 
 namespace Revolutions.CampaignBehaviors
@@ -25,7 +24,7 @@ namespace Revolutions.CampaignBehaviors
             RevolutionsManagers.RevolutionManager.IncreaseDailyLoyaltyForSettlement();
             RevolutionsManagers.RevolutionManager.CheckRevolutionProgress();
             UpdateSettlementInfos();
-            
+
         }
 
         public override void SyncData(IDataStore dataStore)

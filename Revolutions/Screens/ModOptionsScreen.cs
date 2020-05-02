@@ -29,7 +29,7 @@ namespace Revolutions.Screens
 
         private void OnClose()
         {
-            
+
         }
 
         protected override void OnFinalize()

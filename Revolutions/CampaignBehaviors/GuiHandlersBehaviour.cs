@@ -1,8 +1,5 @@
 ﻿using System;
-using ModLibrary.Factions;
-using ModLibrary.Settlements;
 using Revolutions.Components.Factions;
-using Revolutions.Factions;
 using Revolutions.Screens;
 using Revolutions.Settlements;
 using TaleWorlds.CampaignSystem;
@@ -22,19 +19,19 @@ namespace Revolutions.CampaignBehaviors
 
         public override void SyncData(IDataStore dataStore)
         {
-            
+
         }
-        
+
         private void OnSessionLaunched(CampaignGameStarter obj)
         {
             CreateLoyaltyMenu(obj);
         }
-        
+
         public static void CreateModOptionsMenu()
         {
             ScreenManager.PushScreen(new ModOptionsScreen());
         }
-        
+
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
         {
             TextObject menuName = GameTexts.FindText("str_GM_TownLoyalty");

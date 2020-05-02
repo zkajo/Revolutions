@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
@@ -19,15 +18,15 @@ namespace ModLibrary.Characters
         public static CharacterManager Instance { get; private set; }
 
         #endregion
-        
+
         public CharacterObject CreateLordCharacter(CultureObject culture)
         {
             List<CharacterObject> characterObjects = new List<CharacterObject>();
-            
+
             foreach (CharacterObject characterObject in CharacterObject.Templates)
             {
                 if (characterObject.Occupation == Occupation.Lord
-                    && characterObject.Culture == culture  && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
+                    && characterObject.Culture == culture && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
                     && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
                 {
                     characterObjects.Add(characterObject);

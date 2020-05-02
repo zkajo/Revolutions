@@ -22,7 +22,7 @@ namespace ModLibrary.Clans
         public static ClanManager<T> Instance { get; private set; }
 
         #endregion
-        
+
         public List<T> ClanInfos = new List<T>();
 
         public void InitalizeClanInfos()
@@ -36,7 +36,7 @@ namespace ModLibrary.Clans
                 }
             }
         }
-        
+
         public void WatchClans()
         {
             SynchroniseWithGame();
@@ -53,7 +53,7 @@ namespace ModLibrary.Clans
             {
                 info.Remove = true;
             }
-            
+
             foreach (var clan in Campaign.Current.Clans)
             {
                 var clanInfo = ClanInfos.FirstOrDefault(n => n.StringId == clan.StringId);
@@ -69,7 +69,7 @@ namespace ModLibrary.Clans
             }
 
             int length = ClanInfos.Count();
-            
+
             for (int i = 0; i < length; i++)
             {
                 if (ClanInfos[i].Remove)
@@ -87,7 +87,7 @@ namespace ModLibrary.Clans
             var toRemove = ClanInfos.FirstOrDefault(n => n.StringId == clanId);
             ClanInfos.Remove(toRemove);
         }
-        
+
         public T GetClanInfo(Clan clan)
         {
             T info = this.ClanInfos.FirstOrDefault(clanInfo => clanInfo.StringId == clan.StringId);
@@ -96,7 +96,7 @@ namespace ModLibrary.Clans
             {
                 return info;
             }
-            
+
             Clan missingClan = Campaign.Current.Clans.FirstOrDefault(n => n.StringId == clan.StringId);
             AddClanInfo(missingClan);
 
@@ -105,10 +105,10 @@ namespace ModLibrary.Clans
 
         public void AddClanInfo(Clan clan)
         {
-            this.ClanInfos.Add((T)Activator.CreateInstance(typeof(T), clan ));
+            this.ClanInfos.Add((T)Activator.CreateInstance(typeof(T), clan));
         }
-        
-        
+
+
         public Clan CreateClan(TextObject name, TextObject informalName, CultureObject culture, Hero owner, uint primaryColor, uint secondaryColor, uint labelColour, Vec2 position)
         {
             Clan clan = MBObjectManager.Instance.CreateObject<Clan>();

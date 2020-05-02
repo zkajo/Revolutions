@@ -43,7 +43,7 @@ namespace ModLibrary.Settlements
         {
             return settlementInfo.Settlement.Parties.FirstOrDefault(n => n.IsGarrison).Party;
         }
-        
+
         public static PartyBase GetMilitia(this SettlementInfo settlementInfo)
         {
             return settlementInfo.Settlement.Parties.FirstOrDefault(n => n.IsMilitia).Party;

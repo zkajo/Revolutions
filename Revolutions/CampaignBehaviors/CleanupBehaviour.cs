@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using ModLibrary.Clans;
 using TaleWorlds.CampaignSystem;
 
@@ -9,7 +8,7 @@ namespace Revolutions.CampaignBehaviors
     {
         private int _currentTick = 0;
         private const int _refreshAtTick = 100;
-        
+
         public override void RegisterEvents()
         {
             CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
@@ -22,7 +21,7 @@ namespace Revolutions.CampaignBehaviors
 
         public override void SyncData(IDataStore dataStore)
         {
-            
+
         }
 
         private void ClanDestroyedEvent(Clan clan)
@@ -37,7 +36,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void PartyVisibilityChangedEvent(PartyBase party)
         {
-            
+
         }
 
         private void LordPartySpawned(MobileParty party)
@@ -48,7 +47,7 @@ namespace Revolutions.CampaignBehaviors
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
         {
             ClanInfo info = RevolutionsManagers.ClanManager.GetClanInfo(clan);
-            
+
             if (!info.CanJoinOtherKingdoms && newKingdom.RulingClan.StringId != clan.StringId)
             {
                 clan.ClanLeaveKingdom(false);
@@ -64,23 +63,23 @@ namespace Revolutions.CampaignBehaviors
             {
                 RevolutionsManagers.FactionManager.WatchFactions();
             }
-            
+
             if (_currentTick == _refreshAtTick + 10)
             {
                 RevolutionsManagers.SettlementManager.WatchSettlements();
             }
-            
+
             if (_currentTick == _refreshAtTick + 20)
             {
                 RevolutionsManagers.PartyManager.WatchParties();
             }
-            
+
             if (_currentTick > _refreshAtTick + 30)
             {
                 RevolutionsManagers.ClanManager.WatchClans();
                 _currentTick = 0;
             }
-            
+
             _currentTick++;
         }
     }

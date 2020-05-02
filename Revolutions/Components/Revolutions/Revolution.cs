@@ -10,7 +10,7 @@ namespace Revolutions.Revolutions
     {
         public Revolution()
         {
-            
+
         }
 
         public Revolution(string partyId, Settlement settlement)
@@ -25,7 +25,7 @@ namespace Revolutions.Revolutions
         public string PartyId { get; set; }
 
         public PartyBase Party => ModLibraryManagers.PartyManager.GetParty(this.PartyId);
-        
+
         public string SettlementId { get; set; }
 
         public Settlement Settlement => RevolutionsManagers.SettlementManager.GetSettlement(this.SettlementId);

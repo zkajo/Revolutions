@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TaleWorlds.SaveSystem;
 using Revolutions.Settlements;
-using Revolutions.Factions;
 using Revolutions.Revolutions;
 using ModLibrary;
 using Revolutions.Components.Clans;

@@ -1,8 +1,5 @@
-﻿using ModLibrary.Factions;
-using ModLibrary.Settlements;
-using Revolutions.CampaignBehaviors;
+﻿using Revolutions.CampaignBehaviors;
 using Revolutions.Components.Factions;
-using Revolutions.Factions;
 using Revolutions.Settlements;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
@@ -25,27 +22,30 @@ namespace Revolutions.Screens.ViewModels
 
         private ImageIdentifierVM _factionVisual;
 
-        [DataSourceProperty] public  string DoneDesc
+        [DataSourceProperty]
+        public string DoneDesc
         {
             get { return GetText("str_rev_Done"); }
         }
 
-        [DataSourceProperty] public string InformationDesc
+        [DataSourceProperty]
+        public string InformationDesc
         {
             get { return GetText("str_TD_Information"); }
         }
-        
-        [DataSourceProperty] public  string OptionsDesc
+
+        [DataSourceProperty]
+        public string OptionsDesc
         {
             get { return GetText("str_rev_Options"); }
         }
-        
+
         private string GetText(string id)
         {
             TextObject textObject = GameTexts.FindText(id);
             return textObject.ToString();
         }
-        
+
         [DataSourceProperty]
         public ImageIdentifierVM FactionVisual
         {
@@ -79,7 +79,7 @@ namespace Revolutions.Screens.ViewModels
                 {
                     TextObject textObject = GameTexts.FindText("str_TD_FlamesOfRevolution");
                     textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
-                    
+
                     return textObject.ToString();
                 }
             }
@@ -101,7 +101,7 @@ namespace Revolutions.Screens.ViewModels
         public string RevolutionProgress
         {
             get
-            {                
+            {
                 TextObject textObject = GameTexts.FindText("str_TD_RevoltProgress");
                 textObject.SetTextVariable("PROGRESS", _settlementInfo.RevolutionProgress);
 
@@ -137,10 +137,10 @@ namespace Revolutions.Screens.ViewModels
                             inspiration.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement.Name);
                         }
                     }
-                    
+
                     TextObject baseText = GameTexts.FindText("str_TD_Mood_RaiseBanners");
                     return baseText.ToString() + " " + inspiration.ToString();
-                    
+
                 }
                 else
                 {
@@ -154,10 +154,10 @@ namespace Revolutions.Screens.ViewModels
                         TextObject option = GameTexts.FindText("str_TD_Mood_RecentRevolt");
                         return option.ToString();
                     }
-                    
+
                     TextObject textObject = GameTexts.FindText("str_TD_Mood_RecentRevolt2");
                     textObject.SetTextVariable("SETTLEMENT", _factionInfo.RevoltedSettlement.Name);
-                    
+
                     return textObject.ToString();
                 }
             }

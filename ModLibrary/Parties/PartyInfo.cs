@@ -9,21 +9,21 @@ namespace ModLibrary.Parties
     {
         public PartyInfo()
         {
-            
+
         }
 
         public PartyInfo(PartyBase party)
         {
             partyId = party.Id;
         }
-        
+
         /// <summary>
         /// Id belonging to PartyBase
         /// </summary>
         public string partyId { get; set; }
 
         public bool Remove { get; set; } = false;
-        
+
         public PartyBase PartyBase => Campaign.Current.Parties.ToList().FirstOrDefault(party => party.Id == partyId);
     }
 }

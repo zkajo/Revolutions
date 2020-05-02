@@ -30,7 +30,7 @@ namespace ModLibrary.Factions
                 GetFactionInfo(faction.StringId);
             }
         }
-        
+
         public CharacterObject GetLordWithLeastFiefs(IFaction faction)
         {
             Hero selectedHero = null;
@@ -39,7 +39,8 @@ namespace ModLibrary.Factions
             foreach (var noble in faction.Nobles)
             {
                 int currentSettlements = noble.Clan.Settlements.Count();
-                if (currentSettlements >= leastSettlements) continue;
+                if (currentSettlements >= leastSettlements)
+                    continue;
                 leastSettlements = currentSettlements;
                 chosenClan = noble.Clan;
             }
@@ -60,10 +61,10 @@ namespace ModLibrary.Factions
 
             IFaction missingFaction = Campaign.Current.Factions.FirstOrDefault(n => n.StringId == factionId);
             AddFaction(missingFaction);
-            
+
             return this.FactionInfos.FirstOrDefault(factionInfo => factionInfo.FactionId == factionId);
         }
-        
+
         public void WatchFactions()
         {
             if (FactionInfos.Count() == Campaign.Current.Factions.Count())
@@ -75,7 +76,7 @@ namespace ModLibrary.Factions
             {
                 info.Remove = true;
             }
-            
+
             foreach (var faction in Campaign.Current.Factions)
             {
                 var factionInfo = FactionInfos.FirstOrDefault(n => n.FactionId == faction.StringId);
@@ -91,7 +92,7 @@ namespace ModLibrary.Factions
             }
 
             int length = FactionInfos.Count();
-            
+
             for (int i = 0; i < length; i++)
             {
                 if (FactionInfos[i].Remove)
@@ -124,7 +125,7 @@ namespace ModLibrary.Factions
         {
             return this.GetFaction(factionInfo.FactionId);
         }
-        
+
         private void AddFaction(IFaction faction)
         {
             this.FactionInfos.Add((T)Activator.CreateInstance(typeof(T), faction));

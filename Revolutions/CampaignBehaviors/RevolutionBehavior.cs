@@ -2,7 +2,6 @@
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using ModLibrary.Settlements;
 using Revolutions.Settlements;
 using TaleWorlds.CampaignSystem.Actions;
 
@@ -86,7 +85,7 @@ namespace Revolutions.CampaignBehaviors
             var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
             var partyLeader = mobileParty.Leader.HeroObject;
             var clanLeader = mobileParty.Party.Owner.Clan.Leader;
-            
+
             if (partyLeader.StringId == clanLeader.StringId && partyLeader.Clan.StringId == settlement.OwnerClan.StringId)
             {
                 settlementInfo.IsOwnerInSettlement = false;

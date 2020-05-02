@@ -21,7 +21,7 @@ namespace ModLibrary.Kingdoms
         public static KingdomManager Instance { get; private set; }
 
         #endregion
-        
+
         /// <summary>
         /// Modifies the kingdom list using Harmony.
         /// </summary>

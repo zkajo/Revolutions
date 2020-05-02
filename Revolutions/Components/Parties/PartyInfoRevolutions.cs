@@ -9,12 +9,12 @@ namespace Revolutions.Components.Parties
     {
         public PartyInfoRevolutions() : base()
         {
-            
+
         }
 
         public PartyInfoRevolutions(PartyBase mobileParty) : base(mobileParty)
         {
-            
+
         }
     }
 }

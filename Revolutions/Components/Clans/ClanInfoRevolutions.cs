@@ -9,12 +9,12 @@ namespace Revolutions.Components.Clans
     {
         public ClanInfoRevolutions() : base()
         {
-            
+
         }
-        
+
         public ClanInfoRevolutions(Clan clan) : base(clan)
         {
-            
+
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using TaleWorlds.CampaignSystem;
-using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Clans
 {
@@ -7,9 +6,9 @@ namespace ModLibrary.Clans
     {
         public ClanInfo()
         {
-            
+
         }
-        
+
         public ClanInfo(Clan clan)
         {
             StringId = clan.StringId;
@@ -18,7 +17,7 @@ namespace ModLibrary.Clans
         public string StringId { get; set; }
 
         public bool CanJoinOtherKingdoms { get; set; } = true;
-        
+
         public bool Remove { get; set; }
     }
 }

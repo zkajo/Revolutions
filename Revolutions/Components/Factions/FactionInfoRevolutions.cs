@@ -19,7 +19,7 @@ namespace Revolutions.Components.Factions
         }
 
         public string RevoltedSettlementId { get; set; }
-        
+
         public Settlement RevoltedSettlement => ModLibraryManagers.SettlementManager.GetSettlement(RevoltedSettlementId);
 
         public bool CanRevolt { get; set; } = false;

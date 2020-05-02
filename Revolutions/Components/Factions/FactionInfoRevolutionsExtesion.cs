@@ -1,7 +1,5 @@
-﻿using ModLibrary.Characters;
-using Revolutions.Components.Factions;
+﻿using Revolutions.Components.Factions;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.CampaignSystem.Actions;
 
 namespace Revolutions.Factions
 {

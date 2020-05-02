@@ -1,6 +1,4 @@
 ﻿using TaleWorlds.CampaignSystem;
-using ModLibrary.Settlements;
-using SandBox.Quests.QuestBehaviors;
 
 namespace Revolutions.Settlements
 {
