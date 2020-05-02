@@ -12,6 +12,8 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
             CampaignEvents.ClanChangedKingdom.AddNonSerializedListener(this, new Action<Clan, Kingdom, Kingdom, bool, bool>(this.ClanChangedKingdom));
             CampaignEvents.OnPartyRemovedEvent.AddNonSerializedListener(this, new Action<PartyBase>(this.PartyRemovedEvent));
+            CampaignEvents.OnLordPartySpawnedEvent.AddNonSerializedListener(this, new Action<MobileParty>(this.LordPartySpawned));
+            CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -19,9 +21,19 @@ namespace Revolutions.CampaignBehaviors
             
         }
 
+        private void ClanDestroyedEvent(Clan clan)
+        {
+            RevolutionsManagers.ClanManager.RemoveClanInfo(clan.StringId);
+        }
+
         private void PartyRemovedEvent(PartyBase party)
         {
             RevolutionsManagers.PartyManager.RemovePartyInfo(party.Id);
+        }
+
+        private void LordPartySpawned(MobileParty party)
+        {
+            RevolutionsManagers.PartyManager.AddPartyInfo(party.Party);
         }
 
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
@@ -37,10 +49,11 @@ namespace Revolutions.CampaignBehaviors
         private void TickEvent(float dt)
         {
             //TODO: Add similar functions for other manager
-            RevolutionsManagers.FactionManager.WatchFactions();
-            RevolutionsManagers.SettlementManager.WatchSettlements();
-            RevolutionsManagers.PartyManager.WatchParties();
-            RevolutionsManagers.ClanManager.WatchClans();
+            //TODO: Better functionality here. These are too slow.
+            //RevolutionsManagers.FactionManager.WatchFactions();
+            //RevolutionsManagers.SettlementManager.WatchSettlements();
+            //RevolutionsManagers.PartyManager.WatchParties();
+            //RevolutionsManagers.ClanManager.WatchClans();
         }
     }
 }
