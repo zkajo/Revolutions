@@ -9,7 +9,6 @@
     <DependedModule Id="SandBoxCore"/>
     <DependedModule Id="Sandbox"/>
     <DependedModule Id="StoryMode" />
-	<DependedModule Id="ModLib" />
   </DependedModules>
   <SubModules>
     <SubModule>
