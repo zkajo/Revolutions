@@ -176,11 +176,6 @@ namespace Revolutions.Screens.ViewModels
             ScreenManager.PopScreen();
         }
 
-        private void OpenOptionsMenu()
-        {
-            GuiHandlersBehavior.CreateModOptionsMenu();
-        }
-
         private void RefreshProperties()
         {
             this.OnPropertyChanged("TownDescription");

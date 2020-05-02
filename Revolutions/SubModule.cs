@@ -6,6 +6,7 @@ using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
+using ModLib;
 
 namespace Revolutions
 {
@@ -15,6 +16,28 @@ namespace Revolutions
 
         public static Settings Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
+
+        protected override void OnSubModuleLoad()
+        {
+            try
+            {
+                FileDatabase.Initialise("Revolutions");
+
+                Settings settings = FileDatabase.Get<Settings>("RevolutionsSettings");
+                if (settings == null)
+                {
+                    settings = new Settings();
+                }
+
+                SettingsDatabase.RegisterSettings(settings);
+                SettingsDatabase.SaveSettings(Settings.Instance);
+            }
+            catch (Exception exception)
+            {
+                var errorMessage = "Revolutions: Settings could not be loaded! ";
+                InformationManager.DisplayMessage(new InformationMessage(errorMessage + exception?.ToString()));
+            }
+        }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {

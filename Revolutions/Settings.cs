@@ -1,30 +1,81 @@
-﻿using System;
+﻿using ModLib;
+using ModLib.Attributes;
+using System;
+using System.Xml.Serialization;
 
 namespace Revolutions
 {
     [Serializable]
-    public class Settings
+    public class Settings : SettingsBase
     {
-        public float RevoltCooldownTime = 30.0f;
+        public static Settings Instance
+        {
+            get
+            {
+                return (Settings)SettingsDatabase.GetSettings("RevolutionsSettings");
+            }
+        }
 
-        public bool EmpireLoyaltyMechanics = true;
+        [XmlElement]
+        public override string ID { get; set; } = "RevolutionsSettings";
 
-        public bool OverextensionMechanics = true;
+        public override string ModuleFolderName => "Revolutions";
 
-        public bool PlayerAffectedByOverextension = true;
+        public override string ModName => "Revolutions";
 
-        public int DaysUntilLoyaltyChange = 80;
+        [XmlElement]
+        [SettingPropertyGroup("Mechanics")]
+        [SettingProperty("Empire Loyalty")]
+        public bool EmpireLoyaltyMechanics { get; set; } = true;
 
-        public bool AllowMinorFactions = false;
+        [XmlElement]
+        [SettingPropertyGroup("Mechanics")]
+        [SettingProperty("Overextension")]
+        public bool OverextensionMechanics { get; set; } = true;
 
-        public int MinimumObedianceLoyalty = 25;
+        [XmlElement]
+        [SettingPropertyGroup("Toggles")]
+        [SettingProperty("Overextension Affects Player")]
+        public bool PlayerAffectedByOverextension { get; set; } = true;
 
-        public int PlayerInTownLoyaltyIncrease = 5;
+        [XmlElement]
+        [SettingPropertyGroup("Toggles")]
+        [SettingProperty("Allow Minor Factions")]
+        public bool AllowMinorFactions { get; set; } = false;
 
-        public float OverExtensionMultiplier = 2.0f;
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Revolt Cooldown", 0f, 250f)]
+        public float RevoltCooldownTime { get; set; } = 30.0f;
 
-        public float BasePlayerLoyalty = 5.0f;
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Days Until Loyalty Change", 0, 365)]
+        public int DaysUntilLoyaltyChange { get; set; } = 80;
 
-        public bool DebugMode = false;
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Minimum Obediance Loyalty", 0, 250)]
+        public int MinimumObedianceLoyalty { get; set; } = 25;
+
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Player In Town Loyalty Increase", 0, 100)]
+        public int PlayerInTownLoyaltyIncrease { get; set; } = 5;
+
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Over Extension Multiplier", 0f, 10f)]
+        public float OverExtensionMultiplier { get; set; } = 2.0f;
+
+        [XmlElement]
+        [SettingPropertyGroup("Values")]
+        [SettingProperty("Base Player Loyalty", 0f, 100)]
+        public float BasePlayerLoyalty { get; set; } = 5.0f;
+
+        [XmlElement]
+        [XmlElement]
+        [SettingProperty("DebugMode")]
+        public bool DebugMode { get; set; } = false;
     }
 }

@@ -69,7 +69,11 @@
     <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net472\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="ModLib">
+      <HintPath>..\External\ModLib.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
@@ -89,15 +93,12 @@
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
     <Compile Include="Models\LoyaltyModel.cs" />
     <Compile Include="RevolutionsManagers.cs" />
-    <Compile Include="Screens\ModOptionsScreen.cs" />
     <Compile Include="Screens\TownRevolutionsScreen.cs" />
-    <Compile Include="Screens\ViewModels\ModOptionsViewModel.cs" />
     <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SubModule.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
-    <Content Include="GUI\Prefabs\RevolutionModOptions.xml" />
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
     <Content Include="Logo.png" />
     <Content Include="ModuleData\global_strings.xml" />

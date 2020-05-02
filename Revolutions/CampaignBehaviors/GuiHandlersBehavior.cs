@@ -27,11 +27,6 @@ namespace Revolutions.CampaignBehaviors
             this.CreateLoyaltyMenu(obj);
         }
 
-        public static void CreateModOptionsMenu()
-        {
-            ScreenManager.PushScreen(new ModOptionsScreen());
-        }
-
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
         {
             TextObject menuName = GameTexts.FindText("str_GM_TownLoyalty");
