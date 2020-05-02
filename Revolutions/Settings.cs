@@ -72,10 +72,5 @@ namespace Revolutions
         [SettingPropertyGroup("Values")]
         [SettingProperty("Base Player Loyalty", 0f, 100)]
         public float BasePlayerLoyalty { get; set; } = 5.0f;
-
-        [XmlElement]
-        [XmlElement]
-        [SettingProperty("DebugMode")]
-        public bool DebugMode { get; set; } = false;
     }
 }

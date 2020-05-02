@@ -57,7 +57,7 @@ namespace Revolutions.Revolutions
                 {
                     if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan == settlement.OwnerClan)
                     {
-                        settlement.Town.Loyalty += SubModule.Configuration.PlayerInTownLoyaltyIncrease;
+                        settlement.Town.Loyalty += Settings.Instance.PlayerInTownLoyaltyIncrease;
 
                         if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
                         {
@@ -95,7 +95,7 @@ namespace Revolutions.Revolutions
                     continue;
                 }
 
-                settlementInfoRevolutions.RevolutionProgress += SubModule.Configuration.MinimumObedianceLoyalty - settlement.Town.Loyalty;
+                settlementInfoRevolutions.RevolutionProgress += Settings.Instance.MinimumObedianceLoyalty - settlement.Town.Loyalty;
 
                 if (settlementInfoRevolutions.RevolutionProgress >= 100 && !settlement.IsUnderSiege)
                 {
@@ -126,7 +126,7 @@ namespace Revolutions.Revolutions
 
             currentFactionInfo.CityRevoltionSucceeded(currentSettlement);
 
-            if (SubModule.Configuration.AllowMinorFactions)
+            if (Settings.Instance.AllowMinorFactions)
             {
                 ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, currentSettlement);
                 revolution.Party.MobileParty.Ai.SetAIState(AIState.PatrollingAroundLocation);

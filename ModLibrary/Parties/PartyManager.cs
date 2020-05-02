@@ -82,36 +82,11 @@ namespace ModLibrary.Parties
                 return;
             }
 
-            foreach (var info in this.PartyInfos)
-            {
-                info.Remove = true;
-            }
+            this.PartyInfos.RemoveAll(info => !Campaign.Current.Parties.Any(party => party.Id == info.PartyId));
 
             foreach (var party in Campaign.Current.Parties)
             {
-                var partyInfo = this.PartyInfos.FirstOrDefault(n => n.PartyId == party.Id);
-
-                if (partyInfo == null)
-                {
-                    this.AddPartyInfo(party);
-                }
-                else
-                {
-                    partyInfo.Remove = false;
-                }
-            }
-
-            int length = this.PartyInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (this.PartyInfos[i].Remove)
-                {
-                    this.RemovePartyInfo(this.PartyInfos[i].PartyId);
-                    i--;
-                }
-
-                length = this.PartyInfos.Count();
+                this.GetPartyInfo(party);
             }
         }
 

@@ -55,7 +55,5 @@ namespace ModLibrary.Settlements
         public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.CurrentFactionId).Name.ToLower().Contains("empire");
 
         public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetFaction(this.PreviousFactionId).Name.ToLower().Contains("empire");
-
-        public bool Remove { get; set; } = false;
     }
 }

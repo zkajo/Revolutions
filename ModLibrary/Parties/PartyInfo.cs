@@ -21,7 +21,5 @@ namespace ModLibrary.Parties
 
         public PartyBase Party => Campaign.Current.Parties.ToList().FirstOrDefault(party => party.Id == this.PartyId);
 
-        public bool Remove { get; set; } = false;
-
     }
 }

@@ -79,36 +79,11 @@ namespace ModLibrary.Settlements
                 return;
             }
 
-            foreach (var info in this.SettlementInfos)
-            {
-                info.Remove = true;
-            }
+            this.SettlementInfos.RemoveAll(info => !Settlement.All.Any(settlement => settlement.StringId == info.SettlementId));
 
             foreach (var settlement in Campaign.Current.Settlements)
             {
-                var settlementInfo = this.SettlementInfos.FirstOrDefault(n => n.SettlementId == settlement.StringId);
-
-                if (settlementInfo == null)
-                {
-                    this.AddSettlement(settlement);
-                }
-                else
-                {
-                    settlementInfo.Remove = false;
-                }
-            }
-
-            int length = this.SettlementInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (this.SettlementInfos[i].Remove)
-                {
-                    this.RemoveSettlementInfo(this.SettlementInfos[i].SettlementId);
-                    i--;
-                }
-
-                length = this.SettlementInfos.Count();
+                this.GetSettlementInfo(settlement);
             }
         }
     }

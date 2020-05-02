@@ -85,36 +85,11 @@ namespace ModLibrary.Clans
                 return;
             }
 
-            foreach (var info in this.ClanInfos)
-            {
-                info.Remove = true;
-            }
+            this.ClanInfos.RemoveAll(info => !Campaign.Current.Clans.Any(clan => clan.StringId == info.ClanId));
 
             foreach (var clan in Campaign.Current.Clans)
             {
-                var clanInfo = this.ClanInfos.FirstOrDefault(n => n.ClanId == clan.StringId);
-
-                if (clanInfo == null)
-                {
-                    this.AddClanInfo(clan);
-                }
-                else
-                {
-                    clanInfo.Remove = false;
-                }
-            }
-
-            int length = this.ClanInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (this.ClanInfos[i].Remove)
-                {
-                    this.RemoveClanInfo(this.ClanInfos[i].ClanId);
-                    i--;
-                }
-
-                length = this.ClanInfos.Count();
+                this.GetClanInfo(clan);
             }
         }
 

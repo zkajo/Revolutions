@@ -79,36 +79,11 @@ namespace ModLibrary.Factions
                 return;
             }
 
-            foreach (var info in this.FactionInfos)
-            {
-                info.Remove = true;
-            }
+            this.FactionInfos.RemoveAll(info => !Campaign.Current.Factions.Any(faction => faction.StringId == info.FactionId));
 
             foreach (var faction in Campaign.Current.Factions)
             {
-                var factionInfo = this.FactionInfos.FirstOrDefault(n => n.FactionId == faction.StringId);
-
-                if (factionInfo == null)
-                {
-                    this.AddFactionInfo(faction);
-                }
-                else
-                {
-                    factionInfo.Remove = false;
-                }
-            }
-
-            int length = this.FactionInfos.Count();
-
-            for (int i = 0; i < length; i++)
-            {
-                if (this.FactionInfos[i].Remove)
-                {
-                    this.RemoveFactionInfo(this.FactionInfos[i].FactionId);
-                    i--;
-                }
-
-                length = this.FactionInfos.Count();
+                this.GetFactionInfo(faction);
             }
         }
 

@@ -26,9 +26,9 @@ namespace Revolutions.Models
 
             if (settlementInfoRevolutions.CurrentFaction.Leader == Hero.MainHero)
             {
-                explainedNumber.Add(SubModule.Configuration.BasePlayerLoyalty, GameTexts.FindText("str_loyalty_bannerlord"));
+                explainedNumber.Add(Settings.Instance.BasePlayerLoyalty, GameTexts.FindText("str_loyalty_bannerlord"));
 
-                if (SubModule.Configuration.PlayerAffectedByOverextension && SubModule.Configuration.OverextensionMechanics)
+                if (Settings.Instance.PlayerAffectedByOverextension && Settings.Instance.OverextensionMechanics)
                 {
                     this.Overextension(settlementInfoRevolutions, ref explainedNumber);
                 }
@@ -37,7 +37,7 @@ namespace Revolutions.Models
             {
                 this.BaseLoyalty(settlementInfoRevolutions, ref explainedNumber);
 
-                if (SubModule.Configuration.OverextensionMechanics)
+                if (Settings.Instance.OverextensionMechanics)
                 {
                     this.Overextension(settlementInfoRevolutions, ref explainedNumber);
                 }
@@ -53,7 +53,7 @@ namespace Revolutions.Models
                 return;
             }
 
-            if (SubModule.Configuration.EmpireLoyaltyMechanics)
+            if (Settings.Instance.EmpireLoyaltyMechanics)
             {
                 if (settlementInfoRevolutions.IsOfImperialCulture && settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
                 {
@@ -64,12 +64,12 @@ namespace Revolutions.Models
             var factionInfo = settlementInfoRevolutions.CurrentFactionInfo;
             var overExtension = factionInfo.InitialTownsCount - factionInfo.CurrentTownsCount;
 
-            explainedNumber.Add(overExtension * SubModule.Configuration.OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
+            explainedNumber.Add(overExtension * Settings.Instance.OverExtensionMultiplier, GameTexts.FindText("str_loyalty_overextension"));
         }
 
         private void BaseLoyalty(SettlementInfoRevolutions settlementInfoRevolutions, ref ExplainedNumber explainedNumber)
         {
-            if (SubModule.Configuration.EmpireLoyaltyMechanics)
+            if (Settings.Instance.EmpireLoyaltyMechanics)
             {
                 if (settlementInfoRevolutions.IsOfImperialCulture)
                 {

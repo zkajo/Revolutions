@@ -27,7 +27,7 @@ namespace Revolutions.Factions
         {
             factionInfo.DaysSinceLastRevolt++;
 
-            if (factionInfo.DaysSinceLastRevolt > SubModule.Configuration.RevoltCooldownTime)
+            if (factionInfo.DaysSinceLastRevolt > Settings.Instance.RevoltCooldownTime)
             {
                 factionInfo.CanRevolt = true;
             }

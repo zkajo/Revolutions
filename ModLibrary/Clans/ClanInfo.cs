@@ -19,7 +19,5 @@ namespace ModLibrary.Clans
         public Clan Clan => ModLibraryManagers.ClanManager.GetClan(this.ClanId);
 
         public bool CanJoinOtherKingdoms { get; set; } = true;
-
-        public bool Remove { get; set; }
     }
 }

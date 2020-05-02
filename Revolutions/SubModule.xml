@@ -1,7 +1,7 @@
 ﻿<Module>
   <Name value="Revolutions"/>
   <Id value="Revolutions"/>
-  <Version value="v0.1.0"/>
+  <Version value="v1.0.132"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <DependedModules>
@@ -9,6 +9,7 @@
     <DependedModule Id="SandBoxCore"/>
     <DependedModule Id="Sandbox"/>
     <DependedModule Id="StoryMode" />
+	<DependedModule Id="ModLib" />
   </DependedModules>
   <SubModules>
     <SubModule>

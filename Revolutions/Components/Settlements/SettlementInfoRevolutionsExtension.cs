@@ -24,7 +24,7 @@ namespace Revolutions.Settlements
             settlementInfoRevolutions.DaysOwnedByOwner++;
 
             if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId &&
-                settlementInfoRevolutions.DaysOwnedByOwner > SubModule.Configuration.DaysUntilLoyaltyChange)
+                settlementInfoRevolutions.DaysOwnedByOwner > Settings.Instance.DaysUntilLoyaltyChange)
             {
                 settlementInfoRevolutions.LoyalFactionId = settlementInfoRevolutions.CurrentFactionId;
             }

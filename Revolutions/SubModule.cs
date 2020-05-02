@@ -14,7 +14,6 @@ namespace Revolutions
     {
         private DataStorage _dataStorage;
 
-        public static Settings Configuration;
         public static string ModuleDataPath = Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
 
         protected override void OnSubModuleLoad()
