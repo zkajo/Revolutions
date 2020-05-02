@@ -25,6 +25,8 @@ namespace Revolutions
 
         internal void LoadData()
         {
+            SubModule.Configuration = ModLibraryManagers.FileManager.Load<Settings>(SubModule.ModuleDataPath, "Settings") ?? new Settings();
+
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
             RevolutionsManagers.SettlementManager.SettlementInfos = ModLibraryManagers.FileManager.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
@@ -36,6 +38,8 @@ namespace Revolutions
 
         internal void SaveData()
         {
+            ModLibraryManagers.FileManager.Save(SubModule.Configuration, SubModule.ModuleDataPath, "Settings");
+
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.SettlementManager.SettlementInfos, directoryPath, "SettlementInfos");

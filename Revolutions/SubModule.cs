@@ -56,8 +56,6 @@ namespace Revolutions
             {
                 campaignGameStarter.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
 
-                SubModule.Configuration = ModLibraryManagers.FileManager.Load<Settings>(SubModule.ModuleDataPath, "Settings") ?? new Settings();
-
                 this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);
             }
