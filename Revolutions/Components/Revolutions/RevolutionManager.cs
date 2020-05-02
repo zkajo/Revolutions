@@ -120,6 +120,8 @@ namespace Revolutions.Revolutions
         public void EndFailedRevolution(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions currentFactionInfo)
         {
             currentFactionInfo.CityRevoltionFailed(settlementInfoRevolutions.Settlement);
+            DestroyClanAction.Apply(revolution.Party.Owner.Clan);
+            DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.GetGarrison(), revolution.Party.MobileParty);
             this.Revolutions.Remove(revolution);
         }
 
@@ -130,11 +132,10 @@ namespace Revolutions.Revolutions
             //TODO: Succeed Logic
             currentFactionInfo.CityRevoltionSucceeded(currentSettlement);
             ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, currentSettlement);
-            
+
             //TODO delete?
             this.Revolutions.Remove(revolution);
         }
-        
         
         public void StartRebellionEvent(Settlement settlement)
 		{
@@ -177,8 +178,7 @@ namespace Revolutions.Revolutions
             
 			mobileParty.IsLordParty = true;
 			mobileParty.Party.Visuals.SetMapIconAsDirty();
-			
-
+            
             TextObject information = GameTexts.FindText("str_GM_RevoltNotification");
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.AddQuickInformation(information, 0, null, "");
