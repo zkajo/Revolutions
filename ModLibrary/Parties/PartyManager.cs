@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
+using Helpers;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Parties
 {
@@ -88,25 +90,29 @@ namespace ModLibrary.Parties
             PartyInfos.Remove(toRemove);
         }
 
-        public MobileParty CreateMobileParty(TextObject name, Hero leader, bool addLeaderToRoster, List<TroopRoster> troops, TroopRoster prisonRoster, Vec2 position)
+        /// <summary>
+        /// Creates and initialises a mobile party. Sets owner to hero.
+        /// </summary>
+        public MobileParty CreateMobileParty(string id, TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
-            MobileParty mobileParty = MobileParty.Create(name.ToString());
-            TroopRoster roster = new TroopRoster();
-            prisonRoster.IsPrisonRoster = true;
-            
-            foreach (var troop in troops)
+            MobileParty mobileParty = MBObjectManager.Instance.CreateObject<MobileParty>(string.Concat(new object[]
             {
-                roster.Add(troop);
+                id
+            }));
+            
+            mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
+            mobileParty.Party.Owner = owner;
+
+            if (addOwnerToRoster)
+            {
+                mobileParty.MemberRoster.AddToCounts(mobileParty.Party.Owner.CharacterObject, 1, false, 0, 0, true, -1);
             }
 
-            mobileParty.Party.Owner = leader;
-
-            if (addLeaderToRoster)
+            if (generateName)
             {
-                mobileParty.ChangePartyLeader(leader.CharacterObject);
+                mobileParty.Name = MobilePartyHelper.GeneratePartyName(mobileParty.Party.Owner.CharacterObject);
             }
             
-            mobileParty.InitializeMobileParty(new TextObject(name.ToString(), null), roster, prisonRoster, position, 2.0f, 2.0f);
             return mobileParty;
         }
 

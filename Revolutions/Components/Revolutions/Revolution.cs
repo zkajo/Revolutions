@@ -8,11 +8,15 @@ namespace Revolutions.Revolutions
     [Serializable]
     public class Revolution
     {
-        public Revolution()
+        public Revolution(string partyID, Settlement settlement)
         {
-
+            this.PartyId = partyID;
+            this.SettlementId = settlement.StringId;
         }
 
+        /// <summary>
+        /// This is the PartyBase ID, NOT MobileParty
+        /// </summary>
         public string PartyId { get; set; }
 
         public PartyBase Party => ModLibraryManagers.PartyManager.GetParty(this.PartyId);
