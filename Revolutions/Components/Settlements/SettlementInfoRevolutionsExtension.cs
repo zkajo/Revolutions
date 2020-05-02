@@ -1,5 +1,6 @@
 ﻿using TaleWorlds.CampaignSystem;
 using ModLibrary.Settlements;
+using SandBox.Quests.QuestBehaviors;
 
 namespace Revolutions.Settlements
 {
@@ -7,25 +8,28 @@ namespace Revolutions.Settlements
     {
         public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfoRevolutions, IFaction faction = null)
         {
-            settlementInfoRevolutions.UpdateOwner(faction);
-
-            if (settlementInfoRevolutions.LoyalFactionId == settlementInfoRevolutions.CurrentFactionId)
+            if (faction == null)
             {
-                return;
+                settlementInfoRevolutions.PreviousFactionId = settlementInfoRevolutions.CurrentFactionId;
+            }
+            else
+            {
+                settlementInfoRevolutions.PreviousFactionId = settlementInfoRevolutions.CurrentFactionId;
+                settlementInfoRevolutions.CurrentFactionId = faction.StringId;
             }
 
-            if (settlementInfoRevolutions.DaysOwnedByOwner >= SubModule.Configuration.DaysUntilLoyaltyChange)
+            settlementInfoRevolutions.DaysOwnedByOwner = 0;
+        }
+
+        public static void DailyUpdate(this SettlementInfoRevolutions settlementInfoRevolutions)
+        {
+            settlementInfoRevolutions.DaysOwnedByOwner++;
+
+            if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId &&
+                settlementInfoRevolutions.DaysOwnedByOwner > SubModule.Configuration.DaysUntilLoyaltyChange)
             {
                 settlementInfoRevolutions.LoyalFactionId = settlementInfoRevolutions.CurrentFactionId;
             }
-
-            settlementInfoRevolutions.DaysOwnedByOwner++;
-        }
-
-        public static void ResetOwnership(this SettlementInfoRevolutions settlementInfoRevolutions)
-        {
-            settlementInfoRevolutions.RevolutionProgress = 0;
-            settlementInfoRevolutions.DaysOwnedByOwner = 0;
         }
     }
 }

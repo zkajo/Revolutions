@@ -1,6 +1,8 @@
-﻿using ModLibrary.Factions;
+﻿using ModLibrary.Clans;
+using ModLibrary.Factions;
 using ModLibrary.Parties;
 using ModLibrary.Settlements;
+using Revolutions.Components.Clans;
 using Revolutions.Components.Factions;
 using Revolutions.Components.Parties;
 using Revolutions.Factions;
@@ -18,5 +20,7 @@ namespace Revolutions
         public static PartyManager<PartyInfoRevolutions> PartyManager { get; } = PartyManager<PartyInfoRevolutions>.Instance;
         
         public static RevolutionManager RevolutionManager { get; } = RevolutionManager.Instance;
+
+        public static ClanManager<ClanInfoRevolutions> ClanManager { get; } = ClanManager<ClanInfoRevolutions>.Instance;
     }
 }

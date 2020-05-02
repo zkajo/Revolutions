@@ -1,4 +1,5 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System.Linq;
+using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Settlements
 {
@@ -36,6 +37,16 @@ namespace ModLibrary.Settlements
                 settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
                 settlementInfo.CurrentFactionId = faction.StringId;
             }
+        }
+
+        public static PartyBase GetGarrison(this SettlementInfo settlementInfo)
+        {
+            return settlementInfo.Settlement.Parties.FirstOrDefault(n => n.IsGarrison).Party;
+        }
+        
+        public static PartyBase GetMilitia(this SettlementInfo settlementInfo)
+        {
+            return settlementInfo.Settlement.Parties.FirstOrDefault(n => n.IsMilitia).Party;
         }
     }
 }

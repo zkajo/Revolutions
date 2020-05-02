@@ -24,7 +24,7 @@ namespace Revolutions.Components.Factions
 
         public bool CanRevolt { get; set; } = false;
 
-        public int DaysSinceLastRevolution { get; set; } = 0;
+        public int DaysSinceLastRevolt { get; set; } = 0;
 
         public bool SuccessfullyRevolted { get; set; } = false;
     }

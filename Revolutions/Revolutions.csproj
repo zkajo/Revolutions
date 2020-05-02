@@ -75,6 +75,7 @@
   <ItemGroup>
     <Compile Include="CampaignBehaviors\CleanupBehaviour.cs" />
     <Compile Include="CampaignBehaviors\GuiHandlersBehaviour.cs" />
+    <Compile Include="Components\Clans\ClanInfoRevolutions.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutions.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutionsExtesion.cs" />
     <Compile Include="Components\Parties\PartyInfoRevolutions.cs" />

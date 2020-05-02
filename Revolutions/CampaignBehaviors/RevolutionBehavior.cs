@@ -3,6 +3,7 @@ using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using ModLibrary.Settlements;
+using Revolutions.Settlements;
 using TaleWorlds.CampaignSystem.Actions;
 
 namespace Revolutions.CampaignBehaviors
@@ -54,7 +55,7 @@ namespace Revolutions.CampaignBehaviors
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
             var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
-            settlementInfo.UpdateOwner(newOwner.MapFaction);
+            settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
         }
 
         private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
