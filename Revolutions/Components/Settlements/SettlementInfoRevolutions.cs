@@ -25,6 +25,8 @@ namespace Revolutions.Settlements
 
         public float RevolutionProgress { get; set; } = 0;
 
+        public bool HasRebellionRevent { get; set; } = false;
+
         public int DaysOwnedByOwner { get; set; } = 0;
 
         public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetFaction(this.LoyalFactionId).Name.ToLower().Contains("empire");

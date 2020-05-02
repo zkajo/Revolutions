@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 
 namespace ModLibrary.Factions
 {
@@ -28,6 +29,24 @@ namespace ModLibrary.Factions
             {
                 GetFactionInfo(faction.StringId);
             }
+        }
+        
+        public CharacterObject GetLordWithLeastFiefs(IFaction faction)
+        {
+            Hero selectedHero = null;
+            Clan chosenClan = null;
+            int leastSettlements = 100;
+            foreach (var noble in faction.Nobles)
+            {
+                int currentSettlements = noble.Clan.Settlements.Count();
+                if (currentSettlements >= leastSettlements) continue;
+                leastSettlements = currentSettlements;
+                chosenClan = noble.Clan;
+            }
+
+            selectedHero = chosenClan != null ? chosenClan.Nobles.GetRandomElement() : faction.Leader;
+
+            return selectedHero.CharacterObject;
         }
 
         public T GetFactionInfo(string factionId)

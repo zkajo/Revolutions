@@ -96,7 +96,7 @@ namespace Revolutions.Revolutions
                     continue;
                 }
 
-                if (!factionInfoRevolutions.CanRevolt)
+                if (!factionInfoRevolutions.CanRevolt || settlementInfoRevolutions.HasRebellionRevent)
                 {
                     settlementInfoRevolutions.RevolutionProgress = 0;
                     continue;
@@ -122,6 +122,7 @@ namespace Revolutions.Revolutions
             currentFactionInfo.CityRevoltionFailed(settlementInfoRevolutions.Settlement);
             DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.GetGarrison(), revolution.Party.MobileParty);
+            settlementInfoRevolutions.HasRebellionRevent = false;
             this.Revolutions.Remove(revolution);
         }
 
@@ -131,8 +132,19 @@ namespace Revolutions.Revolutions
             
             //TODO: Succeed Logic
             currentFactionInfo.CityRevoltionSucceeded(currentSettlement);
-            ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, currentSettlement);
 
+            if (SubModule.Configuration.AllowMinorFactions)
+            {
+                ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, currentSettlement);
+                revolution.Party.MobileParty.Ai.SetAIState(AIState.PatrollingAroundLocation);
+            }
+            else
+            {
+                ChangeOwnerOfSettlementAction.ApplyByDefault(RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(settlementInfoRevolutions.LoyalFaction).HeroObject, currentSettlement);
+                revolution.Party.MobileParty.RemoveParty();
+            }
+
+            settlementInfoRevolutions.HasRebellionRevent = false;
             //TODO delete?
             this.Revolutions.Remove(revolution);
         }
@@ -140,32 +152,51 @@ namespace Revolutions.Revolutions
         public void StartRebellionEvent(Settlement settlement)
 		{
             var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement);
-            var factionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.MapFaction);
+            var currentFaction = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.MapFaction);
+            bool atWarWithLoyalFaction = currentFaction.Faction.IsAtWarWith(settlementInfoRevolutions.LoyalFaction);
+
+            Hero hero = null;
+            Clan clan = null;
+            if (atWarWithLoyalFaction)
+            {
+                hero = RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(settlementInfoRevolutions.LoyalFaction).HeroObject;
+                clan = hero.Clan;
+            }
+            else
+            {
+                hero = HeroCreator.CreateSpecialHero(CharacterManager.Instance.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
+                clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color,
+                    settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
+                clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
+
+                ClanInfoRevolutions clanInfo = RevolutionsManagers.ClanManager.GetClanInfo(clan);
+                clanInfo.CanJoinOtherKingdoms = false;
             
-            Hero hero = HeroCreator.CreateSpecialHero(CharacterManager.Instance.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
+                DeclareWarAction.Apply(clan, settlement.MapFaction);
+            }
+            
 			PartyTemplateObject rebelsPartyTemplate = settlement.Culture.RebelsPartyTemplate;
 			rebelsPartyTemplate.IncrementNumberOfCreated();
             
             string id = string.Concat("rebels_of_", settlement.Culture.StringId, "_", rebelsPartyTemplate.NumberOfCreated);
             TextObject name = GameTexts.FindText("str_GM_RevolutionaryMob");
-            MobileParty mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(id, name, settlement.GatePosition, rebelsPartyTemplate, hero, true, true);
+            MobileParty mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(id, name, settlement.GatePosition, rebelsPartyTemplate, hero, !atWarWithLoyalFaction, true);
 
-            int value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
-			mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, value);
-			mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
-            
-
-            Clan clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color,
-                settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
-            clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
-
-            ClanInfoRevolutions clanInfo = RevolutionsManagers.ClanManager.GetClanInfo(clan);
-            clanInfo.CanJoinOtherKingdoms = false;
-            
-            DeclareWarAction.Apply(clan, settlement.MapFaction);
             mobileParty.Party.Owner.Clan = clan;
+            
+            if (!atWarWithLoyalFaction)
+            {
+                int value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
+                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, value);
+                mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
+            }
+            
             mobileParty.AddElementToMemberRoster(mobileParty.MemberRoster.GetCharacterAtIndex(0), (int)((double)settlement.Prosperity * 0.1), false);
-			mobileParty.ChangePartyLeader(mobileParty.Party.Owner.CharacterObject, false);
+
+            if (!atWarWithLoyalFaction)
+            {
+                mobileParty.ChangePartyLeader(mobileParty.Party.Owner.CharacterObject, false);
+            }
             
 			if (settlement.MilitaParty != null && settlement.MilitaParty.CurrentSettlement == settlement && settlement.MilitaParty.MapEvent == null)
 			{
@@ -190,11 +221,12 @@ namespace Revolutions.Revolutions
 
             if (garrison == null)
             {
-                this.EndSucceededRevoluton(revolution, settlementInfoRevolutions, factionInfoRevolutions);
+                this.EndSucceededRevoluton(revolution, settlementInfoRevolutions, currentFaction);
             }
             else
             {
                 Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, garrison);
+                settlementInfoRevolutions.HasRebellionRevent = true;
             }
         }
     }
