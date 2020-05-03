@@ -16,27 +16,27 @@
         <string id="v0coMIcl" text="Values" />
         <!-- General -->
         <string id="Pqk4uuGz" text="Revolt Cooldown" />
-        <string id="zx12ijyW" text="Cooldown before an uprising can occur again in the same city" />
+        <string id="zx12ijyW" text="The time before another revolt can arise in the same city." />
         <!-- Loyalty -->
         <string id="uy96VZX2" text="Empire" />
-        <string id="YnRmSelp" text="Empire Loyalty Mechanic" />
+        <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
         <string id="qNWmNP0z" text="Base Loyalty" />
-        <string id="tOZS0maD" text="Base loyalty for Player" />
+        <string id="tOZS0maD" text="The base loyalty of cities to the player." />
         <string id="ZuwszZww" text="Minimum Obediance" />
-        <string id="BkGsVccZ" text="Minimum needed loyalty for obediance" />
-        <string id="3fQwLwkC" text="Days Loyalty Change" />
-        <string id="dRoMEfb0" text="Days until loyalty of town to new owner will change" />
+        <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
+        <string id="3fQwLwkC" text="Loyalty change" />
+        <string id="dRoMEfb0" text="Days until the city's loyalty to the new owner changes." />
         <string id="cXCfwzPp" text="Loyalty Increase" />
-        <string id="HWiD4aR1" text="Amount by which the loyalty increase, when the owner is in town" />
+        <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
         <!-- Overextension -->
         <string id="sBw5Qz3q" text="Overextension" />
-        <string id="ZRlNsvev" text="Overextension Mechanic" />
+        <string id="ZRlNsvev" text="Activates/Deactivates the mechanics for overextension." />
         <string id="vuDS5ns8" text="Affects Player" />
-        <string id="7LzQHMVj" text="Will overextension affect player" />
+        <string id="7LzQHMVj" text="Does the overextension mechanism affect the player." />
         <string id="q2tbqN8d" text="Multiplier" />
-        <string id="6m1Ss8fW" text="Multiplier for calculating overextension" />
+        <string id="6m1Ss8fW" text="A multiplier to calculate overextension." />
         <!-- Other -->
         <string id="WbOKuWbq" text="Minor Factions" />
-        <string id="P1g6H41e" text="Will minor factions be created if needed" />
+        <string id="P1g6H41e" text="If necessary, new, smaller fractions are formed." />
     </strings>
 </base>
