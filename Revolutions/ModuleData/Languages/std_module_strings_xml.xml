@@ -38,5 +38,33 @@
         <!-- Other -->
         <string id="WbOKuWbq" text="Minor Factions" />
         <string id="P1g6H41e" text="If necessary, new, smaller fractions are formed." />
+
+        <!-- Loyalty Model -->
+        <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
+        <string id="dRoS0maD" text="{SETTLEMENT} is revolting!" />
+        <string id="Ts1iVN8d" text="Town Loyalty" />
+        <string id="q2t1Ss8d" text="Revolutionary Mob" />
+
+        <!-- Town Menu -->
+        <string id="3fBkqk4u" text="The people of {SETTLEMENT} seem to be content." />
+        <string id="dRoS0maD" text="Flames of revolution are slowly stirring in {SETTLEMENT}." />
+        <string id="MYu8szGz" text="Population is loyal to the {FACTION}." />
+        <string id="q2tbSs8d" text="Current revolt progress is {PROGRESS}%." />
+        <string id="zQNPQz3q" text="People are content with the current rule." />
+        <string id="qZS0ma0z"	text="Many are inspired by tales of revolts in the kingdom." />
+        <string id="7LzQWiDZ"	text="Many are inspired by events at {SETTLEMENT}." />
+        <string id="HWiDqN8d"	text="Some talk of raising banners of their homeland." />
+        <string id="q2tbH41e" text="The people of this town had revolted recently, and don't wish to spill blood again." />
+        <string id="6m7Ss8fW" text="After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
+
+        <!-- Loyalty State -->
+        <string id="YnRmNltF" text="Overextension" />
+        <string id="3fQwNP5z" text="Imperial Loyalty" />
+        <string id="7LzQNP0z" text="Foreign Rule" />
+        <string id="qNWmNN8d" text="Imperial Aversion" />
+        <string id="q2tbqP0z" text="Bannerlord Settlement" />
+
+        <!-- Misc -->
+        <string id="3fQwWiDZ" text="Done" />
     </strings>
 </base>

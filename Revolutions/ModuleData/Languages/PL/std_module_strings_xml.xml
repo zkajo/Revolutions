@@ -38,5 +38,33 @@
         <!-- Other -->
         <string id="WbOKuWbq" text="Minor Factions" />
         <string id="P1g6H41e" text="If necessary, new, smaller fractions are formed." />
+
+        <!-- Loyalty Model -->
+        <string id="PqkwszGz" text="Widząc że spędzasz czas w {SETTLEMENT}, twoi mieszczanie stają się bardziej lojalni." />
+        <string id="dRoS0maD" text="{SETTLEMENT} się buntuje!" />
+        <string id="Ts1iVN8d" text="Lojalność Miasta" />
+        <string id="q2t1Ss8d" text="Buntownicy" />
+
+        <!-- Town Menu -->
+        <string id="3fBkqk4u" text="Mieszczanie {SETTLEMENT} są zadowoleni." />
+        <string id="dRoS0maD" text="Mieszczanie szepczą buntownicze hasła w {SETTLEMENT}." />
+        <string id="MYu8szGz" text="Populacja jest lojalna wobec {FACTION}." />
+        <string id="q2tbSs8d" text="Postęp buntu wynosi {PROGRESS}%." />
+        <string id="zQNPQz3q" text="Ludzie są zadowoleni z obecnej władzy." />
+        <string id="qZS0ma0z"	text="Wielu inspiruje się powieściami o buntach w królestwie." />
+        <string id="7LzQWiDZ"	text="Wielu inspiruje się powieściami o wydarzeniach w {SETTLEMENT}." />
+        <string id="HWiDqN8d"	text="Niektórzy mówią o podnoszeniu sztandarów swojej ojczyzny." />
+        <string id="q2tbH41e" text="Ludzie tego miasta przeżyli niedawny bunt, i nie chcą ponownie trwonić krwi." />
+        <string id="6m7Ss8fW" text="Słysząc o krwi przelanej w {SETTLEMENT}, mieszczanie boją się buntować." />
+
+        <!-- Loyalty State -->
+        <string id="YnRmNltF" text="Nadwyrężenie Administracyjne" />
+        <string id="3fQwNP5z" text="Imperialna Lojalność" />
+        <string id="7LzQNP0z" text="Zagraniczna Władza" />
+        <string id="qNWmNN8d" text="Imperialna Awersja" />
+        <string id="q2tbqP0z" text="Lordowskie Włości" />
+
+        <!-- Misc -->
+        <string id="3fQwWiDZ" text="Wyjdź" />
     </strings>
 </base>

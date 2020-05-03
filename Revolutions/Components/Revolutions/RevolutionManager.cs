@@ -61,7 +61,7 @@ namespace Revolutions.Revolutions
 
                         if (settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
                         {
-                            var textObject = GameTexts.FindText("str_GM_LoyaltyIncrease");
+                            var textObject = new TextObject("{=PqkwszGz}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you.");
                             textObject.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
                             InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
                         }
@@ -171,7 +171,7 @@ namespace Revolutions.Revolutions
             rebelsPartyTemplate.IncrementNumberOfCreated();
 
             string id = string.Concat("rebels_of_", settlement.Culture.StringId, "_", rebelsPartyTemplate.NumberOfCreated);
-            TextObject name = GameTexts.FindText("str_GM_RevolutionaryMob");
+            TextObject name = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
             MobileParty mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(id, name, settlement.GatePosition, rebelsPartyTemplate, hero, !atWarWithLoyalFaction, true);
 
             mobileParty.Party.Owner.Clan = clan;
@@ -202,7 +202,7 @@ namespace Revolutions.Revolutions
             mobileParty.IsLordParty = true;
             mobileParty.Party.Visuals.SetMapIconAsDirty();
 
-            TextObject information = GameTexts.FindText("str_GM_RevoltNotification");
+            TextObject information = new TextObject("{=dRoS0maD}{SETTLEMENT} is revolting!");
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.AddQuickInformation(information, 0, null, "");
 

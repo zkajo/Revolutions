@@ -1,5 +1,4 @@
-﻿using Revolutions.CampaignBehaviors;
-using Revolutions.Components.Factions;
+﻿using Revolutions.Components.Factions;
 using Revolutions.Settlements;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
@@ -25,25 +24,7 @@ namespace Revolutions.Screens.ViewModels
         [DataSourceProperty]
         public string DoneDesc
         {
-            get { return this.GetText("str_rev_Done"); }
-        }
-
-        [DataSourceProperty]
-        public string InformationDesc
-        {
-            get { return this.GetText("str_TD_Information"); }
-        }
-
-        [DataSourceProperty]
-        public string OptionsDesc
-        {
-            get { return this.GetText("str_rev_Options"); }
-        }
-
-        private string GetText(string id)
-        {
-            TextObject textObject = GameTexts.FindText(id);
-            return textObject.ToString();
+            get { return "{=3fQwWiDZ}Done"; }
         }
 
         [DataSourceProperty]
@@ -70,14 +51,14 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (this._settlementInfo.RevolutionProgress < 10)
                 {
-                    TextObject textObject = GameTexts.FindText("str_TD_Content");
+                    TextObject textObject = new TextObject("{=3fBkqk4u}The people of {SETTLEMENT} seem to be content.");
                     textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
 
                     return textObject.ToString();
                 }
                 else
                 {
-                    TextObject textObject = GameTexts.FindText("str_TD_FlamesOfRevolution");
+                    TextObject textObject = new TextObject("{=dRoS0maD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
                     textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
 
                     return textObject.ToString();
@@ -90,7 +71,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                TextObject textObject = GameTexts.FindText("str_TD_LoyalToFaction");
+                TextObject textObject = new TextObject("{=MYu8szGz}Population is loyal to the {FACTION}.");
                 textObject.SetTextVariable("FACTION", this._settlementInfo.LoyalFaction.Name);
 
                 return textObject.ToString();
@@ -102,7 +83,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                TextObject textObject = GameTexts.FindText("str_TD_RevoltProgress");
+                TextObject textObject = new TextObject("{=q2tbSs8d}Current revolt progress is {PROGRESS}%.");
                 textObject.SetTextVariable("PROGRESS", this._settlementInfo.RevolutionProgress);
 
                 return textObject.ToString();
@@ -116,7 +97,7 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (this._factionInfo.FactionId == this._settlementInfo.LoyalFaction.StringId)
                 {
-                    TextObject textObject = GameTexts.FindText("str_TD_Mood_Content");
+                    TextObject textObject = new TextObject("{=zQNPQz3q}People are content with the current rule.");
                     return textObject.ToString();
                 }
 
@@ -129,16 +110,16 @@ namespace Revolutions.Screens.ViewModels
                         //TODO find a cause of this?
                         if (this._factionInfo.RevoltedSettlement == null)
                         {
-                            inspiration = GameTexts.FindText("str_TD_Mood_inspiration_01");
+                            inspiration = new TextObject("{=qZS0ma0z}Many are inspired by tales of revolts in the kingdom.");
                         }
                         else
                         {
-                            inspiration = GameTexts.FindText("str_TD_Mood_inspiration_02");
+                            inspiration = new TextObject("{=7LzQWiDZ}Many are inspired by events at {SETTLEMENT}.");
                             inspiration.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
                         }
                     }
 
-                    TextObject baseText = GameTexts.FindText("str_TD_Mood_RaiseBanners");
+                    TextObject baseText = new TextObject("{=HWiDqN8d}Some talk of raising banners of their homeland.");
                     return baseText.ToString() + " " + inspiration.ToString();
 
                 }
@@ -151,11 +132,11 @@ namespace Revolutions.Screens.ViewModels
 
                     if (this._factionInfo.RevoltedSettlementId == this._settlementInfo.Settlement.StringId)
                     {
-                        TextObject option = GameTexts.FindText("str_TD_Mood_RecentRevolt");
+                        TextObject option = new TextObject("{=q2tbH41e}The people of this town had revolted recently, and don't wish to spill blood again.");
                         return option.ToString();
                     }
 
-                    TextObject textObject = GameTexts.FindText("str_TD_Mood_RecentRevolt2");
+                    TextObject textObject = new TextObject("{=6m7Ss8fW}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting.");
                     textObject.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
 
                     return textObject.ToString();

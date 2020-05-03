@@ -38,5 +38,33 @@
         <!-- Other -->
         <string id="WbOKuWbq" text="Kleinere Fraktionen" />
         <string id="P1g6H41e" text="Werden bei Bedarf neue, kleinere Fraktionen gebildet." />
+
+        <!-- Loyalty Model -->
+        <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />
+        <string id="dRoS0maD" text="{SETTLEMENT} revolviert!" />
+        <string id="Ts1iVN8d" text="Stadttreue" />
+        <string id="q2t1Ss8d" text="Revolutionärer Mob" />
+
+        <!-- Town Menu -->
+        <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheinen zufrieden zu sein." />
+        <string id="dRoS0maD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
+        <string id="MYu8szGz" text="Die Bevölkerung ist {FACTION} treu." />
+        <string id="q2tbSs8d" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%." />
+        <string id="zQNPQz3q" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden." />
+        <string id="qZS0ma0z"	text="Viele lassen sich durch Geschichten von Revolutionen im Königreich inspirieren." />
+        <string id="7LzQWiDZ"	text="Viele sind von Ereignissen bei {SETTLEMENT} inspiriert." />
+        <string id="HWiDqN8d"	text="Einige reden davon das Banner ihrer Heimat zu hissen." />
+        <string id="q2tbH41e" text="Die Menschen in dieser Stadt haben erst kürzlich revolviert und möchten kein weiteres Blut mehr vergießen." />
+        <string id="6m7Ss8fW" text="Nach dem Hören von Blutvergießen in {SETTLEMENT}, haben die Bürger Angst vor Aufruhr." />
+
+        <!-- Loyalty State -->
+        <string id="YnRmNltF" text="Überdehnung" />
+        <string id="3fQwNP5z" text="Kaiserliche Loyalität" />
+        <string id="7LzQNP0z" text="Ausländische Regel" />
+        <string id="qNWmNN8d" text="Kaiserliche Abneigung" />
+        <string id="q2tbqP0z" text="Bannerlord Siedlung" />
+
+        <!-- Misc -->
+        <string id="3fQwWiDZ" text="Erledigt" />
     </strings>
 </base>

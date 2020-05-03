@@ -29,7 +29,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
         {
-            TextObject menuName = GameTexts.FindText("str_GM_TownLoyalty");
+            TextObject menuName = new TextObject("{=Ts1iVN8d}Town Loyalty");
             obj.AddGameMenuOption("town", "town_enter_entr_option", menuName.ToString(), (MenuCallbackArgs args) =>
             {
                 args.optionLeaveType = GameMenuOption.LeaveType.Submenu;

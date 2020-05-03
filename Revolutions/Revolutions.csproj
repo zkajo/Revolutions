@@ -100,8 +100,9 @@
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
     <Content Include="Logo.png" />
-    <Content Include="ModuleData\global_stringsx.xml" />
     <Content Include="ModuleData\Languages\DE\std_module_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\PL\std_module_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\RU\std_module_strings_xml.xml" />
     <Content Include="ModuleData\Languages\std_module_strings_xml.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
@@ -114,10 +115,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ModuleData\Languages\PL\" />
-    <Folder Include="ModuleData\Languages\RU\" />
-  </ItemGroup>
+  <ItemGroup />
   <!-- Post-Build -->
   <PropertyGroup>
     <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"	

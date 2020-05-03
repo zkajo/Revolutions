@@ -38,5 +38,33 @@
         <!-- Other -->
         <string id="WbOKuWbq" text="Minor Factions" />
         <string id="P1g6H41e" text="If necessary, new, smaller fractions are formed." />
+
+        <!-- Loyalty Model -->
+        <string id="PqkwszGz" text="Видя, как Вы проводите время в {SETTLEMENT}, Ваши подданные становятся более преданы Вам." />
+        <string id="dRoS0maD" text="{SETTLEMENT} восстаёт!" />
+        <string id="Ts1iVN8d" text="Преданность города" />
+        <string id="q2t1Ss8d" text="Повстанцыb" />
+
+        <!-- Town Menu -->
+        <string id="3fBkqk4u" text="Люди {SETTLEMENT} кажутся довольными." />
+        <string id="dRoS0maD" text="Огни революции медленно зарождаются в {SETTLEMENT}." />
+        <string id="MYu8szGz" text="Население предано {FACTION}." />
+        <string id="q2tbSs8d" text="Текущий прогресс восстания {PROGRESS}%." />
+        <string id="zQNPQz3q" text="Население довольно текущим правлением." />
+        <string id="qZS0ma0z"	text="Многие вдохновлены рассказами о восстаниях в королевстве." />
+        <string id="7LzQWiDZ"	text="Многие вдохновлены событиями в {SETTLEMENT}." />
+        <string id="HWiDqN8d"	text="Некоторые говорят о поднятии знамён своей родины." />
+        <string id="q2tbH41e" text="Люди этого города уже восставали недавно и не хотят пролить кровь снова." />
+        <string id="6m7Ss8fW" text="После слухов о пролитой крови в {SETTLEMENT}, жители опасаются поднимать восстание." />
+
+        <!-- Loyalty State -->
+        <string id="YnRmNltF" text="Перенапряжение" />
+        <string id="3fQwNP5z" text="Верность Империи" />
+        <string id="7LzQNP0z" text="Иностранное правление" />
+        <string id="qNWmNN8d" text="Антипатия к Империи" />
+        <string id="q2tbqP0z" text="Волость Лорда-Знаменосца" />
+
+        <!-- Misc -->
+        <string id="3fQwWiDZ" text="Закрыть" />
     </strings>
 </base>
