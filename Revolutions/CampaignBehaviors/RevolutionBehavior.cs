@@ -2,8 +2,9 @@
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using Revolutions.Settlements;
 using TaleWorlds.CampaignSystem.Actions;
+using ModLibrary;
+using Revolutions.Settlements;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -27,22 +28,31 @@ namespace Revolutions.CampaignBehaviors
 
         public override void SyncData(IDataStore dataStore)
         {
-            if (dataStore.IsLoading)
+            try
             {
-                this.DataStorage.InitializeData();
-                dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
-                this.DataStorage.LoadData();
-            }
-
-            if (dataStore.IsSaving)
-            {
-                if (this.DataStorage.SaveId.IsEmpty())
+                if (dataStore.IsLoading)
                 {
-                    this.DataStorage.SaveId = Guid.NewGuid().ToString();
+                    this.DataStorage.InitializeData();
+
+                    dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
+                    this.DataStorage.LoadData();
                 }
 
-                dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
-                this.DataStorage.SaveData();
+                if (dataStore.IsSaving)
+                {
+                    if (this.DataStorage.SaveId.IsEmpty())
+                    {
+                        this.DataStorage.SaveId = Guid.NewGuid().ToString();
+                    }
+
+                    dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
+                    this.DataStorage.SaveData();
+                }
+            }
+            catch (Exception exception)
+            {
+                var exceptionMessage = $"Revolutions: SyncData failed (({dataStore.IsLoading} | {dataStore.IsSaving} | {this.DataStorage.SaveId}))! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
             }
         }
 

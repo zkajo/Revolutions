@@ -4,6 +4,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
+using ModLibrary;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
 
@@ -17,35 +18,19 @@ namespace Revolutions
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            try
-            {
-                InformationManager.DisplayMessage(new InformationMessage("Loaded Revolutions.", Color.White));
-            }
-            catch (Exception exception)
-            {
-                var errorMessage = "Revolutions: Could not be loaded! ";
-                InformationManager.DisplayMessage(new InformationMessage(errorMessage + exception?.ToString()));
-            }
+            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {
-            try
-            {
-                base.OnGameStart(game, gameStarter);
+            base.OnGameStart(game, gameStarter);
 
-                if (!(game.GameType is Campaign))
-                {
-                    return;
-                }
-
-                this.InitializeMod(gameStarter as CampaignGameStarter);
-            }
-            catch (Exception exception)
+            if (!(game.GameType is Campaign))
             {
-                var exceptionMessage = "Revolutions: Failed to load on game start! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
+                return;
             }
+
+            this.InitializeMod(gameStarter as CampaignGameStarter);
         }
 
         private void InitializeMod(CampaignGameStarter campaignGameStarter)
@@ -60,7 +45,7 @@ namespace Revolutions
             catch (Exception exception)
             {
                 var exceptionMessage = "Revolutions: Failed to initialize! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), Color.FromUint(4282569842U)));
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
             }
         }
 

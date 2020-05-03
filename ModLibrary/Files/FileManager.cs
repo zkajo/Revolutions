@@ -4,7 +4,6 @@ using System.Security.AccessControl;
 using System.Security.Principal;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
-using TaleWorlds.Library;
 
 namespace ModLibrary.Files
 {
@@ -39,9 +38,10 @@ namespace ModLibrary.Files
                     xmlSerializer.Serialize(fileStream, data);
                 }
             }
-            catch (IOException)
+            catch (Exception exception)
             {
-                InformationManager.DisplayMessage(new InformationMessage($"Could not create configuration file '{fileName}'.", Color.FromUint(4282569842U)));
+                var exceptionMessage = $"Revolutions: Could not save file '{fileName}'! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
             }
         }
 
@@ -61,9 +61,11 @@ namespace ModLibrary.Files
                     return (T)xmlSerializer.Deserialize(fileStream);
                 }
             }
-            catch (IOException)
+            catch (Exception exception)
             {
-                InformationManager.DisplayMessage(new InformationMessage($"Could not load file '{fileName}'.", Color.FromUint(4282569842U)));
+                var exceptionMessage = $"Revolutions: Could not load file '{fileName}'! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+
                 return (T)Activator.CreateInstance(typeof(T));
             }
         }
