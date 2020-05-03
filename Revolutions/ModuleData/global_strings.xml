@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
   <strings>
-    <string id="str_TD_Content" text="{=rev01}The people of {SETTLEMENT} seem to be content" />
-	<string id="str_TD_FlamesOfRevolution" text="{=rev02}Flames of revolution are slowly stirring in {SETTLEMENT}" />
-	<string id="str_TD_LoyalToFaction" text="{=rev03}Population is loyal to the {FACTION}" />
-	<string id="str_TD_RevoltProgress" text="{=rev04}Current revolt progress is {PROGRESS}" />
-	<string id="str_TD_Mood_Content" text="{=rev05}People are content with the current rule" />
-	<string id="str_TD_Mood_inspiration_01"	text="{=rev06}Many are inspired by tales of revolts in the kingdom." />
-	<string id="str_TD_Mood_inspiration_02"	text="{=rev07}Many are inspired by events at {SETTLEMENT}." />
-	<string id="str_TD_Mood_RaiseBanners"	text="{=rev08}Some talk of raising banners of their homeland." />
-	<string id="str_TD_Mood_RecentRevolt" text="{=rev09}The people of this town had revolted recently, and don't wish to spill blood again." />
-	<string id="str_TD_Mood_RecentRevolt2" text="{=rev10}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
+	<!-- Settings -->
+	<!-- Header -->
+  <string id="str_revolutions_option_header_general" text="{=revolutions_01}General" />
+	<string id="str_revolutions_option_header_loyalty" text="{=revolutions_02}Loyalty" />
+	<string id="str_revolutions_option_header_overextension" text="{=revolutions_03}Overextension" />
+	<string id="str_revolutions_option_header_other" text="{=revolutions_04}Other" />
 
-	<string id="str_opt_LoyaltyChangeDays" text="{=revopt01}City changes loyalty to current owner in: {DAYS} days" />
-	<string id="str_opt_RevoltCooldown"	text="{=revopt02}Revolt cooldown per faction: {COOLDOWN} days" />
-	<string id="str_opt_OverextPlayerDesc" text="{=revopt03}Overextension Affects Player" />
-	<string id="str_opt_ImpLoyaltyMechDesc" text="{=revopt04}Imperial Loyalty Mechanic" />
-	<string id="str_opt_OverextDesc" text="{=revopt05}Overextension Mechanic" />
-	<string id="str_opt_MinFactEnabledDesc" text="{=revopt06}Rise of minor kingdoms" />
-	<string id="str_opt_DebugDesc" text="{=revopt07}Debug mode" />
+	<!-- Subheader -->
+	<string id="str_revolutions_option_subheader_mechanics" text="{=revolutions_05}Mechanics" />
+	<string id="str_revolutions_option_subheader_toggles" text="{=revolutions_06}Toggles" />
+	<string id="str_revolutions_option_subheader_values" text="{=revolutions_07}Values" />
 
-	<string id="str_GM_LoyaltyIncrease" text="{=revGM01}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
-	<string id="str_GM_RevoltNotification" text="{=revGM02}{SETTLEMENT} is revolting!" />
-	<string id="str_GM_TownLoyalty" text="{=revGM03}Town Loyalty" />
+  <!-- General -->
+	<string id="str_revolutions_option_general_values_revolt_cooldown_time" text="{=revolutions_08}Revolt Cooldown" />
+	<string id="str_revolutions_option_general_values_revolt_cooldown_time_description" text="{=revolutions_09}Cooldown before an uprising can occur again in the same city" />
 
-	<string id="str_GM_RevolutionaryMob" text="{=revGM04}Revolutionary Mob" />
-	<string id="str_rev_Done" text="{=rev11}Done" />
-	<string id="str_rev_Options" text="{=rev12}Options" />
+	<!-- Loyalty -->
+	<string id="str_revolutions_option_loyalty_mechanics_empire_loyalty" text="{=revolutions_10}Empire" />
+	<string id="str_revolutions_option_loyalty_mechanics_empire_loyalty_description" text="{=revolutions_11}Empire Loyalty Mechanic" />
+	<string id="str_revolutions_option_loyalty_values_base_player_loyalty" text="{=revolutions_12}Base Loyalty" />
+	<string id="str_revolutions_option_loyalty_values_base_player_loyalty_description" text="{=revolutions_13}Base loyalty for Player" />
+	<string id="str_revolutions_option_loyalty_values_minimum_obediance_loyalty" text="{=revolutions_14}Minimum Obediance" />
+	<string id="str_revolutions_option_loyalty_values_minimum_obediance_loyalty_description" text="{=revolutions_15}Minimum needed loyalty for obediance" />
+	<string id="str_revolutions_option_loyalty_values_days_until_loyalty_change" text="{=revolutions_16}Days Loyalty Change" />
+	<string id="str_revolutions_option_loyalty_values_days_until_loyalty_change_description" text="{=revolutions_17}Days until loyalty of town to new owner will change" />
+	<string id="str_revolutions_option_loyalty_values_player_in_town_loyalty_increase" text="{=revolutions_18}Loyalty Increase" />
+	<string id="str_revolutions_option_loyalty_values_player_in_town_loyalty_increase_description" text="{=revolutions_19}Amount by which the loyalty increase, when the owner is in town" />
 
-	<string id="str_loyalty_overextension" text="{=rev13}Overextension" />
-	<string id="str_loyalty_imperial" text="{=rev14}Imperial Loyalty" />
-	<string id="str_loyalty_foreignRule" text="{=rev15}Foreign Rule" />
-	<string id="str_loyalty_imperialAvers" text="{=rev16}Imperial Aversion" />
-	<string id="str_loyalty_bannerlord" text="{=rev17}Bannerlord Settlement" />
+    <!-- Overextension -->
+	<string id="str_revolutions_option_overextension_mechanics_overextension" text="{=revolutions_20}Overextension" />
+	<string id="str_revolutions_option_overextension_mechanics_overextension_description" text="{=revolutions_21}Overextension Mechanic" />
+	<string id="str_revolutions_option_overextension_toggles_overextension_affects_player" text="{=revolutions_22}Affects Player" />
+	<string id="str_revolutions_option_overextension_toggles_overextension_affects_player_description" text="{=revolutions_23}Will overextension affect player" />
+	<string id="str_revolutions_option_overextension_values_overextension_multiplier" text="{=revolutions_24}Multiplier" />
+	<string id="str_revolutions_option_overextension_values_overextension_multiplier_description" text="{=revolutions_25}Multiplier for calculating overextension" />
 
-	<string id="str_TD_Information" text="{=rev18}Information" />
+	<!-- Other -->
+	<string id="str_revolutions_option_other_toggles_allow_minor_factions" text="{=revolutions_26}Minor Factions" />
+	<string id="str_revolutions_option_other_toggles_allow_minor_factions_description" text="{=revolutions_27}Will minor factions be created if needed" />
   </strings>
 </base>

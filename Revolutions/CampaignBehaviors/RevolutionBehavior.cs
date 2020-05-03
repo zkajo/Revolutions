@@ -51,7 +51,7 @@ namespace Revolutions.CampaignBehaviors
             }
             catch (Exception exception)
             {
-                var exceptionMessage = $"Revolutions: SyncData failed (({dataStore.IsLoading} | {dataStore.IsSaving} | {this.DataStorage.SaveId}))! ";
+                var exceptionMessage = $"Revolutions: SyncData failed ({dataStore.IsLoading} | {dataStore.IsSaving} | {this.DataStorage.SaveId})! ";
                 InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
             }
         }

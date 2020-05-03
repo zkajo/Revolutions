@@ -6,12 +6,12 @@
   <strings>
 	<!-- Settings -->
 	<!-- Header -->
-    <string id="revolutions_01" text="Genral" />
+  <string id="revolutions_01" text="General" />
 	<string id="revolutions_02" text="Loyalty" />
 	<string id="revolutions_03" text="Overextension" />
 	<string id="revolutions_04" text="Other" />
 
-	<!-- Subheader -->
+	<!-- SubHeader -->
 	<string id="revolutions_05" text="Mechanics" />
 	<string id="revolutions_06" text="Toggles" />
 	<string id="revolutions_07" text="Values" />

@@ -16,9 +16,20 @@ namespace Revolutions
 
         internal static string ModuleDataPath => Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
 
-        protected override void OnBeforeInitialModuleScreenSetAsRoot()
+        protected override void OnSubModuleLoad()
         {
-            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
+            base.OnSubModuleLoad();
+
+            try
+            {
+                Module.CurrentModule.GlobalTextManager.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
+            }
+            catch (Exception exception)
+            {
+                var exceptionMessage = "Revolutions: Failed to load! ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+            }
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
@@ -37,8 +48,6 @@ namespace Revolutions
         {
             try
             {
-                campaignGameStarter.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "module_strings.xml"));
-
                 this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);
             }

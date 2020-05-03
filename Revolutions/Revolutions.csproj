@@ -101,11 +101,8 @@
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
     <Content Include="Logo.png" />
     <Content Include="ModuleData\global_strings.xml" />
-    <Content Include="ModuleData\Languages\module_strings_de.xml" />
-    <Content Include="ModuleData\Languages\module_strings_en.xml" />
-    <Content Include="ModuleData\Languages\module_strings_pl.xml" />
-    <Content Include="ModuleData\Languages\module_strings_ru.xml" />
-    <Content Include="ModuleData\module_strings.xml" />
+    <Content Include="ModuleData\Languages\DE\std_global_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\std_global_strings_xml.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +114,10 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ModuleData\Languages\PL\" />
+    <Folder Include="ModuleData\Languages\RU\" />
+  </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>
     <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"	
@@ -124,11 +125,9 @@
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "$(SolutionDir)\..\Revolutions\GUI\Brushes\"
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\module_strings.xml" "$(SolutionDir)\..\Revolutions\ModuleData\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_en.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_de.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_pl.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_ru.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"</PostBuildEvent>
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\global_strings.xml" "$(SolutionDir)\..\Revolutions\ModuleData\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\DE\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
