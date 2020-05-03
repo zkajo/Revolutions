@@ -24,7 +24,7 @@ namespace Revolutions.Screens.ViewModels
         [DataSourceProperty]
         public string DoneDesc
         {
-            get { return "{=3fQwWiDZ}Done"; }
+            get { return new TextObject("{=3fQwWiDZ}Done").ToString(); }
         }
 
         [DataSourceProperty]
