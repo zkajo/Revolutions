@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Polski" />
+  </tags>
+  <strings>
+	<!-- Settings -->
+	<!-- Header -->
+    <string id="str_revolutions_option_header_general" text="{=revolutions_01}Genral" />
+	<string id="str_revolutions_option_header_loyalty" text="{=revolutions_02}Loyalty" />
+	<string id="str_revolutions_option_header_overextension" text="{=revolutions_03}Overextension" />
+	<string id="str_revolutions_option_header_other" text="{=revolutions_04}Other" />
+
+	<!-- Subheader -->
+	<string id="str_revolutions_option_subheader_mechanics" text="{=revolutions_05}Mechanics" />
+	<string id="str_revolutions_option_subheader_toggles" text="{=revolutions_06}Toggles" />
+	<string id="str_revolutions_option_subheader_values" text="{=revolutions_07}Values" />
+
+    <!-- General -->
+	<string id="str_revolutions_option_general_values_revolt_cooldown_time" text="{=revolutions_08}Revolt Cooldown" />
+	<string id="str_revolutions_option_general_values_revolt_cooldown_time_description" text="{=revolutions_09}Cooldown before an uprising can occur again in the same city" />
+
+	<!-- Loyalty -->
+	<string id="str_revolutions_option_loyalty_mechanics_empire_loyalty" text="{=revolutions_10}Empire" />
+	<string id="str_revolutions_option_loyalty_mechanics_empire_loyalty_description" text="{=revolutions_11}Empire Loyalty Mechanic" />
+	<string id="str_revolutions_option_loyalty_values_base_player_loyalty" text="{=revolutions_12}Base Loyalty" />
+	<string id="str_revolutions_option_loyalty_values_base_player_loyalty_description" text="{=revolutions_13}Base loyalty for Player" />
+	<string id="str_revolutions_option_loyalty_values_minimum_obediance_loyalty" text="{=revolutions_14}Minimum Obediance" />
+	<string id="str_revolutions_option_loyalty_values_minimum_obediance_loyalty_description" text="{=revolutions_15}Minimum needed loyalty for obediance" />
+	<string id="str_revolutions_option_loyalty_values_days_until_loyalty_change" text="{=revolutions_16}Days Loyalty Change" />
+	<string id="str_revolutions_option_loyalty_values_days_until_loyalty_change_description" text="{=revolutions_17}Days until loyalty of town to new owner will change" />
+	<string id="str_revolutions_option_loyalty_values_player_in_town_loyalty_increase" text="{=revolutions_18}Loyalty Increase" />
+	<string id="str_revolutions_option_loyalty_values_player_in_town_loyalty_increase_description" text="{=revolutions_19}Amount by which the loyalty increase, when the owner is in town" />
+
+    <!-- Overextension -->
+	<string id="str_revolutions_option_overextension_mechanics_overextension" text="{=revolutions_20}Overextension" />
+	<string id="str_revolutions_option_overextension_mechanics_overextension_description" text="{=revolutions_21}Overextension Mechanic" />
+	<string id="str_revolutions_option_overextension_toggles_overextension_affects_player" text="{=revolutions_22}Affects Player" />
+	<string id="str_revolutions_option_overextension_toggles_overextension_affects_player_description" text="{=revolutions_23}Will overextension affect player" />
+	<string id="str_revolutions_option_overextension_values_overextension_multiplier" text="{=revolutions_24}Multiplier" />
+	<string id="str_revolutions_option_overextension_values_overextension_multiplier_description" text="{=revolutions_25}Multiplier for calculating overextension" />
+
+	<!-- Other -->
+	<string id="str_revolutions_option_other_toggles_allow_minor_factions" text="{=revolutions_26}Minor Factions" />
+	<string id="str_revolutions_option_other_toggles_allow_minor_factions_description" text="{=revolutions_27}Will minor factions be created if needed" />
+  </strings>
+</base>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="Deutsch" />
+  </tags>
+  <strings>
+	<!-- Settings -->
+	<!-- Header -->
+    <string id="revolutions_01" text="Allgemein" />
+	<string id="revolutions_02" text="Loyalität" />
+	<string id="revolutions_03" text="Überdehnung" />
+	<string id="revolutions_04" text="Andere" />
+
+	<!-- Subheader -->
+	<string id="revolutions_05" text="Mechaniken" />
+	<string id="revolutions_06" text="Toggles" />
+	<string id="revolutions_07" text="Schalter" />
+
+	<!-- General -->
+	<string id="revolutions_08" text="Revolte Abklingzeit" />
+	<string id="revolutions_09" text="Abklingzeit bevor ein AUfstand in der selben Stadt erneut entstehen kann" />
+
+	<!-- Loyalty -->
+	<string id="revolutions_10" text="Reich" />
+	<string id="revolutions_11" text="Mechnik für die Reichstreue" />
+	<string id="revolutions_12" text="Basisloyalität" />
+	<string id="revolutions_13" text="Grundtreue für den Spieler" />
+	<string id="revolutions_14" text="Minimaler Gehorsam" />
+	<string id="revolutions_15" text="Minimal benötigte Loyalität für Gehorsam" />
+	<string id="revolutions_16" text="Tage Loyalitätsänderung" />
+	<string id="revolutions_17" text="Tage bis sich die Loyalität der Stadt gegenüber dem neuen Besitzer ändert" />
+	<string id="revolutions_18" text="Loyalitätserhöhung" />
+	<string id="revolutions_19" text="Menge, um welche die Loyalität steigt, wenn der Eigentümer in der Stadt ist" />
+
+	<!-- Overextension -->
+	<string id="revolutions_20" text="Überdehnung" />
+	<string id="revolutions_21" text="Mechanik für die Überdehnung" />
+	<string id="revolutions_22" text="Beeinflusst den Spieler" />
+	<string id="revolutions_23" text="Wirkt sich eine Überdehnung auf den Spieler aus" />
+	<string id="revolutions_24" text="Multiplikator" />
+	<string id="revolutions_25" text="Multiplikator zur Berechnung der Überdehnung" />
+
+	<!-- Other -->
+	<string id="revolutions_26" text="Kleinere Fraktionen" />
+	<string id="revolutions_27" text="Werden bei Bedarf kleinere Fraktionen gebildet" />
+  </strings>
+</base>

@@ -58,20 +58,24 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net48\0Harmony.dll</HintPath>
-    </Reference>
+  </ItemGroup>
+  <!-- Files & Classes -->
+  <ItemGroup>
     <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net472\0Harmony.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MBOptionScreen.v2.0.10, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bannerlord.MBOptionScreen.2.0.10\lib\net472\MBOptionScreen.v2.0.10.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
     <Reference Include="System.Xml" />
   </ItemGroup>
-  <!-- Files & Classes -->
   <ItemGroup>
     <Compile Include="Characters\CharacterManager.cs" />
     <Compile Include="Clans\ClanInfo.cs" />
     <Compile Include="Clans\ClanManager.cs" />
+    <Compile Include="ColorManager.cs" />
     <Compile Include="Factions\FactionInfo.cs" />
     <Compile Include="Factions\FactionManager.cs" />
     <Compile Include="Factions\FactionInfoExtension.cs" />

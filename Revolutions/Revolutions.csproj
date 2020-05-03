@@ -66,20 +66,14 @@
   </ItemGroup>
   <!-- Files & Classes -->
   <ItemGroup>
-	<Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
+    <Reference Include="0Harmony, Version=2.0.0.10, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\packages\Lib.Harmony.2.0.0.10\lib\net472\0Harmony.dll</HintPath>
-	  <Private>False</Private>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="ModLib">
-      <HintPath>..\External\ModLib.dll</HintPath>
-	  <Private>False</Private>
-    </Reference>
-    <Reference Include="ModLib.Patches">
-      <HintPath>..\External\ModLib.Patches.dll</HintPath>
-	  <Private>False</Private>
+    <Reference Include="MBOptionScreen.v2.0.10, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Bannerlord.MBOptionScreen.2.0.10\lib\net472\MBOptionScreen.v2.0.10.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CampaignBehaviors\CleanupBehavior.cs" />
@@ -107,10 +101,11 @@
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
     <Content Include="Logo.png" />
     <Content Include="ModuleData\global_strings.xml" />
-    <Content Include="ModuleData\Languages\DE\std_global_strings_xml.xml" />
-    <Content Include="ModuleData\Languages\PL\std_global_strings_xml.xml" />
-    <Content Include="ModuleData\Languages\RU\std_global_strings_xml.xml" />
-    <Content Include="ModuleData\Languages\std_global_strings_xml.xml" />
+    <Content Include="ModuleData\Languages\module_strings_de.xml" />
+    <Content Include="ModuleData\Languages\module_strings_en.xml" />
+    <Content Include="ModuleData\Languages\module_strings_pl.xml" />
+    <Content Include="ModuleData\Languages\module_strings_ru.xml" />
+    <Content Include="ModuleData\module_strings.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -124,22 +119,16 @@
   </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>
-    <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"
-
+    <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"	
 
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "$(SolutionDir)\..\Revolutions\GUI\Brushes\"
-
-xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\RevolutionModOptions.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
 
-
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\global_strings.xml" "$(SolutionDir)\..\Revolutions\ModuleData\"
-
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
-
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\DE\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\PL\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\PL\"
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\RU\std_global_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\RU\"</PostBuildEvent>
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\module_strings.xml" "$(SolutionDir)\..\Revolutions\ModuleData\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_en.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_de.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_pl.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\module_strings_ru.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

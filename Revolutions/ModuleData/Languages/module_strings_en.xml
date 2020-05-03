@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+	<!-- Settings -->
+	<!-- Header -->
+    <string id="revolutions_01" text="Genral" />
+	<string id="revolutions_02" text="Loyalty" />
+	<string id="revolutions_03" text="Overextension" />
+	<string id="revolutions_04" text="Other" />
+
+	<!-- Subheader -->
+	<string id="revolutions_05" text="Mechanics" />
+	<string id="revolutions_06" text="Toggles" />
+	<string id="revolutions_07" text="Values" />
+
+	<!-- General -->
+	<string id="revolutions_08" text="Revolt Cooldown" />
+	<string id="revolutions_09" text="Cooldown before an uprising can occur again in the same city" />
+
+	<!-- Loyalty -->
+	<string id="revolutions_10" text="Empire" />
+	<string id="revolutions_11" text="Empire Loyalty Mechanic" />
+	<string id="revolutions_12" text="Base Loyalty" />
+	<string id="revolutions_13" text="Base loyalty for Player" />
+	<string id="revolutions_14" text="Minimum Obediance" />
+	<string id="revolutions_15" text="Minimum needed loyalty for obediance" />
+	<string id="revolutions_16" text="Days Loyalty Change" />
+	<string id="revolutions_17" text="Days until loyalty of town to new owner will change" />
+	<string id="revolutions_18" text="Loyalty Increase" />
+	<string id="revolutions_19" text="Amount by which the loyalty increase, when the owner is in town" />
+
+	<!-- Overextension -->
+	<string id="revolutions_20" text="Overextension" />
+	<string id="revolutions_21" text="Overextension Mechanic" />
+	<string id="revolutions_22" text="Affects Player" />
+	<string id="revolutions_23" text="Will overextension affect player" />
+	<string id="revolutions_24" text="Multiplier" />
+	<string id="revolutions_25" text="Multiplier for calculating overextension" />
+
+	<!-- Other -->
+	<string id="revolutions_26" text="Minor Factions" />
+	<string id="revolutions_27" text="Will minor factions be created if needed" />
+  </strings>
+</base>

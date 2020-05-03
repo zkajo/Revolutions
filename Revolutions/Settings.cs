@@ -1,76 +1,55 @@
-﻿using ModLib;
-using ModLib.Attributes;
-using System;
-using System.Xml.Serialization;
+﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Attributes.v2;
+using MBOptionScreen.Settings;
 
 namespace Revolutions
 {
-    [Serializable]
-    public class Settings : SettingsBase
+    public class Settings : AttributeSettings<Settings>
     {
-        public static Settings Instance
-        {
-            get
-            {
-                return (Settings)SettingsDatabase.GetSettings("RevolutionsSettings");
-            }
-        }
-
-        [XmlElement]
-        public override string ID { get; set; } = "RevolutionsSettings";
+        public override string Id { get; set; } = "RevolutionsSettings_v1";
 
         public override string ModuleFolderName => "Revolutions";
 
         public override string ModName => "Revolutions";
 
-        [XmlElement]
-        [SettingPropertyGroup("Mechanics")]
-        [SettingProperty("Empire Loyalty")]
-        public bool EmpireLoyaltyMechanics { get; set; } = true;
-
-        [XmlElement]
-        [SettingPropertyGroup("Mechanics")]
-        [SettingProperty("Overextension")]
-        public bool OverextensionMechanics { get; set; } = true;
-
-        [XmlElement]
-        [SettingPropertyGroup("Toggles")]
-        [SettingProperty("Overextension Affects Player")]
-        public bool PlayerAffectedByOverextension { get; set; } = true;
-
-        [XmlElement]
-        [SettingPropertyGroup("Toggles")]
-        [SettingProperty("Allow Minor Factions")]
-        public bool AllowMinorFactions { get; set; } = false;
-
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Revolt Cooldown", 0f, 250f)]
+        [SettingPropertyGroup("{=revolutions_01}/{=revolutions_07}")]
+        [SettingPropertyFloatingInteger(displayName: "{=revolutions_08}", minValue: 0f, maxValue: 250f, HintText = "{=revolutions_09}", RequireRestart = false)]
         public float RevoltCooldownTime { get; set; } = 30.0f;
 
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Days Until Loyalty Change", 0, 365)]
-        public int DaysUntilLoyaltyChange { get; set; } = 80;
+        [SettingPropertyGroup("{=revolutions_02}/{=revolutions_05}")]
+        [SettingPropertyBool(displayName: "{=revolutions_10}", HintText = "{=revolutions_11}", RequireRestart = false)]
+        public bool EmpireLoyaltyMechanics { get; set; } = true;
 
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Minimum Obediance Loyalty", 0, 250)]
+        [SettingPropertyGroup("{=revolutions_02}/{=revolutions_07}")]
+        [SettingPropertyFloatingInteger(displayName: "{=revolutions_12}", minValue: 0f, maxValue: 100f, HintText = "{=revolutions_13}", RequireRestart = false)]
+        public float BasePlayerLoyalty { get; set; } = 5.0f;
+
+        [SettingPropertyGroup("{=revolutions_02}/{=revolutions_07}")]
+        [SettingPropertyInteger(displayName: "{=revolutions_14}", minValue: 0, maxValue: 250, HintText = "{=revolutions_15}", RequireRestart = false)]
         public int MinimumObedianceLoyalty { get; set; } = 25;
 
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Player In Town Loyalty Increase", 0, 100)]
+        [SettingPropertyGroup("{=revolutions_02}/{=revolutions_07}")]
+        [SettingPropertyInteger(displayName: "{=revolutions_16}", minValue: 0, maxValue: 365, HintText = "{=revolutions_17}", RequireRestart = false)]
+        public int DaysUntilLoyaltyChange { get; set; } = 80;
+
+        [SettingPropertyGroup("{=revolutions_02}/{=revolutions_07}")]
+        [SettingPropertyInteger(displayName: "{=revolutions_18}", minValue: 0, maxValue: 100, HintText = "{=revolutions_19}", RequireRestart = false)]
         public int PlayerInTownLoyaltyIncrease { get; set; } = 5;
 
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Over Extension Multiplier", 0f, 10f)]
+        [SettingPropertyGroup("{=revolutions_03}/{=revolutions_05}")]
+        [SettingPropertyBool(displayName: "{=revolutions_20}", HintText = "{=revolutions_21}", RequireRestart = false)]
+        public bool OverextensionMechanics { get; set; } = true;
+
+        [SettingPropertyGroup("{=revolutions_03}/{=revolutions_06}")]
+        [SettingPropertyBool(displayName: "{=revolutions_22}", HintText = "{=revolutions_23}", RequireRestart = false)]
+        public bool PlayerAffectedByOverextension { get; set; } = true;
+
+        [SettingPropertyGroup("{=revolutions_03}/{=revolutions_07}")]
+        [SettingPropertyFloatingInteger(displayName: "{=revolutions_24}", minValue: 0f, maxValue: 10f, HintText = "{=revolutions_25}", RequireRestart = false)]
         public float OverExtensionMultiplier { get; set; } = 2.0f;
 
-        [XmlElement]
-        [SettingPropertyGroup("Values")]
-        [SettingProperty("Base Player Loyalty", 0f, 100)]
-        public float BasePlayerLoyalty { get; set; } = 5.0f;
+        [SettingPropertyGroup("{=revolutions_04}/{=revolutions_06}")]
+        [SettingPropertyBool(displayName: "{=revolutions_26}", HintText = "{=revolutions_27}", RequireRestart = false)]
+        public bool AllowMinorFactions { get; set; } = false;
     }
 }
