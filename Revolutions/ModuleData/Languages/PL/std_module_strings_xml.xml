@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="string">
+    <tags>
+        <tag language="Polski" />
+    </tags>
+    <strings>
+        <!-- Settings -->
+        <!-- Header -->
+        <string id="MYu8nKqq" text="General" />
+        <string id="hPERH4u4" text="Loyalty" />
+        <string id="Ts1iV2pO" text="Overextension" />
+        <string id="XQGxDr11" text="Other" />
+        <!-- SubHeader -->
+        <string id="ONkcmltF" text="Mechanics" />
+        <string id="jPHYDjzQ" text="Toggles" />
+        <string id="v0coMIcl" text="Values" />
+        <!-- General -->
+        <string id="Pqk4uuGz" text="Revolt Cooldown" />
+        <string id="zx12ijyW" text="Cooldown before an uprising can occur again in the same city" />
+        <!-- Loyalty -->
+        <string id="uy96VZX2" text="Empire" />
+        <string id="YnRmSelp" text="Empire Loyalty Mechanic" />
+        <string id="qNWmNP0z" text="Base Loyalty" />
+        <string id="tOZS0maD" text="Base loyalty for Player" />
+        <string id="ZuwszZww" text="Minimum Obediance" />
+        <string id="BkGsVccZ" text="Minimum needed loyalty for obediance" />
+        <string id="3fQwLwkC" text="Days Loyalty Change" />
+        <string id="dRoMEfb0" text="Days until loyalty of town to new owner will change" />
+        <string id="cXCfwzPp" text="Loyalty Increase" />
+        <string id="HWiD4aR1" text="Amount by which the loyalty increase, when the owner is in town" />
+        <!-- Overextension -->
+        <string id="sBw5Qz3q" text="Overextension" />
+        <string id="ZRlNsvev" text="Overextension Mechanic" />
+        <string id="vuDS5ns8" text="Affects Player" />
+        <string id="7LzQHMVj" text="Will overextension affect player" />
+        <string id="q2tbqN8d" text="Multiplier" />
+        <string id="6m1Ss8fW" text="Multiplier for calculating overextension" />
+        <!-- Other -->
+        <string id="WbOKuWbq" text="Minor Factions" />
+        <string id="P1g6H41e" text="Will minor factions be created if needed" />
+    </strings>
+</base>

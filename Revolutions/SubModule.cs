@@ -7,6 +7,7 @@ using TaleWorlds.Library;
 using ModLibrary;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
+using TaleWorlds.Localization;
 
 namespace Revolutions
 {
@@ -16,25 +17,20 @@ namespace Revolutions
 
         internal static string ModuleDataPath => Path.Combine(BasePath.Name, "Modules", "Revolutions", "ModuleData");
 
-        protected override void OnSubModuleLoad()
+        protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            base.OnSubModuleLoad();
+            base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            try
-            {
-                Module.CurrentModule.GlobalTextManager.LoadGameTexts(Path.Combine(SubModule.ModuleDataPath, "global_strings.xml"));
-                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
-            }
-            catch (Exception exception)
-            {
-                var exceptionMessage = "Revolutions: Failed to load! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
-            }
+            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {
             base.OnGameStart(game, gameStarter);
+
+            var x = new TextObject("{=MYu8nKqq}General");
+            var y = new TextObject("{=MYu8nKqq}Allgemein");
+            var z = new TextObject("{=MYu8nKqq}");
 
             if (!(game.GameType is Campaign))
             {

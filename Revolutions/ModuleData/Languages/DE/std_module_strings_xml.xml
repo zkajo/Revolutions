@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<base xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="string">
+    <tags>
+        <tag language="Deutsch" />
+    </tags>
+    <strings>
+        <!-- Settings -->
+        <!-- Header -->
+        <string id="MYu8nKqq" text="Allgemein" />
+        <string id="hPERH4u4" text="Loyalität" />
+        <string id="Ts1iV2pO" text="Überdehnung" />
+        <string id="XQGxDr11" text="Andere" />
+        <!-- SubHeader -->
+        <string id="ONkcmltF" text="Mechaniken" />
+        <string id="jPHYDjzQ" text="Schalter" />
+        <string id="v0coMIcl" text="Werte" />
+        <!-- General -->
+        <string id="Pqk4uuGz" text="Abklingzeit Revolte" />
+        <string id="zx12ijyW" text="Die Zeit bevor in der selben STadt erneut eine Revolte entstehen kann." />
+        <!-- Loyalty -->
+        <string id="uy96VZX2" text="Reich" />
+        <string id="YnRmSelp" text="Aktviert/Deaktiviert die Mechnik für die Reichstreue." />
+        <string id="qNWmNP0z" text="Basisloyalität" />
+        <string id="tOZS0maD" text="Die Grundtreue von Städten gegenübert dem Spieler." />
+        <string id="ZuwszZww" text="Minimaler Gehorsam" />
+        <string id="BkGsVccZ" text="Minimal benötigte Loyalität für den Gehorsam der Stadt gegenüber dem Besitzer." />
+        <string id="3fQwLwkC" text="Loyalitätsänderung" />
+        <string id="dRoMEfb0" text="Tage bis sich die Loyalität der Stadt gegenüber dem neuen Besitzer ändert." />
+        <string id="cXCfwzPp" text="Loyalitätserhöhung" />
+        <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer in der Stadt ist." />
+        <!-- Overextension -->
+        <string id="sBw5Qz3q" text="Überdehnung" />
+        <string id="ZRlNsvev" text="Aktviert/Deaktiviert die Mechanik für die Überdehnung." />
+        <string id="vuDS5ns8" text="Spielereinfluss" />
+        <string id="7LzQHMVj" text="Wirkt sich die Übersehnungsmechanik auf den SPieler aus." />
+        <string id="q2tbqN8d" text="Multiplikator" />
+        <string id="6m1Ss8fW" text="Ein Multiplikator zur Berechnung der Überdehnung." />
+        <!-- Other -->
+        <string id="WbOKuWbq" text="Kleinere Fraktionen" />
+        <string id="P1g6H41e" text="Werden bei Bedarf kleinere Fraktionen gebildet." />
+    </strings>
+</base>
