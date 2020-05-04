@@ -16,13 +16,16 @@ namespace Revolutions.Revolutions
 
         }
 
-        public Revolution(string partyId, Settlement settlement)
+        public Revolution(string partyId, Settlement settlement, bool isMinorFaction)
         {
             this.PartyId = partyId;
             this.SettlementId = settlement.StringId;
+            this.IsMinorFaction = isMinorFaction;
         }
 
         public string PartyId { get; set; }
+
+        public bool IsMinorFaction { get; set; } = false;
 
         public PartyBase Party => ModLibraryManagers.PartyManager.GetParty(this.PartyId);
 

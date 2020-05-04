@@ -113,7 +113,12 @@ namespace Revolutions.Revolutions
         public void EndFailedRevolution(Revolution revolution, SettlementInfoRevolutions settlementInfoRevolutions, FactionInfoRevolutions currentFactionInfo)
         {
             currentFactionInfo.CityRevoltionFailed(settlementInfoRevolutions.Settlement);
-            DestroyClanAction.Apply(revolution.Party.Owner.Clan);
+
+            if (revolution.IsMinorFaction)
+            {
+                DestroyClanAction.Apply(revolution.Party.Owner.Clan);
+            }
+   
             DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.GetGarrison(), revolution.Party.MobileParty);
 
             settlementInfoRevolutions.HasRebellionEvent = false;
@@ -146,7 +151,9 @@ namespace Revolutions.Revolutions
             var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement);
             var currentFaction = RevolutionsManagers.FactionManager.GetFactionInfo(settlement.MapFaction);
             bool atWarWithLoyalFaction = currentFaction.Faction.IsAtWarWith(settlementInfoRevolutions.LoyalFaction);
-
+            bool isMinorFaction = false;
+            
+            
             Hero hero;
             Clan clan;
 
@@ -160,10 +167,10 @@ namespace Revolutions.Revolutions
                 hero = HeroCreator.CreateSpecialHero(CharacterManager.Instance.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
                 clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
                 clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
-
                 ClanInfoRevolutions clanInfo = RevolutionsManagers.ClanManager.GetClanInfo(clan);
                 clanInfo.CanJoinOtherKingdoms = false;
-
+                
+                isMinorFaction = true;
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
             }
 
@@ -206,7 +213,7 @@ namespace Revolutions.Revolutions
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.AddQuickInformation(information, 0, null, "");
 
-            Revolution revolution = new Revolution(mobileParty.Party.Id, settlement);
+            Revolution revolution = new Revolution(mobileParty.Party.Id, settlement, isMinorFaction);
             this.Revolutions.Add(revolution);
 
             PartyBase garrison = settlementInfoRevolutions.GetGarrison();
