@@ -9,11 +9,11 @@ namespace ModLibrary.Components
 
         void InitializeInfos();
 
-        InfoType GetInfoById(string id);
+        InfoType GetInfoById(string id, bool addIfNotFound = true);
 
-        InfoType GetInfoByObject(GameObjectType gameObject);
+        InfoType GetInfoByObject(GameObjectType gameObject, bool addIfNotFound = true);
 
-        InfoType AddInfo(GameObjectType gameObject);
+        InfoType AddInfo(GameObjectType gameObject, bool force = false);
 
         void RemoveInfo(string id);
 

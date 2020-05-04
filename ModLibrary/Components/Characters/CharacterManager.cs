@@ -29,11 +29,11 @@ namespace ModLibrary.Components.Characters
         {
             foreach (var character in Campaign.Current.Characters)
             {
-                this.GetInfoByObject(character);
+                this.AddInfo(character, true);
             }
         }
 
-        public InfoType GetInfoById(string id)
+        public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var characterInfo = this.Infos.FirstOrDefault(info => info.CharacterId == id);
 
@@ -42,17 +42,31 @@ namespace ModLibrary.Components.Characters
                 return characterInfo;
             }
 
-            var missingCharacter = Campaign.Current.Characters.FirstOrDefault(character => character.StringId == id);
-            return missingCharacter != null ? this.AddInfo(missingCharacter) : null;
+            if(!addIfNotFound)
+            {
+                return null;
+            }
+
+            var missingCharacter = this.GetObjectById(id);
+            return missingCharacter != null ? this.AddInfo(missingCharacter, true) : null;
         }
 
-        public InfoType GetInfoByObject(CharacterObject character)
+        public InfoType GetInfoByObject(CharacterObject character, bool addIfNotFound = true)
         {
-            return this.GetInfoById(character.StringId);
+            return this.GetInfoById(character?.StringId, addIfNotFound);
         }
 
-        public InfoType AddInfo(CharacterObject character)
+        public InfoType AddInfo(CharacterObject character, bool force = false)
         {
+            if (!force)
+            {
+                var existingCharacterInfo = this.Infos.FirstOrDefault(info => info.CharacterId == character?.StringId);
+                if (existingCharacterInfo != null)
+                {
+                    return existingCharacterInfo;
+                }
+            }
+
             var characterInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), character);
             this.Infos.Add(characterInfo);
 
@@ -66,7 +80,7 @@ namespace ModLibrary.Components.Characters
 
         public CharacterObject GetObjectById(string id)
         {
-            return Campaign.Current.Characters.FirstOrDefault(character => character.StringId == id);
+            return Campaign.Current.Characters.FirstOrDefault(character => character?.StringId == id);
         }
 
         public CharacterObject GetObjectByInfo(InfoType info)
@@ -81,11 +95,11 @@ namespace ModLibrary.Components.Characters
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Characters.Any(character => character.StringId == info.CharacterId));
+            this.Infos.RemoveAll(info => !Campaign.Current.Characters.Any(character => character?.StringId == info.CharacterId));
 
-            foreach (var character in Campaign.Current.Characters)
+            foreach (var character in Campaign.Current.Characters.Where(character => !this.Infos.Any(info => info.CharacterId == character?.StringId)))
             {
-                this.GetInfoById(character.StringId);
+                this.AddInfo(character, true);
             }
         }
 

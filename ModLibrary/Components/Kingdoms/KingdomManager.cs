@@ -30,11 +30,11 @@ namespace ModLibrary.Components.Kingdoms
         {
             foreach (var kingdom in Campaign.Current.Kingdoms)
             {
-                this.GetInfoByObject(kingdom);
+                this.AddInfo(kingdom, true);
             }
         }
 
-        public InfoType GetInfoById(string id)
+        public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var kingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == id);
 
@@ -43,17 +43,31 @@ namespace ModLibrary.Components.Kingdoms
                 return kingdomInfo;
             }
 
-            var missingKingdom = Campaign.Current.Kingdoms.FirstOrDefault(kingdom => kingdom.StringId == id);
-            return missingKingdom != null ? this.AddInfo(missingKingdom) : null;
+            if (!addIfNotFound)
+            {
+                return null;
+            }
+
+            var missingKingdom = this.GetObjectById(id);
+            return missingKingdom != null ? this.AddInfo(missingKingdom, true) : null;
         }
 
-        public InfoType GetInfoByObject(Kingdom kingdom)
+        public InfoType GetInfoByObject(Kingdom kingdom, bool addIfNotFound = true)
         {
-            return this.GetInfoById(kingdom.StringId);
+            return this.GetInfoById(kingdom?.StringId, addIfNotFound);
         }
 
-        public InfoType AddInfo(Kingdom kingdom)
+        public InfoType AddInfo(Kingdom kingdom, bool force = false)
         {
+            if (!force)
+            {
+                var existingKingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == kingdom?.StringId);
+                if (existingKingdomInfo != null)
+                {
+                    return existingKingdomInfo;
+                }
+            }
+
             var kingdomInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), kingdom);
             this.Infos.Add(kingdomInfo);
 
@@ -67,7 +81,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public Kingdom GetObjectById(string id)
         {
-            return Campaign.Current.Kingdoms.FirstOrDefault(kingdom => kingdom.StringId == id);
+            return Campaign.Current.Kingdoms.FirstOrDefault(kingdom => kingdom?.StringId == id);
         }
 
         public Kingdom GetObjectByInfo(InfoType info)
@@ -82,11 +96,11 @@ namespace ModLibrary.Components.Kingdoms
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Kingdoms.Any(kingdom => kingdom.StringId == info.KingdomId));
+            this.Infos.RemoveAll(info => !Campaign.Current.Kingdoms.Any(kingdom => kingdom?.StringId == info.KingdomId));
 
-            foreach (var kingdom in Campaign.Current.Kingdoms)
+            foreach (var kingdom in Campaign.Current.Kingdoms.Where(kingdom => !this.Infos.Any(info => info.KingdomId == kingdom?.StringId)))
             {
-                this.GetInfoById(kingdom.StringId);
+                this.AddInfo(kingdom, true);
             }
         }
 

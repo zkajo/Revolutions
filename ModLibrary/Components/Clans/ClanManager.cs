@@ -31,11 +31,11 @@ namespace ModLibrary.Components.Clans
         {
             foreach (var clan in Campaign.Current.Clans)
             {
-                this.GetInfoByObject(clan);
+                this.AddInfo(clan, true);
             }
         }
 
-        public InfoType GetInfoById(string id)
+        public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var clanInfo = this.Infos.FirstOrDefault(info => info.ClanId == id);
 
@@ -44,17 +44,31 @@ namespace ModLibrary.Components.Clans
                 return clanInfo;
             }
 
-            var missingClan = Campaign.Current.Clans.FirstOrDefault(clan => clan.StringId == id);
-            return missingClan != null ? this.AddInfo(missingClan) : null;
+            if (!addIfNotFound)
+            {
+                return null;
+            }
+
+            var missingClan = this.GetObjectById(id);
+            return missingClan != null ? this.AddInfo(missingClan, true) : null;
         }
 
-        public InfoType GetInfoByObject(Clan clan)
+        public InfoType GetInfoByObject(Clan clan, bool addIfNotFound = true)
         {
-            return this.GetInfoById(clan.StringId);
+            return this.GetInfoById(clan?.StringId, addIfNotFound);
         }
 
-        public InfoType AddInfo(Clan clan)
+        public InfoType AddInfo(Clan clan, bool force = false)
         {
+            if (!force)
+            {
+                var existingClanInfo = this.Infos.FirstOrDefault(info => info.ClanId == clan?.StringId);
+                if (existingClanInfo != null)
+                {
+                    return existingClanInfo;
+                }
+            }
+
             var clanInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), clan);
             this.Infos.Add(clanInfo);
 
@@ -83,9 +97,9 @@ namespace ModLibrary.Components.Clans
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Clans.Any(clan => clan.StringId == info.ClanId));
+            this.Infos.RemoveAll(info => !Campaign.Current.Clans.Any(clan => clan?.StringId == info.ClanId));
 
-            foreach (var clan in Campaign.Current.Clans)
+            foreach (var clan in Campaign.Current.Clans.Where(clan => !this.Infos.Any(info => info.ClanId == clan?.StringId)))
             {
                 this.GetInfoById(clan.StringId);
             }

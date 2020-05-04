@@ -28,11 +28,11 @@ namespace ModLibrary.Components.Settlements
         {
             foreach (var settlement in Campaign.Current.Settlements)
             {
-                this.GetInfoByObject(settlement);
+                this.AddInfo(settlement, true);
             }
         }
 
-        public InfoType GetInfoById(string id)
+        public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var settlementInfo = this.Infos.FirstOrDefault(info => info.SettlementId == id);
 
@@ -41,17 +41,31 @@ namespace ModLibrary.Components.Settlements
                 return settlementInfo;
             }
 
-            var missingSettlement = Campaign.Current.Settlements.FirstOrDefault(settlement => settlement.StringId == id);
-            return missingSettlement != null ? this.AddInfo(missingSettlement) : null;
+            if (!addIfNotFound)
+            {
+                return null;
+            }
+
+            var missingSettlement = this.GetObjectById(id);
+            return missingSettlement != null ? this.AddInfo(missingSettlement, true) : null;
         }
 
-        public InfoType GetInfoByObject(Settlement settlement)
+        public InfoType GetInfoByObject(Settlement settlement, bool addIfNotFound = true)
         {
-            return this.GetInfoById(settlement.StringId);
+            return this.GetInfoById(settlement?.StringId, addIfNotFound);
         }
 
-        public InfoType AddInfo(Settlement settlement)
+        public InfoType AddInfo(Settlement settlement, bool force = false)
         {
+            if (!force)
+            {
+                var existingSettlementInfo = this.Infos.FirstOrDefault(info => info.SettlementId == settlement?.StringId);
+                if (existingSettlementInfo != null)
+                {
+                    return existingSettlementInfo;
+                }
+            }
+
             var settlementInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), settlement);
             this.Infos.Add(settlementInfo);
 
@@ -65,7 +79,7 @@ namespace ModLibrary.Components.Settlements
 
         public Settlement GetObjectById(string id)
         {
-            return Campaign.Current.Settlements.FirstOrDefault(settlement => settlement.StringId == id);
+            return Campaign.Current.Settlements.FirstOrDefault(settlement => settlement?.StringId == id);
         }
 
         public Settlement GetObjectByInfo(InfoType info)
@@ -80,11 +94,11 @@ namespace ModLibrary.Components.Settlements
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Settlements.Any(settlement => settlement.StringId == info.SettlementId));
+            this.Infos.RemoveAll(info => !Campaign.Current.Settlements.Any(settlement => settlement?.StringId == info.SettlementId));
 
-            foreach (var settlement in Campaign.Current.Settlements)
+            foreach (var settlement in Campaign.Current.Settlements.Where(settlement => !this.Infos.Any(info => info.SettlementId == settlement?.StringId)))
             {
-                this.GetInfoById(settlement.StringId);
+                this.AddInfo(settlement, true);
             }
         }
 
