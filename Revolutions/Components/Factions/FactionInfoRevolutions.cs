@@ -1,9 +1,9 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
 using ModLibrary;
-using ModLibrary.Factions;
-using ModLibrary.Settlements;
-using Revolutions.Settlements;
+using ModLibrary.Components.Settlements;
+using ModLibrary.Components.Factions;
+using Revolutions.Components.Settlements;
 
 namespace Revolutions.Components.Factions
 {
@@ -20,18 +20,42 @@ namespace Revolutions.Components.Factions
 
         }
 
+        #region Reference Properties
+
         public string RevoltedSettlementId { get; set; }
 
-        public Settlement RevoltedSettlement => ModLibraryManagers.SettlementManager.GetSettlement(this.RevoltedSettlementId);
+        #endregion
 
-        public SettlementInfo RevoltedSettlementInfo => ModLibraryManagers.SettlementManager.GetSettlementInfo(this.RevoltedSettlementId);
+        #region Virtual Objects
 
-        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetSettlementInfo(this.RevoltedSettlementId);
+        #region Reference Properties
+
+        public Settlement RevoltedSettlement => ModLibraryManagers.SettlementManager.GetObjectById(this.RevoltedSettlementId);
+
+        public SettlementInfo RevoltedSettlementInfo => ModLibraryManagers.SettlementManager.GetInfoById(this.RevoltedSettlementId);
+
+        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfoById(this.RevoltedSettlementId);
+
+        #endregion
+
+        #region Reference Properties Inherited
+
+
+
+        #endregion
+
+
+
+        #endregion
+
+        #region Normal Properties
 
         public bool CanRevolt { get; set; } = false;
 
         public int DaysSinceLastRevolt { get; set; } = 0;
 
         public bool SuccessfullyRevolted { get; set; } = false;
+
+        #endregion
     }
 }

@@ -4,7 +4,8 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
 using ModLibrary;
-using Revolutions.Settlements;
+using Revolutions.Revolutions;
+using Revolutions.Components.Settlements;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -63,7 +64,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
             settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
         }
 
@@ -74,7 +75,7 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
 
             var partyLeader = mobileParty.Leader.HeroObject;
             var clanLeader = mobileParty.Party.Owner.Clan.Leader;
@@ -92,7 +93,7 @@ namespace Revolutions.CampaignBehaviors
                 return;
             }
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
             var partyLeader = mobileParty.Leader.HeroObject;
             var clanLeader = mobileParty.Party.Owner.Clan.Leader;
 
@@ -104,25 +105,22 @@ namespace Revolutions.CampaignBehaviors
 
         private void MapEventEnded(MapEvent mapEvent)
         {
-            var revolutionParties = RevolutionsManagers.RevolutionManager.Revolutions.Select(revolution => RevolutionsManagers.RevolutionManager.GetParty(revolution)).ToList();
-            var involvedRevolutionParty = mapEvent.InvolvedParties.Intersect(revolutionParties).FirstOrDefault();
-            if (involvedRevolutionParty == null)
+            var involvedParty = mapEvent.InvolvedParties.Intersect(RevolutionManager.Instance.GetParties()).FirstOrDefault();
+            if (involvedParty == null)
             {
                 return;
             }
 
-            var currentRevolution = RevolutionsManagers.RevolutionManager.GetRevolution(involvedRevolutionParty.Id);
-            var currentSettlementInfoRevolutions = currentRevolution.SettlementInfoRevolutions;
-            var currentFactionInfoRevolutions = RevolutionsManagers.FactionManager.GetFactionInfo(currentSettlementInfoRevolutions.CurrentFactionId);
+            var currentRevolution = RevolutionsManagers.RevolutionManager.GetRevolutionByPartyId(involvedParty.Id);
 
             var winnerSide = mapEvent.BattleState == BattleState.AttackerVictory ? mapEvent.AttackerSide : mapEvent.DefenderSide;
-            if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedRevolutionParty.Id) == null)
+            if (winnerSide.PartiesOnThisSide.FirstOrDefault(party => party.Id == involvedParty.Id) == null)
             {
-                RevolutionsManagers.RevolutionManager.EndFailedRevolution(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
+                RevolutionsManagers.RevolutionManager.EndFailedRevolution(currentRevolution);
             }
             else
             {
-                RevolutionsManagers.RevolutionManager.EndSucceededRevoluton(currentRevolution, currentSettlementInfoRevolutions, currentFactionInfoRevolutions);
+                RevolutionsManagers.RevolutionManager.EndSucceededRevoluton(currentRevolution);
             }
         }
     }

@@ -1,32 +1,58 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary.Settlements;
-using ModLibrary.Factions;
 using ModLibrary;
+using ModLibrary.Components.Factions;
+using ModLibrary.Components.Settlements;
 using Revolutions.Components.Factions;
 
-namespace Revolutions.Settlements
+namespace Revolutions.Components.Settlements
 {
     [Serializable]
     public class SettlementInfoRevolutions : SettlementInfo
     {
         public SettlementInfoRevolutions() : base()
         {
-            this.LoyalFactionId = base.InitialFactionId;
+            this.LoyalFactionId = InitialFactionId;
         }
 
         public SettlementInfoRevolutions(Settlement settlement) : base(settlement)
         {
-            this.LoyalFactionId = base.InitialFactionId;
+            this.LoyalFactionId = InitialFactionId;
         }
+
+        #region Reference Properties
 
         public string LoyalFactionId { get; set; }
 
-        public IFaction LoyalFaction => ModLibraryManagers.FactionManager.GetFaction(this.LoyalFactionId);
+        #endregion
 
-        public FactionInfo LoyalFactionInfo => ModLibraryManagers.FactionManager.GetFactionInfo(this.LoyalFactionId);
+        #region Virtual Objects
 
-        public FactionInfoRevolutions LoyalFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetFactionInfo(this.LoyalFactionId);
+        #region Reference Properties
+
+        public IFaction LoyalFaction => ModLibraryManagers.FactionManager.GetObjectById(this.LoyalFactionId);
+
+        public FactionInfo LoyalFactionInfo => ModLibraryManagers.FactionManager.GetInfoById(this.LoyalFactionId);
+
+        public FactionInfoRevolutions LoyalFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.LoyalFactionId);
+
+        #endregion
+
+        #region Reference Properties Inherited
+
+        public FactionInfoRevolutions InitialFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.InitialFactionId);
+
+        public FactionInfoRevolutions CurrentFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.CurrentFactionId);
+
+        public FactionInfoRevolutions PreviousFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.PreviousFactionId);
+
+        #endregion
+
+        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetObjectById(this.LoyalFactionId).Name.ToLower().Contains("empire");
+
+        #endregion
+
+        #region Normal Properties
 
         public bool IsOwnerInSettlement { get; set; } = false;
 
@@ -36,6 +62,6 @@ namespace Revolutions.Settlements
 
         public int DaysOwnedByOwner { get; set; } = 0;
 
-        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetFaction(this.LoyalFactionId).Name.ToLower().Contains("empire");
+        #endregion
     }
 }

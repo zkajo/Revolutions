@@ -1,26 +1,25 @@
-﻿using Revolutions.Components.Factions;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 
-namespace Revolutions.Factions
+namespace Revolutions.Components.Factions
 {
     public static class FactionInfoRevolutionsExtesion
     {
-        public static void CityRevoltionFailed(this FactionInfoRevolutions factionInfoRevolutions, Settlement settlement)
+        public static void CityRevoltionFailed(this FactionInfoRevolutions factionInfo, Settlement settlement)
         {
-            factionInfoRevolutions.CanRevolt = false;
-            factionInfoRevolutions.RevoltedSettlementId = settlement.StringId;
-            factionInfoRevolutions.DaysSinceLastRevolt = 0;
-            factionInfoRevolutions.SuccessfullyRevolted = false;
-            RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement).RevolutionProgress = 0;
+            factionInfo.CanRevolt = false;
+            factionInfo.RevoltedSettlementId = settlement.StringId;
+            factionInfo.DaysSinceLastRevolt = 0;
+            factionInfo.SuccessfullyRevolted = false;
+            RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId).RevolutionProgress = 0;
         }
 
-        public static void CityRevoltionSucceeded(this FactionInfoRevolutions factionInfoRevolutions, Settlement settlement)
+        public static void CityRevoltionSucceeded(this FactionInfoRevolutions factionInfo, Settlement settlement)
         {
-            factionInfoRevolutions.CanRevolt = false;
-            factionInfoRevolutions.RevoltedSettlementId = settlement.StringId;
-            factionInfoRevolutions.DaysSinceLastRevolt = 0;
-            factionInfoRevolutions.SuccessfullyRevolted = true;
-            RevolutionsManagers.SettlementManager.GetSettlementInfo(settlement).RevolutionProgress = 0;
+            factionInfo.CanRevolt = false;
+            factionInfo.RevoltedSettlementId = settlement.StringId;
+            factionInfo.DaysSinceLastRevolt = 0;
+            factionInfo.SuccessfullyRevolted = true;
+            RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId).RevolutionProgress = 0;
         }
 
         public static void DailyUpdate(this FactionInfoRevolutions factionInfo)

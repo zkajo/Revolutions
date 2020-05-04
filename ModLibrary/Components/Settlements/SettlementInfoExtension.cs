@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using TaleWorlds.CampaignSystem;
+﻿using TaleWorlds.CampaignSystem;
 
-namespace ModLibrary.Settlements
+namespace ModLibrary.Components.Settlements
 {
     public static class SettlementInfoExtension
     {
@@ -23,16 +22,6 @@ namespace ModLibrary.Settlements
         public static bool IsOfCulture(this SettlementInfo settlementInfo, CultureObject culture)
         {
             return settlementInfo.IsOfCulture(culture.StringId);
-        }
-
-        public static PartyBase GetGarrison(this SettlementInfo settlementInfo)
-        {
-            return settlementInfo.Settlement.Parties?.FirstOrDefault(party => party.IsGarrison)?.Party;
-        }
-
-        public static PartyBase GetMilitia(this SettlementInfo settlementInfo)
-        {
-            return settlementInfo.Settlement.Parties?.FirstOrDefault(party => party.IsMilitia)?.Party;
         }
     }
 }

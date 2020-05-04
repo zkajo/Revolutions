@@ -1,32 +1,32 @@
 ﻿using TaleWorlds.CampaignSystem;
 
-namespace Revolutions.Settlements
+namespace Revolutions.Components.Settlements
 {
     public static class SettlementInfoRevolutionsExtension
     {
-        public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfoRevolutions, IFaction faction = null)
+        public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfo, IFaction faction = null)
         {
             if (faction == null)
             {
-                settlementInfoRevolutions.PreviousFactionId = settlementInfoRevolutions.CurrentFactionId;
+                settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
             }
             else
             {
-                settlementInfoRevolutions.PreviousFactionId = settlementInfoRevolutions.CurrentFactionId;
-                settlementInfoRevolutions.CurrentFactionId = faction.StringId;
+                settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
+                settlementInfo.CurrentFactionId = faction.StringId;
             }
 
-            settlementInfoRevolutions.DaysOwnedByOwner = 0;
+            settlementInfo.DaysOwnedByOwner = 0;
         }
 
-        public static void DailyUpdate(this SettlementInfoRevolutions settlementInfoRevolutions)
+        public static void DailyUpdate(this SettlementInfoRevolutions settlementInfo)
         {
-            settlementInfoRevolutions.DaysOwnedByOwner++;
+            settlementInfo.DaysOwnedByOwner++;
 
-            if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId &&
-                settlementInfoRevolutions.DaysOwnedByOwner > Settings.Instance.DaysUntilLoyaltyChange)
+            if (settlementInfo.LoyalFactionId != settlementInfo.CurrentFactionId &&
+                settlementInfo.DaysOwnedByOwner > Settings.Instance.DaysUntilLoyaltyChange)
             {
-                settlementInfoRevolutions.LoyalFactionId = settlementInfoRevolutions.CurrentFactionId;
+                settlementInfo.LoyalFactionId = settlementInfo.CurrentFactionId;
             }
         }
     }

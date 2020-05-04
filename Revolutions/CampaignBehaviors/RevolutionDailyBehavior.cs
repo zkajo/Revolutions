@@ -1,7 +1,7 @@
 ﻿using System;
-using Revolutions.Factions;
 using TaleWorlds.CampaignSystem;
-using Revolutions.Settlements;
+using Revolutions.Components.Settlements;
+using Revolutions.Components.Factions;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -34,12 +34,12 @@ namespace Revolutions.CampaignBehaviors
 
         private void UpdateSettlementInfos()
         {
-            foreach (var factionInfo in RevolutionsManagers.FactionManager.FactionInfos)
+            foreach (var factionInfo in RevolutionsManagers.FactionManager.Infos)
             {
                 factionInfo.DailyUpdate();
             }
 
-            foreach (var settlementInfo in RevolutionsManagers.SettlementManager.SettlementInfos)
+            foreach (var settlementInfo in RevolutionsManagers.SettlementManager.Infos)
             {
                 settlementInfo.DailyUpdate();
             }

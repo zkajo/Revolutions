@@ -1,10 +1,9 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
 using ModLibrary;
-using ModLibrary.Parties;
-using ModLibrary.Settlements;
-using Revolutions.Components.Parties;
-using Revolutions.Settlements;
+using ModLibrary.Components.Settlements;
+using ModLibrary.Components.Parties;
+using Revolutions.Components.Settlements;
 
 namespace Revolutions.Revolutions
 {
@@ -22,20 +21,38 @@ namespace Revolutions.Revolutions
             this.SettlementId = settlement.StringId;
         }
 
+        #region Reference Properties
+
         public string PartyId { get; set; }
-
-        public PartyBase Party => ModLibraryManagers.PartyManager.GetParty(this.PartyId);
-
-        public PartyInfo PartyInfo => ModLibraryManagers.PartyManager.GetPartyInfo(this.PartyId);
-
-        public PartyInfoRevolutions PartyInfoRevolutions => RevolutionsManagers.PartyManager.GetPartyInfo(this.PartyId);
 
         public string SettlementId { get; set; }
 
-        public Settlement Settlement => ModLibraryManagers.SettlementManager.GetSettlement(this.SettlementId);
+        #endregion
 
-        public SettlementInfo SettlementInfo => ModLibraryManagers.SettlementManager.GetSettlementInfo(this.SettlementId);
+        #region Virtual Objects
 
-        public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetSettlementInfo(this.SettlementId);
+        #region Reference Properties Objects
+
+        public PartyBase Party => ModLibraryManagers.PartyManager.GetObjectById(this.PartyId);
+
+        public PartyInfo PartyInfo => ModLibraryManagers.PartyManager.GetInfoById(this.PartyId);
+
+        public Settlement Settlement => ModLibraryManagers.SettlementManager.GetObjectById(this.SettlementId);
+
+        public SettlementInfo SettlementInfo => ModLibraryManagers.SettlementManager.GetInfoById(this.SettlementId);
+
+        public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfoById(this.SettlementId);
+
+        #endregion
+
+
+
+        #endregion
+
+        #region Normal Properties
+
+
+
+        #endregion
     }
 }

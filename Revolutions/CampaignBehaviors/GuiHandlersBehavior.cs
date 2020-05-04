@@ -1,7 +1,7 @@
 ﻿using System;
 using Revolutions.Components.Factions;
+using Revolutions.Components.Settlements;
 using Revolutions.Screens;
-using Revolutions.Settlements;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
 using TaleWorlds.Core;
@@ -29,16 +29,15 @@ namespace Revolutions.CampaignBehaviors
 
         private void CreateLoyaltyMenu(CampaignGameStarter obj)
         {
-            TextObject menuName = new TextObject("{=Ts1iVN8d}Town Loyalty");
+            var menuName = new TextObject("{=Ts1iVN8d}Town Loyalty");
             obj.AddGameMenuOption("town", "town_enter_entr_option", menuName.ToString(), (MenuCallbackArgs args) =>
             {
                 args.optionLeaveType = GameMenuOption.LeaveType.Submenu;
                 return true;
             }, (MenuCallbackArgs args) =>
             {
-                SettlementInfoRevolutions setinf = RevolutionsManagers.SettlementManager.GetSettlementInfo(Settlement.CurrentSettlement);
-                FactionInfoRevolutions factinfo = RevolutionsManagers.FactionManager.GetFactionInfo(Settlement.CurrentSettlement.MapFaction);
-                ScreenManager.PushScreen(new TownRevolutionsScreen(setinf, factinfo));
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(Settlement.CurrentSettlement.StringId);
+                ScreenManager.PushScreen(new TownRevolutionsScreen(settlementInfo, settlementInfo.CurrentFactionInfoRevolutions));
             }, false, 4);
         }
     }

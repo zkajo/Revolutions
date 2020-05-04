@@ -72,22 +72,29 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Characters\CharacterManager.cs" />
-    <Compile Include="Clans\ClanInfo.cs" />
-    <Compile Include="Clans\ClanManager.cs" />
+    <Compile Include="Components\Characters\CharacterInfoExtension.cs" />
+    <Compile Include="Components\Clans\ClanInfoExtension.cs" />
+    <Compile Include="Components\Kingdoms\KingdomInfo.cs" />
+    <Compile Include="Components\Characters\CharacterInfo.cs" />
+    <Compile Include="Components\Characters\CharacterManager.cs" />
+    <Compile Include="Components\Clans\ClanInfo.cs" />
+    <Compile Include="Components\Clans\ClanManager.cs" />
     <Compile Include="ColorManager.cs" />
-    <Compile Include="Factions\FactionInfo.cs" />
-    <Compile Include="Factions\FactionManager.cs" />
-    <Compile Include="Factions\FactionInfoExtension.cs" />
-    <Compile Include="Kingdoms\KingdomManager.cs" />
+    <Compile Include="Components\Factions\FactionInfo.cs" />
+    <Compile Include="Components\Factions\FactionManager.cs" />
+    <Compile Include="Components\Factions\FactionInfoExtension.cs" />
+    <Compile Include="Components\IManager.cs" />
+    <Compile Include="Components\Kingdoms\KingdomManager.cs" />
+    <Compile Include="Components\Kingdoms\KingdomInfoExtension.cs" />
+    <Compile Include="Components\Parties\PartyInfoExtension.cs" />
     <Compile Include="ModLibraryManagers.cs" />
-    <Compile Include="Parties\PartyInfo.cs" />
-    <Compile Include="Parties\PartyManager.cs" />
+    <Compile Include="Components\Parties\PartyInfo.cs" />
+    <Compile Include="Components\Parties\PartyManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Files\FileManager.cs" />
-    <Compile Include="Settlements\SettlementInfo.cs" />
-    <Compile Include="Settlements\SettlementInfoExtension.cs" />
-    <Compile Include="Settlements\SettlementManager.cs" />
+    <Compile Include="FileManager.cs" />
+    <Compile Include="Components\Settlements\SettlementInfo.cs" />
+    <Compile Include="Components\Settlements\SettlementInfoExtension.cs" />
+    <Compile Include="Components\Settlements\SettlementManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Xml.Serialization;
 using TaleWorlds.Core;
 
-namespace ModLibrary.Files
+namespace ModLibrary
 {
     public class FileManager
     {
@@ -15,7 +15,7 @@ namespace ModLibrary.Files
 
         static FileManager()
         {
-            FileManager.Instance = new FileManager();
+            Instance = new FileManager();
         }
 
         public static FileManager Instance { get; private set; }

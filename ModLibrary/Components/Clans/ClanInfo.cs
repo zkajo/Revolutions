@@ -1,6 +1,6 @@
 ﻿using TaleWorlds.CampaignSystem;
 
-namespace ModLibrary.Clans
+namespace ModLibrary.Components.Clans
 {
     public class ClanInfo
     {
@@ -14,9 +14,17 @@ namespace ModLibrary.Clans
             this.ClanId = clan.StringId;
         }
 
+        #region Saved Properties
+
         public string ClanId { get; set; }
 
-        public Clan Clan => ModLibraryManagers.ClanManager.GetClan(this.ClanId);
+        #endregion
+
+        #region Saved Properties Objects
+
+        public Clan Clan => ModLibraryManagers.ClanManager.GetObjectById(this.ClanId);
+
+        #endregion
 
         public bool CanJoinOtherKingdoms { get; set; } = true;
     }

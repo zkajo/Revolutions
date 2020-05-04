@@ -1,5 +1,5 @@
 ﻿using System;
-using ModLibrary.Clans;
+using ModLibrary;
 using TaleWorlds.CampaignSystem;
 
 namespace Revolutions.CampaignBehaviors
@@ -27,12 +27,12 @@ namespace Revolutions.CampaignBehaviors
 
         private void ClanDestroyedEvent(Clan clan)
         {
-            RevolutionsManagers.ClanManager.RemoveClanInfo(clan.StringId);
+            ModLibraryManagers.ClanManager.RemoveInfo(clan.StringId);
         }
 
         private void PartyRemovedEvent(PartyBase party)
         {
-            RevolutionsManagers.PartyManager.RemovePartyInfo(party.Id);
+            ModLibraryManagers.PartyManager.RemoveInfo(party.Id);
         }
 
         private void PartyVisibilityChangedEvent(PartyBase party)
@@ -42,14 +42,14 @@ namespace Revolutions.CampaignBehaviors
 
         private void LordPartySpawned(MobileParty party)
         {
-            RevolutionsManagers.PartyManager.AddPartyInfo(party.Party);
+            ModLibraryManagers.PartyManager.AddInfo(party.Party);
         }
 
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
         {
-            ClanInfo info = RevolutionsManagers.ClanManager.GetClanInfo(clan);
+            var clanInfo = ModLibraryManagers.ClanManager.GetInfoById(clan.StringId);
 
-            if (!info.CanJoinOtherKingdoms && newKingdom.RulingClan.StringId != clan.StringId)
+            if (!clanInfo.CanJoinOtherKingdoms && newKingdom.RulingClan.StringId != clan.StringId)
             {
                 clan.ClanLeaveKingdom(false);
             }
@@ -62,22 +62,22 @@ namespace Revolutions.CampaignBehaviors
 
             if (this._currentTick == CleanupBehavior.RefreshAtTick)
             {
-                RevolutionsManagers.FactionManager.WatchFactions();
+                RevolutionsManagers.FactionManager.UpdateInfos();
             }
 
             if (this._currentTick == CleanupBehavior.RefreshAtTick + 10)
             {
-                RevolutionsManagers.SettlementManager.WatchSettlements();
+                RevolutionsManagers.SettlementManager.UpdateInfos();
             }
 
             if (this._currentTick > CleanupBehavior.RefreshAtTick + 20)
             {
-                RevolutionsManagers.ClanManager.WatchClans();
+                ModLibraryManagers.ClanManager.UpdateInfos();
 
             }
             if (this._currentTick == CleanupBehavior.RefreshAtTick + 30)
             {
-                RevolutionsManagers.PartyManager.WatchParties();
+                ModLibraryManagers.PartyManager.UpdateInfos();
                 this._currentTick = 0;
             }
 

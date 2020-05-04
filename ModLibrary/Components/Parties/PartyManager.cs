@@ -7,9 +7,9 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ObjectSystem;
 
-namespace ModLibrary.Parties
+namespace ModLibrary.Components.Parties
 {
-    public class PartyManager<T> where T : PartyInfo, new()
+    public class PartyManager<InfoType> /*: IManager<InfoType, MobileParty>*/ where InfoType : PartyInfo, new()
     {
         #region Singleton
 
@@ -17,85 +17,86 @@ namespace ModLibrary.Parties
 
         static PartyManager()
         {
-            PartyManager<T>.Instance = new PartyManager<T>();
+            PartyManager<InfoType>.Instance = new PartyManager<InfoType>();
         }
 
-        public static PartyManager<T> Instance { get; private set; }
+        public static PartyManager<InfoType> Instance { get; private set; }
 
         #endregion
 
-        public List<T> PartyInfos = new List<T>();
+        #region IManager
 
-        public void InitializePartyInfos()
+        public List<InfoType> Infos { get; set; } = new List<InfoType>();
+
+        public void InitializeInfos()
         {
             foreach (var party in Campaign.Current.Parties)
             {
-                this.GetPartyInfo(party.Id);
+                this.GetInfoByObject(party);
             }
         }
 
-        public T GetPartyInfo(string partyId)
+        public InfoType GetInfoById(string id)
         {
-            var partyInfo = this.PartyInfos.FirstOrDefault(info => info.PartyId == partyId);
+            var partyInfo = this.Infos.FirstOrDefault(info => info.PartyId == id);
 
             if (partyInfo != null)
             {
                 return partyInfo;
             }
 
-            PartyBase missingParty = Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
-            return missingParty != null ? this.AddPartyInfo(missingParty) : null;
+            var missingParty = Campaign.Current.Parties.FirstOrDefault(party => party.Id == id);
+            return missingParty != null ? this.AddInfo(missingParty) : null;
         }
 
-        public T GetPartyInfo(PartyBase party)
+        public InfoType GetInfoByObject(PartyBase party)
         {
-            return this.GetPartyInfo(party.Id);
+            return this.GetInfoById(party.Id);
         }
 
-        public T AddPartyInfo(PartyBase party)
+        public InfoType AddInfo(PartyBase party)
         {
-            var partyInfo = (T)Activator.CreateInstance(typeof(T), party);
-            this.PartyInfos.Add(partyInfo);
+            var partyInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), party);
+            this.Infos.Add(partyInfo);
 
             return partyInfo;
         }
 
-        public void RemovePartyInfo(string partyId)
+        public void RemoveInfo(string id)
         {
-            this.PartyInfos.RemoveAll(party => party.PartyId == partyId);
+            this.Infos.RemoveAll(info => info.PartyId == id);
         }
 
-        public PartyBase GetParty(string partyId)
+        public PartyBase GetObjectById(string id)
         {
-            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == partyId);
+            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == id);
         }
 
-        public PartyBase GetParty(T partyInfo)
+        public PartyBase GetObjectByInfo(InfoType info)
         {
-            return this.GetParty(partyInfo.PartyId);
+            return this.GetObjectById(info.PartyId);
         }
 
-        public void WatchParties()
+        public void UpdateInfos()
         {
-            if (this.PartyInfos.Count() == Campaign.Current.Parties.Count())
+            if (this.Infos.Count() == Campaign.Current.Parties.Count())
             {
                 return;
             }
 
-            this.PartyInfos.RemoveAll(info => !Campaign.Current.Parties.Any(party => party.Id == info.PartyId));
+            this.Infos.RemoveAll(info => !Campaign.Current.Parties.Any(party => party.Id == info.PartyId));
 
             foreach (var party in Campaign.Current.Parties)
             {
-                this.GetPartyInfo(party);
+                this.GetInfoById(party.Id);
             }
         }
 
-        /// <summary>
-        /// Creates and initializes a mobile party. Sets owner to hero.
-        /// </summary>
+        #endregion
+
         public MobileParty CreateMobileParty(string id, TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
-            MobileParty mobileParty = MBObjectManager.Instance.CreateObject<MobileParty>(string.Concat(new object[]
+            var mobileParty = MBObjectManager.Instance.CreateObject<MobileParty>(string.Concat(new object[]
             {
                 id
             }));
@@ -118,14 +119,14 @@ namespace ModLibrary.Parties
 
         public TroopRoster CreateTroopRoster(int numberNeeded, CharacterObject troopCharacter)
         {
-            TroopRoster newRoster = new TroopRoster();
+            var newRoster = new TroopRoster();
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
             return newRoster;
         }
 
         public TroopRoster CreatePrisonRoster(int numberNeeded, CharacterObject troopCharacter)
         {
-            TroopRoster newRoster = new TroopRoster();
+            var newRoster = new TroopRoster();
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
             newRoster.IsPrisonRoster = true;
             return newRoster;

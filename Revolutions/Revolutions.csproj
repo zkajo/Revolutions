@@ -78,10 +78,8 @@
   <ItemGroup>
     <Compile Include="CampaignBehaviors\CleanupBehavior.cs" />
     <Compile Include="CampaignBehaviors\GuiHandlersBehavior.cs" />
-    <Compile Include="Components\Clans\ClanInfoRevolutions.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutions.cs" />
     <Compile Include="Components\Factions\FactionInfoRevolutionsExtesion.cs" />
-    <Compile Include="Components\Parties\PartyInfoRevolutions.cs" />
     <Compile Include="Components\Revolutions\Revolution.cs" />
     <Compile Include="Components\Revolutions\RevolutionExtension.cs" />
     <Compile Include="Components\Revolutions\RevolutionManager.cs" />

@@ -1,8 +1,7 @@
 ﻿using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
-using TaleWorlds.Core;
-using Revolutions.Settlements;
 using TaleWorlds.Localization;
+using Revolutions.Components.Settlements;
 
 namespace Revolutions.Models
 {
@@ -18,63 +17,63 @@ namespace Revolutions.Models
         public override float CalculateLoyaltyChange(Town town, StatExplainer statExplainer = null)
         {
             var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
-            var settlementInfoRevolutions = RevolutionsManagers.SettlementManager.GetSettlementInfo(town.Settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(town.Settlement.StringId);
 
             if (!town.IsTown)
             {
                 return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
             }
 
-            if (settlementInfoRevolutions.CurrentFaction.Leader == Hero.MainHero)
+            if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
             {
                 explainedNumber.Add(Settings.Instance.BasePlayerLoyalty, new TextObject("{=q2tbqP0z}Bannerlord Settlement"));
 
                 if (Settings.Instance.PlayerAffectedByOverextension && Settings.Instance.OverextensionMechanics)
                 {
-                    this.Overextension(settlementInfoRevolutions, ref explainedNumber);
+                    this.Overextension(settlementInfo, ref explainedNumber);
                 }
             }
             else
             {
-                this.BaseLoyalty(settlementInfoRevolutions, ref explainedNumber);
+                this.BaseLoyalty(settlementInfo, ref explainedNumber);
 
                 if (Settings.Instance.OverextensionMechanics)
                 {
-                    this.Overextension(settlementInfoRevolutions, ref explainedNumber);
+                    this.Overextension(settlementInfo, ref explainedNumber);
                 }
             }
 
             return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
         }
 
-        private void Overextension(SettlementInfoRevolutions settlementInfoRevolutions, ref ExplainedNumber explainedNumber)
+        private void Overextension(SettlementInfoRevolutions settlementInfo, ref ExplainedNumber explainedNumber)
         {
-            if (settlementInfoRevolutions.CurrentFaction.StringId == settlementInfoRevolutions.LoyalFaction.StringId)
+            if (settlementInfo.CurrentFaction.StringId == settlementInfo.LoyalFaction.StringId)
             {
                 return;
             }
 
             if (Settings.Instance.EmpireLoyaltyMechanics)
             {
-                if (settlementInfoRevolutions.IsOfImperialCulture && settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
+                if (settlementInfo.IsOfImperialCulture && settlementInfo.IsCurrentFactionOfImperialCulture)
                 {
                     return;
                 }
             }
 
-            var factionInfo = settlementInfoRevolutions.CurrentFactionInfo;
+            var factionInfo = settlementInfo.CurrentFactionInfo;
             var overExtension = factionInfo.InitialTownsCount - factionInfo.CurrentTownsCount;
 
             explainedNumber.Add(overExtension * Settings.Instance.OverExtensionMultiplier, new TextObject("{=YnRmNltF}Overextension"));
         }
 
-        private void BaseLoyalty(SettlementInfoRevolutions settlementInfoRevolutions, ref ExplainedNumber explainedNumber)
+        private void BaseLoyalty(SettlementInfoRevolutions settlementInfo, ref ExplainedNumber explainedNumber)
         {
             if (Settings.Instance.EmpireLoyaltyMechanics)
             {
-                if (settlementInfoRevolutions.IsOfImperialCulture)
+                if (settlementInfo.IsOfImperialCulture)
                 {
-                    if (settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
+                    if (settlementInfo.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(10, new TextObject("{=3fQwNP5z}Imperial Loyalty"));
                     }
@@ -85,12 +84,12 @@ namespace Revolutions.Models
                 }
                 else
                 {
-                    if (settlementInfoRevolutions.IsCurrentFactionOfImperialCulture)
+                    if (settlementInfo.IsCurrentFactionOfImperialCulture)
                     {
                         explainedNumber.Add(-5, new TextObject("{=qNWmNN8d}Imperial Aversion"));
                     }
 
-                    if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId)
+                    if (settlementInfo.LoyalFactionId != settlementInfo.CurrentFactionId)
                     {
                         explainedNumber.Add(-5, new TextObject("{=7LzQNP0z}Foreign Rule"));
                     }
@@ -98,7 +97,7 @@ namespace Revolutions.Models
             }
             else
             {
-                if (settlementInfoRevolutions.LoyalFactionId != settlementInfoRevolutions.CurrentFactionId)
+                if (settlementInfo.LoyalFactionId != settlementInfo.CurrentFactionId)
                 {
                     explainedNumber.Add(-5, new TextObject("{=7LzQNP0z}Foreign Rule"));
                 }

@@ -1,5 +1,5 @@
 ﻿using Revolutions.Components.Factions;
-using Revolutions.Settlements;
+using Revolutions.Components.Settlements;
 using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
@@ -51,14 +51,14 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (this.SettlementInfo.RevolutionProgress < 10)
                 {
-                    TextObject textObject = new TextObject("{=3fBkqk4u}The people of {SETTLEMENT} seem to be content.");
+                    var textObject = new TextObject("{=3fBkqk4u}The people of {SETTLEMENT} seem to be content.");
                     textObject.SetTextVariable("SETTLEMENT", this.SettlementInfo.Settlement.Name);
 
                     return textObject.ToString();
                 }
                 else
                 {
-                    TextObject textObject = new TextObject("{=dRoS0maD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
+                    var textObject = new TextObject("{=dRoS0maD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
                     textObject.SetTextVariable("SETTLEMENT", this.SettlementInfo.Settlement.Name);
 
                     return textObject.ToString();
@@ -71,7 +71,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                TextObject textObject = new TextObject("{=MYu8szGz}Population is loyal to {FACTION}.");
+                var textObject = new TextObject("{=MYu8szGz}Population is loyal to {FACTION}.");
                 textObject.SetTextVariable("FACTION", this.SettlementInfo.LoyalFaction.Name);
 
                 return textObject.ToString();
@@ -83,7 +83,7 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                TextObject textObject = new TextObject("{=q2tbSs8d}Current revolt progress is {PROGRESS}%.");
+                var textObject = new TextObject("{=q2tbSs8d}Current revolt progress is {PROGRESS}%.");
                 textObject.SetTextVariable("PROGRESS", this.SettlementInfo.RevolutionProgress);
 
                 return textObject.ToString();
@@ -97,13 +97,13 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (this.FactionInfo.FactionId == this.SettlementInfo.LoyalFaction.StringId)
                 {
-                    TextObject textObject = new TextObject("{=zQNPQz3q}People are content with the current rule.");
+                    var textObject = new TextObject("{=zQNPQz3q}People are content with the current rule.");
                     return textObject.ToString();
                 }
 
                 if (this.FactionInfo.CanRevolt)
                 {
-                    TextObject inspiration = new TextObject("");
+                    var inspiration = new TextObject("");
                     if (this.FactionInfo.SuccessfullyRevolted)
                     {
                         if (this.FactionInfo.RevoltedSettlement == null)
@@ -117,7 +117,7 @@ namespace Revolutions.Screens.ViewModels
                         }
                     }
 
-                    TextObject baseText = new TextObject("{=HWiDqN8d}Some talk of raising banners of their homeland.");
+                    var baseText = new TextObject("{=HWiDqN8d}Some talk of raising banners of their homeland.");
                     return baseText.ToString() + " " + inspiration.ToString();
 
                 }
@@ -130,11 +130,11 @@ namespace Revolutions.Screens.ViewModels
 
                     if (this.FactionInfo.RevoltedSettlementId == this.SettlementInfo.Settlement.StringId)
                     {
-                        TextObject option = new TextObject("{=q2tbH41e}The people of this town had revolted recently, and don't wish to spill blood again.");
+                        var option = new TextObject("{=q2tbH41e}The people of this town had revolted recently, and don't wish to spill blood again.");
                         return option.ToString();
                     }
 
-                    TextObject textObject = new TextObject("{=6m7Ss8fW}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting.");
+                    var textObject = new TextObject("{=6m7Ss8fW}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting.");
                     textObject.SetTextVariable("SETTLEMENT", this.FactionInfo.RevoltedSettlement.Name);
 
                     return textObject.ToString();

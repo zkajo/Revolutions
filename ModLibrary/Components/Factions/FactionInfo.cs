@@ -2,7 +2,7 @@
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 
-namespace ModLibrary.Factions
+namespace ModLibrary.Components.Factions
 {
     [Serializable]
     public class FactionInfo
@@ -20,10 +20,10 @@ namespace ModLibrary.Factions
 
         public string FactionId { get; set; }
 
-        public IFaction Faction => ModLibraryManagers.FactionManager.GetFaction(this.FactionId);
+        public IFaction Faction => ModLibraryManagers.FactionManager.GetObjectById(this.FactionId);
 
         public int InitialTownsCount { get; set; }
 
-        public int CurrentTownsCount => ModLibraryManagers.FactionManager.GetFaction(this.FactionId).Settlements.Where(settlement => settlement.IsTown).Count();
+        public int CurrentTownsCount => this.Faction.Settlements.Where(settlement => settlement.IsTown).Count();
     }
 }

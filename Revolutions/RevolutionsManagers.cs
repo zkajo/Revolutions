@@ -1,12 +1,8 @@
-﻿using ModLibrary.Clans;
-using ModLibrary.Factions;
-using ModLibrary.Parties;
-using ModLibrary.Settlements;
-using Revolutions.Components.Clans;
+﻿using ModLibrary.Components.Factions;
+using ModLibrary.Components.Settlements;
 using Revolutions.Components.Factions;
-using Revolutions.Components.Parties;
+using Revolutions.Components.Settlements;
 using Revolutions.Revolutions;
-using Revolutions.Settlements;
 
 namespace Revolutions
 {
@@ -15,10 +11,6 @@ namespace Revolutions
         public static FactionManager<FactionInfoRevolutions> FactionManager { get; } = FactionManager<FactionInfoRevolutions>.Instance;
 
         public static SettlementManager<SettlementInfoRevolutions> SettlementManager { get; } = SettlementManager<SettlementInfoRevolutions>.Instance;
-
-        public static ClanManager<ClanInfoRevolutions> ClanManager { get; } = ClanManager<ClanInfoRevolutions>.Instance;
-
-        public static PartyManager<PartyInfoRevolutions> PartyManager { get; } = PartyManager<PartyInfoRevolutions>.Instance;
 
         public static RevolutionManager RevolutionManager { get; } = RevolutionManager.Instance;
     }
