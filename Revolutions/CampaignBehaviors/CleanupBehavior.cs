@@ -1,6 +1,8 @@
 ﻿using System;
 using ModLibrary;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
+using TaleWorlds.Engine;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -87,7 +89,7 @@ namespace Revolutions.CampaignBehaviors
                 ModLibraryManagers.SettlementManager.UpdateInfos();
                 this._currentTick = 0;
             }
-
+            
             this._currentTick++;
         }
     }

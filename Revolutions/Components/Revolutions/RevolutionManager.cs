@@ -148,7 +148,9 @@ namespace Revolutions.Components.Revolutions
             }
             else
             {
-                ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.MobileParty.LeaderHero, revolution.Settlement);
+                Hero newOwner = revolution.Party.MobileParty.LeaderHero ?? revolution.Party.MapFaction.Leader;
+
+                ChangeOwnerOfSettlementAction.ApplyByDefault(newOwner, revolution.Settlement);
                 revolution.Party.MobileParty.RemoveParty();
             }
 

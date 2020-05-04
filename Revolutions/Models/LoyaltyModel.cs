@@ -19,15 +19,15 @@ namespace Revolutions.Models
 
         public override float CalculateLoyaltyChange(Town town, StatExplainer statExplainer = null)
         {
+            if (!town.IsTown)
+            {
+                return base.CalculateLoyaltyChange(town, statExplainer);
+            }
+            
             try
             {
                 var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
                 var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(town.Settlement?.StringId);
-
-                if (!town.IsTown)
-                {
-                    return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
-                }
 
                 if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
                 {
@@ -53,6 +53,8 @@ namespace Revolutions.Models
             catch (Exception exception)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now.", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage("Exception caused by: " + town.Name, ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.StackTrace, ColorManager.Red));
                 InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
 
                 return base.CalculateLoyaltyChange(town, statExplainer);
