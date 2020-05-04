@@ -1,4 +1,4 @@
-﻿namespace Revolutions.Revolutions
+﻿namespace Revolutions.Components.Revolutions
 {
     public static class RevolutionExtension
     {

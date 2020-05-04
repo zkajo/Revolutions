@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <base xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="string">
-    <tags>
-        <tag language="English" />
-    </tags>
-    <strings>
-        <!-- Settings -->
-        <!-- Header -->
-        <string id="MYu8nKqq" text="General" />
-        <string id="hPERH4u4" text="Imperial Loyalty" />
-        <string id="Ts1iV2pO" text="Overextension" />
-        <string id="WbOKuWbq" text="Minor Factions" />
-        <!-- General -->
-        <string id="Pqk4uuGz" text="Revolt Cooldown" />
-        <string id="zx12ijyW" text="The time before another revolt can arise in the same city." />
-        <string id="qNWmNP0z" text="Base Loyalty" />
-        <string id="tOZS0maD" text="The base loyalty of cities to the player." />
-        <string id="3fQwLwkC" text="Loyalty Change" />
-        <string id="dRoMEfb0" text="Days until the city's loyalty to the new owner changes." />
-        <string id="cXCfwzPp" text="Loyalty Increase" />
-        <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
-        <string id="ZuwszZww" text="Minimum Obediance" />
-        <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
-        <string id="Z64szZ0r" text="Base Army Size" />
-        <string id="u54sxY0r" text="The base size of the revolting army, which gets spawned." />
-        <string id="Z64soMEf" text="Army Prosperity Multiplier" />
-        <string id="uD4aRY0r" text="This multiplier gets multiplied by the towns prosperity to add the amount to the base army size." />
-        <!-- Imperial Loyalty -->
-        <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
-        <!-- Overextension -->
-        <string id="ZRlNsvev" text="Activates/Deactivates the mechanics for overextension." />
-        <string id="vuDS5ns8" text="Affects Player" />
-        <string id="7LzQHMVj" text="Does the overextension mechanism affect the player." />
-        <string id="q2tbqN8d" text="Multiplier" />
-        <string id="6m1Ss8fW" text="A multiplier to calculate overextension. This affects the city's loyalty to the owner." />
-        <!-- Minor Factions -->
-        <string id="P1g6H41e" text="Activates/Deactivates the mechanics for forming minor factions." />
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <!-- Settings -->
+    <!-- Header -->
+    <string id="MYu8nKqq" text="General" />
+    <string id="hPERH4u4" text="Imperial Loyalty" />
+    <string id="Ts1iV2pO" text="Overextension" />
+    <string id="WbOKuWbq" text="Minor Factions" />
+    <!-- General -->
+    <string id="Pqk4uuGz" text="Revolt Cooldown" />
+    <string id="zx12ijyW" text="The time before another revolt can arise in the same city." />
+    <string id="qNWmNP0z" text="Base Loyalty" />
+    <string id="tOZS0maD" text="The base loyalty of cities to the player." />
+    <string id="3fQwLwkC" text="Loyalty Change" />
+    <string id="dRoMEfb0" text="Days until the city's loyalty to the new owner changes." />
+    <string id="cXCfwzPp" text="Loyalty Increase" />
+    <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
+    <string id="ZuwszZww" text="Minimum Obediance" />
+    <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
+    <string id="Z64szZ0r" text="Base Army Size" />
+    <string id="u54sxY0r" text="The base size of the revolting army, which gets spawned." />
+    <string id="Z64soMEf" text="Army Prosperity Multiplier" />
+    <string id="uD4aRY0r" text="This multiplier gets multiplied by the towns prosperity to add the amount to the base army size." />
+    <!-- Imperial Loyalty -->
+    <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
+    <string id="ER9izZPu" text="Renown Loss" />
+    <string id="1i5izHqq" text="The amount of renown a imperial faction will loose after a failed revolt." />
+    <!-- Overextension -->
+    <string id="ZRlNsvev" text="Activates/Deactivates the mechanics for overextension." />
+    <string id="vuDS5ns8" text="Affects Player" />
+    <string id="7LzQHMVj" text="Does the overextension mechanism affect the player." />
+    <string id="q2tbqN8d" text="Multiplier" />
+    <string id="6m1Ss8fW" text="A multiplier to calculate overextension. This affects the city's loyalty to the owner." />
+    <!-- Minor Factions -->
+    <string id="P1g6H41e" text="Activates/Deactivates the mechanics for forming minor factions." />
+    <string id="Z79izZPu" text="Renown Gain" />
+    <string id="1i9izH4u" text="The amount of renown a minor faction will get after a successful revolt." />
 
-        <!-- Loyalty Model -->
-        <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
-        <string id="dRoS0maD" text="{SETTLEMENT} is revolting!" />
-        <string id="Ts1iVN8d" text="Town Loyalty" />
-        <string id="q2t1Ss8d" text="Revolutionary Mob" />
+    <!-- Loyalty Model -->
+    <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
+    <string id="dRoS0maD" text="{SETTLEMENT} is revolting!" />
+    <string id="Ts1iVN8d" text="Town Loyalty" />
+    <string id="q2t1Ss8d" text="Revolutionary Mob" />
 
-        <!-- Town Menu -->
-        <string id="3fBkqk4u" text="The people of {SETTLEMENT} seem to be content." />
-        <string id="dRoS0maD" text="Flames of revolution are slowly stirring in {SETTLEMENT}." />
-        <string id="MYu8szGz" text="Population is loyal to the {FACTION}." />
-        <string id="q2tbSs8d" text="Current revolt progress is {PROGRESS}%." />
-        <string id="zQNPQz3q" text="People are content with the current rule." />
-        <string id="qZS0ma0z"	text="Many are inspired by tales of revolts in the kingdom." />
-        <string id="7LzQWiDZ"	text="Many are inspired by events at {SETTLEMENT}." />
-        <string id="HWiDqN8d"	text="Some talk of raising banners of their homeland." />
-        <string id="q2tbH41e" text="The people of this town had revolted recently, and don't wish to spill blood again." />
-        <string id="6m7Ss8fW" text="After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
+    <!-- Town Menu -->
+    <string id="3fBkqk4u" text="The people of {SETTLEMENT} seem to be content." />
+    <string id="dRoS0maD" text="Flames of revolution are slowly stirring in {SETTLEMENT}." />
+    <string id="MYu8szGz" text="Population is loyal to the {FACTION}." />
+    <string id="q2tbSs8d" text="Current revolt progress is {PROGRESS}%." />
+    <string id="zQNPQz3q" text="People are content with the current rule." />
+    <string id="qZS0ma0z"	text="Many are inspired by tales of revolts in the kingdom." />
+    <string id="7LzQWiDZ"	text="Many are inspired by events at {SETTLEMENT}." />
+    <string id="HWiDqN8d"	text="Some talk of raising banners of their homeland." />
+    <string id="q2tbH41e" text="The people of this town had revolted recently, and don't wish to spill blood again." />
+    <string id="6m7Ss8fW" text="After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
 
-        <!-- Loyalty State -->
-        <string id="YnRmNltF" text="Overextension" />
-        <string id="3fQwNP5z" text="Imperial Loyalty" />
-        <string id="7LzQNP0z" text="Foreign Rule" />
-        <string id="qNWmNN8d" text="Imperial Aversion" />
-        <string id="q2tbqP0z" text="Bannerlord Settlement" />
+    <!-- Loyalty State -->
+    <string id="YnRmNltF" text="Overextension" />
+    <string id="3fQwNP5z" text="Imperial Loyalty" />
+    <string id="7LzQNP0z" text="Foreign Rule" />
+    <string id="qNWmNN8d" text="Imperial Aversion" />
+    <string id="q2tbqP0z" text="Bannerlord Settlement" />
 
-        <!-- Misc -->
-        <string id="3fQwWiDZ" text="Done" />
-    </strings>
+    <!-- Misc -->
+    <string id="3fQwWiDZ" text="Done" />
+  </strings>
 </base>

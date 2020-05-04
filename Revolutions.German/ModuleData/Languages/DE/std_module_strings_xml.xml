@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <base xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" type="string">
-    <tags>
-        <tag language="Deutsch" />
-    </tags>
-    <strings>
-        <!-- Settings -->
-        <!-- Header -->
-        <string id="MYu8nKqq" text="Allgemein" />
-        <string id="hPERH4u4" text="Reichsloyalität" />
-        <string id="Ts1iV2pO" text="Überdehnung" />
-        <string id="WbOKuWbq" text="Kleinere Fraktionen" />
-        <!-- General -->
-        <string id="Pqk4uuGz" text="Abklingzeit Revolte" />
-        <string id="zx12ijyW" text="Die Zeit bevor in der selben Fraktion erneut eine Revolte entstehen kann." />
-        <string id="qNWmNP0z" text="Basisloyalität" />
-        <string id="tOZS0maD" text="Die Grundtreue von Städten gegenüber dem Spieler." />
-        <string id="3fQwLwkC" text="Loyalitätsänderung" />
-        <string id="dRoMEfb0" text="Tage bis sich die Loyalität der Stadt gegenüber dem neuen Besitzer ändert." />
-        <string id="cXCfwzPp" text="Loyalitätserhöhung" />
-        <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer in der Stadt ist." />
-        <string id="ZuwszZww" text="Minimaler Gehorsam" />
-        <string id="BkGsVccZ" text="Minimal benötigte Loyalität für den Gehorsam der Stadt gegenüber dem Besitzer." />
-        <string id="Z64szZ0r" text="Basisarmeegröße" />
-        <string id="u54sxY0r" text="Die Grundgröße der aufständischen Armee, welche erzeugt wird." />
-        <string id="Z64soMEf" text="Armee Wohlstandsmultiplikator" />
-        <string id="uD4aRY0r" text="Dieser Multiplikator wird mit dem Wohlstand der Städte multipliziert, um den Betrag zur Größe der Basisarmee hinzuzufügen." />
-        <!-- Imperial Loyalty -->
-        <string id="YnRmSelp" text="Aktiviert/Deaktiviert die Mechnik für die Reichstreue." />
-        <!-- Overextension -->
-        <string id="ZRlNsvev" text="Aktiviert/Deaktiviert die Mechanik für die Überdehnung." />
-        <string id="vuDS5ns8" text="Spielereinfluss" />
-        <string id="7LzQHMVj" text="Wirkt sich die Übersehnungsmechanik auf den Spieler aus." />
-        <string id="q2tbqN8d" text="Multiplikator" />
-        <string id="6m1Ss8fW" text="Ein Multiplikator zur Berechnung der Überdehnung. Dies wirkt sich auf die Loyalität der Stadt gegenüber dem Eigentümer aus." />
-        <!-- Minor Factions -->
-        <string id="P1g6H41e" text="Aktiviert/Deaktiviert die Mechnik für die Erstellung kleinerer Fraktionen." />
+  <tags>
+    <tag language="Deutsch" />
+  </tags>
+  <strings>
+    <!-- Settings -->
+    <!-- Header -->
+    <string id="MYu8nKqq" text="Allgemein" />
+    <string id="hPERH4u4" text="Reichsloyalität" />
+    <string id="Ts1iV2pO" text="Überdehnung" />
+    <string id="WbOKuWbq" text="Kleinere Fraktionen" />
+    <!-- General -->
+    <string id="Pqk4uuGz" text="Abklingzeit Revolte" />
+    <string id="zx12ijyW" text="Die Zeit bevor in der selben Fraktion erneut eine Revolte entstehen kann." />
+    <string id="qNWmNP0z" text="Basisloyalität" />
+    <string id="tOZS0maD" text="Die Grundtreue von Städten gegenüber dem Spieler." />
+    <string id="3fQwLwkC" text="Loyalitätsänderung" />
+    <string id="dRoMEfb0" text="Tage bis sich die Loyalität der Stadt gegenüber dem neuen Besitzer ändert." />
+    <string id="cXCfwzPp" text="Loyalitätserhöhung" />
+    <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer in der Stadt ist." />
+    <string id="ZuwszZww" text="Minimaler Gehorsam" />
+    <string id="BkGsVccZ" text="Minimal benötigte Loyalität für den Gehorsam der Stadt gegenüber dem Besitzer." />
+    <string id="Z64szZ0r" text="Basisarmeegröße" />
+    <string id="u54sxY0r" text="Die Grundgröße der aufständischen Armee, welche erzeugt wird." />
+    <string id="Z64soMEf" text="Armee Wohlstandsmultiplikator" />
+    <string id="uD4aRY0r" text="Dieser Multiplikator wird mit dem Wohlstand der Städte multipliziert, um den Betrag zur Größe der Basisarmee hinzuzufügen." />
+    <!-- Imperial Loyalty -->
+    <string id="YnRmSelp" text="Aktiviert/Deaktiviert die Mechnik für die Reichstreue." />
+    <string id="ER9izZPu" text="Verlust von Ansehen" />
+    <string id="1i5izHqq" text="Die Menge an Ansehen, welches eine imperiale Fraktion nach einem gescheiterten Aufstand verlieren wird." />
+    <!-- Overextension -->
+    <string id="ZRlNsvev" text="Aktiviert/Deaktiviert die Mechanik für die Überdehnung." />
+    <string id="vuDS5ns8" text="Spielereinfluss" />
+    <string id="7LzQHMVj" text="Wirkt sich die Übersehnungsmechanik auf den Spieler aus." />
+    <string id="q2tbqN8d" text="Multiplikator" />
+    <string id="6m1Ss8fW" text="Ein Multiplikator zur Berechnung der Überdehnung. Dies wirkt sich auf die Loyalität der Stadt gegenüber dem Eigentümer aus." />
+    <!-- Minor Factions -->
+    <string id="P1g6H41e" text="Aktiviert/Deaktiviert die Mechnik für die Erstellung kleinerer Fraktionen." />
+    <string id="Z79izZPu" text="Gewinnen von Ansehen" />
+    <string id="1i9izH4u" text="Die Menge an Ansehen, welches eine kleinere Fraktion nach einem erfolgreichen Aufstand gewinnen wird." />
 
-        <!-- Loyalty Model -->
-        <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />
-        <string id="dRoS0maD" text="{SETTLEMENT} revolviert!" />
-        <string id="Ts1iVN8d" text="Stadttreue" />
-        <string id="q2t1Ss8d" text="Revolutionärer Mob" />
+    <!-- Loyalty Model -->
+    <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />
+    <string id="dRoS0maD" text="{SETTLEMENT} revolviert!" />
+    <string id="Ts1iVN8d" text="Stadttreue" />
+    <string id="q2t1Ss8d" text="Revolutionärer Mob" />
 
-        <!-- Town Menu -->
-        <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheinen zufrieden zu sein." />
-        <string id="dRoS0maD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
-        <string id="MYu8szGz" text="Die Bevölkerung ist {FACTION} treu." />
-        <string id="q2tbSs8d" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%." />
-        <string id="zQNPQz3q" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden." />
-        <string id="qZS0ma0z"	text="Viele lassen sich durch Geschichten von Revolutionen im Königreich inspirieren." />
-        <string id="7LzQWiDZ"	text="Viele sind von Ereignissen bei {SETTLEMENT} inspiriert." />
-        <string id="HWiDqN8d"	text="Einige reden davon das Banner ihrer Heimat zu hissen." />
-        <string id="q2tbH41e" text="Die Menschen in dieser Stadt haben erst kürzlich revolviert und möchten kein weiteres Blut mehr vergießen." />
-        <string id="6m7Ss8fW" text="Nach dem Hören von Blutvergießen in {SETTLEMENT}, haben die Bürger Angst vor Aufruhr." />
+    <!-- Town Menu -->
+    <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheinen zufrieden zu sein." />
+    <string id="dRoS0maD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
+    <string id="MYu8szGz" text="Die Bevölkerung ist {FACTION} treu." />
+    <string id="q2tbSs8d" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%." />
+    <string id="zQNPQz3q" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden." />
+    <string id="qZS0ma0z"	text="Viele lassen sich durch Geschichten von Revolutionen im Königreich inspirieren." />
+    <string id="7LzQWiDZ"	text="Viele sind von Ereignissen bei {SETTLEMENT} inspiriert." />
+    <string id="HWiDqN8d"	text="Einige reden davon das Banner ihrer Heimat zu hissen." />
+    <string id="q2tbH41e" text="Die Menschen in dieser Stadt haben erst kürzlich revolviert und möchten kein weiteres Blut mehr vergießen." />
+    <string id="6m7Ss8fW" text="Nach dem Hören von Blutvergießen in {SETTLEMENT}, haben die Bürger Angst vor Aufruhr." />
 
-        <!-- Loyalty State -->
-        <string id="YnRmNltF" text="Überdehnung" />
-        <string id="3fQwNP5z" text="Kaiserliche Loyalität" />
-        <string id="7LzQNP0z" text="Ausländische Regel" />
-        <string id="qNWmNN8d" text="Kaiserliche Abneigung" />
-        <string id="q2tbqP0z" text="Bannerlord Siedlung" />
+    <!-- Loyalty State -->
+    <string id="YnRmNltF" text="Überdehnung" />
+    <string id="3fQwNP5z" text="Kaiserliche Loyalität" />
+    <string id="7LzQNP0z" text="Ausländische Regel" />
+    <string id="qNWmNN8d" text="Kaiserliche Abneigung" />
+    <string id="q2tbqP0z" text="Bannerlord Siedlung" />
 
-        <!-- Misc -->
-        <string id="3fQwWiDZ" text="Erledigt" />
-    </strings>
+    <!-- Misc -->
+    <string id="3fQwWiDZ" text="Erledigt" />
+  </strings>
 </base>

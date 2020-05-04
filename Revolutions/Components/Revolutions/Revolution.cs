@@ -5,7 +5,7 @@ using ModLibrary.Components.Settlements;
 using ModLibrary.Components.Parties;
 using Revolutions.Components.Settlements;
 
-namespace Revolutions.Revolutions
+namespace Revolutions.Components.Revolutions
 {
     [Serializable]
     public class Revolution

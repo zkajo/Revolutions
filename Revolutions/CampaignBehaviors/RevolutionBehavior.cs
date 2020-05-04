@@ -4,8 +4,8 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
 using ModLibrary;
-using Revolutions.Revolutions;
 using Revolutions.Components.Settlements;
+using Revolutions.Components.Revolutions;
 
 namespace Revolutions.CampaignBehaviors
 {

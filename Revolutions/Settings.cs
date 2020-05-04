@@ -50,6 +50,10 @@ namespace Revolutions
         [SettingPropertyBool(displayName: "{=hPERH4u4}Imperial Loyalty", Order = 0, HintText = "{=YnRmSelp}Activates/Deactivates the mechanic for the empire loyalty.", RequireRestart = false)]
         public bool EmpireLoyaltyMechanics { get; set; } = true;
 
+        [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
+        [SettingPropertyInteger(displayName: "{=ER9izZPu}Renown Loss", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i5izHqq}The amount of renown a imperial faction will loose after a failed revolt.", RequireRestart = false)]
+        public int ImperialRenownLossOnWin { get; set; } = 200;
+
         #endregion
 
         #region Overextension
@@ -73,6 +77,10 @@ namespace Revolutions
         [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
         [SettingPropertyBool(displayName: "{=WbOKuWbq}Minor Factions", Order = 0, HintText = "{=P1g6H41e}Activates/Deactivates the mechanics for minor factions.", RequireRestart = false)]
         public bool AllowMinorFactions { get; set; } = true;
+
+        [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
+        [SettingPropertyInteger(displayName: "{=Z79izZPu}Renown Gain", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i9izH4u}The amount of renown a minor faction will get after a successful revolt.", RequireRestart = false)]
+        public int RenownGainOnWin { get; set; } = 200;
 
         #endregion
     }

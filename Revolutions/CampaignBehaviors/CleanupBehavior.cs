@@ -57,27 +57,34 @@ namespace Revolutions.CampaignBehaviors
 
         private void TickEvent(float dt)
         {
-            //TODO: Add similar functions for other manager
-            //TODO: Better functionality here. These are too slow.
-
             if (this._currentTick == CleanupBehavior.RefreshAtTick)
             {
-                RevolutionsManagers.FactionManager.UpdateInfos();
+                RevolutionsManagers.KingdomManager.UpdateInfos();
             }
 
             if (this._currentTick == CleanupBehavior.RefreshAtTick + 10)
             {
-                RevolutionsManagers.SettlementManager.UpdateInfos();
+                RevolutionsManagers.FactionManager.UpdateInfos();
             }
 
-            if (this._currentTick > CleanupBehavior.RefreshAtTick + 20)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
             {
-                ModLibraryManagers.ClanManager.UpdateInfos();
-
+                RevolutionsManagers.ClanManager.UpdateInfos();
             }
+
             if (this._currentTick == CleanupBehavior.RefreshAtTick + 30)
             {
-                ModLibraryManagers.PartyManager.UpdateInfos();
+                RevolutionsManagers.PartyManager.UpdateInfos();
+            }
+
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
+            {
+                RevolutionsManagers.CharacterManager.UpdateInfos();
+            }
+
+            if (this._currentTick > CleanupBehavior.RefreshAtTick + 50)
+            {
+                ModLibraryManagers.SettlementManager.UpdateInfos();
                 this._currentTick = 0;
             }
 

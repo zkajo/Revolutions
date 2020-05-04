@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using TaleWorlds.SaveSystem;
 using ModLibrary;
-using ModLibrary.Components.Clans;
-using ModLibrary.Components.Parties;
-using Revolutions.Revolutions;
-using Revolutions.Components.Settlements;
+using Revolutions.Components.Kingdoms;
 using Revolutions.Components.Factions;
+using Revolutions.Components.Clans;
+using Revolutions.Components.Parties;
+using Revolutions.Components.Characters;
+using Revolutions.Components.Settlements;
+using Revolutions.Components.Revolutions;
 
 namespace Revolutions
 {
@@ -17,9 +19,11 @@ namespace Revolutions
 
         internal void InitializeData()
         {
+            RevolutionsManagers.KingdomManager.InitializeInfos();
             RevolutionsManagers.FactionManager.InitializeInfos();
-            ModLibraryManagers.ClanManager.InitializeInfos();
-            ModLibraryManagers.PartyManager.InitializeInfos();
+            RevolutionsManagers.ClanManager.InitializeInfos();
+            RevolutionsManagers.PartyManager.InitializeInfos();
+            RevolutionsManagers.CharacterManager.InitializeInfos();
             RevolutionsManagers.SettlementManager.InitializeInfos();
         }
 
@@ -27,9 +31,11 @@ namespace Revolutions
         {
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
+            RevolutionsManagers.KingdomManager.Infos = ModLibraryManagers.FileManager.Load<List<KingdomInfoRevolutions>>(directoryPath, "KingdomInfos");
             RevolutionsManagers.FactionManager.Infos = ModLibraryManagers.FileManager.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
-            ModLibraryManagers.ClanManager.Infos = ModLibraryManagers.FileManager.Load<List<ClanInfo>>(directoryPath, "ClanInfos");
-            ModLibraryManagers.PartyManager.Infos = ModLibraryManagers.FileManager.Load<List<PartyInfo>>(directoryPath, "PartyInfos");
+            RevolutionsManagers.ClanManager.Infos = ModLibraryManagers.FileManager.Load<List<ClanInfoRevolutions>>(directoryPath, "ClanInfos");
+            RevolutionsManagers.PartyManager.Infos = ModLibraryManagers.FileManager.Load<List<PartyInfoRevolutions>>(directoryPath, "PartyInfos");
+            RevolutionsManagers.CharacterManager.Infos = ModLibraryManagers.FileManager.Load<List<CharacterInfoRevolutions>>(directoryPath, "CharacterInfos");
             RevolutionsManagers.SettlementManager.Infos = ModLibraryManagers.FileManager.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
             RevolutionsManagers.RevolutionManager.Revolutions = ModLibraryManagers.FileManager.Load<List<Revolution>>(directoryPath, "Revolutions");
         }
@@ -38,9 +44,11 @@ namespace Revolutions
         {
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.KingdomManager.Infos, directoryPath, "KingdomInfos");
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.FactionManager.Infos, directoryPath, "FactionInfos");
-            ModLibraryManagers.FileManager.Save(ModLibraryManagers.ClanManager.Infos, directoryPath, "ClanInfos");
-            ModLibraryManagers.FileManager.Save(ModLibraryManagers.PartyManager.Infos, directoryPath, "PartyInfos");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.ClanManager.Infos, directoryPath, "ClanInfos");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.PartyManager.Infos, directoryPath, "PartyInfos");
+            ModLibraryManagers.FileManager.Save(RevolutionsManagers.CharacterManager.Infos, directoryPath, "CharacterInfos");
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.SettlementManager.Infos, directoryPath, "SettlementInfos");
             ModLibraryManagers.FileManager.Save(RevolutionsManagers.RevolutionManager.Revolutions, directoryPath, "Revolutions");
         }

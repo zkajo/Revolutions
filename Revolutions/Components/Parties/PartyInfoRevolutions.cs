@@ -1,0 +1,50 @@
+﻿using System;
+using TaleWorlds.CampaignSystem;
+using ModLibrary.Components.Parties;
+
+namespace Revolutions.Components.Parties
+{
+    [Serializable]
+    public class PartyInfoRevolutions : PartyInfo
+    {
+        public PartyInfoRevolutions() : base()
+        {
+
+        }
+
+        public PartyInfoRevolutions(PartyBase party) : base(party)
+        {
+
+        }
+
+        #region Reference Properties
+
+
+
+        #endregion
+
+        #region Virtual Objects
+
+        #region Reference Properties
+
+
+
+        #endregion
+
+        #region Reference Properties Inherited
+
+
+
+        #endregion
+
+
+
+        #endregion
+
+        #region Normal Properties
+
+
+
+        #endregion
+    }
+}

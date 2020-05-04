@@ -8,7 +8,7 @@ using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
 
-namespace Revolutions.Revolutions
+namespace Revolutions.Components.Revolutions
 {
     public class RevolutionManager
     {
@@ -18,7 +18,7 @@ namespace Revolutions.Revolutions
 
         static RevolutionManager()
         {
-            RevolutionManager.Instance = new RevolutionManager();
+            Instance = new RevolutionManager();
         }
 
         public static RevolutionManager Instance { get; private set; }
@@ -134,14 +134,20 @@ namespace Revolutions.Revolutions
 
         public void EndSucceededRevoluton(Revolution revolution)
         {
-            if (Settings.Instance.AllowMinorFactions)
+            if( Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
+            {
+                revolution.Settlement.OwnerClan.AddRenown(-Settings.Instance.ImperialRenownLossOnWin);
+            }
+
+            if (Settings.Instance.AllowMinorFactions && revolution.IsMinorFaction)
             {
                 ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, revolution.Settlement);
                 revolution.Party.MobileParty.Ai.SetAIState(AIState.PatrollingAroundLocation);
+                revolution.Party.LeaderHero.Clan.AddRenown(Settings.Instance.RenownGainOnWin);
             }
             else
             {
-                ChangeOwnerOfSettlementAction.ApplyByDefault(RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(revolution.SettlementInfoRevolutions.LoyalFaction).HeroObject, revolution.Settlement);
+                ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.MobileParty.LeaderHero, revolution.Settlement);
                 revolution.Party.MobileParty.RemoveParty();
             }
 
@@ -191,7 +197,7 @@ namespace Revolutions.Revolutions
             var numberOfRebels = Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier);
             mobileParty.AddElementToMemberRoster(mobileParty.MemberRoster.GetCharacterAtIndex(0), numberOfRebels, false);
 
-            if (!atWarWithLoyalFaction)
+            if (isMinorFaction)
             {
                 mobileParty.ChangePartyLeader(mobileParty.Party.Owner.CharacterObject, false);
             }
