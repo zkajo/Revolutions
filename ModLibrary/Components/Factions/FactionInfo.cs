@@ -18,12 +18,29 @@ namespace ModLibrary.Components.Factions
             this.InitialTownsCount = this.CurrentTownsCount;
         }
 
+
+        #region Reference Properties
+
         public string FactionId { get; set; }
+
+        #endregion
+
+        #region Virtual Objects
+
+        #region Reference Properties
 
         public IFaction Faction => ModLibraryManagers.FactionManager.GetObjectById(this.FactionId);
 
-        public int InitialTownsCount { get; set; }
+        #endregion
 
         public int CurrentTownsCount => this.Faction.Settlements.Where(settlement => settlement.IsTown).Count();
+
+        #endregion
+
+        #region Normal Properties
+
+        public int InitialTownsCount { get; set; }
+
+        #endregion
     }
 }

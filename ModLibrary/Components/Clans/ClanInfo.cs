@@ -14,18 +14,28 @@ namespace ModLibrary.Components.Clans
             this.ClanId = clan.StringId;
         }
 
-        #region Saved Properties
+        #region Reference Properties
 
         public string ClanId { get; set; }
 
         #endregion
 
-        #region Saved Properties Objects
+        #region Virtual Objects
+
+        #region Reference Properties Objects
 
         public Clan Clan => ModLibraryManagers.ClanManager.GetObjectById(this.ClanId);
 
         #endregion
 
+
+
+        #endregion
+
+        #region Normal Properties
+
         public bool CanJoinOtherKingdoms { get; set; } = true;
+
+        #endregion
     }
 }
