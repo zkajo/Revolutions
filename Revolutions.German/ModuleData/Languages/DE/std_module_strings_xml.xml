@@ -21,6 +21,10 @@
         <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer in der Stadt ist." />
         <string id="ZuwszZww" text="Minimaler Gehorsam" />
         <string id="BkGsVccZ" text="Minimal benötigte Loyalität für den Gehorsam der Stadt gegenüber dem Besitzer." />
+        <string id="Z64szZ0r" text="Basisarmeegröße" />
+        <string id="u54sxY0r" text="Die Grundgröße der aufständischen Armee, welche erzeugt wird." />
+        <string id="Z64soMEf" text="Armee Wohlstandsmultiplikator" />
+        <string id="uD4aRY0r" text="Dieser Multiplikator wird mit dem Wohlstand der Städte multipliziert, um den Betrag zur Größe der Basisarmee hinzuzufügen." />
         <!-- Imperial Loyalty -->
         <string id="YnRmSelp" text="Aktiviert/Deaktiviert die Mechnik für die Reichstreue." />
         <!-- Overextension -->

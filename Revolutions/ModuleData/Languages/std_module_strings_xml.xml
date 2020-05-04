@@ -21,6 +21,10 @@
         <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
         <string id="ZuwszZww" text="Minimum Obediance" />
         <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
+        <string id="Z64szZ0r" text="Base Army Size" />
+        <string id="u54sxY0r" text="The base size of the revolting army, which gets spawned." />
+        <string id="Z64soMEf" text="Army Prosperity Multiplier" />
+        <string id="uD4aRY0r" text="This multiplier gets multiplied by the towns prosperity to add the amount to the base army size." />
         <!-- Imperial Loyalty -->
         <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
         <!-- Overextension -->

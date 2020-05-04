@@ -6,7 +6,7 @@ namespace Revolutions
 {
     public class Settings : AttributeSettings<Settings>
     {
-        public override string Id { get; set; } = "RevolutionsSettings_v042";
+        public override string Id { get; set; } = "RevolutionsSettings_v043";
 
         public override string ModuleFolderName => "Revolutions";
 
@@ -33,6 +33,14 @@ namespace Revolutions
         [SettingPropertyGroup("{=MYu8nKqq}General", order: 0)]
         [SettingPropertyInteger(displayName: "{=ZuwszZww}Minimum Obedience", minValue: 0, maxValue: 250, Order = 4, HintText = "{=BkGsVccZ}Minimal loyalty is required for the city's obedience to the owner.", RequireRestart = false)]
         public int MinimumObedienceLoyalty { get; set; } = 25;
+
+        [SettingPropertyGroup("{=MYu8nKqq}General", order: 0)]
+        [SettingPropertyInteger(displayName: "{=Z64szZ0r}Base Army Size", minValue: 0, maxValue: 1000, Order = 5, HintText = "{=u54sxY0r}The base size of the revolting army, which gets spawned.", RequireRestart = false)]
+        public int BaseRevoltArmySize { get; set; } = 100;
+
+        [SettingPropertyGroup("{=MYu8nKqq}General", order: 0)]
+        [SettingPropertyFloatingInteger(displayName: "{=Z64soMEf}Army Prosperity Multiplier", minValue: 0f, maxValue: 100f, Order = 6, HintText = "{=uD4aRY0r}This multiplier gets multiplied by the towns prosperity to add the amount to the base army size.", RequireRestart = false)]
+        public float ArmyProsperityMulitplier { get; set; } = 0.1f;
 
         #endregion
 

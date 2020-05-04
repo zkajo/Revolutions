@@ -82,7 +82,7 @@ namespace ModLibrary.Components.Clans
 
         public Clan GetObjectById(string id)
         {
-            return Campaign.Current.Clans.FirstOrDefault(clan => clan.StringId == id);
+            return Campaign.Current.Clans.FirstOrDefault(clan => clan?.StringId == id);
         }
 
         public Clan GetObjectByInfo(InfoType info)

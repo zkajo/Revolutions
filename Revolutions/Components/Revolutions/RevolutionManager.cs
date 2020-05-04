@@ -7,7 +7,6 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
-using Revolutions.Components.Settlements;
 
 namespace Revolutions.Revolutions
 {
@@ -157,18 +156,17 @@ namespace Revolutions.Revolutions
             var isMinorFaction = false;
 
             Hero hero;
-            Clan clan;
 
             if (atWarWithLoyalFaction)
             {
                 hero = RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(settlementInfo.LoyalFaction).HeroObject;
-                clan = hero.Clan;
             }
             else
             {
                 hero = HeroCreator.CreateSpecialHero(ModLibraryManagers.CharacterManager.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
-                clan = ModLibraryManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
+                var clan = ModLibraryManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
                 clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
+                hero.Clan = clan;
 
                 var clanInfo = ModLibraryManagers.ClanManager.GetInfoById(clan.StringId);
                 clanInfo.CanJoinOtherKingdoms = false;
@@ -183,16 +181,15 @@ namespace Revolutions.Revolutions
             var name = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
             var mobileParty = ModLibraryManagers.PartyManager.CreateMobileParty(id, name, settlement.GatePosition, rebelsPartyTemplate, hero, !atWarWithLoyalFaction, true);
 
-            mobileParty.Party.Owner.Clan = clan;
-
-            if (!atWarWithLoyalFaction)
+            if (isMinorFaction)
             {
                 var value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
                 mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, value);
                 mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
             }
 
-            mobileParty.AddElementToMemberRoster(mobileParty.MemberRoster.GetCharacterAtIndex(0), (int)((double)settlement.Prosperity * 0.1), false);
+            var numberOfRebels = Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier);
+            mobileParty.AddElementToMemberRoster(mobileParty.MemberRoster.GetCharacterAtIndex(0), numberOfRebels, false);
 
             if (!atWarWithLoyalFaction)
             {
@@ -205,6 +202,7 @@ namespace Revolutions.Revolutions
                 {
                     mobileParty.AddElementToMemberRoster(troopRosterElement.Character, troopRosterElement.Number, false);
                 }
+
                 settlement.MilitaParty.RemoveParty();
             }
 

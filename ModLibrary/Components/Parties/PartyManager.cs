@@ -132,14 +132,14 @@ namespace ModLibrary.Components.Parties
             return mobileParty;
         }
 
-        public TroopRoster CreateTroopRoster(int numberNeeded, CharacterObject troopCharacter)
+        public TroopRoster CreateTroopRoster(CharacterObject troopCharacter, int numberNeeded)
         {
             var newRoster = new TroopRoster();
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
             return newRoster;
         }
 
-        public TroopRoster CreatePrisonRoster(int numberNeeded, CharacterObject troopCharacter)
+        public TroopRoster CreatePrisonRoster(CharacterObject troopCharacter, int numberNeeded)
         {
             var newRoster = new TroopRoster();
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
