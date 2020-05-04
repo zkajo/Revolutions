@@ -18,7 +18,7 @@
     <string id="3fQwLwkC" text="Loyalty Change" />
     <string id="dRoMEfb0" text="Days until the city's loyalty to the new owner changes." />
     <string id="cXCfwzPp" text="Loyalty Increase" />
-    <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
+    <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town over night." />
     <string id="ZuwszZww" text="Minimum Obediance" />
     <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
     <string id="Z64szZ0r" text="Base Army Size" />
@@ -55,7 +55,7 @@
     <string id="qZS0ma0z"	text="Many are inspired by tales of revolts in the kingdom." />
     <string id="7LzQWiDZ"	text="Many are inspired by events at {SETTLEMENT}." />
     <string id="HWiDqN8d"	text="Some talk of raising banners of their homeland." />
-    <string id="q2tbH41e" text="The people of this town had revolted recently, and don't wish to spill blood again." />
+    <string id="q2tbH41e" text="The people of this town had revolted recently and don't wish to spill blood again." />
     <string id="6m7Ss8fW" text="After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting." />
 
     <!-- Loyalty State -->

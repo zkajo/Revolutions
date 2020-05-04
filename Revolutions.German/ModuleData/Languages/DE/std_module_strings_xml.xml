@@ -18,7 +18,7 @@
     <string id="3fQwLwkC" text="Loyalitätsänderung" />
     <string id="dRoMEfb0" text="Tage bis sich die Loyalität der Stadt gegenüber dem neuen Besitzer ändert." />
     <string id="cXCfwzPp" text="Loyalitätserhöhung" />
-    <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer in der Stadt ist." />
+    <string id="HWiD4aR1" text="Die Menge, um welche die Loyalität steigt, wenn der Besitzer über Nacht in der Stadt ist." />
     <string id="ZuwszZww" text="Minimaler Gehorsam" />
     <string id="BkGsVccZ" text="Minimal benötigte Loyalität für den Gehorsam der Stadt gegenüber dem Besitzer." />
     <string id="Z64szZ0r" text="Basisarmeegröße" />
@@ -47,16 +47,16 @@
     <string id="q2t1Ss8d" text="Revolutionärer Mob" />
 
     <!-- Town Menu -->
-    <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheinen zufrieden zu sein." />
+    <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheint zufrieden zu sein." />
     <string id="dRoS0maD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
     <string id="MYu8szGz" text="Die Bevölkerung ist {FACTION} treu." />
     <string id="q2tbSs8d" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%." />
     <string id="zQNPQz3q" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden." />
     <string id="qZS0ma0z"	text="Viele lassen sich durch Geschichten von Revolutionen im Königreich inspirieren." />
-    <string id="7LzQWiDZ"	text="Viele sind von Ereignissen bei {SETTLEMENT} inspiriert." />
+    <string id="7LzQWiDZ"	text="Viele sind von den Ereignissen bei {SETTLEMENT} inspiriert." />
     <string id="HWiDqN8d"	text="Einige reden davon das Banner ihrer Heimat zu hissen." />
     <string id="q2tbH41e" text="Die Menschen in dieser Stadt haben erst kürzlich revolviert und möchten kein weiteres Blut mehr vergießen." />
-    <string id="6m7Ss8fW" text="Nach dem Hören von Blutvergießen in {SETTLEMENT}, haben die Bürger Angst vor Aufruhr." />
+    <string id="6m7Ss8fW" text="Nach dem Hören von Blutvergießen in {SETTLEMENT} haben die Bürger Angst vor Aufruhr." />
 
     <!-- Loyalty State -->
     <string id="YnRmNltF" text="Überdehnung" />
