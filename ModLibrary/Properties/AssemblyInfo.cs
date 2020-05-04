@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("ModLibrary")]
-[assembly: AssemblyCopyright("Copyright © 2020 Kommissar & TH3UNKN0WN")]
+[assembly: AssemblyCopyright("Copyright © 2020 Kommissar & TH3UNKN0WN1337")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -33,4 +33,4 @@ using System.Runtime.InteropServices;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("1.0.0")]
 [assembly: AssemblyFileVersion("1.0.0")]
-[assembly: AssemblyInformationalVersion("Mount & Blade II: Bannerlord | BETA 1.3.2")]
+[assembly: AssemblyInformationalVersion("Mount & Blade II: Bannerlord | BETA 1.3.0")]

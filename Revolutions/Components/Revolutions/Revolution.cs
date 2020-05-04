@@ -15,10 +15,11 @@ namespace Revolutions.Revolutions
 
         }
 
-        public Revolution(string partyId, Settlement settlement)
+        public Revolution(string partyId, Settlement settlement, bool isMinorFaction)
         {
             this.PartyId = partyId;
             this.SettlementId = settlement.StringId;
+            this.IsMinorFaction = isMinorFaction;
         }
 
         #region Reference Properties
@@ -51,7 +52,7 @@ namespace Revolutions.Revolutions
 
         #region Normal Properties
 
-
+        public bool IsMinorFaction { get; set; } = false;
 
         #endregion
     }

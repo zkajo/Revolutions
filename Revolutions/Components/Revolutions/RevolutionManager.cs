@@ -120,7 +120,13 @@ namespace Revolutions.Revolutions
 
         public void EndFailedRevolution(Revolution revolution)
         {
-            DestroyClanAction.Apply(revolution.Party.Owner.Clan);
+            revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionFailed(revolution.Settlement);
+
+            if (revolution.IsMinorFaction)
+            {
+                DestroyClanAction.Apply(revolution.Party.Owner.Clan);
+            }
+
             DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.Garrision, revolution.Party.MobileParty);
 
             revolution.SettlementInfoRevolutions.HasRebellionEvent = false;
@@ -148,6 +154,7 @@ namespace Revolutions.Revolutions
         {
             var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
             var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);
+            var isMinorFaction = false;
 
             Hero hero;
             Clan clan;
@@ -165,7 +172,7 @@ namespace Revolutions.Revolutions
 
                 var clanInfo = ModLibraryManagers.ClanManager.GetInfoById(clan.StringId);
                 clanInfo.CanJoinOtherKingdoms = false;
-
+                isMinorFaction = true;
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
             }
 
@@ -208,18 +215,16 @@ namespace Revolutions.Revolutions
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.AddQuickInformation(information, 0, null, "");
 
-            var revolution = new Revolution(mobileParty.Party.Id, settlement);
+            var revolution = new Revolution(mobileParty.Party.Id, settlement, isMinorFaction);
             this.Revolutions.Add(revolution);
 
-            var garrison = settlementInfo.Garrision;
-
-            if (garrison == null)
+            if (settlementInfo.Garrision == null)
             {
                 this.EndSucceededRevoluton(revolution);
             }
             else
             {
-                Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, garrison);
+                Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, settlementInfo.Garrision);
                 settlementInfo.HasRebellionEvent = true;
             }
         }
