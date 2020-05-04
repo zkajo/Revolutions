@@ -36,6 +36,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="German.PNG" />
+    <Content Include="Logo.png" />
     <Content Include="ModuleData\Languages\DE\std_module_strings_xml.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
