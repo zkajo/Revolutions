@@ -40,8 +40,8 @@ namespace ModLibrary
             }
             catch (Exception exception)
             {
-                var exceptionMessage = $"Revolutions: Could not save file '{fileName}'! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage($"Revolutions: Could not save file '{fileName}'!", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
             }
         }
 
@@ -63,8 +63,8 @@ namespace ModLibrary
             }
             catch (Exception exception)
             {
-                var exceptionMessage = $"Revolutions: Could not load file '{fileName}'! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage($"Revolutions: Could not load file '{fileName}'! Using default model.", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
 
                 return (T)Activator.CreateInstance(typeof(T));
             }

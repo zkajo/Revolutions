@@ -51,7 +51,7 @@ namespace Revolutions
         public bool EmpireLoyaltyMechanics { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
-        [SettingPropertyInteger(displayName: "{=ER9izZPu}Renown Loss", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i5izHqq}The amount of renown a imperial faction will loose after a revolt against them had success.", RequireRestart = false)]
+        [SettingPropertyInteger(displayName: "{=ER9izZPu}Renown Loss", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i5izHqq}The amount of renown a imperial clan will loose after a revolt against them had success.", RequireRestart = false)]
         public int ImperialRenownLossOnWin { get; set; } = 50;
 
         #endregion
