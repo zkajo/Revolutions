@@ -5,3 +5,10 @@ D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolut
 D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.csproj.CopyComplete
 D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.dll
 D:\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.pdb
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client\Revolutions.dll
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Revolutions\bin\Win64_Shipping_Client\Revolutions.pdb
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.csprojAssemblyReference.cache
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.csproj.CoreCompileInputs.cache
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.csproj.CopyComplete
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.dll
+C:\SteamLibrary\steamapps\common\Mount & Blade II Bannerlord\Modules\Bannerlord\Revolutions\obj\Debug\Revolutions.pdb

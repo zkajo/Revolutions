@@ -80,7 +80,7 @@ namespace Revolutions
 
         [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
         [SettingPropertyInteger(displayName: "{=Z79izZPu}Renown Gain", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i9izH4u}The amount of renown a minor faction will get after they successful revolted.", RequireRestart = false)]
-        public int RenownGainOnWin { get; set; } = 100;
+        public int RenownGainOnWin { get; set; } = 350;
 
         #endregion
     }

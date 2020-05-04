@@ -25,7 +25,9 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
             CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
+            CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
         }
+        
 
         public override void SyncData(IDataStore dataStore)
         {
@@ -121,6 +123,15 @@ namespace Revolutions.CampaignBehaviors
             else
             {
                 RevolutionsManagers.RevolutionManager.EndSucceededRevoluton(currentRevolution);
+            }
+        }
+
+        private void KingdomDestroyedEvent(Kingdom kingdom)
+        {
+            var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfoByObject(kingdom);
+            if (kingdomInfo.UserMadeKingdom)
+            {
+                RevolutionsManagers.KingdomManager.ModifyKingdomList(kingdoms => kingdoms.Remove(kingdom));
             }
         }
     }

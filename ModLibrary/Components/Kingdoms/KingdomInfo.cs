@@ -18,6 +18,8 @@ namespace ModLibrary.Components.Kingdoms
 
         public string KingdomId { get; set; }
 
+        public bool UserMadeKingdom { get; set; } = false;
+
         #endregion
 
         #region Virtual Objects

@@ -178,6 +178,7 @@ namespace Revolutions.Components.Revolutions
                 clanInfo.CanJoinOtherKingdoms = false;
                 isMinorFaction = true;
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
+                CreateRebelKingdom(clan, settlement.Name.ToString().ToLower() + "_kingdom", settlement.MapFaction, settlement);
             }
 
             var rebelsPartyTemplate = settlement.Culture.RebelsPartyTemplate;
@@ -231,6 +232,36 @@ namespace Revolutions.Components.Revolutions
                 Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, settlementInfo.Garrision);
                 settlementInfo.HasRebellionEvent = true;
             }
+        }
+        
+        private Kingdom CreateRebelKingdom(Clan ownerClan, string stringId, IFaction warOnFaction, Settlement settlement)
+        {
+            string kingdomId = stringId;
+            var kingdom = Kingdom.All.SingleOrDefault(x => x.StringId == kingdomId);
+
+            if (kingdom == null)
+            {
+                string kingdomName = settlement.Name.ToString();
+                kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomId,kingdomName , kingdomName);
+            }
+            else
+            {
+                if (kingdom.IsDeactivated)
+                {
+                    kingdom.ReactivateKingdom();
+                }
+            }
+            
+            //For whatever reason this city's kingdom is not kingdom holder.
+            //Therefore new clan is now kingdom owner.
+            kingdom.RulingClan = ownerClan;
+            
+            if (!kingdom.IsAtWarWith(warOnFaction))
+            {
+                DeclareWarAction.Apply(kingdom, warOnFaction);
+            }
+            
+            return kingdom;
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using HarmonyLib;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
+using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Kingdoms
 {
@@ -111,6 +113,23 @@ namespace ModLibrary.Components.Kingdoms
             var kingdoms = new List<Kingdom>(Campaign.Current.Kingdoms.ToList());
             modificator(kingdoms);
             AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
+        }
+        
+        public Kingdom CreateKingdom(Clan rulingClan, string stringId, string name, string informalName)
+        {
+            var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>(stringId);
+            TextObject kingdomName = new TextObject(name, null);
+            TextObject kingdomInformalName = new TextObject(informalName, null);
+            
+            kingdom.InitializeKingdom(kingdomName, kingdomInformalName, rulingClan.Culture, rulingClan.Banner, 
+                rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
+            kingdom.RulingClan = rulingClan;
+            
+            ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
+            var info = GetInfoById(kingdom.StringId);
+            info.UserMadeKingdom = true;
+            
+            return kingdom;
         }
     }
 }
