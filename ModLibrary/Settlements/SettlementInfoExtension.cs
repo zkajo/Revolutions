@@ -27,12 +27,12 @@ namespace ModLibrary.Settlements
 
         public static PartyBase GetGarrison(this SettlementInfo settlementInfo)
         {
-            return settlementInfo.Settlement.Parties.FirstOrDefault(party => party.IsGarrison).Party;
+            return settlementInfo.Settlement.Parties?.FirstOrDefault(party => party.IsGarrison)?.Party;
         }
 
         public static PartyBase GetMilitia(this SettlementInfo settlementInfo)
         {
-            return settlementInfo.Settlement.Parties.FirstOrDefault(party => party.IsMilitia).Party;
+            return settlementInfo.Settlement.Parties?.FirstOrDefault(party => party.IsMilitia)?.Party;
         }
     }
 }

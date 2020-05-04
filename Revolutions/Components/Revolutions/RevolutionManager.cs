@@ -95,7 +95,7 @@ namespace Revolutions.Revolutions
                     continue;
                 }
 
-                settlementInfoRevolutions.RevolutionProgress += Settings.Instance.MinimumObedianceLoyalty - settlement.Town.Loyalty;
+                settlementInfoRevolutions.RevolutionProgress += Settings.Instance.MinimumObedienceLoyalty - settlement.Town.Loyalty;
 
                 if (settlementInfoRevolutions.RevolutionProgress >= 100 && !settlement.IsUnderSiege)
                 {

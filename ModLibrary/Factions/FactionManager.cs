@@ -89,22 +89,8 @@ namespace ModLibrary.Factions
 
         public CharacterObject GetLordWithLeastFiefs(IFaction faction)
         {
-            Clan chosenClan = null;
-            int leastSettlements = 100;
-
-            foreach (var noble in faction.Nobles)
-            {
-                int currentSettlements = noble.Clan.Settlements.Count();
-                if (currentSettlements >= leastSettlements)
-                {
-                    continue;
-                }
-
-                leastSettlements = currentSettlements;
-                chosenClan = noble.Clan;
-            }
-
-            return chosenClan != null ? chosenClan.Nobles.GetRandomElement().CharacterObject : faction.Leader.CharacterObject;
+            var noble = faction.Nobles.Aggregate((currentResult, current) => current.Clan.Settlements.Count() < currentResult.Clan.Settlements.Count() ? current : currentResult);
+            return noble.Clan != null ? noble.Clan.Nobles.GetRandomElement().CharacterObject : faction.Leader.CharacterObject;
         }
     }
 }

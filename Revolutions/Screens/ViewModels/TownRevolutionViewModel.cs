@@ -9,23 +9,23 @@ namespace Revolutions.Screens.ViewModels
 {
     public class TownRevolutionViewModel : ViewModel
     {
-        private SettlementInfoRevolutions _settlementInfo;
-        private FactionInfoRevolutions _factionInfo;
+        private readonly SettlementInfoRevolutions SettlementInfo;
+        private readonly FactionInfoRevolutions FactionInfo;
 
-        public TownRevolutionViewModel(SettlementInfoRevolutions settInfo, FactionInfoRevolutions factInfo)
+        public TownRevolutionViewModel(SettlementInfoRevolutions settlementInfo, FactionInfoRevolutions factionInfo)
         {
-            this._settlementInfo = settInfo;
-            this._factionInfo = factInfo;
-            this._factionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(this._settlementInfo.LoyalFaction.Banner), true);
+            this.SettlementInfo = settlementInfo;
+            this.FactionInfo = factionInfo;
+            this.FactionVisual = new ImageIdentifierVM(BannerCode.CreateFrom(this.SettlementInfo.LoyalFaction.Banner), true);
         }
-
-        private ImageIdentifierVM _factionVisual;
 
         [DataSourceProperty]
         public string DoneDesc
         {
             get { return new TextObject("{=3fQwWiDZ}Done").ToString(); }
         }
+
+        private ImageIdentifierVM _factionVisual;
 
         [DataSourceProperty]
         public ImageIdentifierVM FactionVisual
@@ -38,7 +38,7 @@ namespace Revolutions.Screens.ViewModels
             {
                 if (value != this._factionVisual)
                 {
-                    this.FactionVisual = value;
+                    this._factionVisual = value;
                     base.OnPropertyChanged("FactionVisual");
                 }
             }
@@ -49,17 +49,17 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (this._settlementInfo.RevolutionProgress < 10)
+                if (this.SettlementInfo.RevolutionProgress < 10)
                 {
                     TextObject textObject = new TextObject("{=3fBkqk4u}The people of {SETTLEMENT} seem to be content.");
-                    textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
+                    textObject.SetTextVariable("SETTLEMENT", this.SettlementInfo.Settlement.Name);
 
                     return textObject.ToString();
                 }
                 else
                 {
                     TextObject textObject = new TextObject("{=dRoS0maD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
-                    textObject.SetTextVariable("SETTLEMENT", this._settlementInfo.Settlement.Name);
+                    textObject.SetTextVariable("SETTLEMENT", this.SettlementInfo.Settlement.Name);
 
                     return textObject.ToString();
                 }
@@ -71,8 +71,8 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                TextObject textObject = new TextObject("{=MYu8szGz}Population is loyal to the {FACTION}.");
-                textObject.SetTextVariable("FACTION", this._settlementInfo.LoyalFaction.Name);
+                TextObject textObject = new TextObject("{=MYu8szGz}Population is loyal to {FACTION}.");
+                textObject.SetTextVariable("FACTION", this.SettlementInfo.LoyalFaction.Name);
 
                 return textObject.ToString();
             }
@@ -84,7 +84,7 @@ namespace Revolutions.Screens.ViewModels
             get
             {
                 TextObject textObject = new TextObject("{=q2tbSs8d}Current revolt progress is {PROGRESS}%.");
-                textObject.SetTextVariable("PROGRESS", this._settlementInfo.RevolutionProgress);
+                textObject.SetTextVariable("PROGRESS", this.SettlementInfo.RevolutionProgress);
 
                 return textObject.ToString();
             }
@@ -95,27 +95,25 @@ namespace Revolutions.Screens.ViewModels
         {
             get
             {
-                if (this._factionInfo.FactionId == this._settlementInfo.LoyalFaction.StringId)
+                if (this.FactionInfo.FactionId == this.SettlementInfo.LoyalFaction.StringId)
                 {
                     TextObject textObject = new TextObject("{=zQNPQz3q}People are content with the current rule.");
                     return textObject.ToString();
                 }
 
-                if (this._factionInfo.CanRevolt)
+                if (this.FactionInfo.CanRevolt)
                 {
                     TextObject inspiration = new TextObject("");
-                    if (this._factionInfo.SuccessfullyRevolted)
+                    if (this.FactionInfo.SuccessfullyRevolted)
                     {
-                        //no idea why that's the case, but it is O_O
-                        //TODO find a cause of this?
-                        if (this._factionInfo.RevoltedSettlement == null)
+                        if (this.FactionInfo.RevoltedSettlement == null)
                         {
                             inspiration = new TextObject("{=qZS0ma0z}Many are inspired by tales of revolts in the kingdom.");
                         }
                         else
                         {
                             inspiration = new TextObject("{=7LzQWiDZ}Many are inspired by events at {SETTLEMENT}.");
-                            inspiration.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
+                            inspiration.SetTextVariable("SETTLEMENT", this.FactionInfo.RevoltedSettlement.Name);
                         }
                     }
 
@@ -125,29 +123,21 @@ namespace Revolutions.Screens.ViewModels
                 }
                 else
                 {
-                    if (this._factionInfo.RevoltedSettlement == null)
+                    if (this.FactionInfo.RevoltedSettlement == null)
                     {
-                        return " ";
+                        return string.Empty;
                     }
 
-                    if (this._factionInfo.RevoltedSettlementId == this._settlementInfo.Settlement.StringId)
+                    if (this.FactionInfo.RevoltedSettlementId == this.SettlementInfo.Settlement.StringId)
                     {
                         TextObject option = new TextObject("{=q2tbH41e}The people of this town had revolted recently, and don't wish to spill blood again.");
                         return option.ToString();
                     }
 
                     TextObject textObject = new TextObject("{=6m7Ss8fW}After hearing of blood spilled in {SETTLEMENT} citizens are afraid of revolting.");
-                    textObject.SetTextVariable("SETTLEMENT", this._factionInfo.RevoltedSettlement.Name);
+                    textObject.SetTextVariable("SETTLEMENT", this.FactionInfo.RevoltedSettlement.Name);
 
                     return textObject.ToString();
-                }
-            }
-            set
-            {
-                if (value != this.RevoltMood)
-                {
-                    this.RevoltMood = value;
-                    base.OnPropertyChanged("RevoltMood");
                 }
             }
         }
@@ -159,11 +149,11 @@ namespace Revolutions.Screens.ViewModels
 
         private void RefreshProperties()
         {
+            this.OnPropertyChanged("FactionVisual");
             this.OnPropertyChanged("TownDescription");
-            this.OnPropertyChanged("RevolutionProgress");
             this.OnPropertyChanged("TownOwnership");
-            this.OnPropertyChanged("FactionVisual");
-            this.OnPropertyChanged("FactionVisual");
+            this.OnPropertyChanged("RevolutionProgress");
+            this.OnPropertyChanged("RevoltMood");
         }
     }
 }

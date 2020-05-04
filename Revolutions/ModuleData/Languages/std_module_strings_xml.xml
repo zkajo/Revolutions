@@ -7,37 +7,30 @@
         <!-- Settings -->
         <!-- Header -->
         <string id="MYu8nKqq" text="General" />
-        <string id="hPERH4u4" text="Loyalty" />
+        <string id="hPERH4u4" text="Imperial Loyalty" />
         <string id="Ts1iV2pO" text="Overextension" />
-        <string id="XQGxDr11" text="Other" />
-        <!-- SubHeader -->
-        <string id="ONkcmltF" text="Mechanics" />
-        <string id="jPHYDjzQ" text="Toggles" />
-        <string id="v0coMIcl" text="Values" />
+        <string id="WbOKuWbq" text="Minor Factions" />
         <!-- General -->
         <string id="Pqk4uuGz" text="Revolt Cooldown" />
         <string id="zx12ijyW" text="The time before another revolt can arise in the same city." />
-        <!-- Loyalty -->
-        <string id="uy96VZX2" text="Empire" />
-        <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
         <string id="qNWmNP0z" text="Base Loyalty" />
         <string id="tOZS0maD" text="The base loyalty of cities to the player." />
-        <string id="ZuwszZww" text="Minimum Obediance" />
-        <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
-        <string id="3fQwLwkC" text="Loyalty change" />
+        <string id="3fQwLwkC" text="Loyalty Change" />
         <string id="dRoMEfb0" text="Days until the city's loyalty to the new owner changes." />
         <string id="cXCfwzPp" text="Loyalty Increase" />
         <string id="HWiD4aR1" text="The amount by which loyalty increases when the owner is in town." />
+        <string id="ZuwszZww" text="Minimum Obediance" />
+        <string id="BkGsVccZ" text="Minimal loyalty is required for the city's obedience to the owner." />
+        <!-- Imperial Loyalty -->
+        <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
         <!-- Overextension -->
-        <string id="sBw5Qz3q" text="Overextension" />
         <string id="ZRlNsvev" text="Activates/Deactivates the mechanics for overextension." />
         <string id="vuDS5ns8" text="Affects Player" />
         <string id="7LzQHMVj" text="Does the overextension mechanism affect the player." />
         <string id="q2tbqN8d" text="Multiplier" />
-        <string id="6m1Ss8fW" text="A multiplier to calculate overextension." />
-        <!-- Other -->
-        <string id="WbOKuWbq" text="Minor Factions" />
-        <string id="P1g6H41e" text="If necessary, new, smaller fractions are formed." />
+        <string id="6m1Ss8fW" text="A multiplier to calculate overextension. This affects the city's loyalty to the owner." />
+        <!-- Minor Factions -->
+        <string id="P1g6H41e" text="Activates/Deactivates the mechanics for forming minor factions." />
 
         <!-- Loyalty Model -->
         <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revolutions", "Revolutions\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModLibrary", "ModLibrary\ModLibrary.csproj", "{D711D674-808C-421A-BA59-9DCD8B4A51DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Revolutions.German", "Revolutions.German\Revolutions.German.csproj", "{881251D2-0683-4827-9F97-9A88F4B5BA51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D711D674-808C-421A-BA59-9DCD8B4A51DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{881251D2-0683-4827-9F97-9A88F4B5BA51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{881251D2-0683-4827-9F97-9A88F4B5BA51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{881251D2-0683-4827-9F97-9A88F4B5BA51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{881251D2-0683-4827-9F97-9A88F4B5BA51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,6 @@ using Revolutions.Settlements;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
-using TaleWorlds.InputSystem;
 
 namespace Revolutions.Screens
 {
@@ -21,26 +20,32 @@ namespace Revolutions.Screens
         protected override void OnFinalize()
         {
             base.OnFinalize();
+
             this._gauntletLayer = null;
             this._dataSource = null;
             this._movie = null;
         }
 
-        public TownRevolutionsScreen(SettlementInfoRevolutions settinfo, FactionInfoRevolutions factInfo)
+        public TownRevolutionsScreen(SettlementInfoRevolutions settlementInfo, FactionInfoRevolutions factionInfo)
         {
-            this._settlementInfo = settinfo;
-            this._factionInfo = factInfo;
+            this._settlementInfo = settlementInfo;
+            this._factionInfo = factionInfo;
         }
 
         protected override void OnInitialize()
         {
             base.OnInitialize();
+
             this._dataSource = new TownRevolutionViewModel(this._settlementInfo, this._factionInfo);
-            this._gauntletLayer = new GauntletLayer(100);
-            this._gauntletLayer.IsFocusLayer = true;
+            this._gauntletLayer = new GauntletLayer(100)
+            {
+                IsFocusLayer = true
+            };
+
             this.AddLayer(this._gauntletLayer);
             this._gauntletLayer.InputRestrictions.SetInputRestrictions();
             ScreenManager.TrySetFocus(this._gauntletLayer);
+
             this._movie = this._gauntletLayer.LoadMovie("TownRevolutionScreen", this._dataSource);
             this._firstRender = true;
         }
@@ -48,7 +53,8 @@ namespace Revolutions.Screens
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);
-            InputContext input = this._gauntletLayer.Input;
+
+            _ = this._gauntletLayer.Input;
         }
     }
 }
