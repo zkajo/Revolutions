@@ -52,8 +52,8 @@ namespace Revolutions.Models
             }
             catch (Exception exception)
             {
-                var exceptionMessage = "Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now. ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now.", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
 
                 return base.CalculateLoyaltyChange(town, statExplainer);
             }

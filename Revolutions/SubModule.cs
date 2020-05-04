@@ -20,7 +20,7 @@ namespace Revolutions
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
+            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.LimeGreen));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
@@ -44,8 +44,8 @@ namespace Revolutions
             }
             catch (Exception exception)
             {
-                var exceptionMessage = "Revolutions: Failed to initialize! ";
-                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Failed to initialize!", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
             }
         }
 
