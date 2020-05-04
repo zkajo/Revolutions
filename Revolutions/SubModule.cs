@@ -7,7 +7,6 @@ using TaleWorlds.Library;
 using ModLibrary;
 using Revolutions.CampaignBehaviors;
 using Revolutions.Models;
-using TaleWorlds.Localization;
 
 namespace Revolutions
 {
@@ -27,10 +26,6 @@ namespace Revolutions
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {
             base.OnGameStart(game, gameStarter);
-
-            var x = new TextObject("{=MYu8nKqq}General");
-            var y = new TextObject("{=MYu8nKqq}Allgemein");
-            var z = new TextObject("{=MYu8nKqq}");
 
             if (!(game.GameType is Campaign))
             {

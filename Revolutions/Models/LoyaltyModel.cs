@@ -2,6 +2,9 @@
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
 using TaleWorlds.Localization;
 using Revolutions.Components.Settlements;
+using System;
+using TaleWorlds.Core;
+using ModLibrary;
 
 namespace Revolutions.Models
 {
@@ -16,34 +19,44 @@ namespace Revolutions.Models
 
         public override float CalculateLoyaltyChange(Town town, StatExplainer statExplainer = null)
         {
-            var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(town.Settlement.StringId);
-
-            if (!town.IsTown)
+            try
             {
+                var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(town.Settlement?.StringId);
+
+                if (!town.IsTown)
+                {
+                    return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
+                }
+
+                if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
+                {
+                    explainedNumber.Add(Settings.Instance.BasePlayerLoyalty, new TextObject("{=q2tbqP0z}Bannerlord Settlement"));
+
+                    if (Settings.Instance.PlayerAffectedByOverextension && Settings.Instance.OverextensionMechanics)
+                    {
+                        this.Overextension(settlementInfo, ref explainedNumber);
+                    }
+                }
+                else
+                {
+                    this.BaseLoyalty(settlementInfo, ref explainedNumber);
+
+                    if (Settings.Instance.OverextensionMechanics)
+                    {
+                        this.Overextension(settlementInfo, ref explainedNumber);
+                    }
+                }
+
                 return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
             }
-
-            if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
+            catch (Exception exception)
             {
-                explainedNumber.Add(Settings.Instance.BasePlayerLoyalty, new TextObject("{=q2tbqP0z}Bannerlord Settlement"));
+                var exceptionMessage = "Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now. ";
+                InformationManager.DisplayMessage(new InformationMessage(exceptionMessage + exception?.ToString(), ColorManager.Red));
 
-                if (Settings.Instance.PlayerAffectedByOverextension && Settings.Instance.OverextensionMechanics)
-                {
-                    this.Overextension(settlementInfo, ref explainedNumber);
-                }
+                return base.CalculateLoyaltyChange(town, statExplainer);
             }
-            else
-            {
-                this.BaseLoyalty(settlementInfo, ref explainedNumber);
-
-                if (Settings.Instance.OverextensionMechanics)
-                {
-                    this.Overextension(settlementInfo, ref explainedNumber);
-                }
-            }
-
-            return explainedNumber.ResultNumber + base.CalculateLoyaltyChange(town, statExplainer);
         }
 
         private void Overextension(SettlementInfoRevolutions settlementInfo, ref ExplainedNumber explainedNumber)
