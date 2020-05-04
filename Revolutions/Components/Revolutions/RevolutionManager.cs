@@ -128,13 +128,14 @@ namespace Revolutions.Components.Revolutions
 
             DestroyPartyAction.Apply(revolution.SettlementInfoRevolutions.Garrision, revolution.Party.MobileParty);
 
-            revolution.SettlementInfoRevolutions.HasRebellionEvent = false;
             this.Revolutions.Remove(revolution);
         }
 
         public void EndSucceededRevoluton(Revolution revolution)
         {
-            if( Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
+            revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionSucceeded(revolution.Settlement);
+
+            if ( Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
             {
                 revolution.Settlement.OwnerClan.AddRenown(-Settings.Instance.ImperialRenownLossOnWin);
             }
@@ -151,7 +152,6 @@ namespace Revolutions.Components.Revolutions
                 revolution.Party.MobileParty.RemoveParty();
             }
 
-            revolution.SettlementInfoRevolutions.HasRebellionEvent = false;
             this.Revolutions.Remove(revolution);
         }
 
