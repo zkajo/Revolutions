@@ -51,8 +51,8 @@ namespace Revolutions
         public bool EmpireLoyaltyMechanics { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
-        [SettingPropertyInteger(displayName: "{=ER9izZPu}Renown Loss", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i5izHqq}The amount of renown a imperial faction will loose after a failed revolt.", RequireRestart = false)]
-        public int ImperialRenownLossOnWin { get; set; } = 200;
+        [SettingPropertyInteger(displayName: "{=ER9izZPu}Renown Loss", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i5izHqq}The amount of renown a imperial faction will loose after a revolt against them had success.", RequireRestart = false)]
+        public int ImperialRenownLossOnWin { get; set; } = 50;
 
         #endregion
 
@@ -79,8 +79,8 @@ namespace Revolutions
         public bool AllowMinorFactions { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
-        [SettingPropertyInteger(displayName: "{=Z79izZPu}Renown Gain", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i9izH4u}The amount of renown a minor faction will get after a successful revolt.", RequireRestart = false)]
-        public int RenownGainOnWin { get; set; } = 200;
+        [SettingPropertyInteger(displayName: "{=Z79izZPu}Renown Gain", minValue: 0, maxValue: 1000, Order = 1, HintText = "{=1i9izH4u}The amount of renown a minor faction will get after they successful revolted.", RequireRestart = false)]
+        public int RenownGainOnWin { get; set; } = 100;
 
         #endregion
     }

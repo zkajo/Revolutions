@@ -28,7 +28,7 @@
     <!-- Imperial Loyalty -->
     <string id="YnRmSelp" text="Aktiviert/Deaktiviert die Mechnik für die Reichstreue." />
     <string id="ER9izZPu" text="Verlust von Ansehen" />
-    <string id="1i5izHqq" text="Die Menge an Ansehen, welches eine imperiale Fraktion nach einem gescheiterten Aufstand verlieren wird." />
+    <string id="1i5izHqq" text="Die Menge an Ansehen, welche eine imperiale Fraktion nach einem erolgreichen, gegen sie gerichteteten Aufstand, verlieren wird." />
     <!-- Overextension -->
     <string id="ZRlNsvev" text="Aktiviert/Deaktiviert die Mechanik für die Überdehnung." />
     <string id="vuDS5ns8" text="Spielereinfluss" />
