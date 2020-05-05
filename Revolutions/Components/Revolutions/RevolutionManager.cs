@@ -152,7 +152,11 @@ namespace Revolutions.Components.Revolutions
             if (Settings.Instance.AllowMinorFactions && revolution.IsMinorFaction)
             {
                 ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, revolution.Settlement);
-                revolution.Party.MobileParty.Ai.SetAIState(AIState.PatrollingAroundLocation);
+
+                revolution.Party.MobileParty.ResetAiBehaviorObject();
+                revolution.Party.MobileParty.EnableAi();
+                revolution.Party.MobileParty.SetMovePatrolAroundSettlement(revolution.Settlement);
+
                 revolution.Party.LeaderHero.Clan.AddRenown(Settings.Instance.RenownGainOnWin);
             }
             else
