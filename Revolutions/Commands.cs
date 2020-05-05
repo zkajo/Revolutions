@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
-using TaleWorlds.Core;
-using TaleWorlds.Engine;
-using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
-using TaleWorlds.MountAndBlade;
-using TaleWorlds.MountAndBlade.View.Missions;
-using TaleWorlds.MountAndBlade.View.Screen;
 
 namespace Revolutions
 {
@@ -27,7 +17,7 @@ namespace Revolutions
 
             if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.start_revolution [SettlementName]\".";
+                return "Format is \"revolutions.start_revolution [Settlement Name]\".";
             }
 
             var settlementName = strings[0];
@@ -59,12 +49,16 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 2 || bool.TryParse(strings[1], out var successful) || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 2 || !strings.Contains("-s") || !strings.Contains("-w") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.end_revolution [SettlementName] [Successful (true|false)]\".";
+                return "Format is \"revolutions.end_revolution -s [Settlement Name] -w [Win (true|false)]\".";
             }
 
-            var settlementName = strings[0];
+            var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
+            var settlementNameIndex = 2;
+            var winIndex = aggregatedString.IndexOf("-w ") + 3;
+
+            var settlementName = aggregatedString.Substring(settlementNameIndex, winIndex - 6);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -78,7 +72,12 @@ namespace Revolutions
                 return $"{settlementName} is not conflicted in a revolt.";
             }
 
-            if (successful)
+            if(!bool.TryParse(aggregatedString.Substring(winIndex, aggregatedString.Length - winIndex), out var isWin))
+            {
+                return "Format is \"revolutions.end_revolution -s [Settlement Name] -w [Win (true|false)]\".";
+            }
+
+            if (isWin)
             {
                 RevolutionsManagers.RevolutionManager.EndSucceededRevoluton(revolution);
             }
@@ -87,7 +86,7 @@ namespace Revolutions
                 RevolutionsManagers.RevolutionManager.EndFailedRevolution(revolution);
             }
 
-            return $"Ended a {(successful ? "successful" : "failed")} revolution in {settlement.Name}.";
+            return $"Ended a {(isWin ? "successful" : "failed")} revolution in {settlement.Name}.";
         }
 
         [CommandLineFunctionality.CommandLineArgumentFunction("set_loyal_to_player", "revolutions")]
@@ -100,7 +99,7 @@ namespace Revolutions
 
             if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_to_player [SettlementName]\".";
+                return "Format is \"revolutions.set_loyal_to_player [Settlement Name]\".";
             }
 
             var settlementName = strings[0];
@@ -127,7 +126,7 @@ namespace Revolutions
 
             if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_to_current_owner [SettlementName]\".";
+                return "Format is \"revolutions.set_loyal_to_current_owner [Settlement Name]\".";
             }
 
             var settlementName = strings[0];
@@ -152,12 +151,16 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 2 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 4 || !strings.Contains("-s") || !strings.Contains("-f") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_to [SettlementName] [FactionName]\".";
+                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -f [Faction Name]\".";
             }
 
-            var settlementName = strings[0];
+            var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
+            var settlementNameIndex = 2;
+            var factionNameIndex = aggregatedString.IndexOf("-f ") + 3;
+
+            var settlementName = aggregatedString.Substring(settlementNameIndex, factionNameIndex - 6);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -165,7 +168,7 @@ namespace Revolutions
                 return $"There is no Settlement \"{settlementName}\".";
             }
 
-            var factionName = strings[1];
+            var factionName = aggregatedString.Substring(factionNameIndex, aggregatedString.Length - factionNameIndex);
 
             var faction = Campaign.Current.Factions.FirstOrDefault(s => s.Name.ToString().ToLower() == factionName.ToLower());
             if (settlement == null)
@@ -187,12 +190,12 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_owner_to_player [SettlementName]\".";
+                return "Format is \"revolutions.set_loyal_owner_to_player [Settlement Name]\".";
             }
 
-            var settlementName = strings[0];
+            var settlementName = strings.Aggregate((i, j) => i + j);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -217,12 +220,16 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 2 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 4 || !strings.Contains("-s") || !strings.Contains("-c") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_owner_to [SettlementName] [ClanName]\".";
+                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -c [Clan Name]\".";
             }
 
-            var settlementName = strings[0];
+            var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
+            var settlementNameIndex = 2;
+            var clanNameIndex = aggregatedString.IndexOf("-c ") + 3;
+
+            var settlementName = aggregatedString.Substring(settlementNameIndex, clanNameIndex - 6);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -230,7 +237,7 @@ namespace Revolutions
                 return $"There is no Settlement \"{settlementName}\".";
             }
 
-            var clanName = strings[1];
+            var clanName = aggregatedString.Substring(clanNameIndex, aggregatedString.Length - clanNameIndex);
 
             var clan = Campaign.Current.Clans.FirstOrDefault(s => s.Name.ToString().ToLower() == clanName.ToLower());
             if (clan == null)
@@ -246,5 +253,5 @@ namespace Revolutions
 
             return $"{settlement.Name} is now owned by and loyal to {clan.Name} ({settlementInfo.LoyalFaction.Name}).";
         }
-	}
+    }
 }
