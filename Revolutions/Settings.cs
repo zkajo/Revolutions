@@ -85,19 +85,19 @@ namespace Revolutions
         #endregion
         
         #region Lucky Nations
-        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 3)]
+        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
         [SettingPropertyBool(displayName: "{=dawijtg5}Enable Lucky Nations", Order = 0, HintText = "", RequireRestart = true)]
         public bool EnableLuckyNations { get; set; } = false;
         
-        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 3)]
+        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
         [SettingPropertyBool(displayName: "{=7fGer34R}Random Lucky Nation", Order = 0, HintText = "{=lgkTi59R}Activates/Deactivates a random lucky nation from all possible kingdoms.", RequireRestart = true)]
         public bool RandomLuckyNation { get; set; } = false;
         
-        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 3)]
+        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
         [SettingPropertyBool(displayName: "{=kgjR53Sd}Imperial Lucky Nation", Order = 0, HintText = "{=lgkr98EE}Guarantees an Imperial lucky nation.", RequireRestart = true)]
         public bool ImperialLuckyNation { get; set; } = false;
 
-        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 3)]
+        [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
         [SettingPropertyBool(displayName: "{=klge23qZ}Non-Imperial Lucky Nation", Order = 0, HintText = "{=mvb34Sdk}Guarantees a  Non-Imperial lucky nation.", RequireRestart = true)]
         public bool NonImperialLuckyNation { get; set; } = false;
         
