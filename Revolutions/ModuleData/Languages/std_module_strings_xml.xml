@@ -67,5 +67,17 @@
 
     <!-- Misc -->
     <string id="3fQwWiDZ" text="Done" />
+	
+    <!-- Lucky Nations -->
+    <string id="6F34Ffer" text="Lucky Nations" />
+	<string id="7fGer34R" text="Random Lucky Nation" />
+	<string id="lgkTi59R" text="Activates/Deactivates a random lucky nation from all possible kingdoms" />
+	<string id="kgjR53Sd" text="Imperial Lucky Nation" />
+	<string id="lgkr98EE" text="Guarantees an Imperial lucky nation" />
+	<string id="klge23qZ" text="Non-Imperial Lucky Nation" />
+	<string id="mvb34Sdk" text="Guarantees a Non-Imperial lucky nation" />
+	<string id="glCo42fD" text="Loyal population" />
+	<string id="dawijtg5" text="Enable Lucky Nations" />
+
   </strings>
 </base>

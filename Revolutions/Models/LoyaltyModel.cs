@@ -84,6 +84,16 @@ namespace Revolutions.Models
 
         private void BaseLoyalty(SettlementInfoRevolutions settlementInfo, ref ExplainedNumber explainedNumber)
         {
+            if (settlementInfo.CurrentFaction.IsKingdomFaction)
+            {
+                var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfoById(settlementInfo.CurrentFactionId);
+                if (kingdomInfo != null && kingdomInfo.LuckyNation)
+                {
+                    explainedNumber.Add(10, new TextObject("{=glCo42fD}Loyal population)"));
+                    return;
+                }   
+            }
+
             if (Settings.Instance.EmpireLoyaltyMechanics)
             {
                 if (settlementInfo.IsOfImperialCulture)
