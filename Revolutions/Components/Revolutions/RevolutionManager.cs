@@ -7,6 +7,7 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
+using TaleWorlds.MountAndBlade.Missions.Handlers;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -143,7 +144,7 @@ namespace Revolutions.Components.Revolutions
 
             revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionSucceeded(revolution.Settlement);
 
-            if ( Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
+            if (Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
             {
                 revolution.Settlement.OwnerClan.AddRenown(-Settings.Instance.ImperialRenownLossOnWin);
             }
@@ -161,6 +162,8 @@ namespace Revolutions.Components.Revolutions
                 ChangeOwnerOfSettlementAction.ApplyByDefault(newOwner, revolution.Settlement);
                 revolution.Party.MobileParty.RemoveParty();
             }
+
+            revolution.PartyInfoRevolutions.CantStarve = false;
 
             this.Revolutions.Remove(revolution);
         }
@@ -204,8 +207,10 @@ namespace Revolutions.Components.Revolutions
 
             if (isMinorFaction)
             {
-                var value = MBMath.ClampInt(1, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
+                var value = MBMath.ClampInt(2, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
                 mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, value);
+                value = MBMath.ClampInt(2, DefaultTraits.Siegecraft.MinValue, DefaultTraits.Siegecraft.MaxValue);
+                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Siegecraft, value);
                 mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
             }
 
@@ -239,7 +244,12 @@ namespace Revolutions.Components.Revolutions
             }
             else
             {
-                Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, settlementInfo.Garrision);
+                revolution.PartyInfoRevolutions.CantStarve = true;
+
+                mobileParty.EnableAi();
+                mobileParty.Ai.SetAIState(AIState.BesiegingCenter, revolution.SettlementInfo.Garrision);
+                mobileParty.SetMoveBesiegeSettlement(revolution.Settlement);
+
                 settlementInfo.HasRebellionEvent = true;
             }
         }
@@ -252,7 +262,7 @@ namespace Revolutions.Components.Revolutions
             if (kingdom == null)
             {
                 string kingdomName = settlement.Name.ToString();
-                kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomId,kingdomName , kingdomName);
+                kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomId, kingdomName, kingdomName);
             }
             else
             {

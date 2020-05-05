@@ -26,8 +26,8 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
             CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
+            CampaignEvents.OnPartyConsumedFoodEvent.AddNonSerializedListener(this, new Action<MobileParty>(this.OnPartyConsumedFoodEvent));
         }
-        
 
         public override void SyncData(IDataStore dataStore)
         {
@@ -132,6 +132,15 @@ namespace Revolutions.CampaignBehaviors
             if (kingdomInfo.UserMadeKingdom)
             {
                 RevolutionsManagers.KingdomManager.ModifyKingdomList(kingdoms => kingdoms.Remove(kingdom));
+            }
+        }
+
+        private void OnPartyConsumedFoodEvent(MobileParty mobileParty)
+        {
+            var partyInfoRevolutions = RevolutionsManagers.PartyManager.GetInfoById(mobileParty.StringId);
+            if(partyInfoRevolutions.CantStarve)
+            {
+                mobileParty.Party.RemainingFoodPercentage = 100;
             }
         }
     }

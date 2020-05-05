@@ -43,7 +43,7 @@ namespace Revolutions.Components.Parties
 
         #region Normal Properties
 
-
+        public bool CantStarve { get; set; } = false;
 
         #endregion
     }

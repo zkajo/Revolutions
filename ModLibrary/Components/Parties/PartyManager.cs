@@ -114,10 +114,7 @@ namespace ModLibrary.Components.Parties
 
         public MobileParty CreateMobileParty(string id, TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
-            var mobileParty = MBObjectManager.Instance.CreateObject<MobileParty>(string.Concat(new object[]
-            {
-                id
-            }));
+            var mobileParty = MobileParty.Create(id);
 
             mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
             mobileParty.Party.Owner = owner;

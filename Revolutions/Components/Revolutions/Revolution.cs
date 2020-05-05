@@ -5,6 +5,7 @@ using ModLibrary.Components;
 using ModLibrary.Components.Settlements;
 using ModLibrary.Components.Parties;
 using Revolutions.Components.Settlements;
+using Revolutions.Components.Parties;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -61,6 +62,8 @@ namespace Revolutions.Components.Revolutions
         public PartyBase Party => ModLibraryManagers.PartyManager.GetObjectById(this.PartyId);
 
         public PartyInfo PartyInfo => ModLibraryManagers.PartyManager.GetInfoById(this.PartyId);
+
+        public PartyInfoRevolutions PartyInfoRevolutions => RevolutionsManagers.PartyManager.GetInfoById(this.PartyId);
 
         public Settlement Settlement => ModLibraryManagers.SettlementManager.GetObjectById(this.SettlementId);
 
