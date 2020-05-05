@@ -15,12 +15,12 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
                 return "Format is \"revolutions.start_revolution [Settlement Name]\".";
             }
 
-            var settlementName = strings[0];
+            var settlementName = strings.Aggregate((i, j) => i + " " + j);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -97,12 +97,12 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
                 return "Format is \"revolutions.set_loyal_to_player [Settlement Name]\".";
             }
 
-            var settlementName = strings[0];
+            var settlementName = strings.Aggregate((i, j) => i + " " + j);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -124,12 +124,12 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
-            if (strings.Count() != 1 || CampaignCheats.CheckHelp(strings))
+            if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
                 return "Format is \"revolutions.set_loyal_to_current_owner [Settlement Name]\".";
             }
 
-            var settlementName = strings[0];
+            var settlementName = strings.Aggregate((i, j) => i + " " + j);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
