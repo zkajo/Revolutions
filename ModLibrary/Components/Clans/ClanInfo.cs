@@ -1,9 +1,35 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System;
+using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Components.Clans
 {
-    public class ClanInfo
+     [Serializable]
+    public class ClanInfo : IGameComponent<ClanInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(ClanInfo other)
+        {
+            return this.ClanId == other.ClanId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is ClanInfo clanInfo)
+            {
+                return this.ClanId == clanInfo.ClanId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.ClanId.GetHashCode();
+        }
+
+        #endregion
+
         public ClanInfo()
         {
 

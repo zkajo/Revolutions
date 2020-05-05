@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Helpers;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
@@ -10,7 +9,7 @@ using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Parties
 {
-    public class PartyManager<InfoType> /*: IManager<InfoType, MobileParty>*/ where InfoType : PartyInfo, new()
+    public class PartyManager<InfoType> /*: IManager<InfoType, PartyBase>*/ where InfoType : PartyInfo, new()
     {
         #region Singleton
 
@@ -27,20 +26,24 @@ namespace ModLibrary.Components.Parties
 
         #region IManager
 
-        public List<InfoType> Infos { get; set; } = new List<InfoType>();
+        public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
         {
+            if (this.Infos.Count() == Campaign.Current.Parties.Count())
+            {
+                return;
+            }
+
             foreach (var party in Campaign.Current.Parties)
             {
-                this.AddInfo(party, true);
+                this.AddInfo(party, false);
             }
         }
 
         public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var partyInfo = this.Infos.FirstOrDefault(info => info.PartyId == id);
-
             if (partyInfo != null)
             {
                 return partyInfo;
@@ -57,14 +60,14 @@ namespace ModLibrary.Components.Parties
 
         public InfoType GetInfoByObject(PartyBase party, bool addIfNotFound = true)
         {
-            return this.GetInfoById(party?.Id, addIfNotFound);
+            return this.GetInfoById(party.Id, addIfNotFound);
         }
 
         public InfoType AddInfo(PartyBase party, bool force = false)
         {
             if (!force)
             {
-                var existingPartyInfo = this.Infos.FirstOrDefault(info => info.PartyId == party?.Id);
+                var existingPartyInfo = this.Infos.FirstOrDefault(info => info.PartyId == party.Id);
                 if (existingPartyInfo != null)
                 {
                     return existingPartyInfo;
@@ -79,12 +82,12 @@ namespace ModLibrary.Components.Parties
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveAll(info => info.PartyId == id);
+            this.Infos.RemoveWhere(info => info.PartyId == id);
         }
 
         public PartyBase GetObjectById(string id)
         {
-            return Campaign.Current.Parties.FirstOrDefault(party => party?.Id == id);
+            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == id);
         }
 
         public PartyBase GetObjectByInfo(InfoType info)
@@ -99,9 +102,9 @@ namespace ModLibrary.Components.Parties
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Parties.Any(party => party?.Id == info.PartyId));
+            this.Infos.RemoveWhere(info => !Campaign.Current.Parties.Any(party => party.Id == info.PartyId));
 
-            foreach (var party in Campaign.Current.Parties.Where(party => !this.Infos.Any(info => info.PartyId == party?.Id)))
+            foreach (var party in Campaign.Current.Parties.Where(party => !this.Infos.Any(info => info.PartyId == party.Id)))
             {
                 this.AddInfo(party, true);
             }

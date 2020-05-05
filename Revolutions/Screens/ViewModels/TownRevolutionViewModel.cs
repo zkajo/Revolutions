@@ -58,7 +58,7 @@ namespace Revolutions.Screens.ViewModels
                 }
                 else
                 {
-                    var textObject = new TextObject("{=dRoS0maD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
+                    var textObject = new TextObject("{=dRoS0zTD}Flames of revolution are slowly stirring in {SETTLEMENT}.");
                     textObject.SetTextVariable("SETTLEMENT", this.SettlementInfo.Settlement.Name);
 
                     return textObject.ToString();

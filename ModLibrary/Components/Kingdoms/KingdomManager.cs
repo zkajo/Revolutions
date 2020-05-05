@@ -26,20 +26,24 @@ namespace ModLibrary.Components.Kingdoms
 
         #region IManager
 
-        public List<InfoType> Infos { get; set; } = new List<InfoType>();
+        public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
         {
+            if(this.Infos.Count() == Campaign.Current.Kingdoms.Count())
+            {
+                return;
+            }
+
             foreach (var kingdom in Campaign.Current.Kingdoms)
             {
-                this.AddInfo(kingdom, true);
+                this.AddInfo(kingdom, false);
             }
         }
 
         public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var kingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == id);
-
             if (kingdomInfo != null)
             {
                 return kingdomInfo;
@@ -56,14 +60,14 @@ namespace ModLibrary.Components.Kingdoms
 
         public InfoType GetInfoByObject(Kingdom kingdom, bool addIfNotFound = true)
         {
-            return this.GetInfoById(kingdom?.StringId, addIfNotFound);
+            return this.GetInfoById(kingdom.StringId, addIfNotFound);
         }
 
         public InfoType AddInfo(Kingdom kingdom, bool force = false)
         {
             if (!force)
             {
-                var existingKingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == kingdom?.StringId);
+                var existingKingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == kingdom.StringId);
                 if (existingKingdomInfo != null)
                 {
                     return existingKingdomInfo;
@@ -78,7 +82,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveAll(info => info.KingdomId == id);
+            this.Infos.RemoveWhere(info => info.KingdomId == id);
         }
 
         public Kingdom GetObjectById(string id)
@@ -98,9 +102,9 @@ namespace ModLibrary.Components.Kingdoms
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Kingdoms.Any(kingdom => kingdom?.StringId == info.KingdomId));
+            this.Infos.RemoveWhere(info => !Campaign.Current.Kingdoms.Any(kingdom => kingdom.StringId == info.KingdomId));
 
-            foreach (var kingdom in Campaign.Current.Kingdoms.Where(kingdom => !this.Infos.Any(info => info.KingdomId == kingdom?.StringId)))
+            foreach (var kingdom in Campaign.Current.Kingdoms.Where(kingdom => !this.Infos.Any(info => info.KingdomId == kingdom.StringId)))
             {
                 this.AddInfo(kingdom, true);
             }
@@ -114,21 +118,21 @@ namespace ModLibrary.Components.Kingdoms
             modificator(kingdoms);
             AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
         }
-        
+
         public Kingdom CreateKingdom(Clan rulingClan, string stringId, string name, string informalName)
         {
             var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>(stringId);
             TextObject kingdomName = new TextObject(name, null);
             TextObject kingdomInformalName = new TextObject(informalName, null);
-            
-            kingdom.InitializeKingdom(kingdomName, kingdomInformalName, rulingClan.Culture, rulingClan.Banner, 
-                rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
+
+            kingdom.InitializeKingdom(kingdomName, kingdomInformalName, rulingClan.Culture, rulingClan.Banner, rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
             kingdom.RulingClan = rulingClan;
-            
-            ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
-            var info = GetInfoById(kingdom.StringId);
+
+            this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
+
+            var info = this.GetInfoById(kingdom.StringId);
             info.UserMadeKingdom = true;
-            
+
             return kingdom;
         }
     }

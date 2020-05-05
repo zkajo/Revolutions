@@ -20,7 +20,7 @@ namespace Revolutions
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.LimeGreen));
+            InformationManager.DisplayMessage(new InformationMessage("Revolutions: Loaded Mod.", ColorManager.Green));
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)

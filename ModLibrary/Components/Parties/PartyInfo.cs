@@ -4,8 +4,32 @@ using TaleWorlds.CampaignSystem;
 namespace ModLibrary.Components.Parties
 {
     [Serializable]
-    public class PartyInfo
+    public class PartyInfo : IGameComponent<PartyInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(PartyInfo other)
+        {
+            return this.PartyId == other.PartyId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is PartyInfo partyInfo)
+            {
+                return this.PartyId == partyInfo.PartyId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.PartyId.GetHashCode();
+        }
+
+        #endregion
+
         public PartyInfo()
         {
 

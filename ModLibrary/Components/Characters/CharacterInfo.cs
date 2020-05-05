@@ -1,9 +1,35 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System;
+using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Components.Characters
 {
-    public class CharacterInfo
+    [Serializable]
+    public class CharacterInfo : IGameComponent<CharacterInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(CharacterInfo other)
+        {
+            return this.CharacterId == other.CharacterId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is CharacterInfo characterInfo)
+            {
+                return this.CharacterId == characterInfo.CharacterId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.CharacterId.GetHashCode();
+        }
+
+        #endregion
+
         public CharacterInfo()
         {
 

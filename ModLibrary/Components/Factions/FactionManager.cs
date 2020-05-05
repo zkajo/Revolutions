@@ -23,20 +23,24 @@ namespace ModLibrary.Components.Factions
 
         #region IManager
 
-        public List<InfoType> Infos { get; set; } = new List<InfoType>();
+        public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
         {
+            if (this.Infos.Count() == Campaign.Current.Factions.Count())
+            {
+                return;
+            }
+
             foreach (var faction in Campaign.Current.Factions)
             {
-                this.AddInfo(faction, true);
+                this.AddInfo(faction, false);
             }
         }
 
         public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var factionInfo = this.Infos.FirstOrDefault(info => info.FactionId == id);
-
             if (factionInfo != null)
             {
                 return factionInfo;
@@ -53,14 +57,14 @@ namespace ModLibrary.Components.Factions
 
         public InfoType GetInfoByObject(IFaction faction, bool addIfNotFound = true)
         {
-            return this.GetInfoById(faction?.StringId, addIfNotFound);
+            return this.GetInfoById(faction.StringId, addIfNotFound);
         }
 
         public InfoType AddInfo(IFaction faction, bool force = false)
         {
             if (!force)
             {
-                var existingFactionInfo = this.Infos.FirstOrDefault(info => info.FactionId == faction?.StringId);
+                var existingFactionInfo = this.Infos.FirstOrDefault(info => info.FactionId == faction.StringId);
                 if(existingFactionInfo != null)
                 {
                     return existingFactionInfo;
@@ -75,12 +79,12 @@ namespace ModLibrary.Components.Factions
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveAll(info => info.FactionId == id);
+            this.Infos.RemoveWhere(info => info.FactionId == id);
         }
 
         public IFaction GetObjectById(string id)
         {
-            return Campaign.Current.Factions.FirstOrDefault(faction => faction?.StringId == id);
+            return Campaign.Current.Factions.FirstOrDefault(faction => faction.StringId == id);
         }
 
         public IFaction GetObjectByInfo(InfoType info)
@@ -95,16 +99,15 @@ namespace ModLibrary.Components.Factions
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Factions.Any(faction => faction?.StringId == info.FactionId));
+            this.Infos.RemoveWhere(info => !Campaign.Current.Factions.ToList().Any(faction => faction.StringId == info.FactionId));
 
-            foreach (var faction in Campaign.Current.Factions.Where(faction => !this.Infos.Any(info => info.FactionId == faction?.StringId)))
+            foreach (var faction in Campaign.Current.Factions.Where(faction => !this.Infos.Any(info => info.FactionId == faction.StringId)))
             {
                 this.AddInfo(faction, true);
             }
         }
 
         #endregion
-
 
         public CharacterObject GetLordWithLeastFiefs(IFaction faction)
         {

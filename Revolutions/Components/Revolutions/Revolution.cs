@@ -1,6 +1,7 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
 using ModLibrary;
+using ModLibrary.Components;
 using ModLibrary.Components.Settlements;
 using ModLibrary.Components.Parties;
 using Revolutions.Components.Settlements;
@@ -8,8 +9,31 @@ using Revolutions.Components.Settlements;
 namespace Revolutions.Components.Revolutions
 {
     [Serializable]
-    public class Revolution
+    public class Revolution : IGameComponent<Revolution>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(Revolution other)
+        {
+            return this.PartyId == other.PartyId && this.SettlementId == other.SettlementId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is Revolution revolution)
+            {
+                return this.PartyId == revolution.PartyId && this.SettlementId == revolution.SettlementId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.PartyId.GetHashCode() ^ this.SettlementId.GetHashCode();
+        }
+
+        #endregion
         public Revolution()
         {
 

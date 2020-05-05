@@ -73,6 +73,7 @@
     <Reference Include="MBOptionScreen.v2.0.10, Version=2.0.10.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Bannerlord.MBOptionScreen.2.0.10\lib\net472\MBOptionScreen.v2.0.10.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation" />
   </ItemGroup>
   <ItemGroup>

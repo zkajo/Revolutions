@@ -12,12 +12,12 @@ namespace Revolutions.Components.Settlements
     {
         public SettlementInfoRevolutions() : base()
         {
-            this.LoyalFactionId = InitialFactionId;
+            this.LoyalFactionId = this.InitialFactionId;
         }
 
         public SettlementInfoRevolutions(Settlement settlement) : base(settlement)
         {
-            this.LoyalFactionId = InitialFactionId;
+            this.LoyalFactionId = this.InitialFactionId;
         }
 
         #region Reference Properties

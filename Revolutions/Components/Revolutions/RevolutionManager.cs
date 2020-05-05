@@ -25,7 +25,7 @@ namespace Revolutions.Components.Revolutions
 
         #endregion
 
-        public List<Revolution> Revolutions = new List<Revolution>();
+        public HashSet<Revolution> Revolutions = new HashSet<Revolution>();
 
         public Revolution GetRevolutionByPartyId(string partyId)
         {
@@ -119,6 +119,10 @@ namespace Revolutions.Components.Revolutions
 
         public void EndFailedRevolution(Revolution revolution)
         {
+            var information = new TextObject("{=dkpS074R}The revolt in {SETTLEMENT} has ended.");
+            information.SetTextVariable("SETTLEMENT", revolution.Settlement.Name.ToString());
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+
             revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionFailed(revolution.Settlement);
 
             if (revolution.IsMinorFaction)
@@ -133,6 +137,10 @@ namespace Revolutions.Components.Revolutions
 
         public void EndSucceededRevoluton(Revolution revolution)
         {
+            var information = new TextObject("{=dkpS074R}The revolt in {SETTLEMENT} has ended.");
+            information.SetTextVariable("SETTLEMENT", revolution.Settlement.Name.ToString());
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+
             revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionSucceeded(revolution.Settlement);
 
             if ( Settings.Instance.EmpireLoyaltyMechanics && revolution.SettlementInfo.IsCurrentFactionOfImperialCulture && !revolution.SettlementInfoRevolutions.IsLoyalFactionOfImperialCulture)
@@ -159,6 +167,10 @@ namespace Revolutions.Components.Revolutions
 
         public void StartRebellionEvent(Settlement settlement)
         {
+            var information = new TextObject("{=dRoS0maD}{SETTLEMENT} is revolting!");
+            information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+
             var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
             var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);
             var isMinorFaction = false;
@@ -180,7 +192,7 @@ namespace Revolutions.Components.Revolutions
                 clanInfo.CanJoinOtherKingdoms = false;
                 isMinorFaction = true;
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
-                CreateRebelKingdom(clan, settlement.Name.ToString().ToLower() + "_kingdom", settlement.MapFaction, settlement);
+                this.CreateRebelKingdom(clan, settlement.Name.ToString().ToLower() + "_kingdom", settlement.MapFaction, settlement);
             }
 
             var rebelsPartyTemplate = settlement.Culture.RebelsPartyTemplate;
@@ -218,10 +230,6 @@ namespace Revolutions.Components.Revolutions
             mobileParty.IsLordParty = true;
             mobileParty.Party.Visuals.SetMapIconAsDirty();
 
-            var information = new TextObject("{=dRoS0maD}{SETTLEMENT} is revolting!");
-            information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
-            InformationManager.AddQuickInformation(information, 0, null, "");
-
             var revolution = new Revolution(mobileParty.Party.Id, settlement, isMinorFaction);
             this.Revolutions.Add(revolution);
 
@@ -235,7 +243,7 @@ namespace Revolutions.Components.Revolutions
                 settlementInfo.HasRebellionEvent = true;
             }
         }
-        
+
         private Kingdom CreateRebelKingdom(Clan ownerClan, string stringId, IFaction warOnFaction, Settlement settlement)
         {
             string kingdomId = stringId;
@@ -253,16 +261,16 @@ namespace Revolutions.Components.Revolutions
                     kingdom.ReactivateKingdom();
                 }
             }
-            
+
             //For whatever reason this city's kingdom is not kingdom holder.
             //Therefore new clan is now kingdom owner.
             kingdom.RulingClan = ownerClan;
-            
+
             if (!kingdom.IsAtWarWith(warOnFaction))
             {
                 DeclareWarAction.Apply(kingdom, warOnFaction);
             }
-            
+
             return kingdom;
         }
     }

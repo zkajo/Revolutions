@@ -25,20 +25,24 @@ namespace ModLibrary.Components.Clans
 
         #region IManager
 
-        public List<InfoType> Infos { get; set; } = new List<InfoType>();
+        public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
         {
+            if (this.Infos.Count() == Campaign.Current.Clans.Count())
+            {
+                return;
+            }
+
             foreach (var clan in Campaign.Current.Clans)
             {
-                this.AddInfo(clan, true);
+                this.AddInfo(clan, false);
             }
         }
 
         public InfoType GetInfoById(string id, bool addIfNotFound = true)
         {
             var clanInfo = this.Infos.FirstOrDefault(info => info.ClanId == id);
-
             if (clanInfo != null)
             {
                 return clanInfo;
@@ -55,14 +59,14 @@ namespace ModLibrary.Components.Clans
 
         public InfoType GetInfoByObject(Clan clan, bool addIfNotFound = true)
         {
-            return this.GetInfoById(clan?.StringId, addIfNotFound);
+            return this.GetInfoById(clan.StringId, addIfNotFound);
         }
 
         public InfoType AddInfo(Clan clan, bool force = false)
         {
             if (!force)
             {
-                var existingClanInfo = this.Infos.FirstOrDefault(info => info.ClanId == clan?.StringId);
+                var existingClanInfo = this.Infos.FirstOrDefault(info => info.ClanId == clan.StringId);
                 if (existingClanInfo != null)
                 {
                     return existingClanInfo;
@@ -77,12 +81,12 @@ namespace ModLibrary.Components.Clans
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveAll(info => info.ClanId == id);
+            this.Infos.RemoveWhere(info => info.ClanId == id);
         }
 
         public Clan GetObjectById(string id)
         {
-            return Campaign.Current.Clans.FirstOrDefault(clan => clan?.StringId == id);
+            return Campaign.Current.Clans.FirstOrDefault(clan => clan.StringId == id);
         }
 
         public Clan GetObjectByInfo(InfoType info)
@@ -97,9 +101,9 @@ namespace ModLibrary.Components.Clans
                 return;
             }
 
-            this.Infos.RemoveAll(info => !Campaign.Current.Clans.Any(clan => clan?.StringId == info.ClanId));
+            this.Infos.RemoveWhere(info => !Campaign.Current.Clans.Any(clan => clan.StringId == info.ClanId));
 
-            foreach (var clan in Campaign.Current.Clans.Where(clan => !this.Infos.Any(info => info.ClanId == clan?.StringId)))
+            foreach (var clan in Campaign.Current.Clans.Where(clan => !this.Infos.Any(info => info.ClanId == clan.StringId)))
             {
                 this.GetInfoById(clan.StringId);
             }

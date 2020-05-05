@@ -23,7 +23,7 @@ namespace Revolutions.Models
             {
                 return base.CalculateLoyaltyChange(town, statExplainer);
             }
-            
+
             try
             {
                 var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
@@ -53,9 +53,9 @@ namespace Revolutions.Models
             catch (Exception exception)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now.", ColorManager.Red));
-                InformationManager.DisplayMessage(new InformationMessage("Exception caused by: " + town.Name, ColorManager.Red));
-                InformationManager.DisplayMessage(new InformationMessage(exception.StackTrace, ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage($"Exception Details: Town: {town?.Name} | Town.StringId: {town?.StringId} | Town.Settlement: {town?.Settlement?.Name} | Town.Settlement.StringId: {town?.Settlement?.StringId}", ColorManager.Red));
                 InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage(exception.StackTrace, ColorManager.Red));
 
                 return base.CalculateLoyaltyChange(town, statExplainer);
             }

@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components
 {
     public interface IManager<InfoType, GameObjectType> where GameObjectType : MBObjectBase
     {
-        List<InfoType> Infos { get; set; }
+        HashSet<InfoType> Infos { get; set; }
 
         void InitializeInfos();
 

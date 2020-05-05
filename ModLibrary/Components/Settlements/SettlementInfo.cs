@@ -7,8 +7,32 @@ using ModLibrary.Components.Factions;
 namespace ModLibrary.Components.Settlements
 {
     [Serializable]
-    public class SettlementInfo
+    public class SettlementInfo : IGameComponent<SettlementInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(SettlementInfo other)
+        {
+            return this.SettlementId == other.SettlementId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is SettlementInfo settlementInfo)
+            {
+                return this.SettlementId == settlementInfo.SettlementId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.SettlementId.GetHashCode();
+        }
+
+        #endregion
+
         public SettlementInfo()
         {
 

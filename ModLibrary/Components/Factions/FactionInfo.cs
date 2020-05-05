@@ -5,8 +5,32 @@ using TaleWorlds.CampaignSystem;
 namespace ModLibrary.Components.Factions
 {
     [Serializable]
-    public class FactionInfo
+    public class FactionInfo : IGameComponent<FactionInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(FactionInfo other)
+        {
+            return this.FactionId == other.FactionId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is FactionInfo factionInfo)
+            {
+                return this.FactionId == factionInfo.FactionId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.FactionId.GetHashCode();
+        }
+
+        #endregion
+
         public FactionInfo()
         {
 

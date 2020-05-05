@@ -1,9 +1,35 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System;
+using TaleWorlds.CampaignSystem;
 
 namespace ModLibrary.Components.Kingdoms
 {
-    public class KingdomInfo
+    [Serializable]
+    public class KingdomInfo : IGameComponent<KingdomInfo>
     {
+        #region IGameComponent<InfoType>
+
+        public bool Equals(KingdomInfo other)
+        {
+            return this.KingdomId == other.KingdomId;
+        }
+
+        public override bool Equals(object other)
+        {
+            if (other is KingdomInfo kingdomInfo)
+            {
+                return this.KingdomId == kingdomInfo.KingdomId;
+            }
+
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return this.KingdomId.GetHashCode();
+        }
+
+        #endregion
+
         public KingdomInfo()
         {
 
@@ -17,8 +43,6 @@ namespace ModLibrary.Components.Kingdoms
         #region Reference Properties
 
         public string KingdomId { get; set; }
-
-        public bool UserMadeKingdom { get; set; } = false;
 
         #endregion
 
@@ -36,7 +60,7 @@ namespace ModLibrary.Components.Kingdoms
 
         #region Normal Properties
 
-
+        public bool UserMadeKingdom { get; set; } = false;
 
         #endregion
     }

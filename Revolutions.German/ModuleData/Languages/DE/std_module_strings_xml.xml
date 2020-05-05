@@ -43,12 +43,13 @@
     <!-- Loyalty Model -->
     <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />
     <string id="dRoS0maD" text="{SETTLEMENT} revolviert!" />
+    <string id="dkpS074R" text="Die Revolte in {SETTLEMENT} wurde beendet." />
     <string id="Ts1iVN8d" text="Stadttreue" />
     <string id="q2t1Ss8d" text="Revolutionärer Mob" />
 
     <!-- Town Menu -->
     <string id="3fBkqk4u" text="Die Bevölkerung von {SETTLEMENT} scheint zufrieden zu sein." />
-    <string id="dRoS0maD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
+    <string id="dRoS0zTD" text="Flammen der Revolution rühren sich langsam in {SETTLEMENT}." />
     <string id="MYu8szGz" text="Die Bevölkerung ist {FACTION} treu." />
     <string id="q2tbSs8d" text="Der aktuelle Revoltefortschritt ist {PROGRESS}%." />
     <string id="zQNPQz3q" text="Die Bevölkerung ist mit der aktuellen Regelung zufrieden." />
