@@ -42,11 +42,7 @@ namespace Revolutions.CampaignBehaviors
 
                 if (dataStore.IsSaving)
                 {
-                    if (this.DataStorage.SaveId.IsEmpty())
-                    {
-                        this.DataStorage.SaveId = Guid.NewGuid().ToString();
-                    }
-
+                    this.DataStorage.SaveId = Guid.NewGuid().ToString();
                     dataStore.SyncData("Revolutions.SaveId", ref this.DataStorage.SaveId);
                     this.DataStorage.SaveData();
                 }
