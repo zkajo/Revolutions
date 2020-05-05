@@ -79,6 +79,7 @@
   <ItemGroup>
     <Compile Include="CampaignBehaviors\CleanupBehavior.cs" />
     <Compile Include="CampaignBehaviors\GuiHandlersBehavior.cs" />
+    <Compile Include="CampaignBehaviors\LuckyNationBehaviour.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="Components\Kingdoms\KingdomInfoRevolutions.cs" />
     <Compile Include="Components\Kingdoms\KingdomInfoRevolutionsExtension.cs" />

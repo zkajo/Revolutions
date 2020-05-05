@@ -43,7 +43,7 @@ namespace Revolutions.Components.Kingdoms
 
         #region Normal Properties
 
-
+        public bool LuckyNation { get; set; } = false;
 
         #endregion
     }
