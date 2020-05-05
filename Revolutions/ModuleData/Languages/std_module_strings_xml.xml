@@ -39,6 +39,16 @@
     <string id="P1g6H41e" text="Activates/Deactivates the mechanics for forming minor factions." />
     <string id="Z79izZPu" text="Renown Gain" />
     <string id="1i9izH4u" text="The amount of renown a minor faction will get after a successful revolt." />
+    <!-- Lucky Nations -->
+    <string id="6F34Ffer" text="Lucky Nations" />
+    <string id="Zkl46vev" text="Activates/Deactivates the mechanics for lucky nations." />
+    <string id="7fGer34R" text="Random Lucky Nation" />
+    <string id="lgkTi59R" text="Activates/Deactivates a random lucky nation from all possible kingdoms." />
+    <string id="kgjR53Sd" text="Imperial Lucky Nation" />
+    <string id="lgkr98EE" text="Guarantees an Imperial lucky nation." />
+    <string id="klge23qZ" text="Non-Imperial Lucky Nation" />
+    <string id="mvb34Sdk" text="Guarantees a Non-Imperial lucky nation." />
+    <string id="glCo42fD" text="Loyal population" />
 
     <!-- Loyalty Model -->
     <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />
@@ -67,17 +77,5 @@
 
     <!-- Misc -->
     <string id="3fQwWiDZ" text="Done" />
-	
-    <!-- Lucky Nations -->
-    <string id="6F34Ffer" text="Lucky Nations" />
-	<string id="7fGer34R" text="Random Lucky Nation" />
-	<string id="lgkTi59R" text="Activates/Deactivates a random lucky nation from all possible kingdoms" />
-	<string id="kgjR53Sd" text="Imperial Lucky Nation" />
-	<string id="lgkr98EE" text="Guarantees an Imperial lucky nation" />
-	<string id="klge23qZ" text="Non-Imperial Lucky Nation" />
-	<string id="mvb34Sdk" text="Guarantees a Non-Imperial lucky nation" />
-	<string id="glCo42fD" text="Loyal population" />
-	<string id="dawijtg5" text="Enable Lucky Nations" />
-
   </strings>
 </base>

@@ -39,6 +39,16 @@
     <string id="P1g6H41e" text="Aktiviert/Deaktiviert die Mechnik für die Erstellung kleinerer Fraktionen." />
     <string id="Z79izZPu" text="Gewinnen von Ansehen" />
     <string id="1i9izH4u" text="Die Menge an Ansehen, welches eine kleinere Fraktion nach einem erfolgreichen Aufstand gewinnen wird." />
+    <!-- Lucky Nations -->
+    <string id="6F34Ffer" text="Glückliche Nation" />
+    <string id="Zkl46vev" text="Aktiviert/Deaktiviert die Mechanik für Glückliche Nation." />
+    <string id="7fGer34R" text="Zufällige glückliche Nation" />
+    <string id="lgkTi59R" text="Aktiviert/Deaktiviert die Auswahl einer zufälligen Glücklichen Nation aus allen möglichen Königreichen." />
+    <string id="kgjR53Sd" text="Imperiale Glückliche Nation" />
+    <string id="lgkr98EE" text="Garantiert eine imperiale Glückliche Nation." />
+    <string id="klge23qZ" text="Nicht-Imperiale Glückliche Nation" />
+    <string id="mvb34Sdk" text="Garantiert eine nicht-imperiale Glückliche Nation." />
+    <string id="glCo42fD" text="Loyale Bevölkerung" />
 
     <!-- Loyalty Model -->
     <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />

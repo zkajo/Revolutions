@@ -46,7 +46,7 @@ namespace Revolutions
 
         #region Loyalty
 
-        [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order : 1)]
+        [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
         [SettingPropertyBool(displayName: "{=hPERH4u4}Imperial Loyalty", Order = 0, HintText = "{=YnRmSelp}Activates/Deactivates the mechanic for the empire loyalty.", RequireRestart = false)]
         public bool EmpireLoyaltyMechanics { get; set; } = true;
 
@@ -83,24 +83,24 @@ namespace Revolutions
         public int RenownGainOnWin { get; set; } = 350;
 
         #endregion
-        
+
         #region Lucky Nations
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=dawijtg5}Enable Lucky Nations", Order = 0, HintText = "", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=6F34Ffer}Lucky Nations", Order = 0, HintText = "{=Zkl46vev}Activates/Deactivates the mechanics for lucky nations.", RequireRestart = true)]
         public bool EnableLuckyNations { get; set; } = false;
-        
+
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=7fGer34R}Random Lucky Nation", Order = 0, HintText = "{=lgkTi59R}Activates/Deactivates a random lucky nation from all possible kingdoms.", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=7fGer34R}Random Lucky Nation", Order = 1, HintText = "{=lgkTi59R}Activates/Deactivates a random lucky nation from all possible kingdoms.", RequireRestart = true)]
         public bool RandomLuckyNation { get; set; } = false;
-        
+
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=kgjR53Sd}Imperial Lucky Nation", Order = 0, HintText = "{=lgkr98EE}Guarantees an Imperial lucky nation.", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=kgjR53Sd}Imperial Lucky Nation", Order = 2, HintText = "{=lgkr98EE}Guarantees an Imperial lucky nation.", RequireRestart = true)]
         public bool ImperialLuckyNation { get; set; } = false;
 
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=klge23qZ}Non-Imperial Lucky Nation", Order = 0, HintText = "{=mvb34Sdk}Guarantees a  Non-Imperial lucky nation.", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=klge23qZ}Non-Imperial Lucky Nation", Order = 3, HintText = "{=mvb34Sdk}Guarantees a  Non-Imperial lucky nation.", RequireRestart = true)]
         public bool NonImperialLuckyNation { get; set; } = false;
-        
+
         #endregion
     }
 }
