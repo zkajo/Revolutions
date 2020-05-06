@@ -50,7 +50,7 @@ namespace ModLibrary.Components.Clans
 
         #region Reference Properties Objects
 
-        public Clan Clan => ModLibraryManagers.ClanManager.GetObjectById(this.ClanId);
+        public Clan Clan => ModLibraryManagers.ClanManager.GetGameObject(this.ClanId);
 
         #endregion
 

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
-using TaleWorlds.Core;
 
 namespace ModLibrary.Components.Characters
 {
@@ -32,98 +31,80 @@ namespace ModLibrary.Components.Characters
                 return;
             }
 
-            foreach (var character in Campaign.Current.Characters)
+            foreach (var gameObject in Campaign.Current.Characters)
             {
-                this.AddInfo(character, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(CharacterObject gameObject)
         {
-            var characterInfo = this.Infos.FirstOrDefault(info => info.CharacterId == id);
-            if (characterInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.CharacterId == gameObject.StringId);
+            if (info != null)
             {
-                return characterInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if (gameObject == null)
             {
                 return null;
             }
 
-            var missingCharacter = this.GetObjectById(id);
-            return missingCharacter != null ? this.AddInfo(missingCharacter, true) : null;
-        }
-
-        public InfoType GetInfoByObject(CharacterObject character, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(character.StringId, addIfNotFound);
-        }
-
-        public InfoType AddInfo(CharacterObject character, bool force = false)
-        {
-            if (!force)
-            {
-                var existingCharacterInfo = this.Infos.FirstOrDefault(info => info.CharacterId == character.StringId);
-                if (existingCharacterInfo != null)
-                {
-                    return existingCharacterInfo;
-                }
-            }
-
-            var characterInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), character);
-            this.Infos.Add(characterInfo);
-
-            return characterInfo;
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.CharacterId == id);
+            this.Infos.RemoveWhere(i => i.CharacterId == id);
         }
 
-        public CharacterObject GetObjectById(string id)
+        public CharacterObject GetGameObject(string id)
         {
-            return Campaign.Current.Characters.FirstOrDefault(character => character.StringId == id);
+            return Campaign.Current.Characters.FirstOrDefault(go => go.StringId == id);
         }
 
-        public CharacterObject GetObjectByInfo(InfoType info)
+        public CharacterObject GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.CharacterId);
+            return this.GetGameObject(info.CharacterId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Characters.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Characters.Any(character => character.StringId == info.CharacterId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.StringId == i.CharacterId));
 
-            foreach (var character in Campaign.Current.Characters.Where(character => !this.Infos.Any(info => info.CharacterId == character.StringId)))
+            if(onlyRemoving)
             {
-                this.AddInfo(character, true);
+                return;
+            }
+
+            foreach (var gameObject in Campaign.Current.Characters.Where(go => !this.Infos.Any(i => i.CharacterId == go.StringId)))
+            {
+                this.GetInfo(gameObject);
             }
         }
 
         #endregion
 
-        public CharacterObject CreateLordCharacter(CultureObject culture)
+        public Hero CreateLord(Settlement settlement)
         {
-            var characterObjects = new List<CharacterObject>();
+            var lordHero = HeroCreator.CreateHeroAtOccupation(Occupation.Lord, settlement);
+            this.GetInfo(lordHero.CharacterObject);
 
-            foreach (var characterObject in CharacterObject.Templates)
-            {
-                if (characterObject.Occupation == Occupation.Lord
-                    && characterObject.Culture == culture && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
-                    && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
-                {
-                    characterObjects.Add(characterObject);
-                }
-            }
-
-            return characterObjects[MBRandom.RandomInt(characterObjects.Count)];
+            return lordHero;
         }
     }
 }

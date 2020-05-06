@@ -32,78 +32,69 @@ namespace ModLibrary.Components.Factions
                 return;
             }
 
-            foreach (var faction in Campaign.Current.Factions)
+            foreach (var gameObject in Campaign.Current.Factions)
             {
-                this.AddInfo(faction, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(IFaction gameObject)
         {
-            var factionInfo = this.Infos.FirstOrDefault(info => info.FactionId == id);
-            if (factionInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.FactionId == gameObject.StringId);
+            if (info != null)
             {
-                return factionInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if (gameObject == null)
             {
                 return null;
             }
 
-            var missingFaction = this.GetObjectById(id);
-            return missingFaction != null ? this.AddInfo(missingFaction, true) : null;
-        }
-
-        public InfoType GetInfoByObject(IFaction faction, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(faction.StringId, addIfNotFound);
-        }
-
-        public InfoType AddInfo(IFaction faction, bool force = false)
-        {
-            if (!force)
-            {
-                var existingFactionInfo = this.Infos.FirstOrDefault(info => info.FactionId == faction.StringId);
-                if(existingFactionInfo != null)
-                {
-                    return existingFactionInfo;
-                }
-            }
-
-            var factionInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), faction);
-            this.Infos.Add(factionInfo);
-
-            return factionInfo;
+            return this.GetInfo(id);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.FactionId == id);
+            this.Infos.RemoveWhere(i => i.FactionId == id);
         }
 
-        public IFaction GetObjectById(string id)
+        public IFaction GetGameObject(string id)
         {
-            return Campaign.Current.Factions.FirstOrDefault(faction => faction.StringId == id);
+            return Campaign.Current.Factions.FirstOrDefault(go => go.StringId == id);
         }
 
-        public IFaction GetObjectByInfo(InfoType info)
+        public IFaction GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.FactionId);
+            return this.GetGameObject(info.FactionId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Factions.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Factions.ToList().Any(faction => faction.StringId == info.FactionId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Factions.ToList().Any(go => go.StringId == i.FactionId));
 
-            foreach (var faction in Campaign.Current.Factions.Where(faction => !this.Infos.Any(info => info.FactionId == faction.StringId)))
+            if(onlyRemoving)
             {
-                this.AddInfo(faction, true);
+                return;
+            }
+
+            foreach (var faction in Campaign.Current.Factions.Where(go => !this.Infos.Any(i => i.FactionId == go.StringId)))
+            {
+                this.GetInfo(faction);
             }
         }
 

@@ -14,7 +14,7 @@ namespace Revolutions.Models
 
         public override bool DoesPartyConsumeFood(MobileParty mobileParty)
         {
-            var partyInfo = RevolutionsManagers.PartyManager.GetInfoById(mobileParty.StringId);
+            var partyInfo = RevolutionsManagers.PartyManager.GetInfo(mobileParty.Party);
             if (partyInfo != null && partyInfo.CantStarve)
             {
                 return false;

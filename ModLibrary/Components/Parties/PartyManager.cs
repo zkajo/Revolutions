@@ -5,7 +5,6 @@ using Helpers;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Parties
 {
@@ -35,84 +34,75 @@ namespace ModLibrary.Components.Parties
                 return;
             }
 
-            foreach (var party in Campaign.Current.Parties)
+            foreach (var gameObject in Campaign.Current.Parties)
             {
-                this.AddInfo(party, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(PartyBase gameObject)
         {
-            var partyInfo = this.Infos.FirstOrDefault(info => info.PartyId == id);
-            if (partyInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.PartyId == gameObject.Id);
+            if (info != null)
             {
-                return partyInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if (gameObject == null)
             {
                 return null;
             }
 
-            var missingParty = this.GetObjectById(id);
-            return missingParty != null ? this.AddInfo(missingParty, true) : null;
-        }
-
-        public InfoType GetInfoByObject(PartyBase party, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(party.Id, addIfNotFound);
-        }
-
-        public InfoType AddInfo(PartyBase party, bool force = false)
-        {
-            if (!force)
-            {
-                var existingPartyInfo = this.Infos.FirstOrDefault(info => info.PartyId == party.Id);
-                if (existingPartyInfo != null)
-                {
-                    return existingPartyInfo;
-                }
-            }
-
-            var partyInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), party);
-            this.Infos.Add(partyInfo);
-
-            return partyInfo;
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.PartyId == id);
+            this.Infos.RemoveWhere(i => i.PartyId == id);
         }
 
-        public PartyBase GetObjectById(string id)
+        public PartyBase GetGameObject(string id)
         {
-            return Campaign.Current.Parties.FirstOrDefault(party => party.Id == id);
+            return Campaign.Current.Parties.FirstOrDefault(go => go.Id == id);
         }
 
-        public PartyBase GetObjectByInfo(InfoType info)
+        public PartyBase GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.PartyId);
+            return this.GetGameObject(info.PartyId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Parties.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Parties.Any(party => party.Id == info.PartyId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Parties.Any(go => go.Id == i.PartyId));
 
-            foreach (var party in Campaign.Current.Parties.Where(party => !this.Infos.Any(info => info.PartyId == party.Id)))
+            if (onlyRemoving)
             {
-                this.AddInfo(party, true);
+                return;
+            }
+
+            foreach (var gameObject in Campaign.Current.Parties.Where(go => !this.Infos.Any(i => i.PartyId == go.Id)))
+            {
+                this.GetInfo(gameObject);
             }
         }
 
         #endregion
 
-        public MobileParty CreateMobileParty(string id, TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
+        public MobileParty CreateMobileParty(TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName, string id = null)
         {
             var mobileParty = MobileParty.Create(id);
 
@@ -136,6 +126,7 @@ namespace ModLibrary.Components.Parties
         {
             var newRoster = new TroopRoster();
             newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
+            newRoster.IsPrisonRoster = false;
             return newRoster;
         }
 

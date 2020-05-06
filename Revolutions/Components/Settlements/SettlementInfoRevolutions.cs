@@ -30,25 +30,25 @@ namespace Revolutions.Components.Settlements
 
         #region Reference Properties
 
-        public IFaction LoyalFaction => ModLibraryManagers.FactionManager.GetObjectById(this.LoyalFactionId);
+        public IFaction LoyalFaction => RevolutionsManagers.FactionManager.GetGameObject(this.LoyalFactionId);
 
-        public FactionInfo LoyalFactionInfo => ModLibraryManagers.FactionManager.GetInfoById(this.LoyalFactionId);
+        public FactionInfo LoyalFactionInfo => RevolutionsManagers.FactionManager.GetInfo(this.LoyalFactionId);
 
-        public FactionInfoRevolutions LoyalFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.LoyalFactionId);
+        public FactionInfoRevolutions LoyalFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfo(this.LoyalFactionId);
 
         #endregion
 
         #region Reference Properties Inherited
 
-        public FactionInfoRevolutions InitialFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.InitialFactionId);
+        public FactionInfoRevolutions InitialFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfo(this.InitialFactionId);
 
-        public FactionInfoRevolutions CurrentFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.CurrentFactionId);
+        public FactionInfoRevolutions CurrentFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfo(this.CurrentFactionId);
 
-        public FactionInfoRevolutions PreviousFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfoById(this.PreviousFactionId);
+        public FactionInfoRevolutions PreviousFactionInfoRevolutions => RevolutionsManagers.FactionManager.GetInfo(this.PreviousFactionId);
 
         #endregion
 
-        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetObjectById(this.LoyalFactionId).Name.ToLower().Contains("empire");
+        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetGameObject(this.LoyalFactionId).Name.ToLower().Contains("empire");
 
         #endregion
 

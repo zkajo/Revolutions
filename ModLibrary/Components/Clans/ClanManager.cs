@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.ObjectSystem;
@@ -34,78 +35,69 @@ namespace ModLibrary.Components.Clans
                 return;
             }
 
-            foreach (var clan in Campaign.Current.Clans)
+            foreach (var gameObject in Campaign.Current.Clans)
             {
-                this.AddInfo(clan, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(Clan gameObject)
         {
-            var clanInfo = this.Infos.FirstOrDefault(info => info.ClanId == id);
-            if (clanInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.ClanId == gameObject.StringId);
+            if (info != null)
             {
-                return clanInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if(gameObject == null)
             {
                 return null;
             }
 
-            var missingClan = this.GetObjectById(id);
-            return missingClan != null ? this.AddInfo(missingClan, true) : null;
-        }
-
-        public InfoType GetInfoByObject(Clan clan, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(clan.StringId, addIfNotFound);
-        }
-
-        public InfoType AddInfo(Clan clan, bool force = false)
-        {
-            if (!force)
-            {
-                var existingClanInfo = this.Infos.FirstOrDefault(info => info.ClanId == clan.StringId);
-                if (existingClanInfo != null)
-                {
-                    return existingClanInfo;
-                }
-            }
-
-            var clanInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), clan);
-            this.Infos.Add(clanInfo);
-
-            return clanInfo;
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.ClanId == id);
+            this.Infos.RemoveWhere(i => i.ClanId == id);
         }
 
-        public Clan GetObjectById(string id)
+        public Clan GetGameObject(string id)
         {
-            return Campaign.Current.Clans.FirstOrDefault(clan => clan.StringId == id);
+            return Campaign.Current.Clans.FirstOrDefault(go => go.StringId == id);
         }
 
-        public Clan GetObjectByInfo(InfoType info)
+        public Clan GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.ClanId);
+            return this.GetGameObject(info.ClanId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Clans.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Clans.Any(clan => clan.StringId == info.ClanId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.StringId == i.ClanId));
 
-            foreach (var clan in Campaign.Current.Clans.Where(clan => !this.Infos.Any(info => info.ClanId == clan.StringId)))
+            if(onlyRemoving)
             {
-                this.GetInfoById(clan.StringId);
+                return;
+            }
+
+            foreach (var gameObject in Campaign.Current.Clans.Where(go => !this.Infos.Any(i => i.ClanId == go.StringId)))
+            {
+                this.GetInfo(gameObject);
             }
         }
 
@@ -122,6 +114,9 @@ namespace ModLibrary.Components.Clans
             clan.LabelColor = labelColour;
             clan.Color = primaryColor;
             clan.Color2 = secondaryColor;
+
+            clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
+            this.GetInfo(clan.StringId);
 
             return clan;
         }

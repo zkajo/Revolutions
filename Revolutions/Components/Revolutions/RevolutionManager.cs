@@ -7,7 +7,6 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
-using TaleWorlds.MountAndBlade.Missions.Handlers;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -179,7 +178,7 @@ namespace Revolutions.Components.Revolutions
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
             var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);
             var isMinorFaction = false;
 
@@ -191,32 +190,35 @@ namespace Revolutions.Components.Revolutions
             }
             else
             {
-                hero = HeroCreator.CreateSpecialHero(ModLibraryManagers.CharacterManager.CreateLordCharacter(settlement.Culture), settlement, null, null, -1);
-                var clan = ModLibraryManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
-                clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
+                hero = RevolutionsManagers.CharacterManager.CreateLord(settlement);
+
+                var clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
                 hero.Clan = clan;
 
-                var clanInfo = ModLibraryManagers.ClanManager.GetInfoById(clan.StringId);
+                var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.StringId);
                 clanInfo.CanJoinOtherKingdoms = false;
-                isMinorFaction = true;
-                var kingdom = this.CreateRebelKingdom(clan, settlement.MapFaction, settlement);
+
+                var kingdom = this.CreateRebelKingdom(clan, settlement);
+
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
                 DeclareWarAction.Apply(kingdom, settlement.MapFaction);
+
+                isMinorFaction = true;
             }
 
-            var rebelsPartyTemplate = settlement.Culture.RebelsPartyTemplate;
-            rebelsPartyTemplate.IncrementNumberOfCreated();
-
-            var id = string.Concat("rebels_of_", settlement.Culture.StringId, "_", rebelsPartyTemplate.NumberOfCreated);
-            var name = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
-            var mobileParty = ModLibraryManagers.PartyManager.CreateMobileParty(id, name, settlement.GatePosition, rebelsPartyTemplate, hero, !atWarWithLoyalFaction, true);
+            var partyTemplate = settlement.Culture.RebelsPartyTemplate;
+            partyTemplate.IncrementNumberOfCreated();
+            var partyId = string.Concat("rebels_of_", settlement.Culture.StringId, "_", partyTemplate.NumberOfCreated);
+            var partyName = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
+            var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(partyName, settlement.GatePosition, partyTemplate, hero, !atWarWithLoyalFaction, true);
 
             if (isMinorFaction)
             {
-                var value = MBMath.ClampInt(2, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
-                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, value);
-                value = MBMath.ClampInt(2, DefaultTraits.Siegecraft.MinValue, DefaultTraits.Siegecraft.MaxValue);
-                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Siegecraft, value);
+                var commanderSkill = MBMath.ClampInt(3, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
+                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, commanderSkill);
+                var siegecraftSkill = MBMath.ClampInt(3, DefaultTraits.Siegecraft.MinValue, DefaultTraits.Siegecraft.MaxValue);
+                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Siegecraft, siegecraftSkill);
+
                 mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
             }
 
@@ -263,7 +265,7 @@ namespace Revolutions.Components.Revolutions
             }
         }
 
-        private Kingdom CreateRebelKingdom(Clan ownerClan, IFaction warOnFaction, Settlement settlement)
+        private Kingdom CreateRebelKingdom(Clan ownerClan, Settlement settlement)
         {
             var kingdomName = settlement.Name.ToString();
             var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomName, kingdomName);

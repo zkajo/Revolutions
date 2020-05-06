@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components
@@ -10,18 +9,16 @@ namespace ModLibrary.Components
 
         void InitializeInfos();
 
-        InfoType GetInfoById(string id, bool addIfNotFound = true);
+        InfoType GetInfo(GameObjectType gameObject);
 
-        InfoType GetInfoByObject(GameObjectType gameObject, bool addIfNotFound = true);
-
-        InfoType AddInfo(GameObjectType gameObject, bool force = false);
+        InfoType GetInfo(string id);
 
         void RemoveInfo(string id);
 
-        GameObjectType GetObjectById(string id);
+        GameObjectType GetGameObject(string id);
 
-        GameObjectType GetObjectByInfo(InfoType info);
+        GameObjectType GetGameObject(InfoType info);
 
-        void UpdateInfos();
+        void UpdateInfos(bool onlyRemoving = false);
     }
 }

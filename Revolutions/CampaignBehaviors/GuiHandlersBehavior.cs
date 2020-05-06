@@ -1,12 +1,9 @@
 ﻿using System;
-using Revolutions.Components.Factions;
-using Revolutions.Components.Settlements;
-using Revolutions.Screens;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
-using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
+using Revolutions.Screens;
 
 namespace Revolutions.CampaignBehaviors
 {
@@ -36,7 +33,7 @@ namespace Revolutions.CampaignBehaviors
                 return true;
             }, (MenuCallbackArgs args) =>
             {
-                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(Settlement.CurrentSettlement.StringId);
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(Settlement.CurrentSettlement.StringId);
                 ScreenManager.PushScreen(new TownRevolutionsScreen(settlementInfo, settlementInfo.CurrentFactionInfoRevolutions));
             }, false, 4);
         }

@@ -50,7 +50,7 @@ namespace ModLibrary.Components.Characters
 
         #region Reference Properties
 
-        public CharacterObject Character => ModLibraryManagers.CharacterManager.GetObjectById(this.CharacterId);
+        public CharacterObject Character => ModLibraryManagers.CharacterManager.GetGameObject(this.CharacterId);
 
         #endregion
 

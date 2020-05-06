@@ -4,18 +4,10 @@ namespace Revolutions.Components.Settlements
 {
     public static class SettlementInfoRevolutionsExtension
     {
-        public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfo, IFaction faction = null)
+        public static void UpdateOwnerRevolution(this SettlementInfoRevolutions settlementInfo, IFaction faction)
         {
-            if (faction == null)
-            {
-                settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
-            }
-            else
-            {
-                settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
-                settlementInfo.CurrentFactionId = faction.StringId;
-            }
-
+            settlementInfo.PreviousFactionId = settlementInfo.CurrentFactionId;
+            settlementInfo.CurrentFactionId = faction.StringId;
             settlementInfo.DaysOwnedByOwner = 0;
         }
 

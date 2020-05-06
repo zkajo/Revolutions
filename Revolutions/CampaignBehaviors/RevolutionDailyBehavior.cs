@@ -19,17 +19,16 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTickEvent));
         }
 
+        public override void SyncData(IDataStore dataStore)
+        {
+
+        }
+
         private void DailyTickEvent()
         {
             RevolutionsManagers.RevolutionManager.IncreaseDailyLoyaltyForSettlement();
             RevolutionsManagers.RevolutionManager.CheckRevolutionProgress();
             this.UpdateSettlementInfos();
-
-        }
-
-        public override void SyncData(IDataStore dataStore)
-        {
-            //REMARK: We won't sync any data here, because the data will be synced inside RevolutionBehavior
         }
 
         private void UpdateSettlementInfos()

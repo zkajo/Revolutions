@@ -65,21 +65,21 @@ namespace ModLibrary.Components.Settlements
 
         #region Reference Properties
 
-        public Settlement Settlement => ModLibraryManagers.SettlementManager.GetObjectById(this.SettlementId);
+        public Settlement Settlement => ModLibraryManagers.SettlementManager.GetGameObject(this.SettlementId);
 
         public CultureObject InitialCulture => Game.Current.ObjectManager.GetObject<CultureObject>(this.InitialCultureId);
 
-        public IFaction InitialFaction => ModLibraryManagers.FactionManager.GetObjectById(this.InitialFactionId);
+        public IFaction InitialFaction => ModLibraryManagers.FactionManager.GetGameObject(this.InitialFactionId);
 
-        public FactionInfo InitialFactionInfo => ModLibraryManagers.FactionManager.GetInfoById(this.InitialFactionId);
+        public FactionInfo InitialFactionInfo => ModLibraryManagers.FactionManager.GetInfo(this.InitialFactionId);
 
-        public IFaction CurrentFaction => ModLibraryManagers.FactionManager.GetObjectById(this.CurrentFactionId);
+        public IFaction CurrentFaction => ModLibraryManagers.FactionManager.GetGameObject(this.CurrentFactionId);
 
-        public FactionInfo CurrentFactionInfo => ModLibraryManagers.FactionManager.GetInfoById(this.CurrentFactionId);
+        public FactionInfo CurrentFactionInfo => ModLibraryManagers.FactionManager.GetInfo(this.CurrentFactionId);
 
-        public IFaction PreviousFaction => ModLibraryManagers.FactionManager.GetObjectById(this.PreviousFactionId);
+        public IFaction PreviousFaction => ModLibraryManagers.FactionManager.GetGameObject(this.PreviousFactionId);
 
-        public FactionInfo PreviousFactionInfo => ModLibraryManagers.FactionManager.GetInfoById(this.PreviousFactionId);
+        public FactionInfo PreviousFactionInfo => ModLibraryManagers.FactionManager.GetInfo(this.PreviousFactionId);
 
         #endregion
 
@@ -89,11 +89,11 @@ namespace ModLibrary.Components.Settlements
 
         public bool IsOfImperialCulture => this.Settlement.Culture.Name.ToLower().Contains("empire");
 
-        public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetObjectById(this.InitialFactionId).Name.ToLower().Contains("empire");
+        public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.InitialFactionId).Name.ToLower().Contains("empire");
 
-        public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetObjectById(this.CurrentFactionId).Name.ToLower().Contains("empire");
+        public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.CurrentFactionId).Name.ToLower().Contains("empire");
 
-        public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetObjectById(this.PreviousFactionId).Name.ToLower().Contains("empire");
+        public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.PreviousFactionId).Name.ToLower().Contains("empire");
 
         #endregion
 

@@ -53,7 +53,7 @@ namespace ModLibrary.Components.Factions
 
         #region Reference Properties
 
-        public IFaction Faction => ModLibraryManagers.FactionManager.GetObjectById(this.FactionId);
+        public IFaction Faction => ModLibraryManagers.FactionManager.GetGameObject(this.FactionId);
 
         #endregion
 

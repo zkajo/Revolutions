@@ -50,7 +50,7 @@ namespace ModLibrary.Components.Kingdoms
 
         #region Reference Properties
 
-        public Kingdom Kingdom => ModLibraryManagers.KingdomManager.GetObjectById(this.KingdomId);
+        public Kingdom Kingdom => ModLibraryManagers.KingdomManager.GetGameObject(this.KingdomId);
 
         #endregion
 

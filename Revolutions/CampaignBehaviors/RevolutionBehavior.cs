@@ -21,11 +21,13 @@ namespace Revolutions.CampaignBehaviors
         public override void RegisterEvents()
         {
             CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnSessionLaunchedEvent));
-            CampaignEvents.SettlementEntered.AddNonSerializedListener(this, new Action<MobileParty, Settlement, Hero>(this.SettlementEntered));
-            CampaignEvents.OnSettlementLeftEvent.AddNonSerializedListener(this, new Action<MobileParty, Settlement>(this.OnSettlementLeftEvent));
+
             CampaignEvents.MapEventEnded.AddNonSerializedListener(this, new Action<MapEvent>(this.MapEventEnded));
+
             CampaignEvents.OnSettlementOwnerChangedEvent.AddNonSerializedListener(this, new Action<Settlement, bool, Hero, Hero, Hero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail>(this.OnSettlementOwnerChangedEvent));
+
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
+            CampaignEvents.ClanChangedKingdom.AddNonSerializedListener(this, new Action<Clan, Kingdom, Kingdom, bool, bool>(this.ClanChangedKingdom));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -59,47 +61,6 @@ namespace Revolutions.CampaignBehaviors
             this.DataStorage.InitializeData();
         }
 
-        private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
-        {
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
-            settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
-        }
-
-        private void SettlementEntered(MobileParty mobileParty, Settlement settlement, Hero hero)
-        {
-            if (mobileParty == null || !mobileParty.IsLordParty || mobileParty.LeaderHero == null)
-            {
-                return;
-            }
-
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
-
-            var partyLeader = mobileParty.Leader.HeroObject;
-            var clanLeader = mobileParty.Party.Owner.Clan.Leader;
-
-            if (partyLeader.StringId == clanLeader.StringId && clanLeader.Clan.StringId == settlement.OwnerClan.StringId)
-            {
-                settlementInfo.IsOwnerInSettlement = true;
-            }
-        }
-
-        private void OnSettlementLeftEvent(MobileParty mobileParty, Settlement settlement)
-        {
-            if (mobileParty == null || !mobileParty.IsLordParty || mobileParty.LeaderHero == null)
-            {
-                return;
-            }
-
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(settlement.StringId);
-            var partyLeader = mobileParty.Leader.HeroObject;
-            var clanLeader = mobileParty.Party.Owner.Clan.Leader;
-
-            if (partyLeader.StringId == clanLeader.StringId && partyLeader.Clan.StringId == settlement.OwnerClan.StringId)
-            {
-                settlementInfo.IsOwnerInSettlement = false;
-            }
-        }
-
         private void MapEventEnded(MapEvent mapEvent)
         {
             var involvedParty = mapEvent.InvolvedParties.Intersect(RevolutionManager.Instance.GetParties()).FirstOrDefault();
@@ -121,12 +82,28 @@ namespace Revolutions.CampaignBehaviors
             }
         }
 
+        private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
+        {
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
+        }
+
         private void KingdomDestroyedEvent(Kingdom kingdom)
         {
-            var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfoByObject(kingdom);
+            var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo(kingdom);
             if (kingdomInfo.UserMadeKingdom)
             {
                 RevolutionsManagers.KingdomManager.ModifyKingdomList(kingdoms => kingdoms.Remove(kingdom));
+            }
+        }
+
+        private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
+        {
+            var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.StringId);
+
+            if (!clanInfo.CanJoinOtherKingdoms && newKingdom.RulingClan.StringId != clan.StringId)
+            {
+                clan.ClanLeaveKingdom(false);
             }
         }
     }

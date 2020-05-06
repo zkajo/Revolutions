@@ -30,11 +30,11 @@ namespace Revolutions.Components.Factions
 
         #region Reference Properties
 
-        public Settlement RevoltedSettlement => ModLibraryManagers.SettlementManager.GetObjectById(this.RevoltedSettlementId);
+        public Settlement RevoltedSettlement => RevolutionsManagers.SettlementManager.GetGameObject(this.RevoltedSettlementId);
 
-        public SettlementInfo RevoltedSettlementInfo => ModLibraryManagers.SettlementManager.GetInfoById(this.RevoltedSettlementId);
+        public SettlementInfo RevoltedSettlementInfo => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlementId);
 
-        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfoById(this.RevoltedSettlementId);
+        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlementId);
 
         #endregion
 

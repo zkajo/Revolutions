@@ -27,7 +27,7 @@ namespace Revolutions.Models
             try
             {
                 var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
-                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfoById(town.Settlement?.StringId);
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(town.Settlement?.StringId);
 
                 if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
                 {
@@ -86,7 +86,7 @@ namespace Revolutions.Models
         {
             if (settlementInfo.CurrentFaction.IsKingdomFaction)
             {
-                var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfoById(settlementInfo.CurrentFactionId);
+                var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo(settlementInfo.CurrentFactionId);
                 if (kingdomInfo != null && kingdomInfo.LuckyNation)
                 {
                     explainedNumber.Add(10, new TextObject("{=glCo42fD}Loyal population)"));

@@ -35,78 +35,69 @@ namespace ModLibrary.Components.Kingdoms
                 return;
             }
 
-            foreach (var kingdom in Campaign.Current.Kingdoms)
+            foreach (var gameObject in Campaign.Current.Kingdoms)
             {
-                this.AddInfo(kingdom, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(Kingdom gameObject)
         {
-            var kingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == id);
-            if (kingdomInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.KingdomId == gameObject.StringId);
+            if (info != null)
             {
-                return kingdomInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if (gameObject == null)
             {
                 return null;
             }
 
-            var missingKingdom = this.GetObjectById(id);
-            return missingKingdom != null ? this.AddInfo(missingKingdom, true) : null;
-        }
-
-        public InfoType GetInfoByObject(Kingdom kingdom, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(kingdom.StringId, addIfNotFound);
-        }
-
-        public InfoType AddInfo(Kingdom kingdom, bool force = false)
-        {
-            if (!force)
-            {
-                var existingKingdomInfo = this.Infos.FirstOrDefault(info => info.KingdomId == kingdom.StringId);
-                if (existingKingdomInfo != null)
-                {
-                    return existingKingdomInfo;
-                }
-            }
-
-            var kingdomInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), kingdom);
-            this.Infos.Add(kingdomInfo);
-
-            return kingdomInfo;
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.KingdomId == id);
+            this.Infos.RemoveWhere(i => i.KingdomId == id);
         }
 
-        public Kingdom GetObjectById(string id)
+        public Kingdom GetGameObject(string id)
         {
-            return Campaign.Current.Kingdoms.FirstOrDefault(kingdom => kingdom?.StringId == id);
+            return Campaign.Current.Kingdoms.FirstOrDefault(go => go?.StringId == id);
         }
 
-        public Kingdom GetObjectByInfo(InfoType info)
+        public Kingdom GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.KingdomId);
+            return this.GetGameObject(info.KingdomId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Kingdoms.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Kingdoms.Any(kingdom => kingdom.StringId == info.KingdomId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.StringId == i.KingdomId));
 
-            foreach (var kingdom in Campaign.Current.Kingdoms.Where(kingdom => !this.Infos.Any(info => info.KingdomId == kingdom.StringId)))
+            if(onlyRemoving)
             {
-                this.AddInfo(kingdom, true);
+                return;
+            }
+
+            foreach (var gameObject in Campaign.Current.Kingdoms.Where(go => !this.Infos.Any(i => i.KingdomId == go.StringId)))
+            {
+                this.GetInfo(gameObject);
             }
         }
 
@@ -130,7 +121,7 @@ namespace ModLibrary.Components.Kingdoms
 
             this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
 
-            var info = this.GetInfoById(kingdom.StringId);
+            var info = this.GetInfo(kingdom.StringId);
             info.UserMadeKingdom = true;
 
             return kingdom;

@@ -31,78 +31,69 @@ namespace ModLibrary.Components.Settlements
                 return;
             }
 
-            foreach (var settlement in Campaign.Current.Settlements)
+            foreach (var gameObject in Campaign.Current.Settlements)
             {
-                this.AddInfo(settlement, false);
+                this.GetInfo(gameObject);
             }
         }
 
-        public InfoType GetInfoById(string id, bool addIfNotFound = true)
+        public InfoType GetInfo(Settlement gameObject)
         {
-            var settlementInfo = this.Infos.FirstOrDefault(info => info.SettlementId == id);
-            if (settlementInfo != null)
+            var info = this.Infos.FirstOrDefault(i => i.SettlementId == gameObject.StringId);
+            if (info != null)
             {
-                return settlementInfo;
+                return info;
             }
 
-            if (!addIfNotFound)
+            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
+            this.Infos.Add(info);
+
+            return info;
+        }
+
+        public InfoType GetInfo(string id)
+        {
+            var gameObject = this.GetGameObject(id);
+            if (gameObject == null)
             {
                 return null;
             }
 
-            var missingSettlement = this.GetObjectById(id);
-            return missingSettlement != null ? this.AddInfo(missingSettlement, true) : null;
-        }
-
-        public InfoType GetInfoByObject(Settlement settlement, bool addIfNotFound = true)
-        {
-            return this.GetInfoById(settlement.StringId, addIfNotFound);
-        }
-
-        public InfoType AddInfo(Settlement settlement, bool force = false)
-        {
-            if (!force)
-            {
-                var existingSettlementInfo = this.Infos.FirstOrDefault(info => info.SettlementId == settlement.StringId);
-                if (existingSettlementInfo != null)
-                {
-                    return existingSettlementInfo;
-                }
-            }
-
-            var settlementInfo = (InfoType)Activator.CreateInstance(typeof(InfoType), settlement);
-            this.Infos.Add(settlementInfo);
-
-            return settlementInfo;
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)
         {
-            this.Infos.RemoveWhere(info => info.SettlementId == id);
+            this.Infos.RemoveWhere(i => i.SettlementId == id);
         }
 
-        public Settlement GetObjectById(string id)
+        public Settlement GetGameObject(string id)
         {
-            return Campaign.Current.Settlements.FirstOrDefault(settlement => settlement.StringId == id);
+            return Campaign.Current.Settlements.FirstOrDefault(go => go.StringId == id);
         }
 
-        public Settlement GetObjectByInfo(InfoType info)
+        public Settlement GetGameObject(InfoType info)
         {
-            return this.GetObjectById(info.SettlementId);
+            return this.GetGameObject(info.SettlementId);
         }
 
-        public void UpdateInfos()
+        public void UpdateInfos(bool onlyRemoving = false)
         {
             if (this.Infos.Count() == Campaign.Current.Settlements.Count())
             {
                 return;
             }
 
-            this.Infos.RemoveWhere(info => !Campaign.Current.Settlements.Any(settlement => settlement.StringId == info.SettlementId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(settlemgoent => settlemgoent.StringId == i.SettlementId));
 
-            foreach (var settlement in Campaign.Current.Settlements.Where(settlement => !this.Infos.Any(info => info.SettlementId == settlement.StringId)))
+            if(onlyRemoving)
             {
-                this.AddInfo(settlement, true);
+                return;
+            }
+
+            foreach (var settlement in Campaign.Current.Settlements.Where(go => !this.Infos.Any(i => i.SettlementId == go.StringId)))
+            {
+                this.GetInfo(settlement);
             }
         }
 

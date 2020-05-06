@@ -50,7 +50,7 @@ namespace ModLibrary.Components.Parties
 
         #region Reference Properties
 
-        public PartyBase Party => ModLibraryManagers.PartyManager.GetObjectById(this.PartyId);
+        public PartyBase Party => ModLibraryManagers.PartyManager.GetGameObject(this.PartyId);
 
         #endregion
 
