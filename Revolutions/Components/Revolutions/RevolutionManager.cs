@@ -211,8 +211,7 @@ namespace Revolutions.Components.Revolutions
             }
 
             var partyTemplate = settlement.Culture.RebelsPartyTemplate;
-            partyTemplate.IncrementNumberOfCreated();
-            var partyId = string.Concat("rebels_of_", settlement.Culture.StringId, "_", partyTemplate.NumberOfCreated);
+            var partyId = string.Concat("rebels_of_", settlement.Culture.StringId, "_1");
             var partyName = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
             var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(partyName, settlement.GatePosition, partyTemplate, hero, !atWarWithLoyalFaction, true);
 
