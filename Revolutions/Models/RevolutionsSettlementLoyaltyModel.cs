@@ -1,18 +1,18 @@
-﻿using TaleWorlds.CampaignSystem;
+﻿using System;
+using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
 using TaleWorlds.Localization;
-using Revolutions.Components.Settlements;
-using System;
 using TaleWorlds.Core;
 using ModLibrary;
+using Revolutions.Components.Settlements;
 
 namespace Revolutions.Models
 {
-    public class LoyaltyModel : DefaultSettlementLoyaltyModel
+    public class RevolutionsSettlementLoyaltyModel : DefaultSettlementLoyaltyModel
     {
         private readonly DataStorage DataStorage;
 
-        public LoyaltyModel(ref DataStorage dataStorage)
+        public RevolutionsSettlementLoyaltyModel(ref DataStorage dataStorage)
         {
             this.DataStorage = dataStorage;
         }
@@ -91,7 +91,7 @@ namespace Revolutions.Models
                 {
                     explainedNumber.Add(10, new TextObject("{=glCo42fD}Loyal population)"));
                     return;
-                }   
+                }
             }
 
             if (Settings.Instance.EmpireLoyaltyMechanics)

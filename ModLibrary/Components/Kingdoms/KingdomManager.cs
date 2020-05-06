@@ -119,9 +119,9 @@ namespace ModLibrary.Components.Kingdoms
             AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
         }
 
-        public Kingdom CreateKingdom(Clan rulingClan, string stringId, string name, string informalName)
+        public Kingdom CreateKingdom(Clan rulingClan, string name, string informalName)
         {
-            var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>(stringId);
+            var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>();
             TextObject kingdomName = new TextObject(name, null);
             TextObject kingdomInformalName = new TextObject(informalName, null);
 

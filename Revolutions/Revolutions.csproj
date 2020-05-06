@@ -99,7 +99,9 @@
     <Compile Include="DataStorage.cs" />
     <Compile Include="CampaignBehaviors\RevolutionBehavior.cs" />
     <Compile Include="CampaignBehaviors\RevolutionDailyBehavior.cs" />
-    <Compile Include="Models\LoyaltyModel.cs" />
+    <Compile Include="Models\RevolutionsPartySizeLimitModel.cs" />
+    <Compile Include="Models\RevolutionsSettlementLoyaltyModel.cs" />
+    <Compile Include="Models\RevolutionsMobilePartyFoodConsumptionModel.cs" />
     <Compile Include="RevolutionsManagers.cs" />
     <Compile Include="Screens\TownRevolutionsScreen.cs" />
     <Compile Include="Screens\ViewModels\TownRevolutionViewModel.cs" />

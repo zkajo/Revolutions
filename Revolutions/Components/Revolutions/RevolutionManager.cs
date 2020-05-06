@@ -128,6 +128,7 @@ namespace Revolutions.Components.Revolutions
 
             if (revolution.IsMinorFaction)
             {
+                DestroyKingdomAction.Apply(revolution.Party.Owner.Clan.Kingdom);
                 DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             }
 
@@ -198,8 +199,9 @@ namespace Revolutions.Components.Revolutions
                 var clanInfo = ModLibraryManagers.ClanManager.GetInfoById(clan.StringId);
                 clanInfo.CanJoinOtherKingdoms = false;
                 isMinorFaction = true;
+                var kingdom = this.CreateRebelKingdom(clan, settlement.MapFaction, settlement);
                 DeclareWarAction.Apply(clan, settlement.MapFaction);
-                this.CreateRebelKingdom(clan, settlement.Name.ToString().ToLower() + "_kingdom", settlement.MapFaction, settlement);
+                DeclareWarAction.Apply(kingdom, settlement.MapFaction);
             }
 
             var rebelsPartyTemplate = settlement.Culture.RebelsPartyTemplate;
@@ -251,39 +253,24 @@ namespace Revolutions.Components.Revolutions
                 revolution.PartyInfoRevolutions.CantStarve = true;
 
                 mobileParty.EnableAi();
-                mobileParty.Ai.SetAIState(AIState.BesiegingCenter, revolution.SettlementInfo.Garrision);
+                mobileParty.Ai.SetAIState(AIState.BesiegingCenter, revolution.SettlementInfoRevolutions.Garrision);
                 mobileParty.SetMoveBesiegeSettlement(revolution.Settlement);
+                var siegeEvent = Campaign.Current.SiegeEventManager.StartSiegeEvent(revolution.Settlement, mobileParty);
+                var mapEvent = Campaign.Current.MapEventManager.StartSiegeMapEvent(mobileParty.Party, revolution.SettlementInfoRevolutions.Garrision);
+                mapEvent.SimulateBattleSetup();
 
                 settlementInfo.HasRebellionEvent = true;
             }
         }
 
-        private Kingdom CreateRebelKingdom(Clan ownerClan, string stringId, IFaction warOnFaction, Settlement settlement)
+        private Kingdom CreateRebelKingdom(Clan ownerClan, IFaction warOnFaction, Settlement settlement)
         {
-            string kingdomId = stringId;
-            var kingdom = Kingdom.All.SingleOrDefault(x => x.StringId == kingdomId);
-
-            if (kingdom == null)
-            {
-                string kingdomName = settlement.Name.ToString();
-                kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomId, kingdomName, kingdomName);
-            }
-            else
-            {
-                if (kingdom.IsDeactivated)
-                {
-                    kingdom.ReactivateKingdom();
-                }
-            }
+            var kingdomName = settlement.Name.ToString();
+            var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomName, kingdomName);
 
             //For whatever reason this city's kingdom is not kingdom holder.
             //Therefore new clan is now kingdom owner.
             kingdom.RulingClan = ownerClan;
-
-            if (!kingdom.IsAtWarWith(warOnFaction))
-            {
-                DeclareWarAction.Apply(kingdom, warOnFaction);
-            }
 
             return kingdom;
         }

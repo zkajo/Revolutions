@@ -122,6 +122,7 @@ namespace ModLibrary.Components.Clans
             clan.LabelColor = labelColour;
             clan.Color = primaryColor;
             clan.Color2 = secondaryColor;
+
             return clan;
         }
     }
