@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Kingdoms
 {
@@ -112,7 +112,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public Kingdom CreateKingdom(Clan rulingClan, string name, string informalName)
         {
-            var kingdom = MBObjectManager.Instance.CreateObject<Kingdom>();
+            var kingdom = Game.Current.ObjectManager.CreateObject<Kingdom>();
             TextObject kingdomName = new TextObject(name, null);
             TextObject kingdomInformalName = new TextObject(informalName, null);
 

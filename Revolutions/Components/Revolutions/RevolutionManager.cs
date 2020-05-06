@@ -152,6 +152,7 @@ namespace Revolutions.Components.Revolutions
             if (Settings.Instance.AllowMinorFactions && revolution.IsMinorFaction)
             {
                 ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, revolution.Settlement);
+                MakePeaceAction.Apply(revolution.Party.Owner.Clan.Kingdom, revolution.Settlement.MapFaction);
 
                 revolution.Party.MobileParty.ResetAiBehaviorObject();
                 revolution.Party.MobileParty.EnableAi();
@@ -200,7 +201,6 @@ namespace Revolutions.Components.Revolutions
 
                 var kingdom = this.CreateRebelKingdom(clan, settlement);
 
-                DeclareWarAction.Apply(clan, settlement.MapFaction);
                 DeclareWarAction.Apply(kingdom, settlement.MapFaction);
 
                 isMinorFaction = true;

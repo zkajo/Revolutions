@@ -60,7 +60,7 @@ namespace ModLibrary.Components.Factions
                 return null;
             }
 
-            return this.GetInfo(id);
+            return this.GetInfo(gameObject);
         }
 
         public void RemoveInfo(string id)

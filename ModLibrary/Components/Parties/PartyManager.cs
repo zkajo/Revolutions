@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Helpers;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
@@ -102,9 +103,9 @@ namespace ModLibrary.Components.Parties
 
         #endregion
 
-        public MobileParty CreateMobileParty(TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName, string id = null)
+        public MobileParty CreateMobileParty(TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
-            var mobileParty = MobileParty.Create(id);
+            var mobileParty = Game.Current.ObjectManager.CreateObject<MobileParty>();
 
             mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
             mobileParty.Party.Owner = owner;
