@@ -243,7 +243,6 @@ namespace Revolutions.Components.Revolutions
             if (isMinorFaction)
             {
                 mobileParty.ChangePartyLeader(mobileParty.Party.Owner.CharacterObject, false);
-                ChangeClanLeaderAction.ApplyWithSelectedNewLeader(mobileParty.Party.Owner.Clan, mobileParty.Party.Owner);
             }
 
             var revolution = new Revolution(mobileParty.Party.Id, settlement, isMinorFaction);
