@@ -43,7 +43,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public InfoType GetInfo(Kingdom gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.KingdomId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -73,7 +73,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public Kingdom GetGameObject(string id)
         {
-            return Campaign.Current.Kingdoms.FirstOrDefault(go => go?.StringId == id);
+            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.StringId == id);
         }
 
         public Kingdom GetGameObject(InfoType info)

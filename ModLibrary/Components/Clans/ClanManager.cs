@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -43,7 +44,7 @@ namespace ModLibrary.Components.Clans
 
         public InfoType GetInfo(Clan gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.ClanId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -58,7 +59,7 @@ namespace ModLibrary.Components.Clans
         public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
-            if(gameObject == null)
+            if (gameObject == null)
             {
                 return null;
             }
@@ -73,7 +74,7 @@ namespace ModLibrary.Components.Clans
 
         public Clan GetGameObject(string id)
         {
-            return Campaign.Current.Clans.FirstOrDefault(go => go.StringId == id);
+            return Campaign.Current.Clans.SingleOrDefault(go => go.StringId == id);
         }
 
         public Clan GetGameObject(InfoType info)
@@ -90,7 +91,7 @@ namespace ModLibrary.Components.Clans
 
             this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.StringId == i.ClanId));
 
-            if(onlyRemoving)
+            if (onlyRemoving)
             {
                 return;
             }
@@ -109,13 +110,14 @@ namespace ModLibrary.Components.Clans
             clan.Culture = culture;
             clan.Name = name;
             clan.InformalName = informalName;
-            clan.SetLeader(owner);
             clan.InitialPosition = position;
             clan.LabelColor = labelColour;
             clan.Color = primaryColor;
             clan.Color2 = secondaryColor;
 
             clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
+            clan.SetLeader(owner);
+
             this.GetInfo(clan.StringId);
 
             return clan;

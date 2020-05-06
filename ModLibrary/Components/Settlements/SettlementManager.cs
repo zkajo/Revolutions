@@ -39,7 +39,7 @@ namespace ModLibrary.Components.Settlements
 
         public InfoType GetInfo(Settlement gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.SettlementId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -69,7 +69,7 @@ namespace ModLibrary.Components.Settlements
 
         public Settlement GetGameObject(string id)
         {
-            return Campaign.Current.Settlements.FirstOrDefault(go => go.StringId == id);
+            return Campaign.Current.Settlements.SingleOrDefault(go => go.StringId == id);
         }
 
         public Settlement GetGameObject(InfoType info)

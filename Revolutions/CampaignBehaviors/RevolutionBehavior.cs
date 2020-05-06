@@ -101,7 +101,9 @@ namespace Revolutions.CampaignBehaviors
         {
             var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.StringId);
 
-            if (!clanInfo.CanJoinOtherKingdoms && newKingdom.RulingClan.StringId != clan.StringId)
+            if (!clanInfo.CanJoinOtherKingdoms && newKingdom?.RulingClan?.StringId != clan.StringId
+                && !(clan.Culture.Name.ToString().ToLower().Contains("empire") && newKingdom.Culture.Name.ToString().ToLower().Contains("empire"))
+                && !(clan.Culture.Name.ToString() == newKingdom.Culture.Name.ToString()))
             {
                 clan.ClanLeaveKingdom(false);
             }

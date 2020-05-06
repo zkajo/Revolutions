@@ -43,7 +43,7 @@ namespace ModLibrary.Components.Parties
 
         public InfoType GetInfo(PartyBase gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.PartyId == gameObject.Id);
+            var info = this.Infos.SingleOrDefault(i => i.PartyId == gameObject.Id);
             if (info != null)
             {
                 return info;
@@ -73,7 +73,7 @@ namespace ModLibrary.Components.Parties
 
         public PartyBase GetGameObject(string id)
         {
-            return Campaign.Current.Parties.FirstOrDefault(go => go.Id == id);
+            return Campaign.Current.Parties.SingleOrDefault(go => go.Id == id);
         }
 
         public PartyBase GetGameObject(InfoType info)
@@ -106,9 +106,12 @@ namespace ModLibrary.Components.Parties
         public MobileParty CreateMobileParty(TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
         {
             var mobileParty = Game.Current.ObjectManager.CreateObject<MobileParty>();
-
             mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
+
             mobileParty.Party.Owner = owner;
+            mobileParty.Party.Owner.Clan = owner.Clan;
+            mobileParty.IsLordParty = true;
+            mobileParty.Party.Visuals.SetMapIconAsDirty();
 
             if (addOwnerToRoster)
             {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 
 namespace ModLibrary.Components.Characters
 {
@@ -39,7 +40,7 @@ namespace ModLibrary.Components.Characters
 
         public InfoType GetInfo(CharacterObject gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.CharacterId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -69,7 +70,7 @@ namespace ModLibrary.Components.Characters
 
         public CharacterObject GetGameObject(string id)
         {
-            return Campaign.Current.Characters.FirstOrDefault(go => go.StringId == id);
+            return Campaign.Current.Characters.SingleOrDefault(go => go.StringId == id);
         }
 
         public CharacterObject GetGameObject(InfoType info)
@@ -101,10 +102,23 @@ namespace ModLibrary.Components.Characters
 
         public Hero CreateLord(Settlement settlement)
         {
-            var lordHero = HeroCreator.CreateHeroAtOccupation(Occupation.Lord, settlement);
-            this.GetInfo(lordHero.CharacterObject);
+            var characterObjects = new List<CharacterObject>();
 
-            return lordHero;
+            foreach (var characterObject in CharacterObject.Templates)
+            {
+                if (characterObject.Occupation == Occupation.Lord
+                    && characterObject.Culture == settlement.Culture && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
+                    && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
+                {
+                    characterObjects.Add(characterObject);
+                }
+            }
+
+            var character = characterObjects[MBRandom.RandomInt(characterObjects.Count)];
+            var hero = HeroCreator.CreateSpecialHero(character, settlement, null, null, -1);
+            this.GetInfo(hero.CharacterObject);
+
+            return hero;
         }
     }
 }

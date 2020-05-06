@@ -40,7 +40,7 @@ namespace ModLibrary.Components.Factions
 
         public InfoType GetInfo(IFaction gameObject)
         {
-            var info = this.Infos.FirstOrDefault(i => i.FactionId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.FactionId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -70,7 +70,7 @@ namespace ModLibrary.Components.Factions
 
         public IFaction GetGameObject(string id)
         {
-            return Campaign.Current.Factions.FirstOrDefault(go => go.StringId == id);
+            return Campaign.Current.Factions.SingleOrDefault(go => go.StringId == id);
         }
 
         public IFaction GetGameObject(InfoType info)
