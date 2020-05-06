@@ -106,8 +106,8 @@ namespace ModLibrary.Components.Characters
 
             foreach (var characterObject in CharacterObject.Templates)
             {
-                if (characterObject.Occupation == Occupation.Lord
-                    && characterObject.Culture == settlement.Culture && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
+                if (characterObject.Occupation == Occupation.Lord && characterObject.Culture == settlement.Culture
+                    && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
                     && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
                 {
                     characterObjects.Add(characterObject);

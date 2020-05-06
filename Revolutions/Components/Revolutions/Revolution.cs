@@ -1,6 +1,5 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary;
 using ModLibrary.Components;
 using ModLibrary.Components.Settlements;
 using ModLibrary.Components.Parties;

@@ -7,7 +7,6 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
-using Helpers;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -257,9 +256,6 @@ namespace Revolutions.Components.Revolutions
                 revolution.PartyInfoRevolutions.CantStarve = true;
 
                 SetPartyAiAction.GetActionForBesiegingSettlement(mobileParty, revolution.Settlement);
-                //var siegeEvent = Campaign.Current.SiegeEventManager.StartSiegeEvent(revolution.Settlement, mobileParty);
-                //var mapEvent = Campaign.Current.MapEventManager.StartSiegeMapEvent(mobileParty.Party, revolution.SettlementInfoRevolutions.Garrision);
-                //mapEvent.SimulateBattleSetup();
 
                 settlementInfo.HasRebellionEvent = true;
             }
