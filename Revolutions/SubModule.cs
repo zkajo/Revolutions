@@ -58,8 +58,6 @@ namespace Revolutions
             campaignGameStarter.AddBehavior(new LuckyNationBehaviour());
 
             campaignGameStarter.AddModel(new RevolutionsSettlementLoyaltyModel(ref this._dataStorage));
-            campaignGameStarter.AddModel(new RevolutionsMobilePartyFoodConsumptionModel(ref this._dataStorage));
-            campaignGameStarter.AddModel(new RevolutionsPartySizeLimitModel(ref this._dataStorage));
         }
     }
 }

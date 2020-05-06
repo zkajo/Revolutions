@@ -127,6 +127,18 @@ namespace Revolutions.Components.Revolutions
 
             if (revolution.IsMinorFaction)
             {
+                var mapFaction = revolution.Party.Owner.Clan.Kingdom.MapFaction;
+                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => list.Remove(revolution.Party.Owner.Clan.Kingdom));
+                foreach (var faction in Campaign.Current.Factions.Where(n => n.IsAtWarWith(mapFaction)))
+                {
+                    if (revolution.Party.Owner.Clan.Kingdom.MapFaction.IsAtWarWith(faction))
+                    {
+                        MakePeaceAction.Apply(faction, mapFaction);
+                    }
+                }
+                
+                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => 
+                    list.Remove(revolution.Party.Owner.Clan.Kingdom));
                 DestroyKingdomAction.Apply(revolution.Party.Owner.Clan.Kingdom);
                 DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             }
@@ -211,7 +223,6 @@ namespace Revolutions.Components.Revolutions
             }
 
             var partyTemplate = settlement.Culture.RebelsPartyTemplate;
-            var partyId = string.Concat("rebels_of_", settlement.Culture.StringId, "_1");
             var partyName = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
             var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(partyName, settlement.GatePosition, partyTemplate, hero, !atWarWithLoyalFaction, true);
 
@@ -253,9 +264,7 @@ namespace Revolutions.Components.Revolutions
             else
             {
                 revolution.PartyInfoRevolutions.CantStarve = true;
-
-                SetPartyAiAction.GetActionForBesiegingSettlement(mobileParty, revolution.Settlement);
-
+                Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, settlementInfo.Garrision);
                 settlementInfo.HasRebellionEvent = true;
             }
         }

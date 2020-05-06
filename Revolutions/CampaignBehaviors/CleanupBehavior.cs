@@ -5,7 +5,7 @@ namespace Revolutions.CampaignBehaviors
 {
     public class CleanupBehavior : CampaignBehaviorBase
     {
-        private const int RefreshAtTick = 50;
+        private const int RefreshAtTick = 0;
 
         private int _currentTick = 0;
 
@@ -26,17 +26,29 @@ namespace Revolutions.CampaignBehaviors
 
         private void TickEvent(float dt)
         {
-            if (this._currentTick == CleanupBehavior.RefreshAtTick)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
             {
                 RevolutionsManagers.KingdomManager.UpdateInfos();
                 RevolutionsManagers.FactionManager.UpdateInfos();
                 RevolutionsManagers.ClanManager.UpdateInfos();
-                RevolutionsManagers.PartyManager.UpdateInfos();
-                RevolutionsManagers.CharacterManager.UpdateInfos();
-                RevolutionsManagers.SettlementManager.UpdateInfos();
-
-                this._currentTick = 0;
+                
                 return;
+            }
+
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
+            {
+                RevolutionsManagers.SettlementManager.UpdateInfos();
+            }
+
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 60)
+            {
+                RevolutionsManagers.PartyManager.UpdateInfos();
+            }
+
+            if (this._currentTick >= CleanupBehavior.RefreshAtTick + 80)
+            { 
+                RevolutionsManagers.CharacterManager.UpdateInfos();
+                this._currentTick = 0;
             }
 
             this._currentTick++;
