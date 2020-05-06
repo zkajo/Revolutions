@@ -117,7 +117,6 @@ namespace ModLibrary.Components.Kingdoms
             TextObject kingdomInformalName = new TextObject(informalName, null);
 
             kingdom.InitializeKingdom(kingdomName, kingdomInformalName, rulingClan.Culture, rulingClan.Banner, rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
-            kingdom.RulingClan = rulingClan;
 
             this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
 

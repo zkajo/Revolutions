@@ -200,6 +200,8 @@ namespace Revolutions.Components.Revolutions
                 clanInfo.CanJoinOtherKingdoms = false;
 
                 var kingdom = this.CreateRebelKingdom(clan, settlement);
+                ChangeKingdomAction.ApplyByJoinToKingdom(clan, kingdom, true);
+                kingdom.RulingClan = clan;
 
                 DeclareWarAction.Apply(kingdom, settlement.MapFaction);
 
@@ -269,10 +271,6 @@ namespace Revolutions.Components.Revolutions
         {
             var kingdomName = settlement.Name.ToString();
             var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(ownerClan, kingdomName, kingdomName);
-
-            //For whatever reason this city's kingdom is not kingdom holder.
-            //Therefore new clan is now kingdom owner.
-            kingdom.RulingClan = ownerClan;
 
             return kingdom;
         }
