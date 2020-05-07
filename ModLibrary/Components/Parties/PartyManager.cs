@@ -83,11 +83,6 @@ namespace ModLibrary.Components.Parties
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Parties.Count())
-            {
-                return;
-            }
-
             this.Infos.RemoveWhere(i => !Campaign.Current.Parties.Any(go => go.Id == i.PartyId));
 
             if (onlyRemoving)
@@ -95,7 +90,7 @@ namespace ModLibrary.Components.Parties
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Parties.Where(go => !this.Infos.Any(i => i.PartyId == go.Id)))
+            foreach (var gameObject in Campaign.Current.Parties)
             {
                 this.GetInfo(gameObject);
             }

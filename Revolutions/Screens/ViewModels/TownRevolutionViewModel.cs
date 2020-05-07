@@ -128,7 +128,7 @@ namespace Revolutions.Screens.ViewModels
                         return string.Empty;
                     }
 
-                    if (this.FactionInfo.RevoltedSettlementId == this.SettlementInfo.Settlement.StringId)
+                    if (this.FactionInfo.RevoltedSettlementId == this.SettlementInfo.Settlement.Id.InternalValue)
                     {
                         var option = new TextObject("{=q2tbH41e}The people of this town had revolted recently, and don't wish to spill blood again.");
                         return option.ToString();

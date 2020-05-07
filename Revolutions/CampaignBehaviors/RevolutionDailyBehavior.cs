@@ -2,7 +2,6 @@
 using TaleWorlds.CampaignSystem;
 using Revolutions.Components.Settlements;
 using Revolutions.Components.Factions;
-using TaleWorlds.CampaignSystem.SandBox.CampaignBehaviors;
 
 namespace Revolutions.CampaignBehaviors
 {

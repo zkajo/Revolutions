@@ -43,7 +43,7 @@ namespace ModLibrary.Components.Clans
 
         public InfoType GetInfo(Clan gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.Id.InternalValue);
             if (info != null)
             {
                 return info;
@@ -55,7 +55,7 @@ namespace ModLibrary.Components.Clans
             return info;
         }
 
-        public InfoType GetInfo(string id)
+        public InfoType GetInfo(uint id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -66,14 +66,14 @@ namespace ModLibrary.Components.Clans
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(string id)
+        public void RemoveInfo(uint id)
         {
             this.Infos.RemoveWhere(i => i.ClanId == id);
         }
 
-        public Clan GetGameObject(string id)
+        public Clan GetGameObject(uint id)
         {
-            return Campaign.Current.Clans.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Clans.SingleOrDefault(go => go.Id.InternalValue == id);
         }
 
         public Clan GetGameObject(InfoType info)
@@ -83,19 +83,14 @@ namespace ModLibrary.Components.Clans
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Clans.Count())
-            {
-                return;
-            }
-
-            this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.StringId == i.ClanId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.Id.InternalValue == i.ClanId));
 
             if (onlyRemoving)
             {
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Clans.Where(go => !this.Infos.Any(i => i.ClanId == go.StringId)))
+            foreach (var gameObject in Campaign.Current.Clans)
             {
                 this.GetInfo(gameObject);
             }
@@ -117,7 +112,7 @@ namespace ModLibrary.Components.Clans
             clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
             clan.SetLeader(owner);
 
-            this.GetInfo(clan.StringId);
+            this.GetInfo(clan.Id.InternalValue);
 
             return clan;
         }

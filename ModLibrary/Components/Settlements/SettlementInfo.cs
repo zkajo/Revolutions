@@ -40,7 +40,7 @@ namespace ModLibrary.Components.Settlements
 
         public SettlementInfo(Settlement settlement)
         {
-            this.SettlementId = settlement.StringId;
+            this.SettlementId = settlement.Id.InternalValue;
             this.InitialCultureId = settlement.Culture.StringId;
             this.InitialFactionId = settlement.MapFaction.StringId;
             this.CurrentFactionId = settlement.MapFaction.StringId;
@@ -49,7 +49,7 @@ namespace ModLibrary.Components.Settlements
 
         #region Reference Properties
 
-        public string SettlementId { get; set; }
+        public uint SettlementId { get; set; }
 
         public string InitialCultureId { get; set; }
 

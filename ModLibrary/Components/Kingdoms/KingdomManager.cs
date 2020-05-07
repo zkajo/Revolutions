@@ -43,7 +43,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public InfoType GetInfo(Kingdom gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.Id.InternalValue);
             if (info != null)
             {
                 return info;
@@ -55,7 +55,7 @@ namespace ModLibrary.Components.Kingdoms
             return info;
         }
 
-        public InfoType GetInfo(string id)
+        public InfoType GetInfo(uint id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -66,14 +66,14 @@ namespace ModLibrary.Components.Kingdoms
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(string id)
+        public void RemoveInfo(uint id)
         {
             this.Infos.RemoveWhere(i => i.KingdomId == id);
         }
 
-        public Kingdom GetGameObject(string id)
+        public Kingdom GetGameObject(uint id)
         {
-            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.StringId == id);
+            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.Id.InternalValue == id);
         }
 
         public Kingdom GetGameObject(InfoType info)
@@ -83,19 +83,14 @@ namespace ModLibrary.Components.Kingdoms
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Kingdoms.Count())
-            {
-                return;
-            }
-
-            this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.StringId == i.KingdomId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.Id.InternalValue == i.KingdomId));
 
             if(onlyRemoving)
             {
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Kingdoms.Where(go => !this.Infos.Any(i => i.KingdomId == go.StringId)))
+            foreach (var gameObject in Campaign.Current.Kingdoms)
             {
                 this.GetInfo(gameObject);
             }
@@ -120,7 +115,7 @@ namespace ModLibrary.Components.Kingdoms
 
             this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
 
-            var info = this.GetInfo(kingdom.StringId);
+            var info = this.GetInfo(kingdom.Id.InternalValue);
             info.UserMadeKingdom = true;
 
             return kingdom;

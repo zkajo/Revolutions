@@ -21,7 +21,7 @@ namespace Revolutions.Components.Factions
 
         #region Reference Properties
 
-        public string RevoltedSettlementId { get; set; }
+        public uint RevoltedSettlementId { get; set; }
 
         #endregion
 

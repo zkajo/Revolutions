@@ -40,7 +40,7 @@ namespace ModLibrary.Components.Characters
 
         public InfoType GetInfo(CharacterObject gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.Id.InternalValue);
             if (info != null)
             {
                 return info;
@@ -52,7 +52,7 @@ namespace ModLibrary.Components.Characters
             return info;
         }
 
-        public InfoType GetInfo(string id)
+        public InfoType GetInfo(uint id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -63,14 +63,14 @@ namespace ModLibrary.Components.Characters
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(string id)
+        public void RemoveInfo(uint id)
         {
             this.Infos.RemoveWhere(i => i.CharacterId == id);
         }
 
-        public CharacterObject GetGameObject(string id)
+        public CharacterObject GetGameObject(uint id)
         {
-            return Campaign.Current.Characters.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Characters.SingleOrDefault(go => go.Id.InternalValue == id);
         }
 
         public CharacterObject GetGameObject(InfoType info)
@@ -80,19 +80,14 @@ namespace ModLibrary.Components.Characters
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Characters.Count())
-            {
-                return;
-            }
-
-            this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.StringId == i.CharacterId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.Id.InternalValue == i.CharacterId));
 
             if(onlyRemoving)
             {
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Characters.Where(go => !this.Infos.Any(i => i.CharacterId == go.StringId)))
+            foreach (var gameObject in Campaign.Current.Characters)
             {
                 this.GetInfo(gameObject);
             }

@@ -26,27 +26,29 @@ namespace Revolutions.CampaignBehaviors
 
         private void TickEvent(float dt)
         {
-            if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick)
+            {
+                RevolutionsManagers.FactionManager.UpdateInfos();
+
+            }
+            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
             {
                 RevolutionsManagers.KingdomManager.UpdateInfos();
-                RevolutionsManagers.FactionManager.UpdateInfos();
-                RevolutionsManagers.ClanManager.UpdateInfos();
-                
-                return;
             }
-
-            if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
+            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
+            {
+                RevolutionsManagers.ClanManager.UpdateInfos();
+            }
+            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 60)
             {
                 RevolutionsManagers.SettlementManager.UpdateInfos();
             }
-
-            if (this._currentTick == CleanupBehavior.RefreshAtTick + 60)
+            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 80)
             {
                 RevolutionsManagers.PartyManager.UpdateInfos();
             }
-
-            if (this._currentTick >= CleanupBehavior.RefreshAtTick + 80)
-            { 
+            else if (this._currentTick >= CleanupBehavior.RefreshAtTick + 100)
+            {
                 RevolutionsManagers.CharacterManager.UpdateInfos();
                 this._currentTick = 0;
             }
@@ -61,17 +63,17 @@ namespace Revolutions.CampaignBehaviors
 
         private void MobilePartyDestroyed(MobileParty mobileParty, PartyBase party)
         {
-            RevolutionsManagers.PartyManager.RemoveInfo(mobileParty.StringId);
+            RevolutionsManagers.PartyManager.RemoveInfo(mobileParty.Party.Id);
         }
 
         private void KingdomDestroyedEvent(Kingdom kingdom)
         {
-            RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.StringId);
+            RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.Id.InternalValue);
         }
 
         private void ClanDestroyedEvent(Clan clan)
         {
-            RevolutionsManagers.ClanManager.RemoveInfo(clan.StringId);
+            RevolutionsManagers.ClanManager.RemoveInfo(clan.Id.InternalValue);
         }
     }
 }

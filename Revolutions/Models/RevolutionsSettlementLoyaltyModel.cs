@@ -27,7 +27,7 @@ namespace Revolutions.Models
             try
             {
                 var explainedNumber = new ExplainedNumber(0.0f, statExplainer, null);
-                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(town.Settlement?.StringId);
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(town.Settlement.Id.InternalValue);
 
                 if (settlementInfo.CurrentFaction.Leader == Hero.MainHero)
                 {
@@ -53,7 +53,7 @@ namespace Revolutions.Models
             catch (Exception exception)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Failed to calculate loyalty change! Using TaleWorld logic now.", ColorManager.Red));
-                InformationManager.DisplayMessage(new InformationMessage($"Exception Details: Town: {town?.Name} | Town.StringId: {town?.StringId} | Town.Settlement: {town?.Settlement?.Name} | Town.Settlement.StringId: {town?.Settlement?.StringId}", ColorManager.Red));
+                InformationManager.DisplayMessage(new InformationMessage($"Exception Details: Town: {town?.Name} | Town.Id.InternalValue: {town?.Id.InternalValue} | Town.Settlement: {town?.Settlement?.Name} | Town.Settlement.Id.InternalValue: {town?.Settlement?.Id.InternalValue}", ColorManager.Red));
                 InformationManager.DisplayMessage(new InformationMessage(exception.ToString(), ColorManager.Red));
                 InformationManager.DisplayMessage(new InformationMessage(exception.StackTrace, ColorManager.Red));
 
@@ -86,7 +86,7 @@ namespace Revolutions.Models
         {
             if (settlementInfo.CurrentFaction.IsKingdomFaction)
             {
-                var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo(settlementInfo.CurrentFactionId);
+                var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo((Kingdom)settlementInfo.CurrentFaction);
                 if (kingdomInfo != null && kingdomInfo.LuckyNation)
                 {
                     explainedNumber.Add(10, new TextObject("{=glCo42fD}Loyal population)"));

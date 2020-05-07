@@ -39,7 +39,7 @@ namespace ModLibrary.Components.Settlements
 
         public InfoType GetInfo(Settlement gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.StringId);
+            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.Id.InternalValue);
             if (info != null)
             {
                 return info;
@@ -51,7 +51,7 @@ namespace ModLibrary.Components.Settlements
             return info;
         }
 
-        public InfoType GetInfo(string id)
+        public InfoType GetInfo(uint id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -62,14 +62,14 @@ namespace ModLibrary.Components.Settlements
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(string id)
+        public void RemoveInfo(uint id)
         {
             this.Infos.RemoveWhere(i => i.SettlementId == id);
         }
 
-        public Settlement GetGameObject(string id)
+        public Settlement GetGameObject(uint id)
         {
-            return Campaign.Current.Settlements.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Settlements.SingleOrDefault(go => go.Id.InternalValue == id);
         }
 
         public Settlement GetGameObject(InfoType info)
@@ -79,19 +79,14 @@ namespace ModLibrary.Components.Settlements
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Settlements.Count())
-            {
-                return;
-            }
-
-            this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(settlemgoent => settlemgoent.StringId == i.SettlementId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(go => go.Id.InternalValue == i.SettlementId));
 
             if(onlyRemoving)
             {
                 return;
             }
 
-            foreach (var settlement in Campaign.Current.Settlements.Where(go => !this.Infos.Any(i => i.SettlementId == go.StringId)))
+            foreach (var settlement in Campaign.Current.Settlements)
             {
                 this.GetInfo(settlement);
             }

@@ -37,12 +37,12 @@ namespace ModLibrary.Components.Clans
 
         public ClanInfo(Clan clan)
         {
-            this.ClanId = clan.StringId;
+            this.ClanId = clan.Id.InternalValue;
         }
 
         #region Reference Properties
 
-        public string ClanId { get; set; }
+        public uint ClanId { get; set; }
 
         #endregion
 

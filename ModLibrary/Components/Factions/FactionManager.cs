@@ -80,11 +80,6 @@ namespace ModLibrary.Components.Factions
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            if (this.Infos.Count() == Campaign.Current.Factions.Count())
-            {
-                return;
-            }
-
             this.Infos.RemoveWhere(i => !Campaign.Current.Factions.ToList().Any(go => go.StringId == i.FactionId));
 
             if(onlyRemoving)
@@ -92,7 +87,7 @@ namespace ModLibrary.Components.Factions
                 return;
             }
 
-            foreach (var faction in Campaign.Current.Factions.Where(go => !this.Infos.Any(i => i.FactionId == go.StringId)))
+            foreach (var faction in Campaign.Current.Factions)
             {
                 this.GetInfo(faction);
             }
