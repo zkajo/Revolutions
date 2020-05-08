@@ -131,7 +131,7 @@ namespace ModLibrary.Components.Parties
             if (addInitialFood)
             {
                 ItemObject foodItem = Campaign.Current.Items.First(item => item.IsFood);
-                mobileParty.ItemRoster.AddToCounts(foodItem, 150);
+                mobileParty.ItemRoster.AddToCounts(foodItem, 200);
             }
 
             mobileParty.HomeSettlement = homeSettlement;
@@ -151,28 +151,28 @@ namespace ModLibrary.Components.Parties
             {
                 if (withTier1)
                 {
-                    basicUnits.AddToCounts(tier1, amount / 2);
+                    basicUnits.AddToCounts(tier1, amount / 4);
                 }
 
                 foreach (CharacterObject tier2 in tier1.UpgradeTargets)
                 {
                     if (withTier2)
                     {
-                        basicUnits.AddToCounts(tier2, amount / 2);
+                        basicUnits.AddToCounts(tier2, amount / 4);
                     }
 
                     foreach (CharacterObject tier3 in tier2.UpgradeTargets)
                     {
                         if (withTier3)
                         {
-                            basicUnits.AddToCounts(tier3, amount / 4);
+                            basicUnits.AddToCounts(tier3, amount / 8);
                         }
 
                         foreach (CharacterObject tier4 in tier3.UpgradeTargets)
                         {
                             if (withTier4)
                             {
-                                basicUnits.AddToCounts(tier4, amount / 8);
+                                basicUnits.AddToCounts(tier4, amount / 16);
                             }
                         }
                     }

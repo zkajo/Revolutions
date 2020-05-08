@@ -56,10 +56,10 @@ namespace Revolutions
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
-            var settlementNameIndex = 2;
+            var settlementNameIndex = 3;
             var winIndex = aggregatedString.IndexOf("-w ") + 3;
 
-            var settlementName = aggregatedString.Substring(settlementNameIndex, winIndex - 6);
+            var settlementName = aggregatedString.Substring(settlementNameIndex, winIndex - 7);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
