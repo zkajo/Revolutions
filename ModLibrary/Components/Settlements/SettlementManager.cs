@@ -79,6 +79,11 @@ namespace ModLibrary.Components.Settlements
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if (this.Infos.Count == Campaign.Current.Settlements.Count)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(go => go.StringId == i.SettlementId));
 
             if(onlyRemoving)

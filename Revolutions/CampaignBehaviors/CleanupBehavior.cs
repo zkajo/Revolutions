@@ -26,31 +26,31 @@ namespace Revolutions.CampaignBehaviors
 
         private void TickEvent(float dt)
         {
-            if (this._currentTick == CleanupBehavior.RefreshAtTick)
+            switch (this._currentTick)
             {
-                RevolutionsManagers.FactionManager.UpdateInfos();
+                case RefreshAtTick:
+                    RevolutionsManagers.FactionManager.UpdateInfos();
+                    break;
+                case RefreshAtTick + 20:
+                    RevolutionsManagers.KingdomManager.UpdateInfos();
+                    break;
+                case RefreshAtTick + 40:
+                    RevolutionsManagers.ClanManager.UpdateInfos();
+                    break;
+                case RefreshAtTick + 60:
+                    RevolutionsManagers.SettlementManager.UpdateInfos();
+                    break;
+                case RefreshAtTick + 80:
+                    RevolutionsManagers.PartyManager.UpdateInfos();
+                    break;
+                default:
+                    if (this._currentTick >= RefreshAtTick + 100)
+                    {
+                        RevolutionsManagers.CharacterManager.UpdateInfos();
+                        this._currentTick = 0;
+                    }
 
-            }
-            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
-            {
-                RevolutionsManagers.KingdomManager.UpdateInfos();
-            }
-            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
-            {
-                RevolutionsManagers.ClanManager.UpdateInfos();
-            }
-            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 60)
-            {
-                RevolutionsManagers.SettlementManager.UpdateInfos();
-            }
-            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 80)
-            {
-                RevolutionsManagers.PartyManager.UpdateInfos();
-            }
-            else if (this._currentTick >= CleanupBehavior.RefreshAtTick + 100)
-            {
-                RevolutionsManagers.CharacterManager.UpdateInfos();
-                this._currentTick = 0;
+                    break;
             }
 
             this._currentTick++;

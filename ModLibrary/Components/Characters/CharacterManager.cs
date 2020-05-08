@@ -82,6 +82,11 @@ namespace ModLibrary.Components.Characters
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if(this.Infos.Count == Campaign.Current.Characters.Count)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.StringId == i.CharacterId));
 
             if (onlyRemoving)
