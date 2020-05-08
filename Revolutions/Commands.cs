@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using ModLibrary.Components.Kingdoms;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Library;
 
@@ -252,6 +253,30 @@ namespace Revolutions
             settlement.OwnerClan = clan;
 
             return $"{settlement.Name} is now owned by and loyal to {clan.Name} ({settlementInfo.LoyalFaction.Name}).";
+        }
+        
+        [CommandLineFunctionality.CommandLineArgumentFunction("show_lucky_nations", "revolutions")]
+        public static string ShowLuckyNations(List<string> strings)
+        {
+            if (Campaign.Current == null)
+            {
+                return "Campaign was not started.";
+            }
+
+            List<string> luckyNations = new List<string>();
+            
+            foreach (var info in RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.LuckyNation))
+            {
+                luckyNations.Add(info.Kingdom.Name.ToString());
+            }
+
+            string response = "Lucky nations:";
+            foreach (var str in luckyNations)
+            {
+                response = response + " " + str + ", ";
+            }
+
+            return response;
         }
     }
 }

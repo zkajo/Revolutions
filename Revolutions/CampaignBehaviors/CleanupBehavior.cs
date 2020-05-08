@@ -26,14 +26,14 @@ namespace Revolutions.CampaignBehaviors
 
         private void TickEvent(float dt)
         {
-            if (this._currentTick == CleanupBehavior.RefreshAtTick)
+            if (this._currentTick == CleanupBehavior.RefreshAtTick + 10)
             {
                 RevolutionsManagers.FactionManager.UpdateInfos();
 
             }
             else if (this._currentTick == CleanupBehavior.RefreshAtTick + 20)
             {
-                RevolutionsManagers.KingdomManager.UpdateInfos();
+                RevolutionsManagers.CharacterManager.UpdateInfos();
             }
             else if (this._currentTick == CleanupBehavior.RefreshAtTick + 40)
             {
@@ -47,9 +47,12 @@ namespace Revolutions.CampaignBehaviors
             {
                 RevolutionsManagers.PartyManager.UpdateInfos();
             }
-            else if (this._currentTick >= CleanupBehavior.RefreshAtTick + 100)
+            else if (this._currentTick == CleanupBehavior.RefreshAtTick + 100)
             {
-                RevolutionsManagers.CharacterManager.UpdateInfos();
+                RevolutionsManagers.KingdomManager.UpdateInfos();
+            }
+            else if (this._currentTick >= CleanupBehavior.RefreshAtTick + 120 )
+            {
                 this._currentTick = 0;
             }
 

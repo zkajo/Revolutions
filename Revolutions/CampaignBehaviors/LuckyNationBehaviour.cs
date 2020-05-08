@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using ModLibrary.Components.Kingdoms;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 
@@ -10,11 +11,17 @@ namespace Revolutions.CampaignBehaviors
         public override void RegisterEvents()
         {
             CampaignEvents.OnGameLoadedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnGameLoadedEvent));
+            CampaignEvents.OnSessionLaunchedEvent.AddNonSerializedListener(this, new Action<CampaignGameStarter>(this.OnSessionLaunchedEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
         {
 
+        }
+
+        private void OnSessionLaunchedEvent(CampaignGameStarter starter)
+        {
+            this.SetLuckyNations();
         }
 
         private void OnGameLoadedEvent(CampaignGameStarter starter)
@@ -46,21 +53,21 @@ namespace Revolutions.CampaignBehaviors
 
             if (Settings.Instance.ImperialLuckyNation)
             {
-                bool imperialLuckyNation = RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.Kingdom.Culture.Name.Contains("empire")).Any(kingdomInfo => kingdomInfo.LuckyNation);
+                bool imperialLuckyNation = RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.Kingdom.Culture.Name.ToString().ToLower().Contains("empire")).Any(kingdomInfo => kingdomInfo.LuckyNation);
 
                 if (!imperialLuckyNation)
                 {
-                    RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.Kingdom.Culture.Name.Contains("empire")).GetRandomElement().LuckyNation = true;
+                    RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.Kingdom.Culture.Name.ToString().ToLower().Contains("empire")).GetRandomElement().LuckyNation = true;
                 }
             }
 
             if (Settings.Instance.NonImperialLuckyNation)
             {
-                bool nonImperialLuckyNation = RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => !kingdomInfo.Kingdom.Culture.Name.Contains("empire")).Any(kingdomInfo => kingdomInfo.LuckyNation);
+                bool nonImperialLuckyNation = RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => !kingdomInfo.Kingdom.Culture.Name.ToString().ToLower().Contains("empire")).Any(kingdomInfo => kingdomInfo.LuckyNation);
 
                 if (!nonImperialLuckyNation)
                 {
-                    RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => !kingdomInfo.Kingdom.Culture.Name.Contains("empire")).GetRandomElement().LuckyNation = true;
+                    RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => !kingdomInfo.Kingdom.Culture.Name.ToString().ToLower().Contains("empire")).GetRandomElement().LuckyNation = true;
                 }
             }
         }
