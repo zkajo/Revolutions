@@ -84,6 +84,11 @@ namespace ModLibrary.Components.Parties
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if (this.Infos.Count == Campaign.Current.Parties.Count)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Parties.Any(go => go.Id == i.PartyId));
 
             if (onlyRemoving)

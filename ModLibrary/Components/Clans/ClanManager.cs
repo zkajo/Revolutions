@@ -83,6 +83,11 @@ namespace ModLibrary.Components.Clans
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if (this.Infos.Count == Campaign.Current.Clans.Count)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.StringId == i.ClanId));
 
             if (onlyRemoving)

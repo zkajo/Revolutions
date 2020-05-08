@@ -80,6 +80,11 @@ namespace ModLibrary.Components.Factions
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if (this.Infos.Count == Campaign.Current.Factions.Count())
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Factions.ToList().Any(go => go.StringId == i.FactionId));
 
             if(onlyRemoving)

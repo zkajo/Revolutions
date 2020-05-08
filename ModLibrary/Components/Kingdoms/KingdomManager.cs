@@ -85,6 +85,11 @@ namespace ModLibrary.Components.Kingdoms
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
+            if (this.Infos.Count == Campaign.Current.Kingdoms.Count)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.StringId == i.KingdomId));
 
             if (onlyRemoving)
