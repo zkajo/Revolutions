@@ -57,7 +57,7 @@ namespace Revolutions
             campaignGameStarter.AddBehavior(new CleanupBehavior());
             campaignGameStarter.AddBehavior(new LuckyNationBehaviour());
 
-            campaignGameStarter.AddModel(new RevolutionsSettlementLoyaltyModel(ref this._dataStorage));
+            campaignGameStarter.AddModel(new Models.SettlementLoyaltyModel(ref this._dataStorage));
         }
     }
 }

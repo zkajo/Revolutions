@@ -8,11 +8,11 @@ using Revolutions.Components.Settlements;
 
 namespace Revolutions.Models
 {
-    public class RevolutionsSettlementLoyaltyModel : DefaultSettlementLoyaltyModel
+    public class SettlementLoyaltyModel : DefaultSettlementLoyaltyModel
     {
         private readonly DataStorage DataStorage;
 
-        public RevolutionsSettlementLoyaltyModel(ref DataStorage dataStorage)
+        public SettlementLoyaltyModel(ref DataStorage dataStorage)
         {
             this.DataStorage = dataStorage;
         }
