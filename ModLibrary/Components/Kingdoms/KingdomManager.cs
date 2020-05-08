@@ -105,11 +105,55 @@ namespace ModLibrary.Components.Kingdoms
 
         #endregion
 
-        public void ModifyKingdomList(Action<List<Kingdom>> modificator)
+        public void ModifyKingdomList(Func<List<Kingdom>, List<Kingdom>> modificator)
         {
             var kingdoms = new List<Kingdom>(Campaign.Current.Kingdoms.ToList());
-            modificator(kingdoms);
-            AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
+            kingdoms = modificator(kingdoms);
+            if (kingdoms != null)
+            {
+                AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
+            }
+        }
+
+        public void AddKingdom(Kingdom kingdom)
+        {
+            this.ModifyKingdomList(kingdoms =>
+            {
+                if (kingdoms.Contains(kingdom))
+                {
+                    return null;
+                }
+
+                kingdoms.Add(kingdom);
+                return kingdoms;
+            });
+        }
+
+        public void RemoveKingdom(Kingdom kingdom)
+        {
+            this.ModifyKingdomList(kingdoms =>
+            {
+                if (kingdoms.RemoveAll(k => k == kingdom) > 0)
+                {
+                    return kingdoms;
+                }
+
+                return null;
+            });
+        }
+
+        public void RemoveAndDestroyKingdom(Kingdom kingdom)
+        {
+            this.ModifyKingdomList(kingdoms =>
+            {
+                if (kingdoms.RemoveAll(go => go == kingdom) > 0)
+                {
+                    DestroyKingdomAction.Apply(kingdom);
+                    return kingdoms;
+                }
+
+                return null;
+            });
         }
 
         public Kingdom CreateKingdom(Hero leader, Settlement settlement, TextObject name, TextObject informalName)
@@ -123,7 +167,7 @@ namespace ModLibrary.Components.Kingdoms
             kingdom.AddPolicy(DefaultPolicies.NobleRetinues);
 
             MBObjectManager.Instance.RegisterObject(kingdom);
-            this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
+            this.AddKingdom(kingdom);
 
             this.GetInfo(kingdom).UserMadeKingdom = true;
             return kingdom;

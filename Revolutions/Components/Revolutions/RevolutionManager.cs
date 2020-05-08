@@ -141,8 +141,7 @@ namespace Revolutions.Components.Revolutions
                     }
                 }
 
-                DestroyKingdomAction.Apply(revolution.Party.Owner.Clan.Kingdom);
-                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => list.Remove(revolution.Party.Owner.Clan.Kingdom));
+                RevolutionsManagers.KingdomManager.RemoveAndDestroyKingdom(revolution.Party.Owner.Clan.Kingdom);
                 DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             }
 

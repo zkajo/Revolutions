@@ -255,6 +255,37 @@ namespace Revolutions
             return $"{settlement.Name} is now owned by and loyal to {clan.Name} ({settlementInfo.LoyalFaction.Name}).";
         }
 
+        [CommandLineFunctionality.CommandLineArgumentFunction("show_loyalty_of", "revolutions")]
+        public static string ShowLoyaltyOf(List<string> strings)
+        {
+            if (Campaign.Current == null)
+            {
+                return "Campaign was not started.";
+            }
+
+            if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
+            {
+                return "Format is \"revolutions.show_loyalty_of [Settlement Name]\"";
+            }
+
+            var settlementName = strings.Aggregate((i, j) => i + " " + j);
+
+            var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
+            if (settlement == null)
+            {
+                return $"There is no Settlement \"{settlementName}\".";
+            }
+
+            if (!settlement.IsTown)
+            {
+                return $"Settlement \"{settlementName}\" is not a town.";
+            }
+
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            return $"{settlement.Name} is loyal to {settlementInfo.LoyalFaction.Name} with a score of {settlement.Town.Loyalty}.";
+        }
+
+
         [CommandLineFunctionality.CommandLineArgumentFunction("show_lucky_nations", "revolutions")]
         public static string ShowLuckyNations(List<string> strings)
         {

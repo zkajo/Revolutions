@@ -28,6 +28,7 @@ namespace Revolutions.CampaignBehaviors
 
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.ClanChangedKingdom.AddNonSerializedListener(this, new Action<Clan, Kingdom, Kingdom, bool, bool>(this.ClanChangedKingdom));
+            CampaignEvents.OnPartyRemovedEvent.AddNonSerializedListener(this, new Action<PartyBase>(this.OnPartyRemovedEvent));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -84,17 +85,15 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement);
             settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
         }
 
         private void KingdomDestroyedEvent(Kingdom kingdom)
         {
             var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo(kingdom);
-            if (kingdomInfo.UserMadeKingdom)
-            {
-                RevolutionsManagers.KingdomManager.ModifyKingdomList(kingdoms => kingdoms.Remove(kingdom));
-            }
+            RevolutionsManagers.KingdomManager.RemoveKingdom(kingdom);
+            RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.StringId);
         }
 
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
@@ -107,6 +106,11 @@ namespace Revolutions.CampaignBehaviors
             {
                 clan.ClanLeaveKingdom(false);
             }
+        }
+
+        private void OnPartyRemovedEvent(PartyBase party)
+        {
+            RevolutionsManagers.PartyManager.RemoveInfo(party.Id);
         }
     }
 }
