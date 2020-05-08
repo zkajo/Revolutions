@@ -40,7 +40,7 @@ namespace ModLibrary.Components.Settlements
 
         public SettlementInfo(Settlement settlement)
         {
-            this.SettlementId = settlement.Id.InternalValue;
+            this.SettlementId = settlement.StringId;
             this.InitialCultureId = settlement.Culture.StringId;
             this.InitialFactionId = settlement.MapFaction.StringId;
             this.CurrentFactionId = settlement.MapFaction.StringId;
@@ -49,7 +49,7 @@ namespace ModLibrary.Components.Settlements
 
         #region Reference Properties
 
-        public uint SettlementId { get; set; }
+        public string SettlementId { get; set; }
 
         public string InitialCultureId { get; set; }
 
@@ -87,13 +87,13 @@ namespace ModLibrary.Components.Settlements
 
         public PartyBase Militia => this.Settlement.Parties?.FirstOrDefault(party => party.IsMilitia)?.Party;
 
-        public bool IsOfImperialCulture => this.Settlement.Culture.Name.ToLower().Contains("empire");
+        public bool IsOfImperialCulture => this.Settlement.Culture.Name.ToString().ToLower().Contains("empire");
 
-        public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.InitialFactionId).Name.ToLower().Contains("empire");
+        public bool IsInitialFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.InitialFactionId).Name.ToString().ToLower().Contains("empire");
 
-        public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.CurrentFactionId).Name.ToLower().Contains("empire");
+        public bool IsCurrentFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.CurrentFactionId).Name.ToString().ToLower().Contains("empire");
 
-        public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.PreviousFactionId).Name.ToLower().Contains("empire");
+        public bool IsPreviousFactionOfImperialCulture => ModLibraryManagers.FactionManager.GetGameObject(this.PreviousFactionId).Name.ToString().ToLower().Contains("empire");
 
         #endregion
 

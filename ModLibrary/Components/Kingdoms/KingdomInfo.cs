@@ -37,12 +37,12 @@ namespace ModLibrary.Components.Kingdoms
 
         public KingdomInfo(Kingdom kingdom)
         {
-            this.KingdomId = kingdom.Id.InternalValue;
+            this.KingdomId = kingdom.StringId;
         }
 
         #region Reference Properties
 
-        public uint KingdomId { get; set; }
+        public string KingdomId { get; set; }
 
         #endregion
 

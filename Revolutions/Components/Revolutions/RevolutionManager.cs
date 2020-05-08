@@ -7,6 +7,7 @@ using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
+using TaleWorlds.TwoDimension;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -37,14 +38,14 @@ namespace Revolutions.Components.Revolutions
             return this.GetRevolutionByPartyId(party.Id);
         }
 
-        public Revolution GetRevolutionBySettlementId(uint settlementId)
+        public Revolution GetRevolutionBySettlementId(string settlementId)
         {
             return this.Revolutions.FirstOrDefault(revolution => revolution.SettlementId == settlementId);
         }
 
         public Revolution GetRevolutionBySettlement(Settlement settlement)
         {
-            return this.GetRevolutionBySettlementId(settlement.Id.InternalValue);
+            return this.GetRevolutionBySettlementId(settlement.StringId);
         }
 
         public List<Settlement> GetSettlements()
@@ -67,7 +68,7 @@ namespace Revolutions.Components.Revolutions
                     {
                         settlementInfo.Settlement.Town.Loyalty += Settings.Instance.PlayerInTownLoyaltyIncrease;
 
-                        if (settlementInfo.Settlement.OwnerClan.Id.InternalValue == Hero.MainHero.Clan.Id.InternalValue)
+                        if (settlementInfo.Settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
                         {
                             var textObject = new TextObject("{=PqkwszGz}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you.");
                             textObject.SetTextVariable("SETTLEMENT", settlementInfo.Settlement.Name.ToString());
@@ -128,8 +129,7 @@ namespace Revolutions.Components.Revolutions
             if (revolution.IsMinorFaction)
             {
                 var mapFaction = revolution.Party.Owner.Clan.Kingdom.MapFaction;
-                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => list.Remove(revolution.Party.Owner.Clan.Kingdom));
-                foreach (var faction in Campaign.Current.Factions.Where(n => n.IsAtWarWith(mapFaction)))
+                foreach (var faction in Campaign.Current.Factions.Where(go => go.IsAtWarWith(mapFaction)))
                 {
                     if (revolution.Party.Owner.Clan.Kingdom.MapFaction.IsAtWarWith(faction))
                     {
@@ -137,8 +137,8 @@ namespace Revolutions.Components.Revolutions
                     }
                 }
 
-                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => list.Remove(revolution.Party.Owner.Clan.Kingdom));
                 DestroyKingdomAction.Apply(revolution.Party.Owner.Clan.Kingdom);
+                RevolutionsManagers.KingdomManager.ModifyKingdomList(list => list.Remove(revolution.Party.Owner.Clan.Kingdom));
                 DestroyClanAction.Apply(revolution.Party.Owner.Clan);
             }
 
@@ -162,24 +162,25 @@ namespace Revolutions.Components.Revolutions
 
             if (Settings.Instance.AllowMinorFactions && revolution.IsMinorFaction)
             {
-                ChangeOwnerOfSettlementAction.ApplyByDefault(revolution.Party.Owner, revolution.Settlement);
-                MakePeaceAction.Apply(revolution.Party.Owner.Clan.Kingdom.MapFaction, revolution.Settlement.MapFaction);
+                if (revolution.Party.MobileParty.Ai.DoNotMakeNewDecisions)
+                {
+                    revolution.Party.MobileParty.Ai.SetDoNotMakeNewDecisions(false);
+                }
 
-                revolution.Party.MobileParty.ResetAiBehaviorObject();
-                revolution.Party.MobileParty.EnableAi();
                 SetPartyAiAction.GetActionForPatrollingAroundSettlement(revolution.Party.MobileParty, revolution.Settlement);
 
                 revolution.Party.LeaderHero.Clan.AddRenown(Settings.Instance.RenownGainOnWin);
+
+                int amountOfEliteTroops = (Settings.Instance.BaseRevoltArmySize + (int)(revolution.Settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier)) / 2;
+                revolution.Party.MobileParty.MemberRoster.Add(RevolutionsManagers.PartyManager.GenerateEliteTroopRoster(revolution.Party.LeaderHero, amountOfEliteTroops));
             }
             else
             {
-                Hero newOwner = revolution.Party.MobileParty.LeaderHero ?? revolution.Party.MapFaction.Leader;
+                Hero newOwner = revolution.Party.MobileParty.LeaderHero ?? revolution.SettlementInfoRevolutions.LoyalFaction.Leader;
 
                 ChangeOwnerOfSettlementAction.ApplyByDefault(newOwner, revolution.Settlement);
                 revolution.Party.MobileParty.RemoveParty();
             }
-
-            revolution.PartyInfoRevolutions.CantStarve = false;
 
             this.Revolutions.Remove(revolution);
         }
@@ -190,53 +191,26 @@ namespace Revolutions.Components.Revolutions
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.Id.InternalValue);
-            var atWarWithLoyalFaction = settlementInfo.CurrentFaction?.IsAtWarWith(settlementInfo.LoyalFaction);
-            var isMinorFaction = false;
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);
 
             Hero hero;
 
-            if (atWarWithLoyalFaction.Value == true)
+            if (atWarWithLoyalFaction)
             {
                 hero = RevolutionsManagers.FactionManager.GetLordWithLeastFiefs(settlementInfo.LoyalFaction).HeroObject;
             }
             else
             {
-                hero = RevolutionsManagers.CharacterManager.CreateLord(settlement);
+                hero = RevolutionsManagers.CharacterManager.CreateRandomLeader(settlement.OwnerClan, settlementInfo);
+                var clan = RevolutionsManagers.ClanManager.CreateClan(hero, hero.Name, hero.Name);
+                var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(hero, settlement, new TextObject($"Kingdom of {settlement.Name}"), new TextObject($"Kingdom of {settlement.Name}"));
 
-                var clan = RevolutionsManagers.ClanManager.CreateClan(hero.Name, hero.Name, hero.Culture, hero, settlement.MapFaction.Color, settlement.MapFaction.Color2, settlement.MapFaction.LabelColor, settlement.GatePosition);
-                hero.Clan = clan;
-
-                var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.Id.InternalValue);
-                clanInfo.CanJoinOtherKingdoms = false;
-
-                var kingdomName = settlement.Name.ToString();
-                var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(clan, kingdomName, kingdomName);
-                ChangeKingdomAction.ApplyByJoinToKingdom(clan, kingdom, true);
-                kingdom.RulingClan = clan;
-
-                DeclareWarAction.Apply(clan, settlement.MapFaction);
-                DeclareWarAction.Apply(kingdom, settlement.MapFaction);
-
-                isMinorFaction = true;
+                RevolutionsManagers.ClanManager.GetInfo(hero.Clan.StringId).CanJoinOtherKingdoms = false;
             }
 
-            var partyTemplate = settlement.Culture.RebelsPartyTemplate;
-            var partyName = new TextObject("{=q2t1Ss8d}Revolutionary Mob");
-            var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(partyName, settlement.GatePosition, partyTemplate, hero, atWarWithLoyalFaction == false, true);
-
-            if (isMinorFaction)
-            {
-                var commanderSkill = MBMath.ClampInt(3, DefaultTraits.Commander.MinValue, DefaultTraits.Commander.MaxValue);
-                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Commander, commanderSkill);
-                var siegecraftSkill = MBMath.ClampInt(3, DefaultTraits.Siegecraft.MinValue, DefaultTraits.Siegecraft.MaxValue);
-                mobileParty.Party.Owner.SetTraitLevel(DefaultTraits.Siegecraft, siegecraftSkill);
-
-                mobileParty.Party.Owner.ChangeState(Hero.CharacterStates.Active);
-            }
-
-            var numberOfRebels = Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier);
-            mobileParty.AddElementToMemberRoster(mobileParty.MemberRoster.GetCharacterAtIndex(0), numberOfRebels, false);
+            var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(hero, settlement.GatePosition, settlement, !atWarWithLoyalFaction, true);
+            mobileParty.MemberRoster.Add(RevolutionsManagers.PartyManager.GenerateBasicTroopRoster(hero, Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier)));
 
             if (settlement.MilitaParty != null && settlement.MilitaParty.CurrentSettlement == settlement && settlement.MilitaParty.MapEvent == null)
             {
@@ -248,24 +222,22 @@ namespace Revolutions.Components.Revolutions
                 settlement.MilitaParty.RemoveParty();
             }
 
-            if (isMinorFaction)
+            if (!atWarWithLoyalFaction)
             {
                 mobileParty.ChangePartyLeader(mobileParty.Party.Owner.CharacterObject, false);
             }
 
-            var revolution = new Revolution(mobileParty.Party.Id, settlement, isMinorFaction);
+            var revolution = new Revolution(mobileParty.Party.Id, settlement, !atWarWithLoyalFaction);
             this.Revolutions.Add(revolution);
 
-            if (settlementInfo.Garrision == null)
-            {
-                this.EndSucceededRevoluton(revolution);
-            }
-            else
-            {
-                revolution.PartyInfoRevolutions.CantStarve = true;
-                Campaign.Current.MapEventManager.StartBattleMapEvent(mobileParty.Party, settlementInfo.Garrision);
-                settlementInfo.HasRebellionEvent = true;
-            }
+            settlementInfo.HasRebellionEvent = true;
+
+            FactionManager.DeclareWar(hero.MapFaction, settlement.MapFaction);
+            Campaign.Current.FactionManager.RegisterCampaignWar(hero.MapFaction, settlement.MapFaction);
+            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(hero, settlement.OwnerClan.Leader, -20, false);
+            ChangeRelationAction.ApplyRelationChangeBetweenHeroes(hero, settlement.OwnerClan.Kingdom.Leader, -20, false);
+            mobileParty.Ai.SetDoNotMakeNewDecisions(true);
+            SetPartyAiAction.GetActionForBesiegingSettlement(mobileParty, settlement);
         }
     }
 }

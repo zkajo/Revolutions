@@ -68,12 +68,12 @@ namespace Revolutions.CampaignBehaviors
 
         private void KingdomDestroyedEvent(Kingdom kingdom)
         {
-            RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.Id.InternalValue);
+            RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.StringId);
         }
 
         private void ClanDestroyedEvent(Clan clan)
         {
-            RevolutionsManagers.ClanManager.RemoveInfo(clan.Id.InternalValue);
+            RevolutionsManagers.ClanManager.RemoveInfo(clan.StringId);
         }
     }
 }

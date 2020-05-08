@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Kingdoms
 {
@@ -30,7 +32,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public void InitializeInfos()
         {
-            if(this.Infos.Count() == Campaign.Current.Kingdoms.Count())
+            if (this.Infos.Count() == Campaign.Current.Kingdoms.Count())
             {
                 return;
             }
@@ -43,7 +45,7 @@ namespace ModLibrary.Components.Kingdoms
 
         public InfoType GetInfo(Kingdom gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.Id.InternalValue);
+            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -55,7 +57,7 @@ namespace ModLibrary.Components.Kingdoms
             return info;
         }
 
-        public InfoType GetInfo(uint id)
+        public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -66,14 +68,14 @@ namespace ModLibrary.Components.Kingdoms
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(uint id)
+        public void RemoveInfo(string id)
         {
             this.Infos.RemoveWhere(i => i.KingdomId == id);
         }
 
-        public Kingdom GetGameObject(uint id)
+        public Kingdom GetGameObject(string id)
         {
-            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.Id.InternalValue == id);
+            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.StringId == id);
         }
 
         public Kingdom GetGameObject(InfoType info)
@@ -83,9 +85,9 @@ namespace ModLibrary.Components.Kingdoms
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.Id.InternalValue == i.KingdomId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Kingdoms.Any(go => go.StringId == i.KingdomId));
 
-            if(onlyRemoving)
+            if (onlyRemoving)
             {
                 return;
             }
@@ -105,19 +107,19 @@ namespace ModLibrary.Components.Kingdoms
             AccessTools.Field(Campaign.Current.GetType(), "_kingdoms").SetValue(Campaign.Current, new MBReadOnlyList<Kingdom>(kingdoms));
         }
 
-        public Kingdom CreateKingdom(Clan rulingClan, string name, string informalName)
+        public Kingdom CreateKingdom(Hero leader, Settlement settlement, TextObject name, TextObject informalName)
         {
-            var kingdom = Game.Current.ObjectManager.CreateObject<Kingdom>();
-            TextObject kingdomName = new TextObject(name, null);
-            TextObject kingdomInformalName = new TextObject(informalName, null);
+            Kingdom kingdom = MBObjectManager.Instance.CreateObject<Kingdom>();
+            kingdom.InitializeKingdom(name, informalName, leader.Culture, Banner.CreateRandomClanBanner(leader.StringId.GetDeterministicHashCode()), leader.Clan.Color, leader.Clan.Color2, leader.Clan.InitialPosition);
 
-            kingdom.InitializeKingdom(kingdomName, kingdomInformalName, rulingClan.Culture, rulingClan.Banner, rulingClan.Color, rulingClan.Color2, rulingClan.InitialPosition);
+            ChangeKingdomAction.ApplyByJoinToKingdom(leader.Clan, kingdom, false);
+            kingdom.RulingClan = leader.Clan;
 
-            this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
+            kingdom.AddPolicy(DefaultPolicies.NobleRetinues);
 
-            var info = this.GetInfo(kingdom.Id.InternalValue);
-            info.UserMadeKingdom = true;
+            MBObjectManager.Instance.RegisterObject(kingdom);
 
+            this.GetInfo(kingdom).UserMadeKingdom = true;
             return kingdom;
         }
     }

@@ -39,7 +39,7 @@ namespace ModLibrary.Components.Settlements
 
         public InfoType GetInfo(Settlement gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.Id.InternalValue);
+            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -51,7 +51,7 @@ namespace ModLibrary.Components.Settlements
             return info;
         }
 
-        public InfoType GetInfo(uint id)
+        public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -62,14 +62,14 @@ namespace ModLibrary.Components.Settlements
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(uint id)
+        public void RemoveInfo(string id)
         {
             this.Infos.RemoveWhere(i => i.SettlementId == id);
         }
 
-        public Settlement GetGameObject(uint id)
+        public Settlement GetGameObject(string id)
         {
-            return Campaign.Current.Settlements.SingleOrDefault(go => go.Id.InternalValue == id);
+            return Campaign.Current.Settlements.SingleOrDefault(go => go.StringId == id);
         }
 
         public Settlement GetGameObject(InfoType info)
@@ -79,7 +79,7 @@ namespace ModLibrary.Components.Settlements
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(go => go.Id.InternalValue == i.SettlementId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(go => go.StringId == i.SettlementId));
 
             if(onlyRemoving)
             {

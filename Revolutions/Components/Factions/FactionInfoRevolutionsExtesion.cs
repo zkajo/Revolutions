@@ -7,11 +7,11 @@ namespace Revolutions.Components.Factions
         public static void CityRevoltionFailed(this FactionInfoRevolutions factionInfo, Settlement settlement)
         {
             factionInfo.CanRevolt = false;
-            factionInfo.RevoltedSettlementId = settlement.Id.InternalValue;
+            factionInfo.RevoltedSettlementId = settlement.StringId;
             factionInfo.DaysSinceLastRevolt = 0;
             factionInfo.SuccessfullyRevolted = false;
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.Id.InternalValue);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
             settlementInfo.HasRebellionEvent = false;
             settlementInfo.RevolutionProgress = 0;
         }
@@ -19,11 +19,11 @@ namespace Revolutions.Components.Factions
         public static void CityRevoltionSucceeded(this FactionInfoRevolutions factionInfo, Settlement settlement)
         {
             factionInfo.CanRevolt = false;
-            factionInfo.RevoltedSettlementId = settlement.Id.InternalValue;
+            factionInfo.RevoltedSettlementId = settlement.StringId;
             factionInfo.DaysSinceLastRevolt = 0;
             factionInfo.SuccessfullyRevolted = true;
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.Id.InternalValue);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
             settlementInfo.HasRebellionEvent = false;
             settlementInfo.RevolutionProgress = 0;
         }

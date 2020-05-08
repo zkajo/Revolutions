@@ -1,8 +1,10 @@
-﻿using System;
+﻿using ModLibrary.Components.Settlements;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
+using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Characters
 {
@@ -40,7 +42,7 @@ namespace ModLibrary.Components.Characters
 
         public InfoType GetInfo(CharacterObject gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.Id.InternalValue);
+            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -52,7 +54,7 @@ namespace ModLibrary.Components.Characters
             return info;
         }
 
-        public InfoType GetInfo(uint id)
+        public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -63,14 +65,14 @@ namespace ModLibrary.Components.Characters
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(uint id)
+        public void RemoveInfo(string id)
         {
             this.Infos.RemoveWhere(i => i.CharacterId == id);
         }
 
-        public CharacterObject GetGameObject(uint id)
+        public CharacterObject GetGameObject(string id)
         {
-            return Campaign.Current.Characters.SingleOrDefault(go => go.Id.InternalValue == id);
+            return Campaign.Current.Characters.SingleOrDefault(go => go.StringId == id);
         }
 
         public CharacterObject GetGameObject(InfoType info)
@@ -80,9 +82,9 @@ namespace ModLibrary.Components.Characters
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.Id.InternalValue == i.CharacterId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Characters.Any(go => go.StringId == i.CharacterId));
 
-            if(onlyRemoving)
+            if (onlyRemoving)
             {
                 return;
             }
@@ -95,25 +97,41 @@ namespace ModLibrary.Components.Characters
 
         #endregion
 
-        public Hero CreateLord(Settlement settlement)
+        public Hero CreateRandomLeader(Clan clan, SettlementInfo settlementInfo)
         {
-            var characterObjects = new List<CharacterObject>();
+            Random random = new Random();
+            Hero hero = null;
 
-            foreach (var characterObject in CharacterObject.Templates)
-            {
-                if (characterObject.Occupation == Occupation.Lord && characterObject.Culture == settlement.Culture
-                    && !(characterObject.AllEquipments == null || characterObject.AllEquipments.IsEmpty())
-                    && characterObject.FirstBattleEquipment != null && characterObject.FirstCivilianEquipment != null)
-                {
-                    characterObjects.Add(characterObject);
-                }
-            }
+            CharacterObject templateBase = clan.Leader.CharacterObject;
 
-            var character = characterObjects[MBRandom.RandomInt(characterObjects.Count)];
-            var hero = HeroCreator.CreateSpecialHero(character, settlement, null, null, -1);
-            this.GetInfo(hero.CharacterObject);
+            CharacterObject characterTemplate = CharacterObject.Templates.Where(go => go.Culture == settlementInfo.InitialCulture && (go.Occupation == Occupation.Lord || go.Occupation == Occupation.Lady)).GetRandomElement();
+            characterTemplate.InitializeEquipmentsOnLoad(templateBase.AllEquipments.ToList());
 
+            hero = HeroCreator.CreateSpecialHero(characterTemplate, settlementInfo.Settlement, clan, null, -1);
+            hero.StringId = Campaign.Current.Heroes[Campaign.Current.Heroes.Count - 1].StringId + random.Next(int.MaxValue);
+            hero.Name = NameGenerator.Current.GenerateHeroFirstName(hero, true);
+            hero.ChangeState(Hero.CharacterStates.NotSpawned);
+            hero.IsMinorFactionHero = false;
+            hero.IsNoble = true;
+            hero.BornSettlement = settlementInfo.Settlement;
+            hero.UpdateHomeSettlement();
+
+            hero.AddSkillXp(SkillObject.GetSkill(0), random.Next(80000, 500000)); // One Handed
+            hero.AddSkillXp(SkillObject.GetSkill(2), random.Next(80000, 500000)); // Pole Arm
+            hero.AddSkillXp(SkillObject.GetSkill(6), random.Next(80000, 500000)); // Riding
+            hero.AddSkillXp(SkillObject.GetSkill(7), random.Next(80000, 500000)); // Athletics
+            hero.AddSkillXp(SkillObject.GetSkill(9), random.Next(80000, 500000)); // Tactics
+            hero.AddSkillXp(SkillObject.GetSkill(13), random.Next(80000, 500000)); // Leadership
+            hero.AddSkillXp(SkillObject.GetSkill(15), random.Next(80000, 500000)); // Steward
+            hero.AddSkillXp(SkillObject.GetSkill(17), random.Next(80000, 500000)); // Engineering
+
+            hero.ChangeState(Hero.CharacterStates.Active);
+
+            MBObjectManager.Instance.RegisterObject(hero);
+
+            this.GetInfo(hero.StringId);
             return hero;
         }
+
     }
 }

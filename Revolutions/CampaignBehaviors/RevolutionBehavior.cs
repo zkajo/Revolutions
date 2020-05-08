@@ -84,7 +84,7 @@ namespace Revolutions.CampaignBehaviors
 
         private void OnSettlementOwnerChangedEvent(Settlement settlement, bool openToClaim, Hero newOwner, Hero oldOwner, Hero capturedHero, ChangeOwnerOfSettlementAction.ChangeOwnerOfSettlementDetail detail)
         {
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.Id.InternalValue);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
             settlementInfo.UpdateOwnerRevolution(newOwner.MapFaction);
         }
 
@@ -99,9 +99,9 @@ namespace Revolutions.CampaignBehaviors
 
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
         {
-            var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.Id.InternalValue);
+            var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.StringId);
 
-            if (!clanInfo.CanJoinOtherKingdoms && newKingdom?.RulingClan?.Id.InternalValue != clan.Id.InternalValue
+            if (!clanInfo.CanJoinOtherKingdoms && newKingdom?.RulingClan?.StringId != clan.StringId
                 && !(clan.Culture.Name.ToString().ToLower().Contains("empire") && newKingdom.Culture.Name.ToString().ToLower().Contains("empire"))
                 && !(clan.Culture.Name.ToString() == newKingdom.Culture.Name.ToString()))
             {

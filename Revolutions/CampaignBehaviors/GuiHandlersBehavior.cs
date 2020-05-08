@@ -33,7 +33,7 @@ namespace Revolutions.CampaignBehaviors
                 return true;
             }, (MenuCallbackArgs args) =>
             {
-                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(Settlement.CurrentSettlement.Id.InternalValue);
+                var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(Settlement.CurrentSettlement.StringId);
                 ScreenManager.PushScreen(new TownRevolutionsScreen(settlementInfo, settlementInfo.CurrentFactionInfoRevolutions));
             }, false, 4);
         }

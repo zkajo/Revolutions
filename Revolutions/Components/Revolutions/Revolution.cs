@@ -42,7 +42,7 @@ namespace Revolutions.Components.Revolutions
         public Revolution(string partyId, Settlement settlement, bool isMinorFaction)
         {
             this.PartyId = partyId;
-            this.SettlementId = settlement.Id.InternalValue;
+            this.SettlementId = settlement.StringId;
             this.IsMinorFaction = isMinorFaction;
         }
 
@@ -50,7 +50,7 @@ namespace Revolutions.Components.Revolutions
 
         public string PartyId { get; set; }
 
-        public uint SettlementId { get; set; }
+        public string SettlementId { get; set; }
 
         #endregion
 

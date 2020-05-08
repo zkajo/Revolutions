@@ -43,7 +43,7 @@ namespace ModLibrary.Components.Clans
 
         public InfoType GetInfo(Clan gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.Id.InternalValue);
+            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.StringId);
             if (info != null)
             {
                 return info;
@@ -55,7 +55,7 @@ namespace ModLibrary.Components.Clans
             return info;
         }
 
-        public InfoType GetInfo(uint id)
+        public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
             if (gameObject == null)
@@ -66,14 +66,14 @@ namespace ModLibrary.Components.Clans
             return this.GetInfo(gameObject);
         }
 
-        public void RemoveInfo(uint id)
+        public void RemoveInfo(string id)
         {
             this.Infos.RemoveWhere(i => i.ClanId == id);
         }
 
-        public Clan GetGameObject(uint id)
+        public Clan GetGameObject(string id)
         {
-            return Campaign.Current.Clans.SingleOrDefault(go => go.Id.InternalValue == id);
+            return Campaign.Current.Clans.SingleOrDefault(go => go.StringId == id);
         }
 
         public Clan GetGameObject(InfoType info)
@@ -83,7 +83,7 @@ namespace ModLibrary.Components.Clans
 
         public void UpdateInfos(bool onlyRemoving = false)
         {
-            this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.Id.InternalValue == i.ClanId));
+            this.Infos.RemoveWhere(i => !Campaign.Current.Clans.Any(go => go.StringId == i.ClanId));
 
             if (onlyRemoving)
             {
@@ -98,22 +98,17 @@ namespace ModLibrary.Components.Clans
 
         #endregion
 
-        public Clan CreateClan(TextObject name, TextObject informalName, CultureObject culture, Hero owner, uint primaryColor, uint secondaryColor, uint labelColour, Vec2 position)
+        public Clan CreateClan(Hero leader, TextObject name, TextObject informalName)
         {
-            var clan = MBObjectManager.Instance.CreateObject<Clan>();
-            clan.Culture = culture;
-            clan.Name = name;
-            clan.InformalName = informalName;
-            clan.InitialPosition = position;
-            clan.LabelColor = labelColour;
-            clan.Color = primaryColor;
-            clan.Color2 = secondaryColor;
+            Clan clan = MBObjectManager.Instance.CreateObject<Clan>();
+            clan.Culture = leader.Culture;
+            clan.AddRenown(900, false);
+            clan.SetLeader(leader);
+            leader.Clan = clan;
 
-            clan.InitializeClan(clan.Name, clan.Name, clan.Culture, Banner.CreateRandomBanner(MBRandom.RandomInt(0, 1000000)));
-            clan.SetLeader(owner);
+            clan.InitializeClan(name, informalName, leader.Culture, Banner.CreateRandomClanBanner(leader.StringId.GetDeterministicHashCode()));
 
-            this.GetInfo(clan.Id.InternalValue);
-
+            this.GetInfo(clan.StringId);
             return clan;
         }
     }

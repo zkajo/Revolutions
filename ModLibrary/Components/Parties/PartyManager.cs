@@ -6,6 +6,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Parties
 {
@@ -98,43 +99,123 @@ namespace ModLibrary.Components.Parties
 
         #endregion
 
-        public MobileParty CreateMobileParty(TextObject name, Vec2 position, PartyTemplateObject partyTemplate, Hero owner, bool addOwnerToRoster, bool generateName)
+        public MobileParty CreateMobileParty(Hero leader, Vec2 spawnPosition, Settlement homeSettlement, bool addLeaderToRoster, bool addInitialFood = true)
         {
-            var mobileParty = Game.Current.ObjectManager.CreateObject<MobileParty>();
-            mobileParty.InitializeMobileParty(name, partyTemplate, position, 0f, 0f, MobileParty.PartyTypeEnum.Default, -1);
+            MobileParty mobileParty = MBObjectManager.Instance.CreateObject<MobileParty>(leader.CharacterObject.Name.ToString() + "_" + leader.Id);
+            mobileParty.Initialize();
 
-            mobileParty.Party.Owner = owner;
-            mobileParty.Party.Owner.Clan = owner.Clan;
-            mobileParty.IsLordParty = true;
-            mobileParty.Party.Visuals.SetMapIconAsDirty();
-
-            if (addOwnerToRoster)
+            TroopRoster memberRoster = new TroopRoster
             {
-                mobileParty.MemberRoster.AddToCounts(mobileParty.Party.Owner.CharacterObject, 1, false, 0, 0, true, -1);
+                IsPrisonRoster = false
+            };
+            TroopRoster prisonerRoster = new TroopRoster
+            {
+                IsPrisonRoster = true
+            };
+
+            mobileParty.Party.Owner = leader;
+            mobileParty.SetAsMainParty();
+
+            if(addLeaderToRoster)
+            {
+                mobileParty.MemberRoster.AddToCounts(leader.CharacterObject, 1, false, 0, 0, true, -1);
             }
 
-            if (generateName)
+            mobileParty.InitializeMobileParty(new TextObject(leader.CharacterObject.GetName().ToString(), null), memberRoster, prisonerRoster, spawnPosition, 0.0f, 0.0f);
+
+            if (addInitialFood)
             {
-                mobileParty.Name = MobilePartyHelper.GeneratePartyName(mobileParty.Party.Owner.CharacterObject);
+                ItemObject foodItem = Campaign.Current.Items.First(item => item.IsFood);
+                mobileParty.ItemRoster.AddToCounts(foodItem, 150);
             }
 
+            mobileParty.HomeSettlement = homeSettlement;
+            mobileParty.Quartermaster = leader;
+
+            this.GetInfo(mobileParty.StringId);
             return mobileParty;
         }
 
-        public TroopRoster CreateTroopRoster(CharacterObject troopCharacter, int numberNeeded)
+        public TroopRoster GenerateBasicTroopRoster(Hero leader, int amount, bool withTier1 = true, bool withTier2 = true, bool withTier3 = true, bool withTier4 = true)
         {
-            var newRoster = new TroopRoster();
-            newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
-            newRoster.IsPrisonRoster = false;
-            return newRoster;
+            TroopRoster basicUnits = new TroopRoster();
+
+            basicUnits.AddToCounts(leader.Culture.BasicTroop, amount);
+
+            foreach (CharacterObject tier1 in leader.Culture.BasicTroop.UpgradeTargets)
+            {
+                if (withTier1)
+                {
+                    basicUnits.AddToCounts(tier1, amount / 2);
+                }
+
+                foreach (CharacterObject tier2 in tier1.UpgradeTargets)
+                {
+                    if (withTier2)
+                    {
+                        basicUnits.AddToCounts(tier2, amount / 2);
+                    }
+
+                    foreach (CharacterObject tier3 in tier2.UpgradeTargets)
+                    {
+                        if (withTier3)
+                        {
+                            basicUnits.AddToCounts(tier3, amount / 4);
+                        }
+
+                        foreach (CharacterObject tier4 in tier3.UpgradeTargets)
+                        {
+                            if (withTier4)
+                            {
+                                basicUnits.AddToCounts(tier4, amount / 8);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return basicUnits;
         }
 
-        public TroopRoster CreatePrisonRoster(CharacterObject troopCharacter, int numberNeeded)
+        public TroopRoster GenerateEliteTroopRoster(Hero leader, int amount, bool withTier1 = true, bool withTier2 = true, bool withTier3 = true, bool withTier4 = true)
         {
-            var newRoster = new TroopRoster();
-            newRoster.FillMembersOfRoster(numberNeeded, troopCharacter);
-            newRoster.IsPrisonRoster = true;
-            return newRoster;
+            TroopRoster eliteUnits = new TroopRoster();
+
+            eliteUnits.AddToCounts(leader.Culture.EliteBasicTroop, amount);
+
+            foreach (CharacterObject tier1 in leader.Culture.EliteBasicTroop.UpgradeTargets)
+            {
+                if (withTier1)
+                {
+                    eliteUnits.AddToCounts(tier1, amount / 2);
+                }
+
+                foreach (CharacterObject tier2 in tier1.UpgradeTargets)
+                {
+                    if (withTier2)
+                    {
+                        eliteUnits.AddToCounts(tier2, amount / 2);
+                    }
+
+                    foreach (CharacterObject tier3 in tier2.UpgradeTargets)
+                    {
+                        if (withTier3)
+                        {
+                            eliteUnits.AddToCounts(tier3, amount / 4);
+                        }
+
+                        foreach (CharacterObject tier4 in tier3.UpgradeTargets)
+                        {
+                            if (withTier4)
+                            {
+                                eliteUnits.AddToCounts(tier4, amount / 8);
+                            }
+                        }
+                    }
+                }
+            }
+
+            return eliteUnits;
         }
     }
 }

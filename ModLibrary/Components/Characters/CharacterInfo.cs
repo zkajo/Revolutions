@@ -37,12 +37,12 @@ namespace ModLibrary.Components.Characters
 
         public CharacterInfo(CharacterObject character)
         {
-            this.CharacterId = character.Id.InternalValue;
+            this.CharacterId = character.StringId;
         }
 
         #region Reference Properties
 
-        public uint CharacterId { get; set; }
+        public string CharacterId { get; set; }
 
         #endregion
 

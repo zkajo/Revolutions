@@ -47,7 +47,7 @@ namespace Revolutions.Components.Settlements
 
         #endregion
 
-        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetGameObject(this.LoyalFactionId).Name.ToLower().Contains("empire");
+        public bool IsLoyalFactionOfImperialCulture => RevolutionsManagers.FactionManager.GetGameObject(this.LoyalFactionId).Name.ToString().ToLower().Contains("empire");
 
         #endregion
 

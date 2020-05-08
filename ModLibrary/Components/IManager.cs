@@ -11,11 +11,11 @@ namespace ModLibrary.Components
 
         InfoType GetInfo(GameObjectType gameObject);
 
-        InfoType GetInfo(uint id);
+        InfoType GetInfo(string id);
 
-        void RemoveInfo(uint id);
+        void RemoveInfo(string id);
 
-        GameObjectType GetGameObject(uint id);
+        GameObjectType GetGameObject(string id);
 
         GameObjectType GetGameObject(InfoType info);
 
