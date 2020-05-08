@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
-using TaleWorlds.ObjectSystem;
 
 namespace ModLibrary.Components.Characters
 {
@@ -42,7 +41,17 @@ namespace ModLibrary.Components.Characters
 
         public InfoType GetInfo(CharacterObject gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.CharacterId == gameObject.StringId);
+            var infos = this.Infos.Where(i => i.CharacterId == gameObject.StringId);
+            if (infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Characters with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Character.Name} | StringId: {duplicatedInfo.CharacterId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
             if (info != null)
             {
                 return info;
@@ -67,6 +76,12 @@ namespace ModLibrary.Components.Characters
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.CharacterId == id);
+            if (id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.CharacterId == id);
         }
 
@@ -94,7 +109,7 @@ namespace ModLibrary.Components.Characters
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Characters)
+            foreach (var gameObject in Campaign.Current.Characters.Where(go => !this.Infos.Any(i => i.CharacterId == go.StringId)))
             {
                 this.GetInfo(gameObject);
             }

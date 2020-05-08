@@ -45,7 +45,17 @@ namespace ModLibrary.Components.Kingdoms
 
         public InfoType GetInfo(Kingdom gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.KingdomId == gameObject.StringId);
+            var infos = this.Infos.Where(i => i.KingdomId == gameObject.StringId);
+            if (infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Kingdoms with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Kingdom.Name} | StringId: {duplicatedInfo.KingdomId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
             if (info != null)
             {
                 return info;
@@ -70,6 +80,12 @@ namespace ModLibrary.Components.Kingdoms
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.KingdomId == id);
+            if (id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.KingdomId == id);
         }
 
@@ -97,7 +113,7 @@ namespace ModLibrary.Components.Kingdoms
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Kingdoms)
+            foreach (var gameObject in Campaign.Current.Kingdoms.Where(go => !this.Infos.Any(i => i.KingdomId == go.StringId)))
             {
                 this.GetInfo(gameObject);
             }

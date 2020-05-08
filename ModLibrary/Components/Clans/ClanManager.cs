@@ -43,7 +43,17 @@ namespace ModLibrary.Components.Clans
 
         public InfoType GetInfo(Clan gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.ClanId == gameObject.StringId);
+            var infos = this.Infos.Where(i => i.ClanId == gameObject.StringId);
+            if (infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Clans with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Clan.Name} | StringId: {duplicatedInfo.ClanId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
             if (info != null)
             {
                 return info;
@@ -68,6 +78,12 @@ namespace ModLibrary.Components.Clans
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.ClanId == id);
+            if (id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.ClanId == id);
         }
 
@@ -95,7 +111,7 @@ namespace ModLibrary.Components.Clans
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Clans)
+            foreach (var gameObject in Campaign.Current.Clans.Where(go => !this.Infos.Any(i => i.ClanId == go.StringId)))
             {
                 this.GetInfo(gameObject);
             }

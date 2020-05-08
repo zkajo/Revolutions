@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Helpers;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
@@ -44,7 +43,18 @@ namespace ModLibrary.Components.Parties
 
         public InfoType GetInfo(PartyBase gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.PartyId == gameObject.Id);
+            var infos = this.Infos.Where(i => i.PartyId == gameObject.Id);
+            if(infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Parties with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Party.Name} | StringId: {duplicatedInfo.PartyId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
+
             if (info != null)
             {
                 return info;
@@ -69,6 +79,12 @@ namespace ModLibrary.Components.Parties
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.PartyId == id);
+            if(id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.PartyId == id);
         }
 
@@ -96,7 +112,7 @@ namespace ModLibrary.Components.Parties
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Parties)
+            foreach (var gameObject in Campaign.Current.Parties.Where(go => !this.Infos.Any(i => i.PartyId == go.Id)))
             {
                 this.GetInfo(gameObject);
             }

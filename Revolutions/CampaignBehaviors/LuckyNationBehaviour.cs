@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using Revolutions.Components.Kingdoms;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 

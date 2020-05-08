@@ -3,13 +3,10 @@ using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
-using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
-using TaleWorlds.TwoDimension;
 using Helpers;
-using System.Text;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -124,7 +121,7 @@ namespace Revolutions.Components.Revolutions
         {
             var information = new TextObject("{=dkpS074R}The revolt in {SETTLEMENT} has ended.");
             information.SetTextVariable("SETTLEMENT", revolution.Settlement.Name.ToString());
-            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Yellow));
 
             revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionFailed(revolution.Settlement);
 
@@ -154,7 +151,7 @@ namespace Revolutions.Components.Revolutions
         {
             var information = new TextObject("{=dkpS074R}The revolt in {SETTLEMENT} has ended.");
             information.SetTextVariable("SETTLEMENT", revolution.Settlement.Name.ToString());
-            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Yellow));
 
             revolution.SettlementInfoRevolutions.CurrentFactionInfoRevolutions.CityRevoltionSucceeded(revolution.Settlement);
 
@@ -191,7 +188,7 @@ namespace Revolutions.Components.Revolutions
         {
             var information = new TextObject("{=dRoS0maD}{SETTLEMENT} is revolting!");
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
-            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Orange));
+            InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Yellow));
 
             var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
             var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);

@@ -40,7 +40,17 @@ namespace ModLibrary.Components.Factions
 
         public InfoType GetInfo(IFaction gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.FactionId == gameObject.StringId);
+            var infos = this.Infos.Where(i => i.FactionId == gameObject.StringId);
+            if (infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Factions with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Faction.Name} | StringId: {duplicatedInfo.FactionId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
             if (info != null)
             {
                 return info;
@@ -65,6 +75,12 @@ namespace ModLibrary.Components.Factions
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.FactionId == id);
+            if (id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.FactionId == id);
         }
 
@@ -92,7 +108,7 @@ namespace ModLibrary.Components.Factions
                 return;
             }
 
-            foreach (var faction in Campaign.Current.Factions)
+            foreach (var faction in Campaign.Current.Factions.Where(go => !this.Infos.Any(i => i.FactionId == go.StringId)))
             {
                 this.GetInfo(faction);
             }

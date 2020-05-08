@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 
 namespace ModLibrary.Components.Settlements
 {
@@ -39,7 +40,17 @@ namespace ModLibrary.Components.Settlements
 
         public InfoType GetInfo(Settlement gameObject)
         {
-            var info = this.Infos.SingleOrDefault(i => i.SettlementId == gameObject.StringId);
+            var infos = this.Infos.Where(i => i.SettlementId == gameObject.StringId);
+            if (infos.Count() > 1)
+            {
+                InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Settlements with same Id. Using first one.", ColorManager.Orange));
+                foreach (var duplicatedInfo in infos)
+                {
+                    InformationManager.DisplayMessage(new InformationMessage($"Name: {duplicatedInfo.Settlement.Name} | StringId: {duplicatedInfo.SettlementId}", ColorManager.Orange));
+                }
+            }
+
+            var info = infos.FirstOrDefault();
             if (info != null)
             {
                 return info;
@@ -64,6 +75,12 @@ namespace ModLibrary.Components.Settlements
 
         public void RemoveInfo(string id)
         {
+            var info = this.Infos.FirstOrDefault(i => i.SettlementId == id);
+            if (id == null)
+            {
+                return;
+            }
+
             this.Infos.RemoveWhere(i => i.SettlementId == id);
         }
 
@@ -91,7 +108,7 @@ namespace ModLibrary.Components.Settlements
                 return;
             }
 
-            foreach (var settlement in Campaign.Current.Settlements)
+            foreach (var settlement in Campaign.Current.Settlements.Where(go => !this.Infos.Any(i => i.SettlementId == go.StringId)))
             {
                 this.GetInfo(settlement);
             }
