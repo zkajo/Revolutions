@@ -9,6 +9,7 @@ using ModLibrary;
 using Revolutions.Components.Factions;
 using TaleWorlds.TwoDimension;
 using Helpers;
+using System.Text;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -213,7 +214,9 @@ namespace Revolutions.Components.Revolutions
             }
 
             var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(hero, settlement.GatePosition, settlement, !atWarWithLoyalFaction, true);
-            mobileParty.MemberRoster.Add(RevolutionsManagers.PartyManager.GenerateBasicTroopRoster(hero, Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier)));
+
+            int amountOfBasicTroops = Settings.Instance.BaseRevoltArmySize + (int)(settlement.Prosperity * Settings.Instance.ArmyProsperityMulitplier);
+            mobileParty.MemberRoster.Add(RevolutionsManagers.PartyManager.GenerateBasicTroopRoster(hero, amountOfBasicTroops, true, true, false, false));
 
             if (settlement.MilitaParty != null && settlement.MilitaParty.CurrentSettlement == settlement && settlement.MilitaParty.MapEvent == null)
             {

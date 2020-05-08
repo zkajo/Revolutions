@@ -31,20 +31,20 @@ namespace Revolutions.CampaignBehaviors
                 case RefreshAtTick:
                     RevolutionsManagers.FactionManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 20:
+                case RefreshAtTick + 25:
                     RevolutionsManagers.KingdomManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 40:
+                case RefreshAtTick + 50:
                     RevolutionsManagers.ClanManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 60:
+                case RefreshAtTick + 75:
                     RevolutionsManagers.SettlementManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 80:
+                case RefreshAtTick + 100:
                     RevolutionsManagers.PartyManager.UpdateInfos();
                     break;
                 default:
-                    if (this._currentTick >= RefreshAtTick + 100)
+                    if (this._currentTick >= RefreshAtTick + 125)
                     {
                         RevolutionsManagers.CharacterManager.UpdateInfos();
                         this._currentTick = 0;

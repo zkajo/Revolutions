@@ -132,8 +132,6 @@ namespace ModLibrary.Components.Characters
 
             hero.ChangeState(Hero.CharacterStates.Active);
 
-            MBObjectManager.Instance.RegisterObject(hero);
-
             this.GetInfo(hero.StringId);
             return hero;
         }
