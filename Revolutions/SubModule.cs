@@ -5,8 +5,8 @@ using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.Library;
 using ModLibrary;
+using ModLibrary.Patches;
 using Revolutions.CampaignBehaviors;
-using Revolutions.Models;
 
 namespace Revolutions
 {
@@ -31,6 +31,8 @@ namespace Revolutions
             {
                 return;
             }
+
+            //Patcher.Patch();
 
             this.InitializeMod(gameStarter as CampaignGameStarter);
         }
