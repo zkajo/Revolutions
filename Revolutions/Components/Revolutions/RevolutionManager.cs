@@ -8,6 +8,7 @@ using TaleWorlds.Localization;
 using ModLibrary;
 using Revolutions.Components.Factions;
 using TaleWorlds.TwoDimension;
+using Helpers;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -133,6 +134,8 @@ namespace Revolutions.Components.Revolutions
                 {
                     if (revolution.Party.Owner.Clan.Kingdom.MapFaction.IsAtWarWith(faction))
                     {
+                        FactionHelper.FinishAllRelatedHostileActionsOfFactionToFaction(faction, mapFaction);
+                        FactionHelper.FinishAllRelatedHostileActionsOfFactionToFaction(mapFaction, faction);
                         MakePeaceAction.Apply(faction, mapFaction);
                     }
                 }

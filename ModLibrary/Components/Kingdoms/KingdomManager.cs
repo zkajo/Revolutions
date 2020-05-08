@@ -123,6 +123,7 @@ namespace ModLibrary.Components.Kingdoms
             kingdom.AddPolicy(DefaultPolicies.NobleRetinues);
 
             MBObjectManager.Instance.RegisterObject(kingdom);
+            this.ModifyKingdomList(kingdoms => kingdoms.Add(kingdom));
 
             this.GetInfo(kingdom).UserMadeKingdom = true;
             return kingdom;

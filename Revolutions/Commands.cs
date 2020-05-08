@@ -18,7 +18,7 @@ namespace Revolutions
 
             if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.start_revolution [Settlement Name]\".";
+                return "Format is \"revolutions.start_revolution [Settlement Name]\"";
             }
 
             var settlementName = strings.Aggregate((i, j) => i + " " + j);
@@ -52,7 +52,7 @@ namespace Revolutions
 
             if (strings.Count() < 2 || !strings.Contains("-s") || !strings.Contains("-w") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.end_revolution -s [Settlement Name] -w [Win (true|false)]\".";
+                return "Format is \"revolutions.end_revolution -s [Settlement Name] -w [Win (true|false)]\"";
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
@@ -73,7 +73,7 @@ namespace Revolutions
                 return $"{settlementName} is not conflicted in a revolt.";
             }
 
-            if(!bool.TryParse(aggregatedString.Substring(winIndex, aggregatedString.Length - winIndex), out var isWin))
+            if (!bool.TryParse(aggregatedString.Substring(winIndex, aggregatedString.Length - winIndex), out var isWin))
             {
                 return "Format is \"revolutions.end_revolution -s [Settlement Name] -w [Win (true|false)]\".";
             }
@@ -100,7 +100,7 @@ namespace Revolutions
 
             if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_to_player [Settlement Name]\".";
+                return "Format is \"revolutions.set_loyal_to_player [Settlement Name]\"";
             }
 
             var settlementName = strings.Aggregate((i, j) => i + " " + j);
@@ -127,7 +127,7 @@ namespace Revolutions
 
             if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_to_current_owner [Settlement Name]\".";
+                return "Format is \"revolutions.set_loyal_to_current_owner [Settlement Name]\"";
             }
 
             var settlementName = strings.Aggregate((i, j) => i + " " + j);
@@ -154,7 +154,7 @@ namespace Revolutions
 
             if (strings.Count() < 4 || !strings.Contains("-s") || !strings.Contains("-f") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -f [Faction Name]\".";
+                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -f [Faction Name]\"";
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
@@ -193,7 +193,7 @@ namespace Revolutions
 
             if (strings.Count() < 1 || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_owner_to_player [Settlement Name]\".";
+                return "Format is \"revolutions.set_loyal_owner_to_player [Settlement Name]\"";
             }
 
             var settlementName = strings.Aggregate((i, j) => i + j);
@@ -223,7 +223,7 @@ namespace Revolutions
 
             if (strings.Count() < 4 || !strings.Contains("-s") || !strings.Contains("-c") || CampaignCheats.CheckHelp(strings))
             {
-                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -c [Clan Name]\".";
+                return "Format is \"revolutions.set_loyal_owner_to -s [Settlement Name] -c [Clan Name]\"";
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
@@ -254,7 +254,7 @@ namespace Revolutions
 
             return $"{settlement.Name} is now owned by and loyal to {clan.Name} ({settlementInfo.LoyalFaction.Name}).";
         }
-        
+
         [CommandLineFunctionality.CommandLineArgumentFunction("show_lucky_nations", "revolutions")]
         public static string ShowLuckyNations(List<string> strings)
         {
@@ -263,20 +263,19 @@ namespace Revolutions
                 return "Campaign was not started.";
             }
 
+            if (strings.Count() > 0 || CampaignCheats.CheckHelp(strings))
+            {
+                return "Format is \"revolutions.show_lucky_nations\"";
+            }
+
             List<string> luckyNations = new List<string>();
-            
-            foreach (var info in RevolutionsManagers.KingdomManager.Infos.Where(kingdomInfo => kingdomInfo.LuckyNation))
+
+            foreach (var info in RevolutionsManagers.KingdomManager.Infos.Where(i => i.LuckyNation))
             {
                 luckyNations.Add(info.Kingdom.Name.ToString());
             }
 
-            string response = "Lucky nations:";
-            foreach (var str in luckyNations)
-            {
-                response = response + " " + str + ", ";
-            }
-
-            return response;
+            return $"Lucky Nations: {luckyNations.Aggregate((i, j) => i + ", " + j)}";
         }
     }
 }
