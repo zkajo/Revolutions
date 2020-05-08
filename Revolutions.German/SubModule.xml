@@ -1,7 +1,7 @@
 ﻿<Module>
   <Name value="Revolutions Deutsch"/>
   <Id value="Revolutions.German"/>
-  <Version value="v0.4.8"/>
+  <Version value="v0.4.9"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <DependedModules />

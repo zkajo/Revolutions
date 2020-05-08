@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.4.8")]
-[assembly: AssemblyFileVersion("0.4.8")]
-[assembly: AssemblyInformationalVersion("Mount & Blade II: Bannerlord | BETA 1.3.0")]
+[assembly: AssemblyVersion("0.4.9")]
+[assembly: AssemblyFileVersion("0.4.9")]
+[assembly: AssemblyInformationalVersion("Mount & Blade II: Bannerlord | 1.3.1 & 1.4.0")]
