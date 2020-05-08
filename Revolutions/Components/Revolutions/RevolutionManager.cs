@@ -207,6 +207,7 @@ namespace Revolutions.Components.Revolutions
             else
             {
                 hero = RevolutionsManagers.CharacterManager.CreateRandomLeader(settlement.OwnerClan, settlementInfo);
+                RevolutionsManagers.CharacterManager.GetInfo(hero.CharacterObject).IsRevoltKingdomLeader = true;
                 var clan = RevolutionsManagers.ClanManager.CreateClan(hero, hero.Name, hero.Name);
                 var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(hero, settlement, new TextObject($"Kingdom of {settlement.Name}"), new TextObject($"Kingdom of {settlement.Name}"));
 

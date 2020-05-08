@@ -62,6 +62,8 @@ namespace ModLibrary.Components.Characters
 
         public bool CanJoinOtherKingdoms { get; set; } = true;
 
+        public bool IsCustomCharater { get; set; } = false;
+
         #endregion
     }
 }

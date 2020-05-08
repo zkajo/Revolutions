@@ -43,7 +43,7 @@ namespace Revolutions.Components.Characters
 
         #region Normal Properties
 
-
+        public bool IsRevoltKingdomLeader { get; set; } = false;
 
         #endregion
     }
