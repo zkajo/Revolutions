@@ -49,7 +49,6 @@ namespace Revolutions.CampaignBehaviors
                         RevolutionsManagers.CharacterManager.UpdateInfos();
                         this._currentTick = 0;
                     }
-
                     break;
             }
 

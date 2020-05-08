@@ -53,11 +53,11 @@ namespace Revolutions
 
         private void AddBehaviours(CampaignGameStarter campaignGameStarter)
         {
+            campaignGameStarter.AddBehavior(new LuckyNationBehaviour());
             campaignGameStarter.AddBehavior(new RevolutionBehavior(ref this._dataStorage));
             campaignGameStarter.AddBehavior(new RevolutionDailyBehavior(ref this._dataStorage));
             campaignGameStarter.AddBehavior(new GuiHandlersBehavior());
             campaignGameStarter.AddBehavior(new CleanupBehavior());
-            campaignGameStarter.AddBehavior(new LuckyNationBehaviour());
 
             campaignGameStarter.AddModel(new Models.SettlementLoyaltyModel(ref this._dataStorage));
         }
