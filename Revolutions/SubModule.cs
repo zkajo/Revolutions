@@ -32,7 +32,7 @@ namespace Revolutions
                 return;
             }
 
-            //Patcher.Patch();
+            //Patcher.PatchAll();
 
             this.InitializeMod(gameStarter as CampaignGameStarter);
         }

@@ -157,10 +157,10 @@ namespace Revolutions
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
-            var settlementNameIndex = 2;
+            var settlementNameIndex = 3;
             var factionNameIndex = aggregatedString.IndexOf("-f ") + 3;
 
-            var settlementName = aggregatedString.Substring(settlementNameIndex, factionNameIndex - 6);
+            var settlementName = aggregatedString.Substring(settlementNameIndex, factionNameIndex - 7);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)
@@ -226,10 +226,10 @@ namespace Revolutions
             }
 
             var aggregatedString = strings.Aggregate((i, j) => i + " " + j);
-            var settlementNameIndex = 2;
+            var settlementNameIndex = 3;
             var clanNameIndex = aggregatedString.IndexOf("-c ") + 3;
 
-            var settlementName = aggregatedString.Substring(settlementNameIndex, clanNameIndex - 6);
+            var settlementName = aggregatedString.Substring(settlementNameIndex, clanNameIndex - 7);
 
             var settlement = Campaign.Current.Settlements.FirstOrDefault(s => s.Name.ToString().ToLower() == settlementName.ToLower());
             if (settlement == null)

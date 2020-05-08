@@ -56,24 +56,6 @@ namespace ModLibrary.Components.Parties
             return info;
         }
 
-        public InfoType GetInfo(PartyBase gameObject, bool forceAdd)
-        {
-            InfoType info;
-            if (!forceAdd)
-            {
-                info = this.Infos.SingleOrDefault(i => i.PartyId == gameObject.Id);
-                if (info != null)
-                {
-                    return info;
-                }
-            }
-
-            info = (InfoType)Activator.CreateInstance(typeof(InfoType), gameObject);
-            this.Infos.Add(info);
-
-            return info;
-        }
-
         public InfoType GetInfo(string id)
         {
             var gameObject = this.GetGameObject(id);
@@ -114,9 +96,9 @@ namespace ModLibrary.Components.Parties
                 return;
             }
 
-            foreach (var gameObject in Campaign.Current.Parties.Where(go => !this.Infos.Any(i => i.PartyId == go.Id)))
+            foreach (var gameObject in Campaign.Current.Parties)
             {
-                this.GetInfo(gameObject, true);
+                this.GetInfo(gameObject);
             }
         }
 
