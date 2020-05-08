@@ -3,7 +3,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.SandBox.GameComponents;
 using TaleWorlds.Localization;
 using TaleWorlds.Core;
-using ModLibrary;
+using KNTLibrary;
 using Revolutions.Components.Settlements;
 
 namespace Revolutions.Models

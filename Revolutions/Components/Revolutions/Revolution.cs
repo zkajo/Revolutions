@@ -1,8 +1,8 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary.Components;
-using ModLibrary.Components.Settlements;
-using ModLibrary.Components.Parties;
+using KNTLibrary.Components;
+using KNTLibrary.Components.Settlements;
+using KNTLibrary.Components.Parties;
 using Revolutions.Components.Settlements;
 using Revolutions.Components.Parties;
 

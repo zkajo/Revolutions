@@ -1,9 +1,9 @@
-﻿using ModLibrary.Components.Kingdoms;
-using ModLibrary.Components.Factions;
-using ModLibrary.Components.Clans;
-using ModLibrary.Components.Parties;
-using ModLibrary.Components.Characters;
-using ModLibrary.Components.Settlements;
+﻿using KNTLibrary.Components.Kingdoms;
+using KNTLibrary.Components.Factions;
+using KNTLibrary.Components.Clans;
+using KNTLibrary.Components.Parties;
+using KNTLibrary.Components.Characters;
+using KNTLibrary.Components.Settlements;
 using Revolutions.Components.Kingdoms;
 using Revolutions.Components.Factions;
 using Revolutions.Components.Clans;

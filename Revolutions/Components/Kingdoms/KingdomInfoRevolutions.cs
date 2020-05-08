@@ -1,6 +1,6 @@
-﻿using System;
+﻿using KNTLibrary.Components.Kingdoms;
+using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary.Components.Kingdoms;
 
 namespace Revolutions.Components.Kingdoms
 {

@@ -113,15 +113,14 @@
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ModLibrary\ModLibrary.csproj">
-      <Project>{d711d674-808c-421a-ba59-9dcd8b4a51dc}</Project>
-      <Name>ModLibrary</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\KNTLibrary\KNTLibrary.csproj">
+      <Project>{D711D674-808C-421A-BA59-9DCD8B4A51DC}</Project>
+      <Name>KNTLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
   <!-- Post-Build -->
   <PropertyGroup>
     <PostBuildEvent>xcopy /d /y /i "$(MSBuildProjectDirectory)\SubModule.xml" "$(SolutionDir)\..\Revolutions\"	

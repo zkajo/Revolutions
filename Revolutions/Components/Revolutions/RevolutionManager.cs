@@ -4,7 +4,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Localization;
-using ModLibrary;
+using KNTLibrary;
 using Revolutions.Components.Factions;
 using Helpers;
 

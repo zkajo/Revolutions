@@ -3,7 +3,7 @@ using System.Linq;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
-using ModLibrary;
+using KNTLibrary;
 using Revolutions.Components.Settlements;
 using Revolutions.Components.Revolutions;
 

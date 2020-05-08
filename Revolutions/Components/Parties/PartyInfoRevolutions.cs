@@ -1,6 +1,6 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary.Components.Parties;
+using KNTLibrary.Components.Parties;
 
 namespace Revolutions.Components.Parties
 {

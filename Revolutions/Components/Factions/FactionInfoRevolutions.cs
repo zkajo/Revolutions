@@ -1,7 +1,7 @@
 ﻿using System;
 using TaleWorlds.CampaignSystem;
-using ModLibrary.Components.Settlements;
-using ModLibrary.Components.Factions;
+using KNTLibrary.Components.Settlements;
+using KNTLibrary.Components.Factions;
 using Revolutions.Components.Settlements;
 
 namespace Revolutions.Components.Factions
