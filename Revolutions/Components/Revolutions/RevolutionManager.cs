@@ -180,10 +180,9 @@ namespace Revolutions.Components.Revolutions
             }
             else
             {
-                Hero newOwner = revolution.Party.MobileParty.LeaderHero ?? revolution.SettlementInfoRevolutions.LoyalFaction.Leader;
-
-                ChangeOwnerOfSettlementAction.ApplyByDefault(newOwner, revolution.Settlement);
-                revolution.Party.MobileParty.RemoveParty();
+                //Hero newOwner = revolution.Party.MobileParty.LeaderHero ?? revolution.SettlementInfoRevolutions.LoyalFaction.Leader;
+                //revolution.Party.MobileParty.RemoveParty();
+                //ChangeOwnerOfSettlementAction.ApplyBySiege(newOwner, newOwner, revolution.Settlement);
             }
 
             this.Revolutions.Remove(revolution);
