@@ -17,6 +17,7 @@ namespace Revolutions.CampaignBehaviors
             CampaignEvents.MobilePartyDestroyed.AddNonSerializedListener(this, new Action<MobileParty, PartyBase>(this.MobilePartyDestroyed));
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTick));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -40,11 +41,8 @@ namespace Revolutions.CampaignBehaviors
                 case RefreshAtTick + 75:
                     RevolutionsManagers.SettlementManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 100:
-                    RevolutionsManagers.PartyManager.UpdateInfos();
-                    break;
                 default:
-                    if (this._currentTick >= RefreshAtTick + 125)
+                    if (this._currentTick >= RefreshAtTick + 100)
                     {
                         RevolutionsManagers.CharacterManager.UpdateInfos();
                         this._currentTick = 0;
@@ -53,6 +51,11 @@ namespace Revolutions.CampaignBehaviors
             }
 
             this._currentTick++;
+        }
+
+        private void DailyTick()
+        {
+            RevolutionsManagers.PartyManager.UpdateInfos();
         }
 
         private void PartyRemovedEvent(PartyBase party)
