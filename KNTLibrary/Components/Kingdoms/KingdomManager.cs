@@ -171,16 +171,8 @@ namespace KNTLibrary.Components.Kingdoms
 
         public void RemoveAndDestroyKingdom(Kingdom kingdom)
         {
-            this.ModifyKingdomList(kingdoms =>
-            {
-                if (kingdoms.RemoveAll(go => go == kingdom) > 0)
-                {
-                    DestroyKingdomAction.Apply(kingdom);
-                    return kingdoms;
-                }
-
-                return null;
-            });
+            this.RemoveKingdom(kingdom);
+            DestroyKingdomAction.Apply(kingdom);
         }
 
         public Kingdom CreateKingdom(Hero leader, Settlement settlement, TextObject name, TextObject informalName)
@@ -188,7 +180,7 @@ namespace KNTLibrary.Components.Kingdoms
             Kingdom kingdom = MBObjectManager.Instance.CreateObject<Kingdom>();
             kingdom.InitializeKingdom(name, informalName, leader.Culture, Banner.CreateRandomClanBanner(leader.StringId.GetDeterministicHashCode()), leader.Clan.Color, leader.Clan.Color2, leader.Clan.InitialPosition);
 
-            ChangeKingdomAction.ApplyByJoinToKingdom(leader.Clan, kingdom, false);
+            ChangeKingdomAction.ApplyByJoinToKingdom(leader.Clan, kingdom, true);
             kingdom.RulingClan = leader.Clan;
 
             kingdom.AddPolicy(DefaultPolicies.NobleRetinues);
