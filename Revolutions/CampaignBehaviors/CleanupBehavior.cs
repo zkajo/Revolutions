@@ -13,11 +13,11 @@ namespace Revolutions.CampaignBehaviors
         {
             CampaignEvents.TickEvent.AddNonSerializedListener(this, new Action<float>(this.TickEvent));
 
+            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTickEvent));
             CampaignEvents.OnPartyRemovedEvent.AddNonSerializedListener(this, new Action<PartyBase>(this.PartyRemovedEvent));
             CampaignEvents.MobilePartyDestroyed.AddNonSerializedListener(this, new Action<MobileParty, PartyBase>(this.MobilePartyDestroyed));
             CampaignEvents.KingdomDestroyedEvent.AddNonSerializedListener(this, new Action<Kingdom>(this.KingdomDestroyedEvent));
             CampaignEvents.OnClanDestroyedEvent.AddNonSerializedListener(this, new Action<Clan>(this.ClanDestroyedEvent));
-            CampaignEvents.DailyTickEvent.AddNonSerializedListener(this, new Action(this.DailyTick));
         }
 
         public override void SyncData(IDataStore dataStore)
@@ -25,37 +25,43 @@ namespace Revolutions.CampaignBehaviors
 
         }
 
+        private void DailyTickEvent()
+        {
+            RevolutionsManagers.FactionManager.CleanupDuplicatedInfos();
+            RevolutionsManagers.KingdomManager.CleanupDuplicatedInfos();
+            RevolutionsManagers.ClanManager.CleanupDuplicatedInfos();
+            RevolutionsManagers.PartyManager.CleanupDuplicatedInfos();
+            RevolutionsManagers.CharacterManager.CleanupDuplicatedInfos();
+            RevolutionsManagers.SettlementManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.PartyManager.UpdateInfos();
+        }
+
         private void TickEvent(float dt)
         {
+            //Assuming, that we have 30 ticks per second, we update one of our data pieces once per second. So after 6 seconds all data was updated one time.
             switch (this._currentTick)
             {
                 case RefreshAtTick:
                     RevolutionsManagers.FactionManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 25:
+                case RefreshAtTick + 30:
                     RevolutionsManagers.KingdomManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 50:
+                case RefreshAtTick + 60:
                     RevolutionsManagers.ClanManager.UpdateInfos();
                     break;
-                case RefreshAtTick + 75:
+                case RefreshAtTick + 90:
                     RevolutionsManagers.SettlementManager.UpdateInfos();
                     break;
+                case RefreshAtTick + 120:
+                    RevolutionsManagers.CharacterManager.UpdateInfos();
+                    this._currentTick = 0;
+                    break;
                 default:
-                    if (this._currentTick >= RefreshAtTick + 100)
-                    {
-                        RevolutionsManagers.CharacterManager.UpdateInfos();
-                        this._currentTick = 0;
-                    }
+                    this._currentTick++;
                     break;
             }
-
-            this._currentTick++;
-        }
-
-        private void DailyTick()
-        {
-            RevolutionsManagers.PartyManager.UpdateInfos();
         }
 
         private void PartyRemovedEvent(PartyBase party)

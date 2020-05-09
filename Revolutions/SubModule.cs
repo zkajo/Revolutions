@@ -40,6 +40,13 @@ namespace Revolutions
             {
                 this._dataStorage = new DataStorage();
                 this.AddBehaviours(campaignGameStarter);
+
+                RevolutionsManagers.FactionManager.DebugMode = Settings.Instance.DebugMode;
+                RevolutionsManagers.KingdomManager.DebugMode = Settings.Instance.DebugMode;
+                RevolutionsManagers.ClanManager.DebugMode = Settings.Instance.DebugMode;
+                RevolutionsManagers.PartyManager.DebugMode = Settings.Instance.DebugMode;
+                RevolutionsManagers.CharacterManager.DebugMode = Settings.Instance.DebugMode;
+                RevolutionsManagers.SettlementManager.DebugMode = Settings.Instance.DebugMode;
             }
             catch (Exception exception)
             {

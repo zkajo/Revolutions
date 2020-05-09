@@ -5,6 +5,8 @@ namespace KNTLibrary.Components
 {
     public interface IManager<InfoType, GameObjectType> where GameObjectType : MBObjectBase
     {
+        bool DebugMode { get; set; }
+
         HashSet<InfoType> Infos { get; set; }
 
         void InitializeInfos();
@@ -20,5 +22,7 @@ namespace KNTLibrary.Components
         GameObjectType GetGameObject(InfoType info);
 
         void UpdateInfos(bool onlyRemoving = false);
+
+        void CleanupDuplicatedInfos();
     }
 }

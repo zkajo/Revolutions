@@ -108,7 +108,9 @@
     <Compile Include="SubModule.cs" />
     <Content Include="GUI\Brushes\ButtonBrush.xml" />
     <Content Include="GUI\Prefabs\TownRevolutionScreen.xml" />
-    <Content Include="Logo.png" />
+    <Content Include="Images\German.PNG" />
+    <Content Include="Images\Logo.png" />
+    <Content Include="ModuleData\Languages\DE\std_module_strings_xml.xml" />
     <Content Include="ModuleData\Languages\std_module_strings_xml.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
@@ -128,7 +130,8 @@
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Brushes\ButtonBrush.xml" "$(SolutionDir)\..\Revolutions\GUI\Brushes\"
 xcopy /d /y /i "$(MSBuildProjectDirectory)\GUI\Prefabs\TownRevolutionScreen.xml" "$(SolutionDir)\..\Revolutions\GUI\Prefabs\"
 
-xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_module_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"</PostBuildEvent>
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\std_module_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\"
+xcopy /d /y /i "$(MSBuildProjectDirectory)\ModuleData\Languages\DE\std_module_strings_xml.xml" "$(SolutionDir)\..\Revolutions\ModuleData\Languages\DE\"</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

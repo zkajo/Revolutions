@@ -49,6 +49,10 @@
     <string id="klge23qZ" text="Nicht-Imperiale Glückliche Nation" />
     <string id="mvb34Sdk" text="Garantiert eine nicht-imperiale Glückliche Nation." />
     <string id="glCo42fD" text="Loyale Bevölkerung" />
+    <!-- Miscellaneous-->
+    <string id="3r7O82pO" text="Sonstiges" />
+    <string id="3H348per" text="Debug Modus" />
+    <string id="3L33P8pr" text="Aktiviert/Deaktiviert die Ausgabe detaillierter Informationen." />
 
     <!-- Loyalty Model -->
     <string id="PqkwszGz" text="Durch das Verbringen von Zeit in {SETTLEMENT}, fühlen sich die Bevölkerung loyaler Ihnen gegenüber." />

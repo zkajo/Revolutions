@@ -26,6 +26,8 @@ namespace KNTLibrary.Components.Clans
 
         #region IManager
 
+        public bool DebugMode { get; set; }
+
         public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
@@ -44,7 +46,7 @@ namespace KNTLibrary.Components.Clans
         public InfoType GetInfo(Clan gameObject)
         {
             var infos = this.Infos.Where(i => i.ClanId == gameObject.StringId);
-            if (infos.Count() > 1)
+            if (this.DebugMode && infos.Count() > 1)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Clans with same Id. Using first one.", ColorManager.Orange));
                 foreach (var duplicatedInfo in infos)
@@ -89,7 +91,7 @@ namespace KNTLibrary.Components.Clans
 
         public Clan GetGameObject(string id)
         {
-            return Campaign.Current.Clans.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Clans.FirstOrDefault(go => go.StringId == id);
         }
 
         public Clan GetGameObject(InfoType info)
@@ -117,6 +119,15 @@ namespace KNTLibrary.Components.Clans
             }
         }
 
+        public void CleanupDuplicatedInfos()
+        {
+            this.Infos.Reverse();
+            this.Infos = this.Infos.GroupBy(i => i.ClanId)
+                                   .Select(i => i.First())
+                                   .ToHashSet();
+            this.Infos.Reverse();
+        }
+
         #endregion
 
         public Clan CreateClan(Hero leader, TextObject name, TextObject informalName)
@@ -129,7 +140,7 @@ namespace KNTLibrary.Components.Clans
 
             clan.InitializeClan(name, informalName, leader.Culture, Banner.CreateRandomClanBanner(leader.StringId.GetDeterministicHashCode()));
 
-            this.GetInfo(clan.StringId);
+            this.GetInfo(clan);
             return clan;
         }
     }

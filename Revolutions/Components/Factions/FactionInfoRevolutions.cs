@@ -31,9 +31,9 @@ namespace Revolutions.Components.Factions
 
         public Settlement RevoltedSettlement => RevolutionsManagers.SettlementManager.GetGameObject(this.RevoltedSettlementId);
 
-        public SettlementInfo RevoltedSettlementInfo => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlementId);
+        public SettlementInfo RevoltedSettlementInfo => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlement);
 
-        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlementId);
+        public SettlementInfoRevolutions RevoltedSettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfo(this.RevoltedSettlement);
 
         #endregion
 

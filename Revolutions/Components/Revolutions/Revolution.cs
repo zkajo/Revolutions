@@ -60,15 +60,15 @@ namespace Revolutions.Components.Revolutions
 
         public PartyBase Party => RevolutionsManagers.PartyManager.GetGameObject(this.PartyId);
 
-        public PartyInfo PartyInfo => RevolutionsManagers.PartyManager.GetInfo(this.PartyId);
+        public PartyInfo PartyInfo => RevolutionsManagers.PartyManager.GetInfo(this.Party);
 
-        public PartyInfoRevolutions PartyInfoRevolutions => RevolutionsManagers.PartyManager.GetInfo(this.PartyId);
+        public PartyInfoRevolutions PartyInfoRevolutions => RevolutionsManagers.PartyManager.GetInfo(this.Party);
 
         public Settlement Settlement => RevolutionsManagers.SettlementManager.GetGameObject(this.SettlementId);
 
-        public SettlementInfo SettlementInfo => RevolutionsManagers.SettlementManager.GetInfo(this.SettlementId);
+        public SettlementInfo SettlementInfo => RevolutionsManagers.SettlementManager.GetInfo(this.Settlement);
 
-        public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfo(this.SettlementId);
+        public SettlementInfoRevolutions SettlementInfoRevolutions => RevolutionsManagers.SettlementManager.GetInfo(this.Settlement);
 
         #endregion
 

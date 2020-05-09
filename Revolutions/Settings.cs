@@ -6,7 +6,7 @@ namespace Revolutions
 {
     public class Settings : AttributeSettings<Settings>
     {
-        public override string Id { get; set; } = "RevolutionsSettings_v043";
+        public override string Id { get; set; } = "RevolutionsSettings_v049";
 
         public override string ModuleFolderName => "Revolutions";
 
@@ -47,7 +47,7 @@ namespace Revolutions
         #region Loyalty
 
         [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
-        [SettingPropertyBool(displayName: "{=hPERH4u4}Imperial Loyalty", Order = 0, HintText = "{=YnRmSelp}Activates/Deactivates the mechanic for the empire loyalty.", RequireRestart = false)]
+        [SettingPropertyBool(displayName: "{=hPERH4u4}Imperial Loyalty", Order = 0, HintText = "{=YnRmSelp}Enables/Disables the mechanic for the empire loyalty.", RequireRestart = false)]
         public bool EmpireLoyaltyMechanics { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=hPERH4u4}Imperial Loyalty", order: 1)]
@@ -59,7 +59,7 @@ namespace Revolutions
         #region Overextension
 
         [SettingPropertyGroup(groupName: "{=Ts1iV2pO}Overextension", order: 2)]
-        [SettingPropertyBool(displayName: "{=Ts1iV2pO}Overextension", Order = 0, HintText = "{=ZRlNsvev}Activates/Deactivates the mechanics for overextension.", RequireRestart = false)]
+        [SettingPropertyBool(displayName: "{=Ts1iV2pO}Overextension", Order = 0, HintText = "{=ZRlNsvev}Enables/Disables the mechanics for overextension.", RequireRestart = false)]
         public bool OverextensionMechanics { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=Ts1iV2pO}Overextension", order: 2)]
@@ -75,7 +75,7 @@ namespace Revolutions
         #region Minor Factions
 
         [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
-        [SettingPropertyBool(displayName: "{=WbOKuWbq}Minor Factions", Order = 0, HintText = "{=P1g6H41e}Activates/Deactivates the mechanics for minor factions.", RequireRestart = false)]
+        [SettingPropertyBool(displayName: "{=WbOKuWbq}Minor Factions", Order = 0, HintText = "{=P1g6H41e}Enables/Disables the mechanics for minor factions.", RequireRestart = false)]
         public bool AllowMinorFactions { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=WbOKuWbq}Minor Factions", order: 3)]
@@ -87,11 +87,11 @@ namespace Revolutions
         #region Lucky Nations
 
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=6F34Ffer}Lucky Nations", Order = 0, HintText = "{=Zkl46vev}Activates/Deactivates the mechanics for lucky nations.", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=6F34Ffer}Lucky Nations", Order = 0, HintText = "{=Zkl46vev}Enables/Disables the mechanics for lucky nations.", RequireRestart = true)]
         public bool EnableLuckyNations { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
-        [SettingPropertyBool(displayName: "{=7fGer34R}Random Lucky Nation", Order = 1, HintText = "{=lgkTi59R}Activates/Deactivates a random lucky nation from all possible kingdoms.", RequireRestart = true)]
+        [SettingPropertyBool(displayName: "{=7fGer34R}Random Lucky Nation", Order = 1, HintText = "{=lgkTi59R}Enables/Disables a random lucky nation from all possible kingdoms.", RequireRestart = true)]
         public bool RandomLuckyNation { get; set; } = true;
 
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
@@ -101,6 +101,14 @@ namespace Revolutions
         [SettingPropertyGroup(groupName: "{=6F34Ffer}Lucky Nations", order: 4)]
         [SettingPropertyBool(displayName: "{=klge23qZ}Non-Imperial Lucky Nation", Order = 3, HintText = "{=mvb34Sdk}Guarantees a  Non-Imperial lucky nation.", RequireRestart = true)]
         public bool NonImperialLuckyNation { get; set; } = true;
+
+        #endregion
+
+        #region Miscellaneous
+
+        [SettingPropertyGroup(groupName: "{=3r7O82pO}Miscellaneous", order: 5)]
+        [SettingPropertyBool(displayName: "{=3H348per}Debug Mode", Order = 0, HintText = "{=3L33P8pr}Enables/Disables the output of detailed information.", RequireRestart = true)]
+        public bool DebugMode { get; set; } = false;
 
         #endregion
     }

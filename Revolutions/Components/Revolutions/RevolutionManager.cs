@@ -4,9 +4,9 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.CampaignSystem.Actions;
 using TaleWorlds.Localization;
+using Helpers;
 using KNTLibrary;
 using Revolutions.Components.Factions;
-using Helpers;
 
 namespace Revolutions.Components.Revolutions
 {
@@ -18,7 +18,7 @@ namespace Revolutions.Components.Revolutions
 
         static RevolutionManager()
         {
-            Instance = new RevolutionManager();
+            RevolutionManager.Instance = new RevolutionManager();
         }
 
         public static RevolutionManager Instance { get; private set; }
@@ -26,10 +26,11 @@ namespace Revolutions.Components.Revolutions
         #endregion
 
         public HashSet<Revolution> Revolutions = new HashSet<Revolution>();
+        private object info;
 
-        public Revolution GetRevolutionByPartyId(string partyId)
+        public Revolution GetRevolutionByPartyId(string id)
         {
-            return this.Revolutions.FirstOrDefault(revolution => revolution.PartyId == partyId);
+            return this.Revolutions.FirstOrDefault(r => r.PartyId == id);
         }
 
         public Revolution GetRevolutionByParty(PartyBase party)
@@ -37,9 +38,9 @@ namespace Revolutions.Components.Revolutions
             return this.GetRevolutionByPartyId(party.Id);
         }
 
-        public Revolution GetRevolutionBySettlementId(string settlementId)
+        public Revolution GetRevolutionBySettlementId(string id)
         {
-            return this.Revolutions.FirstOrDefault(revolution => revolution.SettlementId == settlementId);
+            return this.Revolutions.FirstOrDefault(r => r.SettlementId == id);
         }
 
         public Revolution GetRevolutionBySettlement(Settlement settlement)
@@ -49,28 +50,28 @@ namespace Revolutions.Components.Revolutions
 
         public List<Settlement> GetSettlements()
         {
-            return this.Revolutions.Select(revolution => revolution.Settlement).ToList();
+            return this.Revolutions.Select(r => r.Settlement).ToList();
         }
 
         public List<PartyBase> GetParties()
         {
-            return this.Revolutions.Select(revolution => revolution.Party).ToList();
+            return this.Revolutions.Select(r => r.Party).ToList();
         }
 
         public void IncreaseDailyLoyaltyForSettlement()
         {
-            foreach (var settlementInfo in RevolutionsManagers.SettlementManager.Infos)
+            foreach (var info in RevolutionsManagers.SettlementManager.Infos)
             {
-                foreach (var mobileParty in settlementInfo.Settlement.Parties)
+                foreach (var party in info.Settlement.Parties)
                 {
-                    if (mobileParty.IsLordParty && mobileParty.Party.Owner.Clan == settlementInfo.Settlement.OwnerClan)
+                    if (party.IsLordParty && party.Party.Owner.Clan == info.Settlement.OwnerClan)
                     {
-                        settlementInfo.Settlement.Town.Loyalty += Settings.Instance.PlayerInTownLoyaltyIncrease;
+                        info.Settlement.Town.Loyalty += Settings.Instance.PlayerInTownLoyaltyIncrease;
 
-                        if (settlementInfo.Settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
+                        if (info.Settlement.OwnerClan.StringId == Hero.MainHero.Clan.StringId)
                         {
                             var textObject = new TextObject("{=PqkwszGz}Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you.");
-                            textObject.SetTextVariable("SETTLEMENT", settlementInfo.Settlement.Name.ToString());
+                            textObject.SetTextVariable("SETTLEMENT", info.Settlement.Name.ToString());
                             InformationManager.DisplayMessage(new InformationMessage(textObject.ToString()));
                         }
 
@@ -190,7 +191,7 @@ namespace Revolutions.Components.Revolutions
             information.SetTextVariable("SETTLEMENT", settlement.Name.ToString());
             InformationManager.DisplayMessage(new InformationMessage(information.ToString(), ColorManager.Yellow));
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement);
             var atWarWithLoyalFaction = settlementInfo.CurrentFaction.IsAtWarWith(settlementInfo.LoyalFaction);
 
             Hero hero;
@@ -206,7 +207,7 @@ namespace Revolutions.Components.Revolutions
                 var clan = RevolutionsManagers.ClanManager.CreateClan(hero, hero.Name, hero.Name);
                 var kingdom = RevolutionsManagers.KingdomManager.CreateKingdom(hero, settlement, new TextObject($"Kingdom of {settlement.Name}"), new TextObject($"Kingdom of {settlement.Name}"));
 
-                RevolutionsManagers.ClanManager.GetInfo(hero.Clan.StringId).CanJoinOtherKingdoms = false;
+                RevolutionsManagers.ClanManager.GetInfo(hero.Clan).CanJoinOtherKingdoms = false;
             }
 
             var mobileParty = RevolutionsManagers.PartyManager.CreateMobileParty(hero, settlement.GatePosition, settlement, !atWarWithLoyalFaction, true);

@@ -11,7 +11,7 @@ namespace Revolutions.Components.Factions
             factionInfo.DaysSinceLastRevolt = 0;
             factionInfo.SuccessfullyRevolted = false;
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement);
             settlementInfo.HasRebellionEvent = false;
             settlementInfo.RevolutionProgress = 0;
         }
@@ -23,7 +23,7 @@ namespace Revolutions.Components.Factions
             factionInfo.DaysSinceLastRevolt = 0;
             factionInfo.SuccessfullyRevolted = true;
 
-            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement.StringId);
+            var settlementInfo = RevolutionsManagers.SettlementManager.GetInfo(settlement);
             settlementInfo.HasRebellionEvent = false;
             settlementInfo.RevolutionProgress = 0;
         }

@@ -23,6 +23,8 @@ namespace KNTLibrary.Components.Factions
 
         #region IManager
 
+        public bool DebugMode { get; set; }
+
         public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
@@ -41,7 +43,7 @@ namespace KNTLibrary.Components.Factions
         public InfoType GetInfo(IFaction gameObject)
         {
             var infos = this.Infos.Where(i => i.FactionId == gameObject.StringId);
-            if (infos.Count() > 1)
+            if (this.DebugMode && infos.Count() > 1)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Factions with same Id. Using first one.", ColorManager.Orange));
                 foreach (var duplicatedInfo in infos)
@@ -86,7 +88,7 @@ namespace KNTLibrary.Components.Factions
 
         public IFaction GetGameObject(string id)
         {
-            return Campaign.Current.Factions.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Factions.FirstOrDefault(go => go.StringId == id);
         }
 
         public IFaction GetGameObject(InfoType info)
@@ -112,6 +114,15 @@ namespace KNTLibrary.Components.Factions
             {
                 this.GetInfo(faction);
             }
+        }
+
+        public void CleanupDuplicatedInfos()
+        {
+            this.Infos.Reverse();
+            this.Infos = this.Infos.GroupBy(i => i.FactionId)
+                                   .Select(i => i.First())
+                                   .ToHashSet();
+            this.Infos.Reverse();
         }
 
         #endregion

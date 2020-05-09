@@ -23,6 +23,8 @@ namespace KNTLibrary.Components.Settlements
 
         #region IManager
 
+        public bool DebugMode { get; set; }
+
         public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
@@ -41,7 +43,7 @@ namespace KNTLibrary.Components.Settlements
         public InfoType GetInfo(Settlement gameObject)
         {
             var infos = this.Infos.Where(i => i.SettlementId == gameObject.StringId);
-            if (infos.Count() > 1)
+            if (this.DebugMode && infos.Count() > 1)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Settlements with same Id. Using first one.", ColorManager.Orange));
                 foreach (var duplicatedInfo in infos)
@@ -86,7 +88,7 @@ namespace KNTLibrary.Components.Settlements
 
         public Settlement GetGameObject(string id)
         {
-            return Campaign.Current.Settlements.SingleOrDefault(go => go.StringId == id);
+            return Campaign.Current.Settlements.FirstOrDefault(go => go.StringId == id);
         }
 
         public Settlement GetGameObject(InfoType info)
@@ -103,7 +105,7 @@ namespace KNTLibrary.Components.Settlements
 
             this.Infos.RemoveWhere(i => !Campaign.Current.Settlements.Any(go => go.StringId == i.SettlementId));
 
-            if(onlyRemoving)
+            if (onlyRemoving)
             {
                 return;
             }
@@ -112,6 +114,15 @@ namespace KNTLibrary.Components.Settlements
             {
                 this.GetInfo(settlement);
             }
+        }
+
+        public void CleanupDuplicatedInfos()
+        {
+            this.Infos.Reverse();
+            this.Infos = this.Infos.GroupBy(i => i.SettlementId)
+                                   .Select(i => i.First())
+                                   .ToHashSet();
+            this.Infos.Reverse();
         }
 
         #endregion

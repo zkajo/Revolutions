@@ -26,6 +26,8 @@ namespace KNTLibrary.Components.Parties
 
         #region IManager
 
+        public bool DebugMode { get; set; }
+
         public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
@@ -44,7 +46,7 @@ namespace KNTLibrary.Components.Parties
         public InfoType GetInfo(PartyBase gameObject)
         {
             var infos = this.Infos.Where(i => i.PartyId == gameObject.Id);
-            if(infos.Count() > 1)
+            if (this.DebugMode && infos.Count() > 1)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Parties with same Id. Using first one.", ColorManager.Orange));
                 foreach (var duplicatedInfo in infos)
@@ -80,7 +82,7 @@ namespace KNTLibrary.Components.Parties
         public void RemoveInfo(string id)
         {
             var info = this.Infos.FirstOrDefault(i => i.PartyId == id);
-            if(id == null)
+            if (id == null)
             {
                 return;
             }
@@ -90,7 +92,7 @@ namespace KNTLibrary.Components.Parties
 
         public PartyBase GetGameObject(string id)
         {
-            return Campaign.Current.Parties.SingleOrDefault(go => go.Id == id);
+            return Campaign.Current.Parties.FirstOrDefault(go => go.Id == id);
         }
 
         public PartyBase GetGameObject(InfoType info)
@@ -118,6 +120,15 @@ namespace KNTLibrary.Components.Parties
             }
         }
 
+        public void CleanupDuplicatedInfos()
+        {
+            this.Infos.Reverse();
+            this.Infos = this.Infos.GroupBy(i => i.PartyId)
+                                   .Select(i => i.First())
+                                   .ToHashSet();
+            this.Infos.Reverse();
+        }
+
         #endregion
 
         public MobileParty CreateMobileParty(Hero leader, Vec2 spawnPosition, Settlement homeSettlement, bool addLeaderToRoster, bool addInitialFood = true)
@@ -137,7 +148,7 @@ namespace KNTLibrary.Components.Parties
             mobileParty.Party.Owner = leader;
             mobileParty.SetAsMainParty();
 
-            if(addLeaderToRoster)
+            if (addLeaderToRoster)
             {
                 mobileParty.MemberRoster.AddToCounts(leader.CharacterObject, 1, false, 0, 0, true, -1);
             }
@@ -153,7 +164,7 @@ namespace KNTLibrary.Components.Parties
             mobileParty.HomeSettlement = homeSettlement;
             mobileParty.Quartermaster = leader;
 
-            this.GetInfo(mobileParty.StringId);
+            this.GetInfo(mobileParty.Party);
             return mobileParty;
         }
 
@@ -161,31 +172,57 @@ namespace KNTLibrary.Components.Parties
         {
             TroopRoster basicUnits = new TroopRoster();
 
-            basicUnits.AddToCounts(leader.Culture.BasicTroop, amount);
-
-            foreach (CharacterObject tier1 in leader.Culture.BasicTroop.UpgradeTargets)
+            var basicTroop = leader?.Culture?.BasicTroop;
+            if(basicTroop == null)
             {
+                return basicUnits;
+            }
+
+            basicUnits.AddToCounts(basicTroop, amount);
+
+            foreach (CharacterObject tier1 in basicTroop.UpgradeTargets)
+            {
+                if (tier1 == null)
+                {
+                    continue;
+                }
+
                 if (withTier1)
                 {
                     basicUnits.AddToCounts(tier1, amount / 4);
                 }
 
-                foreach (CharacterObject tier2 in tier1.UpgradeTargets)
+                foreach (CharacterObject tier2 in tier1?.UpgradeTargets)
                 {
+                    if (tier2 == null)
+                    {
+                        continue;
+                    }
+
                     if (withTier2)
                     {
                         basicUnits.AddToCounts(tier2, amount / 4);
                     }
 
-                    foreach (CharacterObject tier3 in tier2.UpgradeTargets)
+                    foreach (CharacterObject tier3 in tier2?.UpgradeTargets)
                     {
+                        if (tier3 == null)
+                        {
+                            continue;
+                        }
+
                         if (withTier3)
                         {
                             basicUnits.AddToCounts(tier3, amount / 8);
                         }
 
-                        foreach (CharacterObject tier4 in tier3.UpgradeTargets)
+                        foreach (CharacterObject tier4 in tier3?.UpgradeTargets)
                         {
+                            if (tier4 == null)
+                            {
+                                continue;
+                            }
+
                             if (withTier4)
                             {
                                 basicUnits.AddToCounts(tier4, amount / 16);
@@ -202,31 +239,57 @@ namespace KNTLibrary.Components.Parties
         {
             TroopRoster eliteUnits = new TroopRoster();
 
+            var eliteBasicTroop = leader?.Culture?.EliteBasicTroop;
+            if (eliteBasicTroop == null)
+            {
+                return eliteUnits;
+            }
+
             eliteUnits.AddToCounts(leader.Culture.EliteBasicTroop, amount);
 
-            foreach (CharacterObject tier1 in leader.Culture.EliteBasicTroop.UpgradeTargets)
+            foreach (CharacterObject tier1 in eliteBasicTroop.UpgradeTargets)
             {
+                if(tier1 == null)
+                {
+                    continue;
+                }
+
                 if (withTier1)
                 {
                     eliteUnits.AddToCounts(tier1, amount / 2);
                 }
 
-                foreach (CharacterObject tier2 in tier1.UpgradeTargets)
+                foreach (CharacterObject tier2 in tier1?.UpgradeTargets)
                 {
+                    if (tier2 == null)
+                    {
+                        continue;
+                    }
+
                     if (withTier2)
                     {
                         eliteUnits.AddToCounts(tier2, amount / 2);
                     }
 
-                    foreach (CharacterObject tier3 in tier2.UpgradeTargets)
+                    foreach (CharacterObject tier3 in tier2?.UpgradeTargets)
                     {
+                        if (tier3 == null)
+                        {
+                            continue;
+                        }
+
                         if (withTier3)
                         {
                             eliteUnits.AddToCounts(tier3, amount / 4);
                         }
 
-                        foreach (CharacterObject tier4 in tier3.UpgradeTargets)
+                        foreach (CharacterObject tier4 in tier3?.UpgradeTargets)
                         {
+                            if (tier4 == null)
+                            {
+                                continue;
+                            }
+
                             if (withTier4)
                             {
                                 eliteUnits.AddToCounts(tier4, amount / 8);

@@ -9,6 +9,7 @@ using Revolutions.Components.Characters;
 using Revolutions.Components.Settlements;
 using Revolutions.Components.Revolutions;
 using KNTLibrary;
+using System.Linq;
 
 namespace Revolutions
 {
@@ -31,13 +32,25 @@ namespace Revolutions
         {
             var directoryPath = Path.Combine(SubModule.ModuleDataPath, "Saves", this.SaveId);
 
-            RevolutionsManagers.FactionManager.Infos = LibraryManagers.FileManager.Load<HashSet<FactionInfoRevolutions>>(directoryPath, "FactionInfos");
-            RevolutionsManagers.KingdomManager.Infos = LibraryManagers.FileManager.Load<HashSet<KingdomInfoRevolutions>>(directoryPath, "KingdomInfos");
-            RevolutionsManagers.ClanManager.Infos = LibraryManagers.FileManager.Load<HashSet<ClanInfoRevolutions>>(directoryPath, "ClanInfos");
-            RevolutionsManagers.PartyManager.Infos = LibraryManagers.FileManager.Load<HashSet<PartyInfoRevolutions>>(directoryPath, "PartyInfos");
-            RevolutionsManagers.CharacterManager.Infos = LibraryManagers.FileManager.Load<HashSet<CharacterInfoRevolutions>>(directoryPath, "CharacterInfos");
-            RevolutionsManagers.SettlementManager.Infos = LibraryManagers.FileManager.Load<HashSet<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos");
-            RevolutionsManagers.RevolutionManager.Revolutions = LibraryManagers.FileManager.Load<HashSet<Revolution>>(directoryPath, "Revolutions");
+            RevolutionsManagers.FactionManager.Infos = LibraryManagers.FileManager.Load<List<FactionInfoRevolutions>>(directoryPath, "FactionInfos").ToHashSet();
+            RevolutionsManagers.FactionManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.KingdomManager.Infos = LibraryManagers.FileManager.Load<List<KingdomInfoRevolutions>>(directoryPath, "KingdomInfos").ToHashSet();
+            RevolutionsManagers.KingdomManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.ClanManager.Infos = LibraryManagers.FileManager.Load<List<ClanInfoRevolutions>>(directoryPath, "ClanInfos").ToHashSet();
+            RevolutionsManagers.ClanManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.PartyManager.Infos = LibraryManagers.FileManager.Load<List<PartyInfoRevolutions>>(directoryPath, "PartyInfos").ToHashSet();
+            RevolutionsManagers.PartyManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.CharacterManager.Infos = LibraryManagers.FileManager.Load<List<CharacterInfoRevolutions>>(directoryPath, "CharacterInfos").ToHashSet();
+            RevolutionsManagers.CharacterManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.SettlementManager.Infos = LibraryManagers.FileManager.Load<List<SettlementInfoRevolutions>>(directoryPath, "SettlementInfos").ToHashSet();
+            RevolutionsManagers.SettlementManager.CleanupDuplicatedInfos();
+
+            RevolutionsManagers.RevolutionManager.Revolutions = LibraryManagers.FileManager.Load<List<Revolution>>(directoryPath, "Revolutions").ToHashSet();
         }
 
         internal void SaveData()

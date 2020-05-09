@@ -91,16 +91,15 @@ namespace Revolutions.CampaignBehaviors
 
         private void KingdomDestroyedEvent(Kingdom kingdom)
         {
-            var kingdomInfo = RevolutionsManagers.KingdomManager.GetInfo(kingdom);
             RevolutionsManagers.KingdomManager.RemoveKingdom(kingdom);
             RevolutionsManagers.KingdomManager.RemoveInfo(kingdom.StringId);
         }
 
         private void ClanChangedKingdom(Clan clan, Kingdom oldKingdom, Kingdom newKingdom, bool byRebellion, bool showNotification)
         {
-            var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan.StringId);
+            var clanInfo = RevolutionsManagers.ClanManager.GetInfo(clan);
 
-            if (!clanInfo.CanJoinOtherKingdoms && newKingdom?.RulingClan?.StringId != clan.StringId
+            if (clanInfo?.CanJoinOtherKingdoms == false && newKingdom?.RulingClan?.StringId != clan?.StringId
                 && !(clan.Culture.Name.ToString().ToLower().Contains("empire") && newKingdom.Culture.Name.ToString().ToLower().Contains("empire"))
                 && !(clan.Culture.Name.ToString() == newKingdom.Culture.Name.ToString()))
             {

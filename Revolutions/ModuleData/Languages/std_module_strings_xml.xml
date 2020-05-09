@@ -26,29 +26,33 @@
     <string id="Z64soMEf" text="Army Prosperity Multiplier" />
     <string id="uD4aRY0r" text="This multiplier gets multiplied by the towns prosperity to add the amount to the base army size." />
     <!-- Imperial Loyalty -->
-    <string id="YnRmSelp" text="Activates/Deactivates the mechanic for the empire loyalty." />
+    <string id="YnRmSelp" text="Enables/Disables the mechanic for the empire loyalty." />
     <string id="ER9izZPu" text="Renown Loss" />
     <string id="1i5izHqq" text="The amount of renown a imperial faction will loose after a failed revolt." />
     <!-- Overextension -->
-    <string id="ZRlNsvev" text="Activates/Deactivates the mechanics for overextension." />
+    <string id="ZRlNsvev" text="Enables/Disables the mechanics for overextension." />
     <string id="vuDS5ns8" text="Affects Player" />
     <string id="7LzQHMVj" text="Does the overextension mechanism affect the player." />
     <string id="q2tbqN8d" text="Multiplier" />
     <string id="6m1Ss8fW" text="A multiplier to calculate overextension. This affects the city's loyalty to the owner." />
     <!-- Minor Factions -->
-    <string id="P1g6H41e" text="Activates/Deactivates the mechanics for forming minor factions." />
+    <string id="P1g6H41e" text="Enables/Disables the mechanics for forming minor factions." />
     <string id="Z79izZPu" text="Renown Gain" />
     <string id="1i9izH4u" text="The amount of renown a minor faction will get after a successful revolt." />
     <!-- Lucky Nations -->
     <string id="6F34Ffer" text="Lucky Nations" />
-    <string id="Zkl46vev" text="Activates/Deactivates the mechanics for lucky nations." />
+    <string id="Zkl46vev" text="Enables/Disables the mechanics for lucky nations." />
     <string id="7fGer34R" text="Random Lucky Nation" />
-    <string id="lgkTi59R" text="Activates/Deactivates a random lucky nation from all possible kingdoms." />
+    <string id="lgkTi59R" text="Enables/Disables a random lucky nation from all possible kingdoms." />
     <string id="kgjR53Sd" text="Imperial Lucky Nation" />
     <string id="lgkr98EE" text="Guarantees an Imperial lucky nation." />
     <string id="klge23qZ" text="Non-Imperial Lucky Nation" />
     <string id="mvb34Sdk" text="Guarantees a Non-Imperial lucky nation." />
     <string id="glCo42fD" text="Loyal population" />
+    <!-- Miscellaneous-->
+    <string id="3r7O82pO" text="Miscellaneous" />
+    <string id="3H348per" text="Debug Mode" />
+    <string id="3L33P8pr" text="Enables/Disables the output of detailed information." />
 
     <!-- Loyalty Model -->
     <string id="PqkwszGz" text="Seeing you spend time at {SETTLEMENT}, your subjects feel more loyal to you." />

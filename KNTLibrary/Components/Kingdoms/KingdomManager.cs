@@ -28,6 +28,8 @@ namespace KNTLibrary.Components.Kingdoms
 
         #region IManager
 
+        public bool DebugMode { get; set; }
+
         public HashSet<InfoType> Infos { get; set; } = new HashSet<InfoType>();
 
         public void InitializeInfos()
@@ -46,7 +48,7 @@ namespace KNTLibrary.Components.Kingdoms
         public InfoType GetInfo(Kingdom gameObject)
         {
             var infos = this.Infos.Where(i => i.KingdomId == gameObject.StringId);
-            if (infos.Count() > 1)
+            if (this.DebugMode && infos.Count() > 1)
             {
                 InformationManager.DisplayMessage(new InformationMessage("Revolutions: Multiple Kingdoms with same Id. Using first one.", ColorManager.Orange));
                 foreach (var duplicatedInfo in infos)
@@ -91,7 +93,7 @@ namespace KNTLibrary.Components.Kingdoms
 
         public Kingdom GetGameObject(string id)
         {
-            return Campaign.Current.Kingdoms.SingleOrDefault(go => go?.StringId == id);
+            return Campaign.Current.Kingdoms.FirstOrDefault(go => go?.StringId == id);
         }
 
         public Kingdom GetGameObject(InfoType info)
@@ -117,6 +119,15 @@ namespace KNTLibrary.Components.Kingdoms
             {
                 this.GetInfo(gameObject);
             }
+        }
+
+        public void CleanupDuplicatedInfos()
+        {
+            this.Infos.Reverse();
+            this.Infos = this.Infos.GroupBy(i => i.KingdomId)
+                                   .Select(i => i.First())
+                                   .ToHashSet();
+            this.Infos.Reverse();
         }
 
         #endregion
